@@ -1,0 +1,32 @@
+import { createRouter, createWebHistory } from 'vue-router'
+import HomePage from '../views/HomePage.vue'
+import Recycle from '../views/Recycle.vue'
+import LogIn from '../views/LogIn.vue'
+import SignUp from '../views/SignUp.vue'
+import AboutPage from '../views/AboutPage.vue'
+import Brands from '../views/Brands.vue'
+import Profile from '../views/Profile.vue'
+import TryOn from '../views/TryOn.vue'
+import UserWardrobe from '../views/userWardrobe.vue'
+
+
+
+const routes = [
+  { path: '/', component: HomePage },
+  { path: '/login', component: LogIn},
+  { path: '/SignUp', component: SignUp },
+  { path: '/AboutPage', component: AboutPage },
+  { path: '/Brands', component: Brands },
+  { path: '/Profile', component: Profile },
+  { path: '/Recycle', component: Recycle },
+  { path: '/TryOn', component: TryOn },
+  { path: '/userWardrobe', component: UserWardrobe },
+]
+
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+})
+
+export default router
