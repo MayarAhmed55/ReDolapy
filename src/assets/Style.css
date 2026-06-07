@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+:root {
+    --primary-bgc:#F2F1F4;
+    --Primary-Brand-color: #40B9FF;
+    --Secondary-Brand-color: #8ED321;
+    --Secondary-Orange-Brand-color: #FF8A3D;
+
+    --Gradient-bgc: linear-gradient(90deg, rgba(64, 185, 255, 1) 0%, rgba(142, 211, 33, 1) 100%);
+    --Gradient-border: linear-gradient(90deg, #FF8A3D 0%, #40B9FF 49%, #8ED321 100%);
+
+    --Primary-Text-color: #121826;
+    --Secondary-Text-color: #1E1E24;
+    --Disabled-Text-color: #A0A6B2;
+    --Bold:700;
+    --Semi-Bold: 500;
+}
+
+body {
+    background-color: var(--primary-bgc) !important;
+    padding: 0 1rem;
+}
+
+@media (min-width: 640px) {
+    body {
+        padding: 0 2.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    body {
+        padding: 0 5rem;
+    }
+}
+
+/* Stepper & card gradient borders */
+.gradient-border-wrap {
+    background: var(--Gradient-border);
+    padding: 4px;
+    border-radius: 24px;
+}
+
+.gradient-dashed-border {
+    background-image:
+        repeating-linear-gradient(0deg, var(--Secondary-Orange-Brand-color), var(--Secondary-Orange-Brand-color) 8px, transparent 8px, transparent 16px),
+        repeating-linear-gradient(90deg, var(--Primary-Brand-color), var(--Primary-Brand-color) 8px, transparent 8px, transparent 16px),
+        repeating-linear-gradient(180deg, var(--Secondary-Brand-color), var(--Secondary-Brand-color) 8px, transparent 8px, transparent 16px),
+        repeating-linear-gradient(270deg, var(--Primary-Brand-color), var(--Primary-Brand-color) 8px, transparent 8px, transparent 16px);
+    background-size: 2px 100%, 100% 2px, 2px 100%, 100% 2px;
+    background-position: 0 0, 0 0, 100% 0, 0 100%;
+    background-repeat: no-repeat;
+}
+
+.recycle-action-btn {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    color: #fff;
+    background-color: var(--Secondary-Brand-color);
+    transition: opacity 0.2s;
+}
+
+.recycle-action-btn:hover:not(:disabled) {
+    opacity: 0.9;
+}
+
+.recycle-action-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.recycle-action-btn--compact {
+    width: auto;
+    min-width: 11rem;
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+}
+
+.recycle-action-btn img,
+.recycle-action-btn svg {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+}
+
+[dir="rtl"] .recycle-action-btn {
+    flex-direction: row-reverse;
+}
+
+.idea-card-selected::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background:
+        repeating-linear-gradient(90deg, var(--Secondary-Orange-Brand-color) 0 8px, transparent 8px 14px),
+        repeating-linear-gradient(180deg, var(--Primary-Brand-color) 0 8px, transparent 8px 14px),
+        repeating-linear-gradient(270deg, var(--Secondary-Brand-color) 0 8px, transparent 8px 14px),
+        repeating-linear-gradient(0deg, var(--Primary-Brand-color) 0 8px, transparent 8px 14px);
+    background-size: 100% 2px, 2px 100%, 100% 2px, 2px 100%;
+    background-position: top, right, bottom, left;
+    background-repeat: repeat-x, repeat-y, repeat-x, repeat-y;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
