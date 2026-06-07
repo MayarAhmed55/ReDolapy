@@ -5,7 +5,7 @@ import LogIn from '../views/LogIn.vue'
 import SignUp from '../views/SignUp.vue'
 import AboutPage from '../views/AboutPage.vue'
 import Brands from '../views/Brands.vue'
-import Profile from '../views/Profile.vue'
+import AboutRecycle from '../views/AboutRecycle.vue'
 import TryOn from '../views/TryOn.vue'
 import UserWardrobe from '../views/userWardrobe.vue'
 
@@ -17,7 +17,7 @@ const routes = [
   { path: '/SignUp', component: SignUp },
   { path: '/AboutPage', component: AboutPage },
   { path: '/Brands', component: Brands },
-  { path: '/Profile', component: Profile },
+  { path: '/AboutRecycle', component: AboutRecycle },
   { path: '/Recycle', component: Recycle },
   { path: '/TryOn', component: TryOn },
   { path: '/userWardrobe', component: UserWardrobe },

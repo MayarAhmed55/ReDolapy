@@ -18,6 +18,37 @@
 
 body {
     background-color: var(--primary-bgc) !important;
-    /* background-color:var(--Primary-Text-color) ; */
     padding: 0rem 5rem;
+}
+
+Section{
+    Padding-bottom:5rem;
+    Padding-top:5rem;
+}
+
+.PrimaryTxt{
+    color: var(--Primary-Text-color);
+}
+.Secondary-grayTxt{
+    color: var(--Secondary-Text-color);
+}
+.grayTxt{
+    color: var(--Disabled-Text-color);
+}
+button:hover{
+    cursor: pointer;
+    scale:1.08;
+}
+button{
+    transition: all 0.3s ease-in-out;
+}
+.gradientColor {
+    background: var(--Gradient-bgc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+    width: fit-content;
+    line-height: 1.3;
+    padding-bottom: 0.15em;
 }

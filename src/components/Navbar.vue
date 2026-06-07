@@ -2,7 +2,6 @@
     <div>
         <nav
             class="relative bg-gray-800/50 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/10">
-            <!-- <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8"> -->
             <div class="relative flex h-16 items-center justify-between">
                 <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
                     <!-- Mobile menu button-->
@@ -37,12 +36,11 @@
                     <div id="Nav-navigators" class=" w-[50%] hidden sm:ml-6 sm:block">
                         <div class="flex space-x-4  justify-between">
                         
-                            <!-- --------------------------- -->
                             <router-link to="/" class="nav-link-item">Home</router-link>
                             <router-link to="/TryOn" class="nav-link-item">TryOn</router-link>
                             <router-link to="/Recycle" class="nav-link-item">Recycle</router-link>
-                            <a href="#" class="nav-link-item">Pricing</a>
-                            <a href="#" class="nav-link-item">About</a>
+                            <router-link to="/AboutPage" class="nav-link-item">About</router-link>
+                            <a href="#PricingSection" class="nav-link-item">Pricing</a>
 
                         </div>
 
@@ -93,7 +91,6 @@ export default {
 
 nav {
     background-color: var(--primary-bgc);
-    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
 }
 
 .signBttns {
@@ -113,7 +110,6 @@ nav {
 
 #signUp {
     background: var(--Gradient-bgc);
-    /* border-color: transparent; */
     padding: 0.4em 1.6em;
     border:none;
     color: white;
