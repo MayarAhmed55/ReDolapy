@@ -8,14 +8,23 @@
                 </router-link>
 
                 <div class="hidden lg:flex flex-1 items-center justify-center gap-6 xl:gap-10">
-                    <router-link
-                        v-for="link in navLinks"
-                        :key="link.to"
-                        :to="link.to"
-                        class="nav-link-item text-sm xl:text-base"
-                    >
-                        {{ link.label }}
-                    </router-link>
+                    <template v-for="link in navLinks" :key="link.to">
+                        <a
+                            v-if="link.hash"
+                            :href="link.hash"
+                            class="nav-link-item text-sm xl:text-base"
+                            @click="onHashLinkClick($event, link.hash)"
+                        >
+                            {{ link.label }}
+                        </a>
+                        <router-link
+                            v-else
+                            :to="link.to"
+                            class="nav-link-item text-sm xl:text-base"
+                        >
+                            {{ link.label }}
+                        </router-link>
+                    </template>
                 </div>
 
                 <div class="hidden lg:flex items-center gap-2 xl:gap-3 shrink-0">
@@ -76,16 +85,25 @@
                             </div>
 
                             <nav class="flex-1 overflow-y-auto px-5 py-6">
-                                <router-link
-                                    v-for="(link, i) in navLinks"
-                                    :key="link.to"
-                                    :to="link.to"
-                                    class="mobile-nav-link block py-3 text-base text-(--Primary-Text-color)"
-                                    :class="{ 'font-bold': i === 0 }"
-                                    @click="closeMobileMenu"
-                                >
-                                    {{ link.mobileLabel || link.label }}
-                                </router-link>
+                                <template v-for="(link, i) in navLinks" :key="link.to">
+                                    <a
+                                        v-if="link.hash"
+                                        :href="link.hash"
+                                        class="mobile-nav-link block py-3 text-base text-(--Primary-Text-color)"
+                                        @click="onHashLinkClick($event, link.hash)"
+                                    >
+                                        {{ link.mobileLabel || link.label }}
+                                    </a>
+                                    <router-link
+                                        v-else
+                                        :to="link.to"
+                                        class="mobile-nav-link block py-3 text-base text-(--Primary-Text-color)"
+                                        :class="{ 'font-bold': i === 0 }"
+                                        @click="closeMobileMenu"
+                                    >
+                                        {{ link.mobileLabel || link.label }}
+                                    </router-link>
+                                </template>
                             </nav>
 
                             <div class="px-5 pb-6 pt-4 border-t border-gray-100 space-y-3">
@@ -126,7 +144,7 @@ export default {
                 { to: '/', label: 'Home', mobileLabel: 'Features' },
                 { to: '/TryOn', label: 'TryOn', mobileLabel: 'Try-On' },
                 { to: '/Recycle', label: 'Recycle' },
-                { to: '/Pricing', label: 'Pricing' },
+                { to: '/#PricingSection', label: 'Pricing', hash: '#PricingSection' },
                 { to: '/AboutPage', label: 'About' },
             ],
         };
@@ -152,6 +170,20 @@ export default {
         navigateAndClose(path) {
             this.closeMobileMenu();
             this.$router.push(path);
+        },
+        onHashLinkClick(e, hash) {
+            e.preventDefault();
+            this.closeMobileMenu();
+            const sectionId = hash.replace('#', '');
+            if (this.$route.path === '/') {
+                document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
+            this.$router.push({ path: '/', hash }).then(() => {
+                this.$nextTick(() => {
+                    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
         },
     },
 };
