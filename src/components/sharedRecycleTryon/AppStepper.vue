@@ -6,7 +6,8 @@
       :class="stepWrapClass(i)"
     >
       <div
-        class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-3 sm:py-4 bg-(--primary-bgc) rounded-[20px] min-h-18 sm:min-h-22"
+        class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-3 sm:py-4 min-h-18 sm:min-h-22"
+        :class="stepInnerClass(i)"
       >
         <div
           class="shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-sm font-bold"
@@ -44,18 +45,12 @@
 
 <script>
 export default {
-  name: 'RecycleStepper',
+  name: 'AppStepper',
   props: {
+    steps: { type: Array, required: true },
     activeStep: { type: Number, default: 0 },
     allComplete: { type: Boolean, default: false },
   },
-  data: () => ({
-    steps: [
-      { id: 'upload', label: 'Upload', subtitle: 'Upload 1-2 garment photos' },
-      { id: 'idea', label: 'Choose Idea', subtitle: 'Pick your favorite design' },
-      { id: 'generate', label: 'Generate', subtitle: 'Visualize your upcycled piece' },
-    ],
-  }),
   methods: {
     isCompleted(i) {
       return this.allComplete || i < this.activeStep
@@ -67,9 +62,14 @@ export default {
       return !this.allComplete && i > this.activeStep
     },
     stepWrapClass(i) {
-      if (this.isActive(i)) return 'gradient-border-wrap'
-      if (this.isCompleted(i)) return 'rounded-3xl border-[3px] border-[var(--Secondary-Brand-color)]'
-      return 'rounded-3xl border border-gray-200'
+      if (this.isActive(i)) return 'animated-solid-gradient-border'
+      if (this.isCompleted(i)) return 'step-border-completed'
+      return 'step-border-inactive'
+    },
+    stepInnerClass(i) {
+      if (this.isActive(i)) return 'animated-solid-gradient-border__inner'
+      if (this.isCompleted(i)) return 'step-border-completed__inner'
+      return 'step-border-inactive__inner'
     },
     circleClass(i) {
       if (this.isCompleted(i) || this.isActive(i)) {
