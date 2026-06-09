@@ -15,7 +15,7 @@ async function parseJsonResponse(res) {
 export async function fetchModels() {
   const res = await fetch(`${API_BASE}/models`)
   const data = await parseJsonResponse(res)
-  if (!res.ok) throw new Error(data.error || data.message || 'Failed to load models')
+  if (!res.ok) throw new Error(data.message || data.error || 'Failed to load models')
   return data
 }
 
@@ -29,8 +29,8 @@ export async function analyzeGarments(files) {
   })
 
   const data = await parseJsonResponse(res)
-  if (!res.ok) throw new Error(data.error || data.message || `Request failed (${res.status})`)
-  if (!data.success) throw new Error(data.error || 'Failed to generate ideas')
+  if (!res.ok) throw new Error(data.message || data.error || `Request failed (${res.status})`)
+  if (!data.success) throw new Error(data.message || data.error || 'Failed to generate ideas')
   return data
 }
 
@@ -42,9 +42,9 @@ export async function generateDesign({ prompt, images, model, size }) {
   })
 
   const data = await parseJsonResponse(res)
-  if (!res.ok) throw new Error(data.error || data.message || 'Image generation failed')
+  if (!res.ok) throw new Error(data.message || data.error || 'Image generation failed')
   if (!data.success || !data.images?.[0]) {
-    throw new Error(data.error || data.message || 'Image generation failed')
+    throw new Error(data.message || data.error || 'Image generation failed')
   }
   return data
 }

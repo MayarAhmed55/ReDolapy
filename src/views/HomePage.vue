@@ -2,9 +2,10 @@
     <div>
 
 
+
         <Header :primaryText="$t('header.primaryText')" :gradientText="$t('header.gradientText')"
             :Description="$t('header.description')"
-            :btnCTA="$t('header.cta')" :imageSrc="headerImgAsset" />
+            :btnCTA="$t('header.cta')" routeTo="/Tryon" :imageSrc="headerImgAsset" />
         <CardsSection :sectionTitle="$t('features.sectionTitle')"
             :sectionDescription="$t('features.sectionDescription')" :Card1Title="$t('features.aiRecommendations.title')"
             :Card1Description="$t('features.aiRecommendations.description')" :Card2Title="$t('features.tryOn.title')" 

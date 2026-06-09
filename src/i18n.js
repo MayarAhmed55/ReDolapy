@@ -209,7 +209,16 @@ const messages = {
 recycle: {
   header_title: 'Redolapy Up-cycling Design Generator',
   header_subtitle: 'Upload your pieces · Pick a design · See it come to life',
-  
+
+  steps: {
+    upload: 'Upload',
+    upload_subtitle: 'Upload 1-2 garment photos',
+    choose: 'Choose Idea',
+    choose_subtitle: 'Pick your favorite design',
+    result: 'Generate',
+    result_subtitle: 'Visualize your upcycled piece',
+  },
+
   upload: {
     title: 'Upload Your Garments',
     support_text: 'Support for JPG, PNG, WEBP (max 10MB each)',
@@ -220,9 +229,36 @@ recycle: {
     warnings: {
       format_error: 'Unsupported file format. Use',
       max_files: 'You cannot upload more than 2 images.',
-      size_limit: 'Each image must be 10MB or smaller.'
-    }
-  }
+      size_limit: 'Each image must be 10MB or smaller.',
+    },
+  },
+
+  ideas: {
+    title: 'Choose Your Style Idea',
+    badge: 'AI Suggested',
+    ai_engine: 'AI Engine',
+    aspect_ratio: 'Aspect Ratio',
+    submit: 'Generate Selected Design',
+    loading: 'Generating…',
+  },
+
+  card: {
+    see_more: 'See more',
+    see_less: 'See less',
+    selected: 'Selected',
+    remove_piece: 'Remove piece {n}',
+  },
+
+  output: {
+    heading: 'Your Generated Design',
+    save_btn: 'Save Specs',
+    saving: 'Downloading…',
+  },
+
+  errors: {
+    upload_first: 'Please upload garments and discover design ideas first.',
+    save_failed: 'Failed to download image.',
+  },
 },
 
 aboutRecycle: {
@@ -623,7 +659,16 @@ aboutRecycle: {
     recycle: {
   header_title: 'مولد تصاميم إعادة التدوير من ري دولابي',
   header_subtitle: 'ارفع قطع ملابسك · اختر تصميماً · شاهده ينبض بالحياة',
-  
+
+  steps: {
+    upload: 'رفع الملابس',
+    upload_subtitle: 'ارفع صورة أو صورتين للقطعة',
+    choose: 'اختيار الفكرة',
+    choose_subtitle: 'اختر التصميم المفضل لديك',
+    result: 'التوليد',
+    result_subtitle: 'شاهد قطعتك المعاد تدويرها',
+  },
+
   upload: {
     title: 'ارفع قطع الملابس الخاصة بك',
     support_text: 'صيغ الملفات المدعومة: JPG، PNG، WEBP (الحد الأقصى ١٠ ميجابايت لكل صورة)',
@@ -634,9 +679,36 @@ aboutRecycle: {
     warnings: {
       format_error: 'صيغة الملف غير مدعومة. يرجى استخدام',
       max_files: 'لا يمكنك رفع أكثر من صورتين فقط.',
-      size_limit: 'يجب أن يكون حجم كل صورة ١٠ ميجابايت أو أقل.'
-    }
-  }
+      size_limit: 'يجب أن يكون حجم كل صورة ١٠ ميجابايت أو أقل.',
+    },
+  },
+
+  ideas: {
+    title: 'اختر فكرة الأسلوب',
+    badge: 'مقترح بالذكاء الاصطناعي',
+    ai_engine: 'محرك الذكاء الاصطناعي',
+    aspect_ratio: 'نسبة العرض إلى الارتفاع',
+    submit: 'توليد التصميم المختار',
+    loading: 'جاري التوليد...',
+  },
+
+  card: {
+    see_more: 'عرض المزيد',
+    see_less: 'عرض أقل',
+    selected: 'محدد',
+    remove_piece: 'إزالة القطعة {n}',
+  },
+
+  output: {
+    heading: 'تصميمك المُولَّد',
+    save_btn: 'حفظ المواصفات',
+    saving: 'جاري التحميل...',
+  },
+
+  errors: {
+    upload_first: 'يرجى رفع قطع الملابس واكتشاف أفكار التصميم أولاً.',
+    save_failed: 'فشل تحميل الصورة.',
+  },
 },
     aboutRecycle: {
       header_primary: "لماذا إعادة التدوير مهمة؟",
