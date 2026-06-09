@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+:root {
+    --primary-bgc:#F2F1F4;
+    --Primary-Brand-color: #40B9FF;
+    --Secondary-Brand-color: #8ED321;
+    --Secondary-Orange-Brand-color: #FF8A3D;
+
+
+    --Gradient-bgc: linear-gradient(90deg, rgba(64, 185, 255, 1) 0%, rgba(142, 211, 33, 1) 100%);
+
+    --Primary-Text-color: #121826;
+    --Secondary-Text-color: #1E1E24;
+    --Disabled-Text-color: #A0A6B2;
+    --Bold:700;
+    --Semi-Bold: 500;
+}
+
+body {
+    background-color: var(--primary-bgc) !important;
+    /* background-color:var(--Primary-Text-color) ; */
+    padding: 0rem 5rem;
+}
