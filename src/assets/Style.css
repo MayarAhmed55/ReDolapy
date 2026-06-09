@@ -32,10 +32,13 @@ body {
         padding: 0 5rem;
     }
 }
+p{
+    font-family: 'Roboto';
+}
 
 Section{
-    Padding-bottom:5rem;
-    Padding-top:5rem;
+    Padding-bottom:2rem;
+    Padding-top:2rem;
 }
 
 .PrimaryTxt{
@@ -47,6 +50,17 @@ Section{
 .grayTxt{
     color: var(--Disabled-Text-color);
 }
+.greenTxt{
+ color:var(--Secondary-Brand-color)
+}
+
+.OrangeTxt{
+ color:var(--Secondary-Orange-Brand-color)
+}
+.blueTxt{
+ color:var(--Primary-Brand-color)
+}
+
 button:hover{
     cursor: pointer;
     scale:1.08;
@@ -64,6 +78,15 @@ button{
     line-height: 1.3;
     padding-bottom: 0.15em;
 }
+/* .card {
+    width: 32%;
+    background-color: white;
+    border-radius: 1em;
+    padding: 2rem;
+    padding-bottom: 4rem;
+    box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.1), -0.1rem -0.1rem 0.1rem rgba(0, 0, 0, 0.1);
+} */
+
 
 
 

@@ -1,27 +1,36 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
   fullWidth: { type: Boolean, default: false },
 })
 
+const { locale } = useI18n()
+
+const savedLang = localStorage.getItem('user-lang') || 'en'
+
 const isOpen = ref(false)
-const currentLang = ref('en')
+const currentLang = ref(savedLang)
+
+locale.value = savedLang
 
 const languages = [
   { code: 'en', label: 'EN', name: 'English' },
   { code: 'ar', label: 'AR', name: 'Arabic' }
 ]
 
-// Toggles the dropdown menu open/closed
 const toggleDropdown = () => {
   isOpen.value = !isOpen.value
 }
 
-// Selects the language and applies HTML text direction rules
 const selectLanguage = (langCode) => {
   currentLang.value = langCode
-  isOpen.value = false // Close the menu on select
+  isOpen.value = false 
+  
+  locale.value = langCode
+  
+  localStorage.setItem('user-lang', langCode)
   
   if (langCode === 'ar') {
     document.documentElement.dir = 'rtl'
@@ -32,7 +41,6 @@ const selectLanguage = (langCode) => {
   }
 }
 
-// Close dropdown automatically if user clicks completely outside of it
 const switcherRef = ref(null)
 const handleClickOutside = (event) => {
   if (switcherRef.value && !switcherRef.value.contains(event.target)) {
@@ -40,9 +48,23 @@ const handleClickOutside = (event) => {
   }
 }
 
-onMounted(() => document.addEventListener('click', handleClickOutside))
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
+  
+  if (currentLang.value === 'ar') {
+    document.documentElement.dir = 'rtl'
+    document.documentElement.lang = 'ar'
+  } else {
+    document.documentElement.dir = 'ltr'
+    document.documentElement.lang = 'en'
+  }
+})
+
 onUnmounted(() => document.removeEventListener('click', handleClickOutside))
 </script>
+
+
+
 
 <template>
   <div
@@ -124,7 +146,6 @@ onUnmounted(() => document.removeEventListener('click', handleClickOutside))
 </template>
 
 <style scoped>
-/* Orders layout elements so horizontal rules divide loop items correctly */
 div[class="flex flex-col p-1"] > div:first-of-type { order: 0; }
 hr { order: 1; }
 div[class="flex flex-col p-1"] > div:last-of-type { order: 2; }

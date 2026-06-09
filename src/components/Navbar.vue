@@ -14,14 +14,14 @@
                         :to="link.to"
                         class="nav-link-item text-sm xl:text-base"
                     >
-                        {{ link.label }}
+                        {{ $t(link.labelKey) }}
                     </router-link>
                 </div>
 
                 <div class="hidden lg:flex items-center gap-2 xl:gap-3 shrink-0">
                     <LangSwitcher />
-                    <button class="signBttns" id="logIn" @click="$router.push('/login')">Login</button>
-                    <button class="signBttns" id="signUp" @click="$router.push('/SignUp')">Sign up</button>
+                    <button class="signBttns" id="logIn" @click="$router.push('/login')">{{ $t('nav.login') }}</button>
+                    <button class="signBttns" id="signUp" @click="$router.push('/SignUp')">{{ $t('nav.signup') }}</button>
                 </div>
 
                 <button
@@ -76,7 +76,7 @@
                             </div>
 
                             <nav class="flex-1 overflow-y-auto px-5 py-6">
-                                <router-link
+                                                <router-link
                                     v-for="(link, i) in navLinks"
                                     :key="link.to"
                                     :to="link.to"
@@ -84,7 +84,7 @@
                                     :class="{ 'font-bold': i === 0 }"
                                     @click="closeMobileMenu"
                                 >
-                                    {{ link.mobileLabel || link.label }}
+                                    {{ link.mobileLabelKey ? $t(link.mobileLabelKey) : $t(link.labelKey) }}
                                 </router-link>
                             </nav>
 
@@ -94,13 +94,13 @@
                                     class="mobile-auth-btn mobile-auth-btn--login w-full"
                                     @click="navigateAndClose('/login')"
                                 >
-                                    Login
+                                    {{ $t('nav.login') }}
                                 </button>
                                 <button
                                     class="mobile-auth-btn mobile-auth-btn--signup w-full"
                                     @click="navigateAndClose('/SignUp')"
                                 >
-                                    Sign-up
+                                    {{ $t('nav.signup') }}
                                 </button>
                             </div>
                         </aside>
@@ -123,11 +123,11 @@ export default {
         return {
             mobileOpen: false,
             navLinks: [
-                { to: '/', label: 'Home', mobileLabel: 'Features' },
-                { to: '/TryOn', label: 'TryOn', mobileLabel: 'Try-On' },
-                { to: '/Recycle', label: 'Recycle' },
-                { to: '/Pricing', label: 'Pricing' },
-                { to: '/AboutPage', label: 'About' },
+                { to: '/', labelKey: 'nav.home' },
+                { to: '/TryOn', labelKey: 'nav.tryOn' },
+                { to: '/Recycle', labelKey: 'nav.recycle' },
+                { to: '/pricing', labelKey: 'nav.pricing' },
+                { to: '/AboutPage', labelKey: 'nav.about' },
             ],
         };
     },

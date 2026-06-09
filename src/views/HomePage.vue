@@ -1,68 +1,46 @@
 <template>
     <div>
-  
-
-        <Header 
-        primaryText="Your Personal" 
-        gradientText="AI Stylist"
-        Description="Get outfit recommendations, virtual try-ons, and wardrobe insights tailored to your style. smart.fast.effortless."
-        btnCTA="Start Styling" 
-        :imageSrc="headerImgAsset"
-        />
-        <CardsSection
-            sectionTitle="Fashion Intelligence"
-            sectionDescription="Built for the next generation of style enthusiasts."
-
-            Card1Title="AI Recommendations"
-            Card1Description="Proprietary algorithms that learn your aesthetic and
-                        suggest outfits
-                        that actually
-                        match your personality."
-
-            Card2Title="Try-on"
-            Card2Description="Precise body mapping technology ensures you never
-                        have to guess your
-                        size across
-                        different brands again."
-            
-            Card3Title="Recycle"
-            Card3Description="Stay ahead of the curve with
-                        real-time analysis of global runway trends filtered through your style lens.">
-                    
-                    
-                        <template #Icon1>
-                            <Sparkles />
-                        </template>
-
-                        <template #Icon2>
-                            <Shirt />
-                        </template>
-                        
-                        <template #Icon3>
-                            <Recycle />
-                        </template>
 
 
-                    </CardsSection>
+        <Header :primaryText="$t('header.primaryText')" :gradientText="$t('header.gradientText')"
+            :Description="$t('header.description')"
+            :btnCTA="$t('header.cta')" :imageSrc="headerImgAsset" />
+        <CardsSection :sectionTitle="$t('features.sectionTitle')"
+            :sectionDescription="$t('features.sectionDescription')" :Card1Title="$t('features.aiRecommendations.title')"
+            :Card1Description="$t('features.aiRecommendations.description')" :Card2Title="$t('features.tryOn.title')" 
+            :Card2Description="$t('features.tryOn.description')" :Card3Title="$t('features.recycle.title')" 
+            :Card3Description="$t('features.recycle.description')">
+
+            <template #Icon1>
+                <Sparkles />
+            </template>
+
+            <template #Icon2>
+                <Shirt />
+            </template>
+
+            <template #Icon3>
+                <Recycle />
+            </template>
+        </CardsSection>
 
 
 
 
         <section id="StepsSection" class="flex justify-between">
             <div class="StepsImg">
-                <img src="../assets/Container.png" class="w-[40rem] h-[30rem]" alt="">
+                <img src="../assets/Container.png" class="w-[40rem] h-[30rem]" :alt="$t('features.sectionTitle')">
             </div>
 
             <div id="Steps" class="w-[48%]">
-                <p class="font-bold text-4xl PrimaryTxt">Simple, Smart, Seamless</p>
+                <p class="font-bold text-4xl PrimaryTxt">{{ $t('steps.title') }}</p>
                 <div class="step flex ">
                     <div class="stepCircle ">
                         <p>1</p>
                     </div>
                     <div class="">
-                        <p class="stepTitle PrimaryTxt">Upload & Sync</p>
-                        <p class="Secondary-grayTxt">Upload photos of your current wardrobe or sync with your
-                            favorite shopping apps.</p>
+                        <p class="stepTitle PrimaryTxt">{{ $t('steps.uploadSync.title') }}</p>
+                        <p class="Secondary-grayTxt">{{ $t('steps.uploadSync.description') }}</p>
                     </div>
                 </div>
 
@@ -72,9 +50,8 @@
                         <p>2</p>
                     </div>
                     <div class="">
-                        <p class="stepTitle PrimaryTxt">Neural Analysis</p>
-                        <p class="Secondary-grayTxt">Our AI analyzes color palettes, textures, and silhouettes to build
-                            your digital DNA.</p>
+                        <p class="stepTitle PrimaryTxt">{{ $t('steps.neuralAnalysis.title') }}</p>
+                        <p class="Secondary-grayTxt">{{ $t('steps.neuralAnalysis.description') }}</p>
                     </div>
                 </div>
 
@@ -84,131 +61,115 @@
                         <p>3</p>
                     </div>
                     <div class="">
-                        <p class="stepTitle PrimaryTxt">Curated Styling</p>
-                        <p class="Secondary-grayTxt">Receive personalized daily lookbooks and shopping
-                            suggestions that fit your style.</p>
+                        <p class="stepTitle PrimaryTxt">{{ $t('steps.curatedStyling.title') }}</p>
+                        <p class="Secondary-grayTxt">{{ $t('steps.curatedStyling.description') }}</p>
                     </div>
                 </div>
             </div>
         </section>
 
 
-        <section id="Sustainable" class="my-[5rem] flex justify-between ">
+        <section id="Sustainable" class="my-[5rem] flex justify-around ">
             <div class="SustainableImg">
-                <img src="../assets/Minimalist recycling bin for sustainable fashion.png" alt="Sustainable Image"
+                <img src="../assets/Minimalist recycling bin for sustainable fashion.png" :alt="$t('sustainable.title')"
                     class="w-full h-auto rounded-4xl">
             </div>
 
-            <div id="SustainableContent" class="w-[50%]">
-                <p class="font-bold text-4xl mb-[1rem] PrimaryTxt">Sustainable Wardrobe</p>
-                <p class="text-lg Secondary-grayTxt">AELIA is committed to circular fashion. Our platform doesn't just
-                    help you style your
-                    clothes—it helps you manage their entire lifecycle. Join our movement to reduce textile waste
-                    through smart recycling, reselling, and donation programs.</p>
+            <div id="SustainableContent" class="w-[40%]">
+                <p class="font-bold text-4xl mb-[1rem] PrimaryTxt">{{ $t('sustainable.title') }}</p>
+                <p class="text-lg Secondary-grayTxt">{{ $t('sustainable.description') }}</p>
 
                 <div class="flex gap-4 mt-[2rem] items-center">
                     <div class="RecycleIcon">
                         <Recycle />
                     </div>
                     <div>
-                        <p class="font-bold text-2xl PrimaryTxt">Recycle & Renew</p>
-                        <p class="Secondary-grayTxt">Easily request a recycling kit for items that have reached the end
-                            of their life.</p>
+                        <p class="font-bold text-2xl PrimaryTxt">{{ $t('sustainable.recycleRenew') }}</p>
+                        <p class="Secondary-grayTxt">{{ $t('sustainable.recycleDescription') }}</p>
                     </div>
                 </div>
                 <div class="flex gap-4 mt-[2rem] items-center">
                     <div class="RecycleIcon">
-                        <Recycle />
+                        <PersonStanding />
                     </div>
                     <div>
-                        <p class="font-bold text-2xl PrimaryTxt">Recycle & Renew</p>
-                        <p class="Secondary-grayTxt">Easily request a recycling kit for items that have reached the end
-                            of their life.</p>
+                        <p class="font-bold text-2xl PrimaryTxt">{{ $t('sustainable.learnTryOn') }}</p>
+                        <p class="Secondary-grayTxt">{{ $t('tryOnSection.description') }}</p>
                     </div>
                 </div>
 
-           
-                <div class="mt-[4rem]">
-                <GradientBorderBtn 
-                Description="Learn about Recycling"
-                />
+<div class="flex justify-around mt-[4rem] items-center">
+                <div class=" w-[100%]">
+                    <GradientBorderBtn :Description="$t('sustainable.learnRecycling')" routeTo="/AboutRecycle" />
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-
+    
 
 
         <section id="VTryOn" class=" my-[5rem] flex items-center justify-between px-[5rem]">
             <div id="TryOnTxt" class="TxtGradient w-[40%] my-[5rem]">
-                <p class="text-4xl font-bold PrimaryTxt">Your Mirror</p>
-                <p class="text-4xl gradientColor font-bold mb-[1rem]">Re Imagined.</p>
-                <p class="w-[50%] mb-[1rem] disabledTxt Secondary-grayTxt">The Redolapy Virtual Try-On uses
-                    hyper-realistic
-                    rendering to show you exactly how clothes will
-                    look and drape on your body.</p>
-
-                <button id="TryBtn"><router-link to="/TryOn" class="no-underline">Try On</router-link></button>
+                <p class="text-4xl font-bold PrimaryTxt">{{ $t('tryOnSection.yourMirror') }}</p>
+                <p class="text-4xl gradientColor font-bold mb-[1rem]">{{ $t('tryOnSection.reimagined') }}</p>
+                <p class="w-[50%] mb-[1rem] disabledTxt Secondary-grayTxt">{{ $t('tryOnSection.description') }}</p>
+                
+                
+                <div class=" w-[100%]">
+                   <GradientBorderBtn :Description="$t('sustainable.learnTryOn')" routeTo="/AboutTryon" />
+               </div>
             </div>
 
             <div id="headerImg" class="w-[50%]">
-                <img src="../assets/Background.png" alt="TryOn Image" class="w-full h-auto">
+                <img src="../assets/Background.png" :alt="$t('tryOnSection.yourMirror')" class="w-full h-auto">
             </div>
         </section>
 
 
         <section id="PricingSection">
-            <p class="w-[fit-content] m-auto mb-[1rem] font-bold text-4xl  PrimaryTxt">ReDolapy Pricing</p>
-            <p class="w-[fit-content] m-auto font-medium PrimaryTxt">Choose the plan that fits your fashion journey.</p>
+            <p class="w-[fit-content] m-auto mb-[1rem] font-bold text-4xl  PrimaryTxt">{{ $t('pricing.title') }}</p>
+            <p class="w-[fit-content] m-auto font-medium PrimaryTxt">{{ $t('pricing.subtitle') }}</p>
 
             <div id="PricingCards" class="flex gap-8 justify-center my-[3rem] items-center">
 
                 <div id="FreePricing" class="card flex flex-col justify-center items-center gap-8">
-                    <p class="PricingTitle text-4xl font-bold PrimaryTxt">Free Plan</p>
-                    <p class="Price font-medium PrimaryTxt"><span class="text-4xl font-bold">$0</span>/month</p>
+                    <p class="PricingTitle text-4xl font-bold PrimaryTxt">{{ $t('pricing.free.name') }}</p>
+                    <p class="Price font-medium PrimaryTxt"><span class="text-4xl font-bold">{{ $t('pricing.free.price') }}</span>{{ $t('pricing.free.priceUnit') }}</p>
                     <div class="planFeatures">
-                        <p class="flex items-center gap-2 font-medium text-lg PrimaryTxt"><span>
-                                <Check />
-                            </span> AI Wardrobe Sync</p>
-                        <p class="flex items-center gap-2 font-medium text-lg PrimaryTxt"><span>
-                                <Check />
-                            </span> Daily Look books (3 outfits)</p>
-                        <p class="flex items-center gap-2 font-medium text-lg PrimaryTxt"><span>
-                                <Check />
-                            </span> Basic Virtual Try-On</p>
+                        <p class="flex items-center gap-2 font-medium text-lg PrimaryTxt  mb-1"><span class="text-[#8ED321]">
+                                <CircleCheckBig />
+                            </span> {{ $t('pricing.free.features.0') }}</p>
+                        <p class="flex items-center gap-2 font-medium text-lg PrimaryTxt  mb-1"><span class="text-[#8ED321]">
+                                <CircleCheckBig />
+                            </span> {{ $t('pricing.free.features.1') }}</p>
+                        <p class="flex items-center gap-2 font-medium text-lg PrimaryTxt  mb-1"><span class="text-[#8ED321]">
+                                <CircleCheckBig />
+                            </span> {{ $t('pricing.free.features.2') }}</p>
                     </div>
 
-                    <button id="FreePricingBtn" class=" PricingCardsButton font-semibold text-lg">Get Started</button>
+                    <button id="FreePricingBtn" class=" PricingCardsButton font-semibold text-lg">{{ $t('pricing.free.button') }}</button>
                 </div>
 
-                <div id="ProPricing" class="relative card">
-                    <div class="card pro-card-inner flex flex-col justify-center items-center gap-8  ">
-                        <p class="PricingTitle text-4xl font-bold">Pro Plan</p>
-                        <p class="Price font-medium"><span class="text-4xl font-bold">$20</span>/month</p>
-                        <div class="planFeatures">
-                            <p class="flex items-center gap-2 font-medium text-lg"><span>
-                                    <Check />
-                                </span>Everything in Essential</p>
-                            <p class="flex items-center gap-2 font-medium text-lg"><span>
-                                    <Check />
-                                </span>Hyper-Realistic Try-On</p>
-                            <p class="flex items-center gap-2 font-medium text-lg"><span>
-                                    <Check />
-                                </span>Unlimited Look books</p>
-                            <p class="flex items-center gap-2 font-medium text-lg"><span>
-                                    <Check />
-                                </span>Personal Style Coaching</p>
+               
+                <GradientCard
+                    :cardTitle="$t('pricing.pro.name')"
+                    :Price="$t('pricing.pro.price')"
+                    :firstPoint="$t('pricing.pro.features.0')"
+                    :secondPoint="$t('pricing.pro.features.1')"
+                    :thirdPoint="$t('pricing.pro.features.2')"
+                    :fourthPoint="$t('pricing.pro.features.3')"
+                    :buttonContent="$t('pricing.pro.button')"
+                    :permonth="$t('pricing.pro.priceUnit')"
+            ></GradientCard>
 
-                        </div>
-                        <button id="ProPricingBtn" class=" PricingCardsButton font-semibold text-lg">Start Free
-                            Trial</button>
-                    </div>
-                </div>
+
             </div>
         </section>
 
 
-        <section id="Q&A">
+
+         <!-- <section id="Q&A">
             <p class="text-4xl font-bold mb-[1rem] w-[fit-content] m-auto PrimaryTxt">Frequently Asked Questions</p>
 
             <div class="w-full max-w-4xl mx-auto flex flex-col gap-6 my-12 px-4">
@@ -250,18 +211,70 @@
 
 
 
-        </section>
+        </section> -->
+
+        
+        <section id="Q&A">
+    <!-- 💡 Dynamic Section Title -->
+    <p class="text-4xl font-bold mb-[1rem] w-[fit-content] m-auto PrimaryTxt">
+      {{ $t('faq.title') }}
+    </p>
+
+    <div class="w-full max-w-4xl mx-auto flex flex-col gap-6 my-12 px-4">
+      <!-- 💡 $tm pulls the questions array dynamically from Translation.js -->
+      <div 
+        v-for="(item, index) in $tm('faq.questions')" 
+        :key="index"
+        class="p-[0.2rem] rounded-[1rem] bg-gradient-to-r from-[#FF8E40] via-[#40B9FF] to-[#8ED321] shadow-sm transition-all duration-300"
+      >
+        <div class="bg-[#FEFEFE] rounded-[1rem] overflow-hidden">
+          <h2>
+            <!-- 💡 Text direction will auto-align to right/left based on language direction -->
+            <button 
+              type="button" 
+              @click="toggleItem(index)"
+              class="w-full px-10 py-5 flex items-center justify-between font-bold text-xl text-slate-900 select-none focus:outline-none transition-colors duration-200"
+              :class="{ 'bg-slate-50/50': activeIndex === index }"
+            >
+              <!-- 💡 $rt safely compiles the localized runtime string data -->
+              <span class="PrimaryTxt text-start">{{ $rt(item.title) }}</span>
+
+              <!-- Dynamic Arrow Icon -->
+              <svg 
+                class="w-5 h-5 text-slate-800 transform transition-transform duration-300 ease-in-out shrink-0 mx-2"
+                :class="{ 'rotate-180': activeIndex === index }" 
+                fill="none" 
+                stroke="currentColor"
+                stroke-width="2.5" 
+                viewBox="0 0 24 24"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+              </svg>
+            </button>
+          </h2>
+
+          <!-- Accordion Content Panel -->
+          <div v-if="activeIndex === index" class="bg-[#FEFEFE]">
+            <div class="mx-8 pt-2 border-t border-slate-100"></div>
+            <div class="px-8 pb-6 pt-3 text-slate-600 font-medium text-base leading-relaxed text-start">
+              {{ $rt(item.answer) }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
     </div>
 </template>
 
 <script>
-import { Sparkle, Sparkles, Shirt, Recycle, Check } from '@lucide/vue';
-import router from '../routers';
+import { Sparkles, Shirt, Recycle, CircleCheckBig ,PersonStanding } from '@lucide/vue';
 import Header from '../components/Header.vue';
 import HeaderImage from '../assets/HeaderImage.png';
 import GradientBorderBtn from '../components/GradientBorderBtn.vue';
 import CardsSection from '../components/CardsSection.vue';
+import GradientCard from '../components/GradientCard.vue';
 
 
 export default {
@@ -270,35 +283,43 @@ export default {
         Sparkles,
         Shirt,
         Recycle,
-        Check,
+        CircleCheckBig,
         Header,
         GradientBorderBtn,
         CardsSection,
+        GradientCard,
+        PersonStanding
     },
-
-    data() {
+      data() {
         return {
 
-            activeIndex: 0,
-            accordionItems: [
-                {
-                    title: 'How does the AI know my size?',
-                    strongText: '',
-                    bodyText: 'Our advanced AI analyzer maps your physical body geometry measurements using standard metrics or a quick photo scan to cross-reference fit scales across global retail brands seamlessly.'
-                },
-                {
-                    title: 'Can I use Redolapy with my current clothes?',
-                    strongText: '',
-                    bodyText: 'Yes! You can take photos of your existing wardrobe pieces, and our digital closet system will instantly catalog them and generate fresh style lookbooks combined with new styling recommendations.'
-                },
-                {
-                    title: 'How does the AI know my size?',
-                    strongText: '',
-                    bodyText: 'Yes! You can take photos of your existing wardrobe pieces, and our digital closet system will instantly catalog them and generate fresh style lookbooks combined with new styling recommendations.'
-                }
-            ],
+            activeIndex: null,
+            // accordionItems: [
+            //     {
+            //         title: 'How does the AI know my size?',
+            //         strongText: '',
+            //         bodyText: 'Our advanced AI analyzer maps your physical body geometry measurements using standard metrics or a quick photo scan to cross-reference fit scales across global retail brands seamlessly.'
+            //     },
+            //     {
+            //         title: 'Can I use Redolapy with my current clothes?',
+            //         strongText: '',
+            //         bodyText: 'Yes! You can take photos of your existing wardrobe pieces, and our digital closet system will instantly catalog them and generate fresh style lookbooks combined with new styling recommendations.'
+            //     },
+            //     {
+            //         title: 'How does the AI know my size?',
+            //         strongText: '',
+            //         bodyText: 'Yes! You can take photos of your existing wardrobe pieces, and our digital closet system will instantly catalog them and generate fresh style lookbooks combined with new styling recommendations.'
+            //     }
+            // ],
             headerImgAsset: HeaderImage
         };
+    },
+
+
+    computed: {
+        faqItems() {
+            return this.$t('faq.questions') || [];
+        }
     },
 
     methods: {
@@ -464,26 +485,25 @@ export default {
     cursor: pointer;
 }
 
-#ProPricingBtn {
+/* #ProPricingBtn {
     background-color: var(--Secondary-Orange-Brand-color);
     border-color: var(--Secondary-Orange-Brand-color);
     color: white;
     cursor: pointer;
-}
+} */
 
-#ProPricing {
+/* #ProPricing {
     background-color: var(--primary-bgc);
     padding: 0.5rem;
     background: linear-gradient(135deg, #FF8E40 0%, #40B9FF 50%, #8ED321 100%);
     border-radius: 1rem;
     position: relative;
-}
-
+} */
+/* 
 .pro-card-inner {
     background-color: var(--primary-bgc, #FEFEFE);
     border-radius: 1rem;
     width: 100%;
     height: 100%;
-}
+} */
 </style>
-

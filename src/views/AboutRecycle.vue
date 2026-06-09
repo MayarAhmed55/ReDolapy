@@ -1,22 +1,15 @@
 <template>
     <div>
-        <Header primaryText="Give Your Clothes a" gradientText="Second Life"
-            Description="Get outfit recommendations, virtual try-ons, and wardrobe insights tailored to your style. smart.fast.effortless."
-            btnCTA="Start Styling" :imageSrc="RecycleImgAsset">
-            <a href="#">
-                <GradientBorderBtn Description="See How to Recycle" />
-            </a>
+        <Header :primaryText="$t('aboutRecycle.header_primary')" :gradientText="$t('aboutRecycle.header_gradient')"
+            :Description="$t('aboutRecycle.header_description')"
+            :btnCTA="$t('aboutRecycle.header_cta')" :imageSrc="RecycleImgAsset" routeTo="/Recycle">
+                <GradientBorderBtn :Description="$t('aboutRecycle.btn_see_how_to_recycle')" routeTo="#Examples" />
         </Header>
 
 
-        <CardsSection sectionTitle="Why Upcycling Matters"
-            sectionDescription="Small changes today, big impact tomorrow." Card1Title="Save Water" Card1Description="Upcycling uses significantly less water
-            compared to producing entirely new
-            textile garments." Card2Title="Save Money" Card2Description="Refresh your personal style and get
-more tangible value from the high-
-quality clothes you already own." Card3Title="Reduce Waste" Card3Description="Keep clothing out of landfills and
-reduce the overall environmental
-footprint of the fashion industry.">
+        <CardsSection :sectionTitle="$t('aboutRecycle.title')"
+            :sectionDescription="$t('aboutRecycle.cards_section_description')" :Card1Title="$t('aboutRecycle.saveWater.title')" :Card1Description="$t('aboutRecycle.saveWater.description')"
+            :Card2Title="$t('aboutRecycle.saveMoney.title')" :Card2Description="$t('aboutRecycle.saveMoney.description')" :Card3Title="$t('aboutRecycle.reduceWaste.title')" :Card3Description="$t('aboutRecycle.reduceWaste.description')">
 
 
             <template #Icon1>
@@ -30,35 +23,33 @@ footprint of the fashion industry.">
             <template #Icon3>
                 <Leaf />
             </template>
-
-
         </CardsSection>
 
 
-
-        <ExamplesCards sectionTitle="See What AI Can Create"
-            sectionDescription="From old to new — endless creative possibilities." Card1Title="Denim Tote Bag"
-            Card1Description="Old Jeans" Card2Title="Denim Tote Bag" Card2Description="Old Jeans"
-            Card3Title="Denim Tote Bag" Card3Description="Old Jeans" :imgSrc1="DenimShortAsset" :imgSrc2="DenimBagAsset"
-            :imgSrc3="WhiteShirtAsset" :imgSrc4="RecycledWhiteShirtAsset" :imgSrc5="DenimShortAsset"
-            :imgSrc6="DenimBagAsset"></ExamplesCards>
-
-
-        <RoundedIconsSection 
-        sectionTitle="How It Works"
-        sectionDescription="Three simple steps to transform your clothes and make an impact." 
-        step1="1"
-        step2="2"
-        step3="3" 
-        IconTitle1="Upload Your Clothing" 
-        IconDescription1="Take photos of items you no longer wear or
-use and add them to your digital atelier." 
-        IconTitle2="AI Suggests Ideas" 
-        IconDescription2="Our AI analyzes your items and generates creative upcycling ideas tailored to your style." 
-        IconTitle3="Transform & Reuse" 
-        IconDescription3="Bring your new design to life or connect with
-creators in our curated marketplace.">
-
+        
+        <ExamplesCards 
+        :sectionTitle="$t('aboutRecycle.examples.title')"
+        :sectionDescription="$t('aboutRecycle.examples.subtitle')" 
+        :Card1Title="$t('aboutRecycle.examples.denimBag')" :Card1Description="$t('aboutRecycle.example1_description')" 
+        :Card2Title="$t('aboutRecycle.examples.oldJeans')" :Card2Description="$t('aboutRecycle.example2_description')"
+        :Card3Title="$t('aboutRecycle.example3_title')" :Card3Description="$t('aboutRecycle.example3_description')" :imgSrc1="DenimShortAsset" :imgSrc2="DenimBagAsset"
+        :imgSrc3="WhiteShirtAsset" :imgSrc4="RecycledWhiteShirtAsset" :imgSrc5="DenimShortAsset"
+        :imgSrc6="DenimBagAsset"></ExamplesCards>
+        
+        <div id="Examples" >
+            <RoundedIconsSection 
+            :sectionTitle="$t('aboutRecycle.how_it_works_title')"
+            :sectionDescription="$t('aboutRecycle.how_it_works_description')" 
+            step1="1"
+            step2="2"
+            step3="3" 
+            :IconTitle1="$t('aboutRecycle.uploadProcess.title')" 
+            :IconDescription1="$t('aboutRecycle.uploadProcess.description')" 
+            :IconTitle2="$t('aboutRecycle.aiSuggests.title')" 
+            :IconDescription2="$t('aboutRecycle.aiSuggests.description')" 
+            :IconTitle3="$t('aboutRecycle.transformReuse.title')" 
+            :IconDescription3="$t('aboutRecycle.transformReuse.description')">
+            
             <template #Icon1>
                 <Camera />
             </template>
@@ -66,13 +57,14 @@ creators in our curated marketplace.">
             <template #Icon2>
                 <WandSparkles />
             </template>
-
+            
             <template #Icon3>
                 <Shirt />
             </template>
-
-
+            
+            
         </RoundedIconsSection>
+    </div>
 
 
 

@@ -1,6 +1,6 @@
 <template>
     <div>
-          <section id="Features">
+          <section>
             <p id="FeaturesTitle" class=" text-5xl font-bold w-[fit-content] m-auto PrimaryTxt">{{sectionTitle}}</p>
             <p class=" text-center w-[30%] m-auto mb-[1rem] font-medium grayTxt">{{sectionDescription}}</p>
 

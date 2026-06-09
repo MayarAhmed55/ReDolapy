@@ -1,13 +1,13 @@
 <template>
     <div>
  <section id="Header" class="  flex items-center justify-between px-[5rem]">
-            <div id="slogan" class="w-[40%] my-[5rem]">
+            <div id="slogan" class="w-[40%] my-[5rem]"> 
                 <p class="text-5xl font-bold mb-[1rem] PrimaryTxt">{{ primaryText }}</p>
                 <p class="text-5xl gradientColor font-bold mb-[1rem]">{{ gradientText }}</p>
                 <p class="w-[60%] mb-[1rem] grayTxt">{{ Description }}</p>
 
                 <div class="flex items-center gap-[0.5rem]">
-                <button id="StartBtn"><router-link to="/TryOn" class="text-white no-underline">{{ btnCTA }}</router-link></button>
+                <button id="StartBtn"><router-link :to="routeTo" class="text-white no-underline">{{ btnCTA }}</router-link></button>
                 <slot class="p-0"></slot>
                 </div>
             </div>
@@ -28,7 +28,8 @@
         gradientText:String,
         Description:String,
         btnCTA:String,
-        imageSrc: String
+        imageSrc: String,
+        routeTo:String
     }
 }
 </script>
