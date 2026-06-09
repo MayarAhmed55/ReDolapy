@@ -6,8 +6,8 @@
     --Secondary-Brand-color: #8ED321;
     --Secondary-Orange-Brand-color: #FF8A3D;
 
-
     --Gradient-bgc: linear-gradient(90deg, rgba(64, 185, 255, 1) 0%, rgba(142, 211, 33, 1) 100%);
+    --Gradient-border: linear-gradient(90deg, #FF8A3D 0%, #40B9FF 49%, #8ED321 100%);
 
     --Primary-Text-color: #121826;
     --Secondary-Text-color: #1E1E24;
@@ -18,6 +18,212 @@
 
 body {
     background-color: var(--primary-bgc) !important;
-    /* background-color:var(--Primary-Text-color) ; */
-    padding: 0rem 5rem;
+    padding: 0 1rem;
 }
+
+@media (min-width: 640px) {
+    body {
+        padding: 0 2.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    body {
+        padding: 0 5rem;
+    }
+}
+p{
+    font-family: 'Roboto';
+}
+
+
+@property --border-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes spin-border-angle {
+    to { --border-angle: 360deg; }
+}
+
+.animated-solid-gradient-border {
+    --border-width: 3px;
+    --border-radius: 24px;
+    border-radius: var(--border-radius);
+    padding: var(--border-width);
+    background: conic-gradient(
+        from var(--border-angle),
+        var(--Secondary-Orange-Brand-color),
+        var(--Primary-Brand-color),
+        var(--Secondary-Brand-color),
+        var(--Secondary-Orange-Brand-color)
+    );
+    animation: spin-border-angle 4s linear infinite;
+}
+
+.animated-solid-gradient-border__inner {
+    border-radius: calc(var(--border-radius) - var(--border-width));
+    background: var(--primary-bgc);
+}
+
+/* Stepper — completed & inactive states */
+.step-border-completed {
+    --border-radius: 24px;
+    border-radius: var(--border-radius);
+    border: 3px solid var(--Secondary-Brand-color);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.step-border-inactive {
+    --border-radius: 24px;
+    border-radius: var(--border-radius);
+    border: 1px solid #D8DCE3;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.step-border-completed__inner,
+.step-border-inactive__inner {
+    background: var(--primary-bgc);
+}
+
+
+.animated-dashed-gradient-border {
+    --border-width: 2px;
+    --border-radius: 24px;
+    --dash-size: 14px;
+    --dash-fill: 8px;
+    position: relative;
+    border-radius: var(--border-radius);
+    padding: var(--border-width);
+    box-sizing: border-box;
+    background-color: transparent;
+    background-image:
+        repeating-linear-gradient(90deg, var(--Primary-Brand-color) 0 var(--dash-fill), transparent var(--dash-fill) var(--dash-size)),
+        repeating-linear-gradient(180deg, var(--Secondary-Brand-color) 0 var(--dash-fill), transparent var(--dash-fill) var(--dash-size)),
+        repeating-linear-gradient(270deg, var(--Primary-Brand-color) 0 var(--dash-fill), transparent var(--dash-fill) var(--dash-size)),
+        repeating-linear-gradient(0deg, var(--Secondary-Orange-Brand-color) 0 var(--dash-fill), transparent var(--dash-fill) var(--dash-size));
+    background-size:
+        100% var(--border-width),
+        var(--border-width) 100%,
+        100% var(--border-width),
+        var(--border-width) 100%;
+    background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+    background-repeat: repeat-x, repeat-y, repeat-x, repeat-y;
+    background-origin: border-box;
+    animation: march-dashed-border 1.2s linear infinite;
+}
+
+@keyframes march-dashed-border {
+    to {
+        background-position:
+            var(--dash-size) 0,
+            100% var(--dash-size),
+            calc(100% - var(--dash-size)) 100%,
+            0 calc(100% - var(--dash-size));
+    }
+}
+
+.animated-dashed-gradient-border__inner {
+    border-radius: calc(var(--border-radius) - var(--border-width));
+    background: var(--primary-bgc);
+}
+
+.animated-dashed-gradient-border--card {
+    --border-radius: 16px;
+}
+
+.animated-dashed-gradient-border--card .animated-dashed-gradient-border__inner {
+    background: #fff;
+}
+
+.recycle-action-btn {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    color: #fff;
+    background-color: var(--Secondary-Brand-color);
+    transition: opacity 0.2s;
+}
+
+.recycle-action-btn:hover:not(:disabled) {
+    opacity: 0.9;
+}
+
+.recycle-action-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.recycle-action-btn--compact {
+    width: auto;
+    min-width: 11rem;
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+}
+
+.recycle-action-btn img,
+.recycle-action-btn svg {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+}
+
+[dir="rtl"] .recycle-action-btn {
+    flex-direction: row-reverse;
+}
+
+
+
+
+Section{
+    Padding-bottom:2rem;
+    Padding-top:2rem;
+}
+
+.PrimaryTxt{
+    color: var(--Primary-Text-color);
+}
+.Secondary-grayTxt{
+    color: var(--Secondary-Text-color);
+}
+.grayTxt{
+    color: var(--Disabled-Text-color);
+}
+.greenTxt{
+ color:var(--Secondary-Brand-color)
+}
+
+.OrangeTxt{
+ color:var(--Secondary-Orange-Brand-color)
+}
+.blueTxt{
+ color:var(--Primary-Brand-color)
+}
+button:hover{
+    cursor: pointer;
+    scale:1.08;
+}
+button{
+    transition: all 0.3s ease-in-out;
+}
+.gradientColor {
+    background: var(--Gradient-bgc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+    width: fit-content;
+    line-height: 1.3;
+    padding-bottom: 0.15em;
+}
+

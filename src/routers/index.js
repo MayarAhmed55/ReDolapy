@@ -5,12 +5,11 @@ import LogIn from '../views/LogIn.vue'
 import SignUp from '../views/SignUp.vue'
 import AboutPage from '../views/AboutPage.vue'
 import Brands from '../views/Brands.vue'
-import Profile from '../views/Profile.vue'
+import AboutRecycle from '../views/AboutRecycle.vue'
 import TryOn from '../views/TryOn.vue'
 import UserWardrobe from '../views/userWardrobe.vue'
-import loginsignup from '../components/login-signUp.vue'
-import forgotPassword from '../components/forgot-password.vue'
-
+import Pricing from '../views/pricing.vue'
+import AboutTryon from '../views/AboutTryon.vue'
 
 
 const routes = [
@@ -18,14 +17,15 @@ const routes = [
   { path: '/login', component: LogIn},
   { path: '/SignUp', component: SignUp },
   { path: '/AboutPage', component: AboutPage },
-  { path: '/Brands', component: Brands },
-  { path: '/Profile', component: Profile },
+  { path: '/Brands', component: Brands }, 
+  { path: '/AboutRecycle', component:  AboutRecycle},
+  { path: '/AboutTryon', component: AboutTryon },
   { path: '/Recycle', component: Recycle },
   { path: '/TryOn', component: TryOn },
+  { path: '/pricing', component: Pricing },
   { path: '/userWardrobe', component: UserWardrobe },
-  { path: '/auth/callback', component: () => import('../views/GoogleCallback.vue')},
+  { path: '/auth/callback', component: () => import('../views/GoogleCallback.vue')}
 ]
-
 
 
 const router = createRouter({
