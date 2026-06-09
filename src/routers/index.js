@@ -12,7 +12,6 @@ import Pricing from '../views/pricing.vue'
 import AboutTryon from '../views/AboutTryon.vue'
 
 
-
 const routes = [
   { path: '/', component: HomePage },
   { path: '/login', component: LogIn},
@@ -25,6 +24,7 @@ const routes = [
   { path: '/TryOn', component: TryOn },
   { path: '/pricing', component: Pricing },
   { path: '/userWardrobe', component: UserWardrobe },
+  { path: '/auth/callback', component: () => import('../views/GoogleCallback.vue')}
 ]
 
 
