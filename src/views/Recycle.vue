@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <main class="w-full max-w-5xl mx-auto px-2 sm:px-4 py-6 sm:py-10">
 
     <header class="text-center mb-8 sm:mb-10">
@@ -382,23 +382,20 @@ export default {
   },
 
 }
-</script> -->
+</script>
 
 
-<template>
+<!-- <template>
   <main class="w-full max-w-5xl mx-auto px-2 sm:px-4 py-6 sm:py-10">
     <header class="text-center mb-8 sm:mb-10">
-      <!-- 💡 Dynamic Brand Title -->
       <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-(--Primary-Text-color) mb-2">
         {{ $t('recycle.header_title') }}
       </h1>
-      <!-- 💡 Dynamic Subtitle Pipeline Workflow -->
       <p class="text-sm sm:text-base text-(--Secondary-Text-color) font-medium">
         {{ $t('recycle.header_subtitle') }}
       </p>
     </header>
 
-    <!-- 💡 Fixed: Passing step labels down as props -->
     <RecycleStepper
       :active-step="activeStep"
       :all-complete="!!generatedDesign"
@@ -408,7 +405,6 @@ export default {
       class="mb-10 sm:mb-12"
     />
 
-    <!-- 💡 Fixed: Passing dropzone & button text states down as props -->
     <UploadArea
       v-model:files="files"
       :analyzing="analyzing"
@@ -420,7 +416,6 @@ export default {
       @analyze="onAnalyze"
     />
 
-    <!-- 💡 Fixed: Passing section headers and dynamic buttons down as props -->
     <RecycleIdeas
       v-if="styleIdeas.length"
       :ideas="styleIdeas"
@@ -435,7 +430,6 @@ export default {
 
     <p v-if="generateError" class="mb-6 text-sm text-red-600 text-center">{{ generateError }}</p>
 
-    <!-- 💡 Fixed: Passing download button label down as a prop -->
     <GeneratedDesign
       v-if="generatedDesign"
       :design="generatedDesign"
@@ -541,7 +535,6 @@ export default {
     async onGenerate({ model, size }) {
       if (!this.selectedIdea || this.generating) return
       if (!this.sourceImages.length) {
-        // 💡 Localized internal runtime text validation error strings
         this.generateError = this.$t('recycle.errors.upload_first')
         return
       }
@@ -580,7 +573,6 @@ export default {
       try {
         await downloadImage(this.generatedDesign.image, this.generatedDesign.title)
       } catch (err) {
-        // 💡 Localized image export error string
         this.saveError = err.message || this.$t('recycle.errors.save_failed')
       } finally {
         this.saving = false
@@ -588,4 +580,4 @@ export default {
     },
   },
 }
-</script>
+</script> -->
