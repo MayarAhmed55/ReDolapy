@@ -7,6 +7,7 @@
 <script>
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { emailVerification } from '../services/services'
 
 export default {
   name: "GoogleCallback",
@@ -16,12 +17,12 @@ export default {
     onMounted(() => {
       const params = new URLSearchParams(window.location.search);
 
-      const token  = params.get("token");
-      const email  = params.get("email");
-      const fname  = params.get("fname");
-      const lname  = params.get("lname");
-      const id     = params.get("_id");
-      const image  = params.get("image");
+      const token = params.get("token");
+      const email = params.get("email");
+      const fname = params.get("fname");
+      const lname = params.get("lname");
+      const id = params.get("_id");
+      const image = params.get("image");
 
       if (token && email) {
         const userData = { id, email, token, firstName: fname, lastName: lname, userImage: image };
@@ -32,6 +33,8 @@ export default {
             { type: "GOOGLE_AUTH_SUCCESS", payload: userData },
             window.origin
           );
+          
+
           window.close();
         } else {
           // Normal redirect flow — save token and navigate home
@@ -42,7 +45,8 @@ export default {
       } else if (!window.opener) {
         router.replace("/");
       }
-    });
+    }
+  );
   },
 };
 </script>
@@ -66,7 +70,9 @@ export default {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>
 
