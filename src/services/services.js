@@ -17,12 +17,16 @@ export const getUserById = (userId) => {
     },
   });
 };
-export const emailVerification = (userId) => {
-  return axios.post(`${API}/auth/send-verification`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
+export const emailVerification = (token) => {
+  return axios.post(
+    `${API}/auth/send-verification`,
+    {}, // body
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 };
 
 export const mailingOTP = (email) => {
@@ -30,9 +34,29 @@ export const mailingOTP = (email) => {
 };
 
 export const verifyOTP = (data) => {
-    return axios.post(`${API}/auth/verify-otp`, data);
+  return axios.post(`${API}/auth/verify-otp`, data);
 }
 
 export const resetPassword = (data) => {
-    return axios.put(`${API}/auth/reset-password`, data);
+  return axios.put(`${API}/auth/reset-password`, data);
 }
+export const deleteAccount = (email) => {
+  return axios.delete(`${API}/users/account`, {
+    data: { email },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`
+    }
+  });
+};
+
+export const userSettings = (settings) => {
+  return axios.post(
+    `${API}/users/settings`,
+    settings,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+    }
+  );
+};

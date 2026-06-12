@@ -107,54 +107,54 @@ const messages = {
     //     ],
     //   },
     // },
-  
+
     pricing: {
-  title: "Simple, Transparent Pricing",
-  subtitle: "Choose the perfect plan for your digital wardrobe needs",
-  completeSubscription: "Complete Subscription",
-  paymentMethod: "Payment Method",
-  cardNumber: "Card Number",
-  dateFormat: "MM / YY",
-  cvv: "CVV",
-  savePayment: "Save payment information for subsequent renewals",
-  monthly: "Monthly Subscription",
-  monthlyPrice: "$29.00",
-  earlyBirdDiscount: "Early Bird Discount",
-  discountAmount: "-$10.00",
-  estimatedTax: "Estimated Tax",
-  taxAmount: "$0.00",
-  dueToday: "Due Today",
-  dueTodayValue: "$19.00",
-  terms: "By finalizing your purchase, you authorize ReDolapy to initiate recurring automatic processing cycles. Cancel anytime inside workspace configurations.",
-  
-  // 💡 Added Missing Free Plan Block
-  free: {
-    name: "Free Wardrobe",
-    price: "$0",
-    priceUnit: "/ month",
-    button: "Get Started Free",
-    features: [
-      "Manage up to 20 clothing items",
-      "Standard 2D Avatar fittings",
-      "Basic upcycling design ideas"
-    ]
-  },
-  
-  pro: {
-    name: "Pro Atelier",
-    price: "$19",
-    priceUnit: "/ month",
-    button: "Finalize & Activate Plan",
-    features: [
-      "Infinite High-Fidelity 2D Avatar Fittings",
-      "Intelligent Wardrobe Color Match Matrix",
-      "Advanced High-Resolution Vector Canvas Exports",
-      "Priority Graphics Rendering Pipeline Lanes",
-    ],
-  },
-},
-  
-  
+      title: "Simple, Transparent Pricing",
+      subtitle: "Choose the perfect plan for your digital wardrobe needs",
+      completeSubscription: "Complete Subscription",
+      paymentMethod: "Payment Method",
+      cardNumber: "Card Number",
+      dateFormat: "MM / YY",
+      cvv: "CVV",
+      savePayment: "Save payment information for subsequent renewals",
+      monthly: "Monthly Subscription",
+      monthlyPrice: "$29.00",
+      earlyBirdDiscount: "Early Bird Discount",
+      discountAmount: "-$10.00",
+      estimatedTax: "Estimated Tax",
+      taxAmount: "$0.00",
+      dueToday: "Due Today",
+      dueTodayValue: "$19.00",
+      terms:
+        "By finalizing your purchase, you authorize ReDolapy to initiate recurring automatic processing cycles. Cancel anytime inside workspace configurations.",
+
+      // 💡 Added Missing Free Plan Block
+      free: {
+        name: "Free Wardrobe",
+        price: "$0",
+        priceUnit: "/ month",
+        button: "Get Started Free",
+        features: [
+          "Manage up to 20 clothing items",
+          "Standard 2D Avatar fittings",
+          "Basic upcycling design ideas",
+        ],
+      },
+
+      pro: {
+        name: "Pro Atelier",
+        price: "$19",
+        priceUnit: "/ month",
+        button: "Finalize & Activate Plan",
+        features: [
+          "Infinite High-Fidelity 2D Avatar Fittings",
+          "Intelligent Wardrobe Color Match Matrix",
+          "Advanced High-Resolution Vector Canvas Exports",
+          "Priority Graphics Rendering Pipeline Lanes",
+        ],
+      },
+    },
+
     faq: {
       title: "Frequently Asked Questions",
       questions: [
@@ -261,7 +261,7 @@ recycle: {
   },
 },
 
-aboutRecycle: {
+    aboutRecycle: {
       header_primary: "Why Upcycling Matters",
       header_gradient: "Sustainable Fashion",
       header_description:
@@ -390,6 +390,111 @@ aboutRecycle: {
       copyright: "© 2026 AELIA AI. All rights reserved.",
       privacyPolicy: "Privacy Policy",
     },
+    auth: {
+      tabs: {
+        signUp: "Sign Up",
+        login: "Login",
+      },
+      signup: {
+        title: "Create Your Style Profile",
+        subtitle: "Start building your personalized wardrobe",
+        firstName: "First name",
+        firstNamePlaceholder: "e.g. Engy",
+        lastName: "Last name",
+        lastNamePlaceholder: "e.g. Ahmed",
+        email: "Email",
+        emailPlaceholder: "enter your email",
+        password: "Password",
+        passwordPlaceholder: "create strong password",
+        confirmPassword: "Confirm password",
+        confirmPasswordPlaceholder: "confirm the password that you created",
+        submit: "Next",
+        loading: "Please wait...",
+        switchText: "Already have an account?",
+        switchLink: "Login now",
+        successMessage:
+          "We sent an email to verify your account. Check your inbox.",
+      },
+      login: {
+        title: "Welcome Back",
+        subtitle: "Log in to your account",
+        email: "Email",
+        emailPlaceholder: "enter your email",
+        password: "Password",
+        passwordPlaceholder: "enter your password",
+        forgotPassword: "Forgot password?",
+        submit: "Login",
+        loading: "Please wait...",
+        switchText: "Don't have an account?",
+        switchLink: "Sign up now",
+      },
+      panel: {
+        emailTitle: "Don't Worry,",
+        welcomeBack: "Welcome <br/>Back",
+        welcomeTo: "Welcome To<br/>Redolapy",
+        noAccount: "Don't Have an account?",
+        alreadyHaveAccount: "Already have an account?",
+        signUp: "Sign up",
+        login: "Login",
+      },
+      common: {
+        orDivider: "——— OR ———",
+        continueWithGoogle: "Continue with Google",
+        error: {
+          somethingWentWrong: "Something went wrong",
+        },
+      },
+    },
+    fp: {
+      forgotTitle: "Forgot Password?",
+      forgotSubtitle:
+        "No worries! It happens to the best of us. Enter the email address associated with your account and we'll send you a link to reset your password.",
+      emailLabel: "Email",
+      emailPlaceholder: "enter your email",
+      sending: "Sending...",
+      next: "Next",
+      hintSpam: "Didn't receive the email? Check your spam folder",
+      or: "OR",
+      hintDifferent: "Try a different email address",
+      backToLogin: "Back to Login",
+      verificationTitle: "Enter Verification Code",
+      verificationSubtitle:
+        "We sent a 6-digit code to {email}. Enter it below to proceed.",
+      verifying: "Verifying...",
+      verifyContinue: "Verify & Continue",
+      didnotReceiveCode: "Didn't receive the code?",
+      resendCode: "Resend Code",
+      requestCodeIn: "Request a new code in {timer}",
+      setNewPasswordTitle: "Set New Password",
+      setNewPasswordSubtitle:
+        "Choose a unique, strong password that you haven't used before for this account.",
+      passwordLabel: "Password",
+      passwordPlaceholder: "create strong password",
+      confirmPasswordLabel: "Confirm password",
+      confirmPasswordPlaceholder: "confirm the password that you created",
+      securityTip:
+        "Use 8+ characters with letters, numbers & symbols for a stronger password.",
+      saving: "Saving...",
+      resetPassword: "Reset Password",
+      strength: {
+        none: "",
+        weak: "Weak ❌",
+        fair: "Fair ⚠️",
+        good: "Good 👍",
+        strong: "Strong 💪",
+      },
+      panel: {
+        emailTitle: "Don't Worry,",
+        emailSubtitle:
+          "We will help you safely recover your profile access within seconds.",
+        otpTitle: "Check Your Inbox",
+        otpSubtitle:
+          "A secure token has been dispatched to establish identity validation.",
+        resetTitle: "Secure Account",
+        resetSubtitle:
+          "Almost completed! Finalize your credentials to log back into your session.",
+      },
+    },
   },
   ar: {
     nav: {
@@ -493,6 +598,7 @@ aboutRecycle: {
         "تقنية التجربة الافتراضي من ريدولابي تستخدم عرضاً واقعياً فائق الدقة لتوضيح كيفية ملاءمة الملابس لجسدك تماماً.",
       button: "جرب الآن",
     },
+
     // pricing: {
     //   title: 'أسعار ريدولابي',
     //   subtitle: 'اختر الخطة التي تناسب رحلتك في الموضة.',
@@ -561,50 +667,51 @@ aboutRecycle: {
     // },
 
     pricing: {
-  title: "أسعار بسيطة وشفافة",
-  subtitle: "اختر الخطة المثالية لاحتياجات خزانتك الرقمية",
-  completeSubscription: "إتمام الاشتراك",
-  paymentMethod: "طريقة الدفع",
-  cardNumber: "رقم البطاقة",
-  dateFormat: "شهر / سنة",
-  cvv: "الرمز السري (CVV)",
-  savePayment: "حفظ معلومات الدفع لتسهيل التجديد التلقائي لاحقاً",
-  monthly: "الاشتراك الشهري",
-  monthlyPrice: "$٢٩٫٠٠",
-  earlyBirdDiscount: "خصم الانضمام المبكر",
-  discountAmount: "-$١٠٫٠٠",
-  estimatedTax: "الضريبة التقديرية",
-  taxAmount: "$٠٫٠٠",
-  dueToday: "المستحق اليوم",
-  dueTodayValue: "$١٩٫٠٠",
-  terms: "بإتمامك لعملية الشراء، فإنك تفوض ري دولابي لبدء دورات خصم تلقائية متكررة. يمكنك إلغاء الاشتراك في أي وقت من إعدادات مساحة عملك.",
-  
-  // 💡 Added Missing Free Plan Block
-  free: {
-    name: "الخزانة المجانية",
-    price: "$٠",
-    priceUnit: "/ شهرياً",
-    button: "ابدأ مجاناً الآن",
-    features: [
-      "إدارة ما يصل إلى ٢٠ قطعة ملابس",
-      "تجارب قياس أساسية لـ 2D Avatar",
-      "أفكار أساسية لإعادة تدوير الملابس"
-    ]
-  },
-  
-  pro: {
-    name: "المحترف (Pro)",
-    price: "$١٩",
-    priceUnit: "/ شهرياً",
-    button: "تأكيد وتفعيل الخطة الآن",
-    features: [
-      "تجارب قياس ثنائية الأبعاد غير محدودة وبدقة عالية",
-      "مصفوفة الذكاء الاصطناعي الذكية لتنسيق ألوان الخزانة",
-      "تصدير لوحات العمل بصيغ فيكتور عالية الجودة",
-      "أولوية المعالجة السريعة في خوادم رندرة التصاميم",
-    ],
-  },
-},
+      title: "أسعار بسيطة وشفافة",
+      subtitle: "اختر الخطة المثالية لاحتياجات خزانتك الرقمية",
+      completeSubscription: "إتمام الاشتراك",
+      paymentMethod: "طريقة الدفع",
+      cardNumber: "رقم البطاقة",
+      dateFormat: "شهر / سنة",
+      cvv: "الرمز السري (CVV)",
+      savePayment: "حفظ معلومات الدفع لتسهيل التجديد التلقائي لاحقاً",
+      monthly: "الاشتراك الشهري",
+      monthlyPrice: "$٢٩٫٠٠",
+      earlyBirdDiscount: "خصم الانضمام المبكر",
+      discountAmount: "-$١٠٫٠٠",
+      estimatedTax: "الضريبة التقديرية",
+      taxAmount: "$٠٫٠٠",
+      dueToday: "المستحق اليوم",
+      dueTodayValue: "$١٩٫٠٠",
+      terms:
+        "بإتمامك لعملية الشراء، فإنك تفوض ري دولابي لبدء دورات خصم تلقائية متكررة. يمكنك إلغاء الاشتراك في أي وقت من إعدادات مساحة عملك.",
+
+      // 💡 Added Missing Free Plan Block
+      free: {
+        name: "الخزانة المجانية",
+        price: "$٠",
+        priceUnit: "/ شهرياً",
+        button: "ابدأ مجاناً الآن",
+        features: [
+          "إدارة ما يصل إلى ٢٠ قطعة ملابس",
+          "تجارب قياس أساسية لـ 2D Avatar",
+          "أفكار أساسية لإعادة تدوير الملابس",
+        ],
+      },
+
+      pro: {
+        name: "المحترف (Pro)",
+        price: "$١٩",
+        priceUnit: "/ شهرياً",
+        button: "تأكيد وتفعيل الخطة الآن",
+        features: [
+          "تجارب قياس ثنائية الأبعاد غير محدودة وبدقة عالية",
+          "مصفوفة الذكاء الاصطناعي الذكية لتنسيق ألوان الخزانة",
+          "تصدير لوحات العمل بصيغ فيكتور عالية الجودة",
+          "أولوية المعالجة السريعة في خوادم رندرة التصاميم",
+        ],
+      },
+    },
     faq: {
       title: "الأسئلة الشائعة",
       questions: [
@@ -655,7 +762,7 @@ aboutRecycle: {
     //     save_failed: "فشل تحميل وصيانة الصورة الاستعراضية.",
     //   },
     // },
-    
+
     recycle: {
   header_title: 'مولد تصاميم إعادة التدوير من ري دولابي',
   header_subtitle: 'ارفع قطع ملابسك · اختر تصميماً · شاهده ينبض بالحياة',
@@ -836,6 +943,110 @@ aboutRecycle: {
       telegram: "تيليجرام",
       copyright: "© ٢٠٢٦ أيليا للذكاء الاصطناعي. جميع الحقوق محفوظة.",
       privacyPolicy: "سياسة الخصوصية",
+    },
+    auth: {
+      tabs: {
+        signUp: "إنشاء حساب",
+        login: "تسجيل الدخول",
+      },
+      signup: {
+        title: "أنشئ ملفك الشخصي",
+        subtitle: "ابدأ في بناء خزانة ملابس مخصصة لك",
+        firstName: "الاسم الأول",
+        firstNamePlaceholder: "مثال: إنجي",
+        lastName: "اسم العائلة",
+        lastNamePlaceholder: "مثال: أحمد",
+        email: "البريد الإلكتروني",
+        emailPlaceholder: "أدخل بريدك الإلكتروني",
+        password: "كلمة المرور",
+        passwordPlaceholder: "أنشئ كلمة مرور قوية",
+        confirmPassword: "تأكيد كلمة المرور",
+        confirmPasswordPlaceholder: "أكد كلمة المرور التي أنشأتها",
+        submit: "التالي",
+        loading: "يرجى الانتظار...",
+        switchText: "هل لديك حساب بالفعل؟",
+        switchLink: "سجّل الدخول الآن",
+        successMessage:
+          "لقد أرسلنا بريدًا إلكترونيًا للتحقق من حسابك. تحقق من صندوق الوارد.",
+      },
+      login: {
+        title: "مرحبًا بعودتك",
+        subtitle: "سجّل الدخول إلى حسابك",
+        email: "البريد الإلكتروني",
+        emailPlaceholder: "أدخل بريدك الإلكتروني",
+        password: "كلمة المرور",
+        passwordPlaceholder: "أدخل كلمة المرور",
+        forgotPassword: "نسيت كلمة المرور؟",
+        submit: "تسجيل الدخول",
+        loading: "يرجى الانتظار...",
+        switchText: "ليس لديك حساب؟",
+        switchLink: "سجّل الآن",
+      },
+      panel: {
+        welcomeBack: "مرحبًا<br/>بعودتك",
+        welcomeTo: "مرحبًا بك في<br/>Redolapy",
+        noAccount: "ليس لديك حساب؟",
+        alreadyHaveAccount: "هل لديك حساب بالفعل؟",
+        signUp: "إنشاء حساب",
+        login: "تسجيل الدخول",
+      },
+      common: {
+        orDivider: "——— أو ———",
+        continueWithGoogle: "المتابعة مع Google",
+        error: {
+          somethingWentWrong: "حدث خطأ ما",
+        },
+      },
+    },
+    fp: {
+      forgotTitle: "هل نسيت كلمة المرور؟",
+      forgotSubtitle:
+        "لا تقلق! يحدث هذا للجميع. أدخل عنوان البريد الإلكتروني المرتبط بحسابك وسنرسل لك رمزاً لإعادة تعيين كلمة المرور الخاصة بك.",
+      emailLabel: "البريد الإلكتروني",
+      emailPlaceholder: "أدخل بريدك الإلكتروني",
+      sending: "جاري الإرسال...",
+      next: "التالي",
+      hintSpam:
+        "لم يصلك البريد الإلكتروني؟ تحقق من ملف الرسائل غير المرغوب فيها",
+      or: "أو",
+      hintDifferent: "جرّب عنوان بريد إلكتروني آخر",
+      backToLogin: "العودة لتسجيل الدخول",
+      verificationTitle: "أدخل رمز التحقق",
+      verificationSubtitle:
+        "لقد أرسلنا رمزاً مكوناً من 6 أرقام إلى {email}. أدخله أدناه للمتابعة.",
+      verifying: "جاري التحقق...",
+      verifyContinue: "التحقق والمتابعة",
+      didnotReceiveCode: "لم يصلك الرمز؟",
+      resendCode: "إعادة إرسال الرمز",
+      requestCodeIn: "إعادة طلب الرمز خلال {timer}",
+      setNewPasswordTitle: "تعيين كلمة مرور جديدة",
+      setNewPasswordSubtitle:
+        "اختر كلمة مرور فريدة وقوية لم تستخدمها من قبل لهذا الحساب.",
+      passwordLabel: "كلمة المرور",
+      passwordPlaceholder: "أنشئ كلمة مرور قوية",
+      confirmPasswordLabel: "تأكيد كلمة المرور",
+      confirmPasswordPlaceholder: "تأكيد كلمة المرور التي أنشأتها",
+      securityTip:
+        "استخدم 8 أحرف أو أكثر تحتوي على أحرف وأرقام ورموز للحصول على كلمة مرور أقوى.",
+      saving: "جاري الحفظ...",
+      resetPassword: "إعادة تعيين كلمة المرور",
+      strength: {
+        none: "",
+        weak: "ضعيفة ❌",
+        fair: "مقبولة ⚠️",
+        good: "جيدة 👍",
+        strong: "قوية جداً 💪",
+      },
+      panel: {
+        emailTitle: "لا تقلق،",
+        emailSubtitle:
+          "سنساعدك على استعادة الوصول إلى ملفك الشخصي بأمان في غضون ثوانٍ.",
+        otpTitle: "تحقق من بريدك",
+        otpSubtitle: "تم إرسال رمز أمان للتحقق من هويتك وتأمين حسابك.",
+        resetTitle: "تأمين الحساب",
+        resetSubtitle:
+          "أوشكت على الانتهاء! قم بتعيين بيانات الاعتماد الجديدة للعودة إلى حسابك.",
+      },
     },
   },
 };

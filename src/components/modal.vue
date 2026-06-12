@@ -15,7 +15,7 @@
       </TransitionChild>
 
       <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-        <div class="flex min-h-full items-center justify-center p-4">
+        <div class="flex min-h-full items-center justify-center p-4 sm:p-4">
           <TransitionChild
             as="template"
             enter="ease-out duration-300"
@@ -33,6 +33,7 @@
                 @submit="$emit('submit', $event)"
                 @forgot-password="view = 'forgot'"
                 @close="$emit('close')"
+                @login-success="$emit('login-success')"
               />
               <ForgotPassword
                 v-else
@@ -65,7 +66,7 @@ export default {
     open: { type: Boolean, required: true },
     mode: { type: String, default: "login" },
   },
-  emits: ["close", "switch-mode", "submit"],
+  emits: ["close", "switch-mode", "submit", "success", "login-success"],
   setup(props) {
     const view = ref("auth"); // 'auth' | 'forgot'
 
@@ -80,4 +81,23 @@ export default {
 </script>
 
 <style scoped>
+/* On small screens, make the modal use full available width */
+@media (max-width: 1024px) {
+  :deep(.relative) {
+    width: 100%;
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 599px) {
+  :deep(.relative) {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Reduce outer padding so the modal fills more of the screen */
+  .fixed.inset-0 > div {
+    padding: 8px;
+  }
+}
 </style>

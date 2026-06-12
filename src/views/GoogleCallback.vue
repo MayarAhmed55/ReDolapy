@@ -7,36 +7,56 @@
 <script>
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { getUserById } from "../services/services"; // adjust path if needed
 
 export default {
   name: "GoogleCallback",
   setup() {
     const router = useRouter();
 
-    onMounted(() => {
+    onMounted(async () => {
       const params = new URLSearchParams(window.location.search);
 
-      const token  = params.get("token");
-      const email  = params.get("email");
-      const fname  = params.get("fname");
-      const lname  = params.get("lname");
-      const id     = params.get("_id");
-      const image  = params.get("image");
+      const token = params.get("token");
+      const email = params.get("email");
+      const _id   = params.get("_id");
 
-      if (token && email) {
-        const userData = { id, email, token, firstName: fname, lastName: lname, userImage: image };
+      if (token && email && _id) {
+        // Store token first so getUserById can attach it to the request
+        localStorage.setItem("token", token);
 
-        if (window.opener) {
-          // Opened as a popup — send data back to the main window and close
-          window.opener.postMessage(
-            { type: "GOOGLE_AUTH_SUCCESS", payload: userData },
-            window.origin
-          );
-          window.close();
-        } else {
-          // Normal redirect flow — save token and navigate home
-          localStorage.setItem("token", token);
-          localStorage.setItem("user", JSON.stringify(userData));
+        try {
+          const userRes = await getUserById(_id);
+
+          const userData = {
+            first_name:      userRes.data.user.profile.first_name,
+            last_name:       userRes.data.user.profile.last_name,
+            email:           userRes.data.user.email,
+            id:              userRes.data.user._id,
+            userImage:       userRes.data.user.userImage,
+            language:        userRes.data.user.settings.language,
+            avatars:         userRes.data.user.avatars,
+            darkMode:        userRes.data.user.darkMode,
+            has_mobile_app:  userRes.data.user.settings.has_mobile_app,
+            gender:          userRes.data.user.profile.gender,
+            date_of_birth:   userRes.data.user.profile.date_of_birth,
+          };
+
+          if (window.opener) {
+            // Popup flow — send full data back to the opener and close
+            window.opener.postMessage(
+              { type: "GOOGLE_AUTH_SUCCESS", payload: { ...userData, token } },
+              window.origin
+            );
+            window.close();
+          } else {
+            // Redirect flow — save and navigate home
+            localStorage.setItem("user", JSON.stringify(userData));
+            router.replace("/");
+          }
+        } catch (err) {
+          console.error("Failed to fetch user profile after Google login:", err);
+          localStorage.removeItem("token");
           router.replace("/");
         }
       } else if (!window.opener) {
@@ -66,7 +86,9 @@ export default {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>
 
@@ -85,9 +107,9 @@ export default {
       window.addEventListener('message', (event) => {
         if (event.origin !== window.origin) return;
         if (event.data?.type === 'GOOGLE_AUTH_SUCCESS') {
-          const { token, ...user } = event.data.payload;
+          const { token, ...userData } = event.data.payload;
           localStorage.setItem('token', token);
-          localStorage.setItem('user', JSON.stringify(user));
+          localStorage.setItem('user', JSON.stringify(userData));
           emit('submit', event.data.payload);
         }
       }, { once: true });
