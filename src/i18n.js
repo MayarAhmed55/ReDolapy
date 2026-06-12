@@ -7,10 +7,16 @@ const messages = {
       features: "Features",
       tryOn: "Try-On",
       recycle: "Recycle",
+      store: "Store",
       pricing: "Pricing",
       about: "About",
       login: "Login",
       signup: "Sign up",
+    },
+    errors: {
+      generic: "Something went wrong. Please try again.",
+      api_not_found: "API endpoint not found. Start the TryOn backend on port 5000.",
+      invalid_response: "Unexpected server response ({status}).",
     },
     header: {
       primaryText: "Your Personal",
@@ -75,6 +81,121 @@ const messages = {
       description:
         "The Redolapy Virtual Try-On uses hyper-realistic rendering to show you exactly how clothes will look and drape on your body.",
       button: "Try On",
+    },
+    tryOn: {
+      header_title: "Redolapy Virtual Try-on",
+      header_subtitle: "Upload your pieces · Pick a style · See it come to life",
+      steps: {
+        image: "Upload Your image",
+        image_subtitle: "Upload a photo or pick an avatar",
+        clothes: "Upload Your clothes",
+        clothes_subtitle: "Upload 1-2 garment photos",
+        tryon: "Virtual Try-on",
+        tryon_subtitle: "See your outfit come to life",
+      },
+      model: {
+        choose_title: "Choose your model",
+        personal_photo: "Personal Photo",
+        personal_subtitle: "Upload your own image",
+        use_avatar: "Use Avatar",
+        avatar_subtitle: "Pick a preset model",
+        upload_prompt: "Upload your photo (JPG, PNG, WEBP)",
+        select_avatar: "Select an avatar",
+        your_photo: "Your Photo",
+        avatar_label: "Avatar",
+        personal_label: "Personal image",
+        avatar_classic: "Classic Model",
+        avatar_casual: "Casual Look",
+        avatar_studio: "Studio Pose",
+        select_avatar_aria: "Select {name}",
+      },
+      garments: {
+        title: "Upload Your Garments",
+        support_text: "Support for JPG, PNG, WEBP (max 10MB each)",
+        drag_prompt: "Click or drag images here",
+        current_selection: "Current Selection",
+        no_items: "No items selected yet",
+        add_more: "Add More Pieces",
+        uploaded_garment: "Uploaded garment",
+        generate_btn: "Try-on",
+        generating: "Generating your try-on…",
+        remove_aria: "Remove {name}",
+      },
+      output: {
+        heading: "Your Virtual Try-on",
+        save_btn: "Add to Wardrobe",
+        saving: "Adding…",
+        style_match: "{percent}% Style Match",
+        zoom_aria: "Zoom image",
+      },
+      errors: {
+        generic: "Something went wrong. Please try again.",
+        save_failed: "Failed to add to wardrobe.",
+        upload_first: "Please upload your model and garments first.",
+      },
+      warnings: {
+        format_error: "Unsupported file format. Use {formats}.",
+        max_files: "You can only upload up to 2 garment images.",
+        size_limit: "Each image must be 10MB or smaller.",
+      },
+      mock_description:
+        "Our AI has seamlessly combined your uploaded garments into a cohesive look. The silhouette balances structure and flow, pairing your pieces for a polished virtual try-on preview.",
+    },
+    store: {
+      title: "Stores",
+      promo_prefix: "you can get Discount on all your Favorite Brands Now, when you",
+      promo_mobile_start: "You can get",
+      promo_discount: "Discount",
+      promo_mobile_mid: "on all your Favorite Brands Now, when you",
+      promo_highlight: "install the application!",
+      search_placeholder: "Search",
+      filters: "Filters",
+      reset_all: "Reset All",
+      filter_aria: "Open filters",
+      close_filters: "Close filters",
+      brands: "Brands",
+      colors: "Colors",
+      season: "Season",
+      categories: "Categories",
+      price_range: "Price Range",
+      seasons: {
+        summer: "Summer",
+        spring: "Spring",
+        fall: "Fall",
+        winter: "Winter",
+      },
+      category_options: {
+        dress: "Dress",
+        top: "Top",
+        bottom: "Bottom",
+        outerwear: "Outerwear",
+      },
+      brand_options: {
+        hm: "HM",
+        zara: "ZARA",
+      },
+      product: {
+        view: "View",
+        view_store: "View Store",
+        view_on_store: "View on Store",
+        brand: "Brand",
+        try_on: "Try-on",
+        wishlist_aria: "Add to wishlist",
+      },
+      loading: "Loading products...",
+      no_products: "No products match your search or filters.",
+      currency: "EGP",
+    },
+
+     wardrobe: {
+
+      title: "Wardrobe",
+      promo_prefix: "here is all your ",
+      promo_highlight: " Sustainable wardrobe Items ",
+      loading: "Loading your wardrobe...",
+      empty: "Your wardrobe is empty. Start adding your pieces now!",
+
+      
     },
 
     // pricing: {
@@ -258,6 +379,9 @@ recycle: {
   errors: {
     upload_first: 'Please upload garments and discover design ideas first.',
     save_failed: 'Failed to download image.',
+    login_required: 'Please log in to analyze garments and generate designs.',
+    missing_github_key: 'GitHub API key is missing. Add VITE_GITHUB_TOKEN to your .env file.',
+    missing_dashscope_key: 'DashScope API key is missing. Add VITE_DASHSCOPE_API_KEY to your .env file.',
   },
 },
 
@@ -397,10 +521,16 @@ aboutRecycle: {
       features: "المميزات",
       tryOn: "جرب الآن",
       recycle: "إعادة التدوير",
+      store: "المتجر",
       pricing: "الأسعار",
       about: "حول",
       login: "دخول",
       signup: "إنشاء حساب",
+    },
+    errors: {
+      generic: "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+      api_not_found: "لم يتم العثور على واجهة البرمجة. شغّل الخادم الخلفي على المنفذ 5000.",
+      invalid_response: "استجابة غير متوقعة من الخادم ({status}).",
     },
     header: {
       primaryText: "مستشارك الشخصي",
@@ -423,36 +553,9 @@ aboutRecycle: {
           "تقنية المسح الجسدي الدقيقة تضمن أنك لن تخمن مقاسك مرة أخرى عبر العلامات التجارية المختلفة.",
       },
       recycle: {
-        header_title: "Redolapy Up-cycling Design Generator",
-        header_subtitle:
-          "Upload your pieces · Pick a design · See it come to life",
-
-        steps: {
-          upload: "Upload Pieces",
-          choose: "Pick Design Idea",
-          result: "Upcycled Concept",
-        },
-
-        upload: {
-          title: "Drag and drop your wardrobe images here",
-          button: "Analyze Garments",
-          loading: "Analyzing fabrics and clothing items...",
-        },
-
-        ideas: {
-          title: "Discovered Upcycling Recommendations",
-          submit: "Generate AI Transformation View",
-        },
-
-        output: {
-          save_btn: "Download Design Blueprint Specs",
-        },
-
-        errors: {
-          upload_first:
-            "Please upload garments and discover design ideas first.",
-          save_failed: "Failed to download image.",
-        },
+        title: "إعادة التدوير",
+        description:
+          "ابقَ في الطليعة مع تحليل فوري لاتجاهات أزياء العروض العالمية مفلترة عبر عدسة أسلوبك الشخصي.",
       },
     },
     steps: {
@@ -492,6 +595,118 @@ aboutRecycle: {
       description:
         "تقنية التجربة الافتراضي من ريدولابي تستخدم عرضاً واقعياً فائق الدقة لتوضيح كيفية ملاءمة الملابس لجسدك تماماً.",
       button: "جرب الآن",
+    },
+    tryOn: {
+      header_title: "التجربة الافتراضية من ريدولابي",
+      header_subtitle: "ارفع قطعك · اختر أسلوباً · شاهد النتيجة تنبض بالحياة",
+      steps: {
+        image: "ارفع صورتك",
+        image_subtitle: "ارفع صورة أو اختر أفاتار",
+        clothes: "ارفع ملابسك",
+        clothes_subtitle: "ارفع صورة أو صورتين للقطع",
+        tryon: "تجربة افتراضية",
+        tryon_subtitle: "شاهد إطلالتك تنبض بالحياة",
+      },
+      model: {
+        choose_title: "اختر نموذجك",
+        personal_photo: "صورة شخصية",
+        personal_subtitle: "ارفع صورتك الخاصة",
+        use_avatar: "استخدم أفاتار",
+        avatar_subtitle: "اختر نموذجاً جاهزاً",
+        upload_prompt: "ارفع صورتك (JPG، PNG، WEBP)",
+        select_avatar: "اختر أفاتار",
+        your_photo: "صورتك",
+        avatar_label: "أفاتار",
+        personal_label: "صورة شخصية",
+        avatar_classic: "نموذج كلاسيكي",
+        avatar_casual: "مظهر عادي",
+        avatar_studio: "وضعية استوديو",
+        select_avatar_aria: "اختر {name}",
+      },
+      garments: {
+        title: "ارفع قطع الملابس",
+        support_text: "صيغ الملفات المدعومة: JPG، PNG، WEBP (الحد الأقصى ١٠ ميجابايت لكل صورة)",
+        drag_prompt: "اضغط هنا أو اسحب الصور إلى هذا المربع",
+        current_selection: "الاختيار الحالي",
+        no_items: "لم يتم اختيار أي قطع بعد",
+        add_more: "أضف المزيد من القطع",
+        uploaded_garment: "قطعة مرفوعة",
+        generate_btn: "جرب افتراضياً",
+        generating: "جاري إنشاء تجربتك الافتراضية…",
+        remove_aria: "إزالة {name}",
+      },
+      output: {
+        heading: "تجربتك الافتراضية",
+        save_btn: "أضف إلى الخزانة",
+        saving: "جاري الإضافة…",
+        style_match: "تطابق الأسلوب {percent}٪",
+        zoom_aria: "تكبير الصورة",
+      },
+      errors: {
+        generic: "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+        save_failed: "فشلت الإضافة إلى الخزانة.",
+        upload_first: "يرجى رفع النموذج والملابس أولاً.",
+      },
+      warnings: {
+        format_error: "صيغة الملف غير مدعومة. يرجى استخدام {formats}.",
+        max_files: "لا يمكنك رفع أكثر من صورتين للملابس.",
+        size_limit: "يجب أن يكون حجم كل صورة ١٠ ميجابايت أو أقل.",
+      },
+      mock_description:
+        "دمج الذكاء الاصطناعي قطعك المرفوعة في إطلالة متناسقة. يوازن القص بين البنية والانسيابية لعرض تجربة افتراضية مصقولة.",
+    },
+    store: {
+      title: "المتاجر",
+      promo_prefix: "يمكنك الحصول على خصم على جميع علاماتك التجارية المفضلة الآن، عندما",
+      promo_mobile_start: "يمكنك الحصول على",
+      promo_discount: "خصم",
+      promo_mobile_mid: "على جميع علاماتك التجارية المفضلة الآن، عندما",
+      promo_highlight: "تثبّت التطبيق!",
+      search_placeholder: "بحث",
+      filters: "الفلاتر",
+      reset_all: "إعادة تعيين الكل",
+      filter_aria: "فتح الفلاتر",
+      close_filters: "إغلاق الفلاتر",
+      brands: "العلامات التجارية",
+      colors: "الألوان",
+      season: "الموسم",
+      categories: "الفئات",
+      price_range: "نطاق السعر",
+      seasons: {
+        summer: "الصيف",
+        spring: "الربيع",
+        fall: "الخريف",
+        winter: "الشتاء",
+      },
+      category_options: {
+        dress: "فستان",
+        top: "علوي",
+        bottom: "سفلي",
+        outerwear: "ملابس خارجية",
+      },
+      brand_options: {
+        hm: "إتش آند إم",
+        zara: "زارا",
+      },
+      product: {
+        view: "عرض",
+        view_store: "عرض المتجر",
+        view_on_store: "عرض في المتجر",
+        brand: "العلامة",
+        try_on: "جرب افتراضياً",
+        wishlist_aria: "أضف إلى المفضلة",
+      },
+      loading: "جاري تحميل المنتجات...",
+      no_products: "لا توجد منتجات تطابق البحث أو الفلاتر.",
+      currency: "ج.م",
+    },
+    wardrobe: {
+      title: "خزانة الملابس",
+      promo_prefix: "هنا كل ",
+      promo_highlight: "عناصر خزانة الملابس المستدامة",
+      loading: "جاري تحميل خزانة ملابسك...",
+      empty: "خزانة ملابسك فارغة. ابدأ بإضافة قطعك الآن!",
+
     },
     // pricing: {
     //   title: 'أسعار ريدولابي',
@@ -708,6 +923,9 @@ aboutRecycle: {
   errors: {
     upload_first: 'يرجى رفع قطع الملابس واكتشاف أفكار التصميم أولاً.',
     save_failed: 'فشل تحميل الصورة.',
+    login_required: 'يرجى تسجيل الدخول لتحليل الملابس وتوليد التصاميم.',
+    missing_github_key: 'مفتاح GitHub API مفقود. أضف VITE_GITHUB_TOKEN إلى ملف .env.',
+    missing_dashscope_key: 'مفتاح DashScope API مفقود. أضف VITE_DASHSCOPE_API_KEY إلى ملف .env.',
   },
 },
     aboutRecycle: {

@@ -187,14 +187,19 @@ export default {
   data() {
     return {
       mobileOpen: false,
-      navLinks: [
-        { to: "/", label: "Home", mobileLabel: "Features" },
-        { to: "/TryOn", label: "TryOn", mobileLabel: "Try-On" },
-        { to: "/Recycle", label: "Recycle" },
-        { to: "/#PricingSection", label: "Pricing", hash: "#PricingSection" },
-        { to: "/AboutPage", label: "About" },
-      ],
     };
+  },
+  computed: {
+    navLinks() {
+      return [
+        { to: "/", label: this.$t("nav.home"), mobileLabel: this.$t("nav.features") },
+        { to: "/TryOn", label: this.$t("nav.tryOn") },
+        { to: "/Recycle", label: this.$t("nav.recycle") },
+        { to: "/Brands", label: this.$t("nav.store") },
+        { to: "/#PricingSection", label: this.$t("nav.pricing"), hash: "#PricingSection" },
+        { to: "/AboutPage", label: this.$t("nav.about") },
+      ];
+    },
   },
   setup() {
     const modalOpen = ref(false);

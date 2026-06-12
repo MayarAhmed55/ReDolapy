@@ -1,6 +1,6 @@
 <template>
   <div class="w-full mb-6 sm:mb-8">
-    <p class="text-sm font-bold text-(--Primary-Text-color) mb-3">Choose your model</p>
+    <p class="text-sm font-bold text-(--Primary-Text-color) mb-3">{{ $t('tryOn.model.choose_title') }}</p>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl">
       <button
         type="button"
@@ -15,8 +15,8 @@
           </svg>
         </span>
         <span>
-          <span class="block text-sm font-bold text-(--Primary-Text-color)">Personal Photo</span>
-          <span class="block text-xs text-(--Disabled-Text-color) mt-0.5">Upload your own image</span>
+          <span class="block text-sm font-bold text-(--Primary-Text-color)">{{ $t('tryOn.model.personal_photo') }}</span>
+          <span class="block text-xs text-(--Disabled-Text-color) mt-0.5">{{ $t('tryOn.model.personal_subtitle') }}</span>
         </span>
       </button>
 
@@ -33,8 +33,8 @@
           </svg>
         </span>
         <span>
-          <span class="block text-sm font-bold text-(--Primary-Text-color)">Use Avatar</span>
-          <span class="block text-xs text-(--Disabled-Text-color) mt-0.5">Pick a preset model</span>
+          <span class="block text-sm font-bold text-(--Primary-Text-color)">{{ $t('tryOn.model.use_avatar') }}</span>
+          <span class="block text-xs text-(--Disabled-Text-color) mt-0.5">{{ $t('tryOn.model.avatar_subtitle') }}</span>
         </span>
       </button>
     </div>
@@ -63,20 +63,20 @@
           :class="modelDragging ? 'bg-green-50/40' : 'bg-(--primary-bgc)'"
         >
           <img :src="uploadIcon" alt="" class="w-8 h-8 shrink-0 opacity-60" aria-hidden="true" />
-          <p class="text-sm text-(--Disabled-Text-color)">Upload your photo (JPG, PNG, WEBP)</p>
+          <p class="text-sm text-(--Disabled-Text-color)">{{ $t('tryOn.model.upload_prompt') }}</p>
         </div>
       </div>
     </div>
 
     <div v-if="modelSource === 'avatar' && !model" class="mt-4">
-      <p class="text-xs text-(--Disabled-Text-color) mb-3">Select an avatar</p>
+      <p class="text-xs text-(--Disabled-Text-color) mb-3">{{ $t('tryOn.model.select_avatar') }}</p>
       <div class="flex flex-wrap gap-3">
         <button
           v-for="avatar in avatars"
           :key="avatar.id"
           type="button"
           class="avatar-option"
-          :aria-label="`Select ${avatar.name}`"
+          :aria-label="$t('tryOn.model.select_avatar_aria', { name: avatar.name })"
           @click="selectAvatar(avatar)"
         >
           <img :src="avatar.url" :alt="avatar.name" class="w-full h-full object-cover" />
@@ -114,12 +114,16 @@ export default {
     warning: '',
     uploadIcon,
     acceptAttr: ACCEPT_ATTR,
-    avatars: [
-      { id: 'avatar-1', name: 'Classic Model', url: avatar1 },
-      { id: 'avatar-2', name: 'Casual Look', url: avatar2 },
-      { id: 'avatar-3', name: 'Studio Pose', url: avatar3 },
-    ],
   }),
+  computed: {
+    avatars() {
+      return [
+        { id: 'avatar-1', name: this.$t('tryOn.model.avatar_classic'), url: avatar1 },
+        { id: 'avatar-2', name: this.$t('tryOn.model.avatar_casual'), url: avatar2 },
+        { id: 'avatar-3', name: this.$t('tryOn.model.avatar_studio'), url: avatar3 },
+      ]
+    },
+  },
   beforeUnmount() {
     if (this.model?.revokable) URL.revokeObjectURL(this.model.url)
   },
@@ -151,18 +155,18 @@ export default {
       if (!file) return
       this.warning = ''
       if (!isAllowedImage(file)) {
-        this.warning = `Unsupported file format. Use ${SUPPORTED_FORMATS_LABEL}.`
+        this.warning = this.$t('tryOn.warnings.format_error', { formats: SUPPORTED_FORMATS_LABEL })
         return
       }
       if (file.size > MAX_FILE_SIZE) {
-        this.warning = 'Each image must be 10MB or smaller.'
+        this.warning = this.$t('tryOn.warnings.size_limit')
         return
       }
       if (this.model?.revokable) URL.revokeObjectURL(this.model.url)
       this.$emit('update:model', {
         type: 'personal',
         id: 'personal',
-        name: 'Your Photo',
+        name: this.$t('tryOn.model.your_photo'),
         url: URL.createObjectURL(file),
         file,
         revokable: true,

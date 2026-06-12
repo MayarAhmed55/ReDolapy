@@ -63,8 +63,10 @@ import AppStepper from '../components/sharedRecycleTryon/AppStepper.vue'
 import GeneratedDesign from '../components/sharedRecycleTryon/GeneratedDesign.vue'
 import RecycleUploadArea from '../components/Recycle/RecycleUploadArea.vue'
 import RecycleIdeas from '../components/Recycle/RecycleIdeas.vue'
-import { analyzeGarments, generateDesign } from '../api/recycle.js'
+import { analyzeGarments, generateIdeaImage } from '../api/recycle.js'
 import { downloadImage } from '../utils/downloadImage.js'
+import { localizeRecycleIdeas, localizeRecycleIdea } from '../utils/recycleLocale.js'
+import { mapApiError } from '../utils/mapApiError.js'
 
 export default {
   name: 'Recycle',
@@ -84,8 +86,8 @@ export default {
     saveError: '',
     selectedIdea: null,
     generatedDesign: null,
-    styleIdeas: [],
-    sourceImages: [],
+    rawIdeas: [],
+    sessionId: null,
   }),
   computed: {
     recycleSteps() {
@@ -107,6 +109,9 @@ export default {
         },
       ]
     },
+    styleIdeas() {
+      return localizeRecycleIdeas(this.rawIdeas, this.$i18n.locale)
+    },
     activeStep() {
       if (this.generatedDesign) return 2
       if (this.styleIdeas.length) return 1
@@ -120,24 +125,40 @@ export default {
         return
       }
       if (oldFiles?.length && newFiles.length !== oldFiles.length) {
-        this.styleIdeas = []
-        this.sourceImages = []
+        this.rawIdeas = []
+        this.sessionId = null
         this.selectedIdea = null
         this.generatedDesign = null
         this.generateError = ''
       }
       this.analyzeError = ''
     },
+    '$i18n.locale'() {
+      if (this.selectedIdea) {
+        const match = this.styleIdeas.find(idea => idea.id === this.selectedIdea.id)
+        if (match) this.selectedIdea = match
+      }
+      if (this.generatedDesign && this.selectedIdea) {
+        this.generatedDesign = {
+          ...this.generatedDesign,
+          title: this.selectedIdea.title,
+          description: this.selectedIdea.design_description || this.selectedIdea.description,
+        }
+      }
+    },
   },
   methods: {
     resetSession() {
       this.selectedIdea = null
       this.generatedDesign = null
-      this.styleIdeas = []
-      this.sourceImages = []
+      this.rawIdeas = []
+      this.sessionId = null
       this.analyzeError = ''
       this.generateError = ''
       this.saveError = ''
+    },
+    mapRecycleError(err) {
+      return mapApiError(err, this.$t.bind(this))
     },
     onSelectIdea(idea) {
       this.selectedIdea = idea
@@ -151,25 +172,22 @@ export default {
       this.generateError = ''
       this.selectedIdea = null
       this.generatedDesign = null
-      this.styleIdeas = []
-      this.sourceImages = []
+      this.rawIdeas = []
+      this.sessionId = null
 
       try {
         const data = await analyzeGarments(this.files.map(f => f.file))
-        this.sourceImages = data.images
-        this.styleIdeas = data.upcycling_ideas.map(idea => ({
-          ...idea,
-          description: idea.design_description,
-        }))
+        this.sessionId = data.session_id
+        this.rawIdeas = data.ideas || []
       } catch (err) {
-        this.analyzeError = err.message
+        this.analyzeError = this.mapRecycleError(err)
       } finally {
         this.analyzing = false
       }
     },
-    async onGenerate({ model, size }) {
+    async onGenerate({ model }) {
       if (!this.selectedIdea || this.generating) return
-      if (!this.sourceImages.length) {
+      if (!this.sessionId) {
         this.generateError = this.$t('recycle.errors.upload_first')
         return
       }
@@ -178,24 +196,28 @@ export default {
       this.generateError = ''
 
       try {
-        const data = await generateDesign({
-          prompt: this.selectedIdea.image_prompt,
-          images: this.sourceImages,
+        const data = await generateIdeaImage({
+          sessionId: this.sessionId,
+          ideaId: this.selectedIdea.id,
           model,
-          size,
         })
 
+        const localizedIdea = localizeRecycleIdea(
+          this.rawIdeas.find(idea => idea.id === this.selectedIdea.id) || this.selectedIdea,
+          this.$i18n.locale,
+        )
+
         this.generatedDesign = {
-          title: this.selectedIdea.title,
-          image: data.images[0],
-          description: this.selectedIdea.design_description || this.selectedIdea.description,
+          title: localizedIdea.title,
+          image: data.image_url,
+          description: localizedIdea.design_description || localizedIdea.description,
         }
 
         this.$nextTick(() => {
           document.getElementById('generated-design')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
         })
       } catch (err) {
-        this.generateError = err.message
+        this.generateError = this.mapRecycleError(err)
       } finally {
         this.generating = false
       }

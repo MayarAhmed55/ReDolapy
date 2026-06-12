@@ -2,10 +2,10 @@
   <main class="w-full max-w-5xl mx-auto px-2 sm:px-4 py-6 sm:py-10">
     <header class="text-center mb-8 sm:mb-10">
       <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-(--Primary-Text-color) mb-2">
-        Redolapy <span class="gradientColor">Virtual Try-on</span>
+        {{ $t('tryOn.header_title') }}
       </h1>
       <p class="text-sm sm:text-base text-(--Secondary-Text-color) font-medium">
-        Upload your pieces · Pick a style · See it come to life
+        {{ $t('tryOn.header_subtitle') }}
       </p>
     </header>
 
@@ -35,9 +35,11 @@
       :design="tryOnResult"
       :saving="saving"
       :error="saveError"
-      heading="Your Virtual Try-on"
-      action-label="Add to Wardrobe"
-      action-loading-label="Adding…"
+      :heading="$t('tryOn.output.heading')"
+      :action-label="$t('tryOn.output.save_btn')"
+      :action-loading-label="$t('tryOn.output.saving')"
+      :match-badge-label="$t('tryOn.output.style_match', { percent: 98 })"
+      :zoom-aria-label="$t('tryOn.output.zoom_aria')"
       scroll-id="tryon-result"
       show-match-badge
       @save="onAddToWardrobe"
@@ -50,17 +52,10 @@ import AppStepper from '../components/sharedRecycleTryon/AppStepper.vue'
 import GeneratedDesign from '../components/sharedRecycleTryon/GeneratedDesign.vue'
 import UserModelUpload from '../components/TryOn/UserModelUpload.vue'
 import TryOnUploadArea from '../components/TryOn/TryOnUploadArea.vue'
+import { fetchProductById } from '../api/store.js'
+import { mapApiError } from '../utils/mapApiError.js'
+import { normalizeProduct, productToTryOnGarment } from '../utils/storeHelpers.js'
 import mockResultImage from '../assets/HeaderImage.png'
-
-const TRY_ON_STEPS = [
-  { id: 'image', label: 'Upload Your image', subtitle: 'Upload a photo or pick an avatar' },
-  { id: 'clothes', label: 'Upload Your clothes', subtitle: 'Upload 1-2 garment photos' },
-  { id: 'tryon', label: 'Virtual Try-on', subtitle: 'See your outfit come to life' },
-]
-
-const MOCK_DESCRIPTION =
-  'Our AI has seamlessly combined your uploaded garments into a cohesive look. ' +
-  'The silhouette balances structure and flow, pairing your pieces for a polished virtual try-on preview.'
 
 export default {
   name: 'TryOn',
@@ -71,7 +66,6 @@ export default {
     GeneratedDesign,
   },
   data: () => ({
-    tryOnSteps: TRY_ON_STEPS,
     model: null,
     garments: [],
     generating: false,
@@ -81,6 +75,25 @@ export default {
     tryOnResult: null,
   }),
   computed: {
+    tryOnSteps() {
+      return [
+        {
+          id: 'image',
+          label: this.$t('tryOn.steps.image'),
+          subtitle: this.$t('tryOn.steps.image_subtitle'),
+        },
+        {
+          id: 'clothes',
+          label: this.$t('tryOn.steps.clothes'),
+          subtitle: this.$t('tryOn.steps.clothes_subtitle'),
+        },
+        {
+          id: 'tryon',
+          label: this.$t('tryOn.steps.tryon'),
+          subtitle: this.$t('tryOn.steps.tryon_subtitle'),
+        },
+      ]
+    },
     activeStep() {
       if (this.tryOnResult) return 2
       if (this.model) return 1
@@ -96,8 +109,39 @@ export default {
         this.resetResult()
       }
     },
+    '$route.query.productId': {
+      immediate: false,
+      handler(productId) {
+        if (productId) {
+          this.loadStoreProduct(productId)
+        }
+      },
+    },
+  },
+  mounted() {
+    const productId = this.$route.query.productId
+    if (productId) {
+      this.loadStoreProduct(productId)
+    }
   },
   methods: {
+    categoryLabel(category) {
+      const key = `store.category_options.${category}`
+      return this.$te(key) ? this.$t(key) : category
+    },
+    async loadStoreProduct(productId) {
+      try {
+        const raw = await fetchProductById(productId)
+        const product = normalizeProduct(raw)
+        if (!product.tryOnEnabled || !product.image) return
+
+        this.garments = [
+          productToTryOnGarment(product, this.categoryLabel(product.category)),
+        ]
+      } catch (err) {
+        this.generateError = mapApiError(err, this.$t.bind(this))
+      }
+    },
     resetResult() {
       this.tryOnResult = null
       this.generateError = ''
@@ -114,16 +158,16 @@ export default {
 
         const garmentNames = this.garments.map(g => g.title).join(' & ')
         this.tryOnResult = {
-          title: garmentNames || 'Your Virtual Look',
+          title: garmentNames || this.$t('tryOn.output.heading'),
           image: mockResultImage,
-          description: MOCK_DESCRIPTION,
+          description: this.$t('tryOn.mock_description'),
         }
 
         this.$nextTick(() => {
           document.getElementById('tryon-result')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
         })
       } catch (err) {
-        this.generateError = err.message || 'Something went wrong. Please try again.'
+        this.generateError = mapApiError(err, this.$t.bind(this))
       } finally {
         this.generating = false
       }
@@ -137,7 +181,7 @@ export default {
       try {
         await new Promise(resolve => setTimeout(resolve, 800))
       } catch (err) {
-        this.saveError = err.message || 'Failed to add to wardrobe.'
+        this.saveError = err.message || this.$t('tryOn.errors.save_failed')
       } finally {
         this.saving = false
       }

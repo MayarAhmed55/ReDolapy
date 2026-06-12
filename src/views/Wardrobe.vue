@@ -12,8 +12,18 @@
 
     <main class="store-page__main">
       <header class="store-page__header">
-        <h1 class="store-page__title">{{ $t('store.title') }}</h1>
+        <h1 class="store-page__title">{{ $t('wardrobe.title') }}</h1>
       </header>
+
+         <div class="store-page__promo store-page__promo--mobile">
+        {{ $t('wardrobe.promo_prefix') }}
+        <span class="store-page__promo-install">{{ $t('wardrobe.promo_highlight') }}</span>
+      </div>
+
+      <p class="store-page__promo store-page__promo--desktop">
+        {{ $t('wardrobe.promo_prefix') }}
+        <span class="store-page__promo-highlight">{{ $t('wardrobe.promo_highlight') }}</span>
+      </p>
 
       <StoreSearchbar
         v-model="searchQuery"
@@ -21,21 +31,11 @@
         @open-filters="filterOpen = true"
       />
 
-      <div class="store-page__promo store-page__promo--mobile">
-        {{ $t('store.promo_mobile_start') }}
-         {{ $t('store.promo_discount') }}
-        {{ $t('store.promo_mobile_mid') }}
-        <span class="store-page__promo-install">{{ $t('store.promo_highlight') }}</span>
-      </div>
 
-      <p class="store-page__promo store-page__promo--desktop">
-        {{ $t('store.promo_prefix') }}
-        <span class="store-page__promo-highlight">{{ $t('store.promo_highlight') }}</span>
-      </p>
 
       <p v-if="loadError" class="store-page__error">{{ loadError }}</p>
 
-      <div v-if="loading" class="store-page__loading">{{ $t('store.loading') }}</div>
+      <div v-if="loading" class="store-page__loading">{{ $t('wardrobe.loading') }}</div>
 
       <StoreProducts
         v-else

@@ -10,6 +10,7 @@ import TryOn from '../views/TryOn.vue'
 import UserWardrobe from '../views/userWardrobe.vue'
 import Pricing from '../views/pricing.vue'
 import AboutTryon from '../views/AboutTryon.vue'
+import Wardrobe from '../views/Wardrobe.vue'
 
 
 const routes = [
@@ -23,6 +24,7 @@ const routes = [
   { path: '/Recycle', component: Recycle },
   { path: '/TryOn', component: TryOn },
   { path: '/pricing', component: Pricing },
+  {path: '/wardrobe', component: Wardrobe},    
   { path: '/userWardrobe', component: UserWardrobe },
   { path: '/auth/callback', component: () => import('../views/GoogleCallback.vue')}
 ]
