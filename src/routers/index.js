@@ -10,6 +10,7 @@ import TryOn from "../views/TryOn.vue";
 import UserWardrobe from "../views/userWardrobe.vue";
 import Pricing from "../views/pricing.vue";
 import AboutTryon from "../views/AboutTryon.vue";
+import Profile from "../views/Profile.vue";
 import {isAuthModalOpen, triggerLoginModal} from '../authState.js';
 
 const routes = [
@@ -24,6 +25,7 @@ const routes = [
   { path: "/TryOn", component: TryOn, meta: { requiresAuth: true } },
   { path: "/pricing", component: Pricing, meta: { requiresAuth: true } },
   { path: "/userWardrobe", component: UserWardrobe },
+  {path:"/Profile", component: () => import("../views/Profile.vue"), meta: { requiresAuth: true }},
   {
     path: "/auth/callback",
     component: () => import("../views/GoogleCallback.vue"),
