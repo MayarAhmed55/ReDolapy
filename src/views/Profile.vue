@@ -21,7 +21,7 @@
               </svg>
             </button>
           </div>
-          <h2 class="text-xl font-semibold font-['Inter'] text-[#1E1E24]">Samira Abdullah</h2>
+          <h2 class="text-xl font-semibold text-[#1E1E24]">{{ fullName }}</h2>
           <p class="text-sm text-[#717182] mt-1">Click the camera icon to change photo</p>
         </div>
 
@@ -41,19 +41,19 @@
                 </svg>
               </button>
             </div>
-            <p class="text-sm text-[#717182] font-['Inter']">Create your Avatar</p>
+            <p class="text-sm text-[#717182]">Create your Avatar</p>
           </div>
 
           <div class="flex items-center gap-4 w-full justify-center mt-4">
             <button 
               type="button" 
-              class="w-24 h-[26px] bg-[#EA0234] text-white rounded-md text-xs font-medium font-['Inter'] shadow-sm hover:opacity-90 transition-opacity"
+              class="w-24 h-[26px] bg-[#EA0234] text-white rounded-md text-xs font-medium shadow-sm hover:opacity-90 transition-opacity"
             >
               Delete
             </button>
             <button 
               type="button" 
-              class="w-24 h-[26px] bg-[#AAE338] text-white rounded-md text-xs font-medium font-['Inter'] shadow-sm hover:opacity-90 transition-opacity"
+              class="w-24 h-[26px] bg-[#AAE338] text-white rounded-md text-xs font-medium shadow-sm hover:opacity-90 transition-opacity"
             >
               Edit
             </button>
@@ -63,17 +63,17 @@
       </div>
 
       <div class="bg-white border border-[#E9EBEF] shadow-sm rounded-2xl p-8">
-        <h3 class="text-lg font-semibold font-['Inter'] text-[#1E1E24] mb-6">Personal Information</h3>
+        <h3 class="text-lg font-semibold text-[#1E1E24] mb-6">Personal Information</h3>
         
         <form @submit.prevent="saveChanges" class="space-y-6">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div class="flex flex-col">
-              <label class="text-sm font-medium text-[#1E1E24] mb-2 font-['Inter']">First Name</label>
+              <label class="text-sm font-medium text-[#1E1E24] mb-2">First Name</label>
               <div class="relative flex items-center">
                 <input 
                   v-model="form.firstName" 
                   type="text" 
-                  class="w-full h-12 px-4 bg-[#F9FAFB] border border-[#E9EBEF] rounded-l-xl text-base text-[#0A0A0A] font-['Inter'] focus:outline-none focus:border-[#40B9FF]"
+                  class="w-full h-12 px-4 bg-[#F9FAFB] border border-[#E9EBEF] rounded-l-xl text-base text-[#0A0A0A] focus:outline-none focus:border-[#40B9FF]"
                 />
                 <div class="absolute right-4 text-[#1E1E1E]">
                   <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6">
@@ -84,12 +84,12 @@
             </div>
 
             <div class="flex flex-col">
-              <label class="text-sm font-medium text-[#1E1E24] mb-2 font-['Inter']">Last Name</label>
+              <label class="text-sm font-medium text-[#1E1E24] mb-2">Last Name</label>
               <div class="relative flex items-center">
                 <input 
                   v-model="form.lastName" 
                   type="text" 
-                  class="w-full h-12 px-4 bg-[#F9FAFB] border border-[#E9EBEF] rounded-l-xl text-base text-[#0A0A0A] font-['Inter'] focus:outline-none focus:border-[#40B9FF]"
+                  class="w-full h-12 px-4 bg-[#F9FAFB] border border-[#E9EBEF] rounded-l-xl text-base text-[#0A0A0A] focus:outline-none focus:border-[#40B9FF]"
                 />
                 <div class="absolute right-4 text-[#1E1E1E]">
                   <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6">
@@ -101,7 +101,7 @@
           </div>
 
           <div class="flex flex-col">
-            <label class="text-sm font-medium text-[#1E1E24] mb-2 font-['Inter']">Email</label>
+            <label class="text-sm font-medium text-[#1E1E24] mb-2">Email</label>
             <div class="relative flex items-center">
               <div class="absolute left-4 text-[#717182]">
                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.67">
@@ -111,18 +111,19 @@
               <input 
                 v-model="form.email" 
                 type="email" 
-                class="w-full h-12 pl-12 pr-4 bg-[#F9FAFB] border border-[#E9EBEF] rounded-xl text-base text-[#0A0A0A] font-['Inter'] focus:outline-none focus:border-[#40B9FF]"
+                readonly
+                class="w-full h-12 pl-12 pr-4 bg-gray-100 border border-[#E9EBEF] rounded-xl text-base text-gray-500 focus:outline-none focus:border-[#40B9FF] cursor-not-allowed"
               />
             </div>
           </div>
 
           <div class="flex flex-col">
-            <label class="text-sm font-medium text-[#1E1E24] mb-3 font-['Inter']">Gender</label>
+            <label class="text-sm font-medium text-[#1E1E24] mb-3">Gender</label>
             <div class="flex items-center gap-3">
               <button 
                 type="button"
                 @click="form.gender = 'male'"
-                class="w-[84px] h-12 rounded-xl text-base font-medium font-['Inter'] transition-all shadow-sm"
+                class="w-[84px] h-12 rounded-xl text-base font-medium transition-all shadow-sm"
                 :class="form.gender === 'male' ? 'bg-[#40B9FF] text-white' : 'bg-[#F9FAFB] text-[#717182]'"
               >
                 Male
@@ -130,7 +131,7 @@
               <button 
                 type="button"
                 @click="form.gender = 'female'"
-                class="w-[100px] h-12 rounded-xl text-base font-medium font-['Inter'] transition-all shadow-sm"
+                class="w-[100px] h-12 rounded-xl text-base font-medium transition-all shadow-sm"
                 :class="form.gender === 'female' ? 'bg-[#40B9FF] text-white' : 'bg-[#F9FAFB] text-[#717182]'"
               >
                 Female
@@ -142,13 +143,13 @@
             <button 
               type="button" 
               @click="cancelEdits"
-              class="flex-1 h-[51px] border 1.6px border-[#E9EBEF] rounded-xl text-base font-medium font-['Inter'] text-[#717182] hover:bg-gray-50 transition-colors"
+              class="flex-1 h-[51px] border border-[#E9EBEF] rounded-xl text-base font-medium text-[#717182] hover:bg-gray-50 transition-colors"
             >
               Cancel
             </button>
             <button 
               type="submit" 
-              class="flex-1 h-[51px] bg-[#8ED321] text-white rounded-xl text-base font-medium font-['Inter'] shadow-md hover:opacity-90 transition-opacity"
+              class="flex-1 h-[51px] bg-[#8ED321] text-white rounded-xl text-base font-medium shadow-md hover:opacity-90 transition-opacity"
             >
               Save Changes
             </button>
@@ -167,7 +168,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
           </div>
-          <span class="text-base font-medium font-['Inter'] text-[#D4183D]">Delete Account</span>
+          <span class="text-base font-medium text-[#D4183D]">Delete Account</span>
         </button>
       </div>
 
@@ -176,37 +177,66 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, computed, onMounted } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
   name: "EditProfile",
   setup() {
+    const router = useRouter();
+
     const form = ref({
-      firstName: "Ahmed",
-      lastName: "Mohamed",
-      email: "ahmed.mohamed@email.com",
-      gender: "male"
+      firstName: "",
+      lastName:  "",
+      email:     "",
+      gender:    "",
+    });
+
+    // Derived full name for the avatar card heading
+    const fullName = computed(() =>
+      [form.value.firstName, form.value.lastName].filter(Boolean).join(" ") || "—"
+    );
+
+    onMounted(() => {
+      const raw = localStorage.getItem("user");
+      if (!raw) {
+        router.replace("/");
+        return;
+      }
+
+      const user = JSON.parse(raw);
+
+      // Pre-fill the form from localStorage
+      form.value.firstName = user.first_name  || "";
+      form.value.lastName  = user.last_name   || "";
+      form.value.email     = user.email       || "";
+      form.value.gender    = user.gender      || "";
     });
 
     const saveChanges = () => {
-      // Handle the profile patch/put integration
-      console.log("Submitting updated parameters data layer structural configuration:", form.value);
+      console.log("Save:", form.value);
     };
 
     const cancelEdits = () => {
-      console.log("Reverting client view form changes back to raw state properties.");
+      const raw  = localStorage.getItem("user");
+      const user = raw ? JSON.parse(raw) : {};
+      form.value.firstName = user.first_name || "";
+      form.value.lastName  = user.last_name  || "";
+      form.value.email     = user.email      || "";
+      form.value.gender    = user.gender     || "";
     };
 
     const confirmDeleteAccount = () => {
-      console.log("Triggering account deletion process confirmation modal view overlay workflow.");
+      console.log("Delete account requested");
     };
 
     return {
       form,
+      fullName,
       saveChanges,
       cancelEdits,
-      confirmDeleteAccount
+      confirmDeleteAccount,
     };
-  }
+  },
 };
 </script>

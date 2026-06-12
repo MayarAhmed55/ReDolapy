@@ -25,11 +25,20 @@ const routes = [
   { path: "/TryOn", component: TryOn, meta: { requiresAuth: true } },
   { path: "/pricing", component: Pricing, meta: { requiresAuth: true } },
   { path: "/userWardrobe", component: UserWardrobe },
-  {path:"/Profile", component: () => import("../views/Profile.vue"), meta: { requiresAuth: true }},
+  { path: "/Profile/:id", component: () => import("../views/Profile.vue"), meta: { requiresAuth: true } },
+  {
+    path: "/Profile",
+    redirect: () => {
+      const user = JSON.parse(localStorage.getItem("user") || "{}");
+      const id = user.id || user._id;
+      return id ? `/Profile/${id}` : "/";
+    },
+  },
   {
     path: "/auth/callback",
     component: () => import("../views/GoogleCallback.vue"),
-  },
+     meta: { layout: "blank" }
+  }
 ];
 
 const router = createRouter({

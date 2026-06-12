@@ -375,7 +375,7 @@
                 </div>
 
                 <div class="edit-profile-warber">
-                  <router-link to="/Profile" class="edit-profile-btn cursor-pointer"  @click="closeUserDropdown">
+                  <router-link :to="`/Profile/${userId}`" class="edit-profile-btn cursor-pointer" @click="closeUserDropdown">
                     <span>Edit Profile</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -726,7 +726,7 @@
                       <!-- Edit Profile -->
                       <div class="px-3 py-2.5">
                         <router-link
-                          to="/Profile"
+                          :to="`/Profile/${userId}`"
                           class="edit-profile-btn cursor-pointer"
                           @click="closeMobileMenu"
                         >
@@ -915,6 +915,9 @@ export default {
   computed: {
     isLoggedIn() {
       return !!this.user;
+    },
+    userId() {
+      return this.user?.id || this.user?._id || "";
     },
     userFullName() {
       if (!this.user) return "";
