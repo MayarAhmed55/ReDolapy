@@ -4,7 +4,7 @@
 
         <Header :primaryText="$t('header.primaryText')" :gradientText="$t('header.gradientText')"
             :Description="$t('header.description')"
-            :btnCTA="$t('header.cta')" :imageSrc="headerImgAsset" />
+            :btnCTA="$t('header.cta')" routeTo="/Tryon" :imageSrc="headerImgAsset" />
         <CardsSection :sectionTitle="$t('features.sectionTitle')"
             :sectionDescription="$t('features.sectionDescription')" :Card1Title="$t('features.aiRecommendations.title')"
             :Card1Description="$t('features.aiRecommendations.description')" :Card2Title="$t('features.tryOn.title')" 
@@ -214,57 +214,7 @@
         </section> -->
 
         
-        <section id="Q&A">
-    <!-- 💡 Dynamic Section Title -->
-    <p class="text-4xl font-bold mb-[1rem] w-[fit-content] m-auto PrimaryTxt">
-      {{ $t('faq.title') }}
-    </p>
-
-    <div class="w-full max-w-4xl mx-auto flex flex-col gap-6 my-12 px-4">
-      <!-- 💡 $tm pulls the questions array dynamically from Translation.js -->
-      <div 
-        v-for="(item, index) in $tm('faq.questions')" 
-        :key="index"
-        class="p-[0.2rem] rounded-[1rem] bg-gradient-to-r from-[#FF8E40] via-[#40B9FF] to-[#8ED321] shadow-sm transition-all duration-300"
-      >
-        <div class="bg-[#FEFEFE] rounded-[1rem] overflow-hidden">
-          <h2>
-            <!-- 💡 Text direction will auto-align to right/left based on language direction -->
-            <button 
-              type="button" 
-              @click="toggleItem(index)"
-              class="w-full px-10 py-5 flex items-center justify-between font-bold text-xl text-slate-900 select-none focus:outline-none transition-colors duration-200"
-              :class="{ 'bg-slate-50/50': activeIndex === index }"
-            >
-              <!-- 💡 $rt safely compiles the localized runtime string data -->
-              <span class="PrimaryTxt text-start">{{ $rt(item.title) }}</span>
-
-              <!-- Dynamic Arrow Icon -->
-              <svg 
-                class="w-5 h-5 text-slate-800 transform transition-transform duration-300 ease-in-out shrink-0 mx-2"
-                :class="{ 'rotate-180': activeIndex === index }" 
-                fill="none" 
-                stroke="currentColor"
-                stroke-width="2.5" 
-                viewBox="0 0 24 24"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-              </svg>
-            </button>
-          </h2>
-
-          <!-- Accordion Content Panel -->
-          <div v-if="activeIndex === index" class="bg-[#FEFEFE]">
-            <div class="mx-8 pt-2 border-t border-slate-100"></div>
-            <div class="px-8 pb-6 pt-3 text-slate-600 font-medium text-base leading-relaxed text-start">
-              {{ $rt(item.answer) }}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
+  
     </div>
 </template>
 
