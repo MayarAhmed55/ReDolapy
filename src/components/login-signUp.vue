@@ -17,7 +17,6 @@
       </button>
     </div>
 
-    <!-- Signup form (always on the left side) -->
     <div
       class="form-panel form-panel--signup"
       :data-active="String(mode === 'signup')"
@@ -108,7 +107,7 @@
         </div>
         <p v-if="error" style="color: red; font-size: 12px">{{ error }}</p>
         <p v-if="successMessage" class="success-message">
-          {{ successMessage }}
+          {{ $t("auth.signup.successMessage") }}
         </p>
         <button
           class="submit-btn"
@@ -132,7 +131,6 @@
       </div>
     </div>
 
-    <!-- Login form (always on the right side) -->
     <div
       class="form-panel form-panel--login"
       :data-active="String(mode === 'login')"
@@ -201,7 +199,6 @@
       </div>
     </div>
 
-    <!-- Sliding blue panel -->
     <div
       class="left-panel"
       :class="{

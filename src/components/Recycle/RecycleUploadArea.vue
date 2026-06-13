@@ -1,13 +1,12 @@
 <template>
-
   <div class="w-full">
     <div class="flex flex-col items-center text-center mb-5 sm:mb-6">
       <div class="flex items-center justify-center gap-2 sm:gap-3">
         <img :src="hangerIcon" alt="" class="w-7 h-7 sm:w-8 sm:h-8 shrink-0" aria-hidden="true" />
-        <h2 class="text-lg sm:text-xl font-bold text-(--Primary-Text-color)">Upload Your Garments</h2>
+        <h2 class="text-lg sm:text-xl font-bold text-(--Primary-Text-color)">{{ titleLabel }}</h2>
       </div>
       <p class="text-xs text-(--Secondary-Text-color) mt-1.5">
-        Support for JPG, PNG, WEBP (max10MB each)
+        {{ supportTextLabel }}
       </p>
     </div>
 
@@ -35,7 +34,7 @@
         :class="isDragging ? 'bg-green-50/40' : 'bg-(--primary-bgc)'"
       >
         <img :src="uploadIcon" alt="" class="w-10 h-10 sm:w-11 sm:h-11" aria-hidden="true" />
-        <p class="text-sm text-(--Disabled-Text-color)">Click or drag images here</p>
+        <p class="text-sm text-(--Disabled-Text-color)">{{ dragPromptLabel }}</p>
       </div>
     </div>
 
@@ -48,17 +47,17 @@
         <div class="rounded-2xl bg-[#D6E8F5] p-2 sm:p-2.5 overflow-hidden">
           <img
             :src="f.url"
-            :alt="`Piece ${i + 1}`"
+            :alt="`${piecePrefixLabel} ${i + 1}`"
             class="w-full h-28 sm:h-32 object-cover rounded-xl block"
           />
           <span class="absolute bottom-4 start-4 bg-white/95 text-[10px] sm:text-xs font-medium text-(--Primary-Text-color) px-2 py-0.5 rounded-md shadow-sm">
-            Piece {{ i + 1 }}
+            {{ piecePrefixLabel }} {{ i + 1 }}
           </span>
         </div>
         <button
           type="button"
           class="absolute -top-1.5 -end-1.5 w-5 h-5 bg-black/50 rounded-full flex items-center justify-center hover:bg-black/70 transition-colors"
-          :aria-label="`Remove piece ${i + 1}`"
+          :aria-label="$t('recycle.card.remove_piece', { n: i + 1 })"
           @click="remove(i)"
         >
           <svg class="w-3 h-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -77,7 +76,7 @@
         @click="$emit('analyze')"
       >
         <img :src="starsIcon" alt="" aria-hidden="true" />
-        {{ analyzing ? 'Creating your design ideas…' : 'Discover Design Ideas' }}
+        {{ analyzing ? loadingLabel : buttonLabel }}
       </button>
     </div>
 
@@ -107,6 +106,12 @@ export default {
     files: { type: Array, default: () => [] },
     analyzing: { type: Boolean, default: false },
     error: { type: String, default: '' },
+    titleLabel: { type: String, required: true },
+    supportTextLabel: { type: String, required: true },
+    dragPromptLabel: { type: String, required: true },
+    piecePrefixLabel: { type: String, required: true },
+    buttonLabel: { type: String, required: true },
+    loadingLabel: { type: String, required: true },
   },
   data: () => ({
     isDragging: false,
@@ -115,7 +120,6 @@ export default {
     uploadIcon,
     starsIcon,
     acceptAttr: ACCEPT_ATTR,
-    supportedFormats: SUPPORTED_FORMATS_LABEL,
   }),
   beforeUnmount() {
     this.revokeAll()
@@ -136,13 +140,13 @@ export default {
       const rejected = incoming.filter(file => !isAllowedImage(file))
 
       if (rejected.length) {
-        this.warning = `Unsupported file format. Use ${SUPPORTED_FORMATS_LABEL}.`
+        this.warning = `${this.$t('recycle.upload.warnings.format_error')} ${SUPPORTED_FORMATS_LABEL}.`
       }
 
       if (!allowed.length) return
 
       if (this.files.length >= MAX_UPLOAD_FILES) {
-        this.warning = 'You cannot upload more than 2 images.'
+        this.warning = this.$t('recycle.upload.warnings.max_files')
         return
       }
 
@@ -155,14 +159,14 @@ export default {
           return
         }
         if (file.size > MAX_FILE_SIZE) {
-          this.warning = 'Each image must be 10MB or smaller.'
+          this.warning = this.$t('recycle.upload.warnings.size_limit')
           return
         }
         next.push({ file, url: URL.createObjectURL(file) })
       })
 
       if (skipped > 0) {
-        this.warning = 'You cannot upload more than 2 images.'
+        this.warning = this.$t('recycle.upload.warnings.max_files')
       }
 
       this.$emit('update:files', next)
@@ -180,4 +184,3 @@ export default {
   },
 }
 </script>
-

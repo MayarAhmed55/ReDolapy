@@ -7,10 +7,17 @@ const messages = {
       features: "Features",
       tryOn: "Try-On",
       recycle: "Recycle",
+      store: "Store",
       pricing: "Pricing",
       about: "About",
       login: "Login",
       signup: "Sign up",
+    },
+    errors: {
+      generic: "Something went wrong. Please try again.",
+      api_not_found:
+        "API endpoint not found. Start the TryOn backend on port 5000.",
+      invalid_response: "Unexpected server response ({status}).",
     },
     header: {
       primaryText: "Your Personal",
@@ -75,6 +82,120 @@ const messages = {
       description:
         "The Redolapy Virtual Try-On uses hyper-realistic rendering to show you exactly how clothes will look and drape on your body.",
       button: "Try On",
+    },
+    tryOn: {
+      header_title: "Redolapy Virtual Try-on",
+      header_subtitle:
+        "Upload your pieces · Pick a style · See it come to life",
+      steps: {
+        image: "Upload Your image",
+        image_subtitle: "Upload a photo or pick an avatar",
+        clothes: "Upload Your clothes",
+        clothes_subtitle: "Upload 1-2 garment photos",
+        tryon: "Virtual Try-on",
+        tryon_subtitle: "See your outfit come to life",
+      },
+      model: {
+        choose_title: "Choose your model",
+        personal_photo: "Personal Photo",
+        personal_subtitle: "Upload your own image",
+        use_avatar: "Use Avatar",
+        avatar_subtitle: "Pick a preset model",
+        upload_prompt: "Upload your photo (JPG, PNG, WEBP)",
+        select_avatar: "Select an avatar",
+        your_photo: "Your Photo",
+        avatar_label: "Avatar",
+        personal_label: "Personal image",
+        avatar_classic: "Classic Model",
+        avatar_casual: "Casual Look",
+        avatar_studio: "Studio Pose",
+        select_avatar_aria: "Select {name}",
+      },
+      garments: {
+        title: "Upload Your Garments",
+        support_text: "Support for JPG, PNG, WEBP (max 10MB each)",
+        drag_prompt: "Click or drag images here",
+        current_selection: "Current Selection",
+        no_items: "No items selected yet",
+        add_more: "Add More Pieces",
+        uploaded_garment: "Uploaded garment",
+        generate_btn: "Try-on",
+        generating: "Generating your try-on…",
+        remove_aria: "Remove {name}",
+      },
+      output: {
+        heading: "Your Virtual Try-on",
+        save_btn: "Add to Wardrobe",
+        saving: "Adding…",
+        style_match: "{percent}% Style Match",
+        zoom_aria: "Zoom image",
+      },
+      errors: {
+        generic: "Something went wrong. Please try again.",
+        save_failed: "Failed to add to wardrobe.",
+        upload_first: "Please upload your model and garments first.",
+      },
+      warnings: {
+        format_error: "Unsupported file format. Use {formats}.",
+        max_files: "You can only upload up to 2 garment images.",
+        size_limit: "Each image must be 10MB or smaller.",
+      },
+      mock_description:
+        "Our AI has seamlessly combined your uploaded garments into a cohesive look. The silhouette balances structure and flow, pairing your pieces for a polished virtual try-on preview.",
+    },
+    store: {
+      title: "Stores",
+      promo_prefix:
+        "you can get Discount on all your Favorite Brands Now, when you",
+      promo_mobile_start: "You can get",
+      promo_discount: "Discount",
+      promo_mobile_mid: "on all your Favorite Brands Now, when you",
+      promo_highlight: "install the application!",
+      search_placeholder: "Search",
+      filters: "Filters",
+      reset_all: "Reset All",
+      filter_aria: "Open filters",
+      close_filters: "Close filters",
+      brands: "Brands",
+      colors: "Colors",
+      season: "Season",
+      categories: "Categories",
+      price_range: "Price Range",
+      seasons: {
+        summer: "Summer",
+        spring: "Spring",
+        fall: "Fall",
+        winter: "Winter",
+      },
+      category_options: {
+        dress: "Dress",
+        top: "Top",
+        bottom: "Bottom",
+        outerwear: "Outerwear",
+      },
+      brand_options: {
+        hm: "HM",
+        zara: "ZARA",
+      },
+      product: {
+        view: "View",
+        view_store: "View Store",
+        view_on_store: "View on Store",
+        brand: "Brand",
+        try_on: "Try-on",
+        wishlist_aria: "Add to wishlist",
+      },
+      loading: "Loading products...",
+      no_products: "No products match your search or filters.",
+      currency: "EGP",
+    },
+
+    wardrobe: {
+      title: "Wardrobe",
+      promo_prefix: "here is all your ",
+      promo_highlight: " Sustainable wardrobe Items ",
+      loading: "Loading your wardrobe...",
+      empty: "Your wardrobe is empty. Start adding your pieces now!",
     },
 
     // pricing: {
@@ -211,6 +332,15 @@ const messages = {
       header_subtitle:
         "Upload your pieces · Pick a design · See it come to life",
 
+      steps: {
+        upload: "Upload",
+        upload_subtitle: "Upload 1-2 garment photos",
+        choose: "Choose Idea",
+        choose_subtitle: "Pick your favorite design",
+        result: "Generate",
+        result_subtitle: "Visualize your upcycled piece",
+      },
+
       upload: {
         title: "Upload Your Garments",
         support_text: "Support for JPG, PNG, WEBP (max 10MB each)",
@@ -223,6 +353,39 @@ const messages = {
           max_files: "You cannot upload more than 2 images.",
           size_limit: "Each image must be 10MB or smaller.",
         },
+      },
+
+      ideas: {
+        title: "Choose Your Style Idea",
+        badge: "AI Suggested",
+        ai_engine: "AI Engine",
+        aspect_ratio: "Aspect Ratio",
+        submit: "Generate Selected Design",
+        loading: "Generating…",
+      },
+
+      card: {
+        see_more: "See more",
+        see_less: "See less",
+        selected: "Selected",
+        remove_piece: "Remove piece {n}",
+      },
+
+      output: {
+        heading: "Your Generated Design",
+        save_btn: "Save Specs",
+        saving: "Downloading…",
+      },
+
+      errors: {
+        upload_first: "Please upload garments and discover design ideas first.",
+        save_failed: "Failed to download image.",
+        login_required:
+          "Please log in to analyze garments and generate designs.",
+        missing_github_key:
+          "GitHub API key is missing. Add VITE_GITHUB_TOKEN to your .env file.",
+        missing_dashscope_key:
+          "DashScope API key is missing. Add VITE_DASHSCOPE_API_KEY to your .env file.",
       },
     },
 
@@ -368,11 +531,11 @@ const messages = {
         lastName: "Last name",
         lastNamePlaceholder: "e.g. Ahmed",
         email: "Email",
-        emailPlaceholder: "enter your email",
+        emailPlaceholder: "Enter your email",
         password: "Password",
-        passwordPlaceholder: "create strong password",
+        passwordPlaceholder: "Create strong password",
         confirmPassword: "Confirm password",
-        confirmPasswordPlaceholder: "confirm the password that you created",
+        confirmPasswordPlaceholder: "Confirm the password that you created",
         submit: "Next",
         loading: "Please wait...",
         switchText: "Already have an account?",
@@ -384,9 +547,9 @@ const messages = {
         title: "Welcome Back",
         subtitle: "Log in to your account",
         email: "Email",
-        emailPlaceholder: "enter your email",
+        emailPlaceholder: "Enter your email",
         password: "Password",
-        passwordPlaceholder: "enter your password",
+        passwordPlaceholder: "Enter your password",
         forgotPassword: "Forgot password?",
         submit: "Login",
         loading: "Please wait...",
@@ -413,18 +576,19 @@ const messages = {
     fp: {
       forgotTitle: "Forgot Password?",
       forgotSubtitle:
-        "No worries! It happens to the best of us. Enter the email address associated with your account and we'll send you a link to reset your password.",
-      emailLabel: "Email",
-      emailPlaceholder: "enter your email",
+        "No worries, enter your email below to receive a verification code.",
+      emailLabel: "Email Address",
+      emailPlaceholder: "Enter your email address",
       sending: "Sending...",
       next: "Next",
-      hintSpam: "Didn't receive the email? Check your spam folder",
+      hintSpam:
+        "Be sure to check your spam or junk folder if you don't see it.",
       or: "OR",
-      hintDifferent: "Try a different email address",
-      backToLogin: "Back to Login",
-      verificationTitle: "Enter Verification Code",
-      verificationSubtitle:
-        "We sent a 6-digit code to {email}. Enter it below to proceed.",
+      hintDifferent:
+        "Try a different email address if you still can't find it.",
+      backToLogin: "Back to login",
+      verificationTitle: "Verify Your Email",
+      verificationSubtitle: "We sent a 6-digit verification code to {email}",
       verifying: "Verifying...",
       verifyContinue: "Verify & Continue",
       didnotReceiveCode: "Didn't receive the code?",
@@ -432,24 +596,23 @@ const messages = {
       requestCodeIn: "Request a new code in {timer}",
       setNewPasswordTitle: "Set New Password",
       setNewPasswordSubtitle:
-        "Choose a unique, strong password that you haven't used before for this account.",
-      passwordLabel: "Password",
-      passwordPlaceholder: "create strong password",
-      confirmPasswordLabel: "Confirm password",
-      confirmPasswordPlaceholder: "confirm the password that you created",
+        "Create a strong, unique password to secure your account.",
+      passwordLabel: "New Password",
+      passwordPlaceholder: "Create a strong password",
+      confirmPasswordLabel: "Confirm New Password",
+      confirmPasswordPlaceholder: "Confirm your new password",
       securityTip:
-        "Use 8+ characters with letters, numbers & symbols for a stronger password.",
+        "Make sure your password is at least 8 characters long and contains mixed case letters.",
       saving: "Saving...",
       resetPassword: "Reset Password",
-      strength: {
-        none: "",
-        weak: "Weak ❌",
-        fair: "Fair ⚠️",
-        good: "Good 👍",
-        strong: "Strong 💪",
-      },
       panel: {
         emailTitle: "Don't Worry,",
+        welcomeBack: "Welcome <br/>Back",
+        welcomeTo: "Welcome To<br/>Redolapy",
+        noAccount: "Don't Have an account?",
+        alreadyHaveAccount: "Already have an account?",
+        signUp: "Sign up",
+        login: "Login",
         emailSubtitle:
           "We will help you safely recover your profile access within seconds.",
         otpTitle: "Check Your Inbox",
@@ -458,7 +621,14 @@ const messages = {
         resetTitle: "Secure Account",
         resetSubtitle:
           "Almost completed! Finalize your credentials to log back into your session.",
-      },
+        },
+        strength: {
+          none: "",
+          weak: "Weak ❌",
+          fair: "Fair ⚠️",
+          good: "Good 👍",
+          strong: "Strong 💪",
+        }
     },
   },
   ar: {
@@ -467,10 +637,17 @@ const messages = {
       features: "المميزات",
       tryOn: "جرب الآن",
       recycle: "إعادة التدوير",
+      store: "المتجر",
       pricing: "الأسعار",
       about: "حول",
       login: "دخول",
       signup: "إنشاء حساب",
+    },
+    errors: {
+      generic: "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+      api_not_found:
+        "لم يتم العثور على واجهة البرمجة. شغّل الخادم الخلفي على المنفذ 5000.",
+      invalid_response: "استجابة غير متوقعة من الخادم ({status}).",
     },
     header: {
       primaryText: "مستشارك الشخصي",
@@ -493,36 +670,9 @@ const messages = {
           "تقنية المسح الجسدي الدقيقة تضمن أنك لن تخمن مقاسك مرة أخرى عبر العلامات التجارية المختلفة.",
       },
       recycle: {
-        header_title: "Redolapy Up-cycling Design Generator",
-        header_subtitle:
-          "Upload your pieces · Pick a design · See it come to life",
-
-        steps: {
-          upload: "Upload Pieces",
-          choose: "Pick Design Idea",
-          result: "Upcycled Concept",
-        },
-
-        upload: {
-          title: "Drag and drop your wardrobe images here",
-          button: "Analyze Garments",
-          loading: "Analyzing fabrics and clothing items...",
-        },
-
-        ideas: {
-          title: "Discovered Upcycling Recommendations",
-          submit: "Generate AI Transformation View",
-        },
-
-        output: {
-          save_btn: "Download Design Blueprint Specs",
-        },
-
-        errors: {
-          upload_first:
-            "Please upload garments and discover design ideas first.",
-          save_failed: "Failed to download image.",
-        },
+        title: "إعادة التدوير",
+        description:
+          "ابقَ في الطليعة مع تحليل فوري لاتجاهات أزياء العروض العالمية مفلترة عبر عدسة أسلوبك الشخصي.",
       },
     },
     steps: {
@@ -563,7 +713,119 @@ const messages = {
         "تقنية التجربة الافتراضي من ريدولابي تستخدم عرضاً واقعياً فائق الدقة لتوضيح كيفية ملاءمة الملابس لجسدك تماماً.",
       button: "جرب الآن",
     },
-
+    tryOn: {
+      header_title: "التجربة الافتراضية من ريدولابي",
+      header_subtitle: "ارفع قطعك · اختر أسلوباً · شاهد النتيجة تنبض بالحياة",
+      steps: {
+        image: "ارفع صورتك",
+        image_subtitle: "ارفع صورة أو اختر أفاتار",
+        clothes: "ارفع ملابسك",
+        clothes_subtitle: "ارفع صورة أو صورتين للقطع",
+        tryon: "تجربة افتراضية",
+        tryon_subtitle: "شاهد إطلالتك تنبض بالحياة",
+      },
+      model: {
+        choose_title: "اختر نموذجك",
+        personal_photo: "صورة شخصية",
+        personal_subtitle: "ارفع صورتك الخاصة",
+        use_avatar: "استخدم أفاتار",
+        avatar_subtitle: "اختر نموذجاً جاهزاً",
+        upload_prompt: "ارفع صورتك (JPG، PNG، WEBP)",
+        select_avatar: "اختر أفاتار",
+        your_photo: "صورتك",
+        avatar_label: "أفاتار",
+        personal_label: "صورة شخصية",
+        avatar_classic: "نموذج كلاسيكي",
+        avatar_casual: "مظهر عادي",
+        avatar_studio: "وضعية استوديو",
+        select_avatar_aria: "اختر {name}",
+      },
+      garments: {
+        title: "ارفع قطع الملابس",
+        support_text:
+          "صيغ الملفات المدعومة: JPG، PNG، WEBP (الحد الأقصى ١٠ ميجابايت لكل صورة)",
+        drag_prompt: "اضغط هنا أو اسحب الصور إلى هذا المربع",
+        current_selection: "الاختيار الحالي",
+        no_items: "لم يتم اختيار أي قطع بعد",
+        add_more: "أضف المزيد من القطع",
+        uploaded_garment: "قطعة مرفوعة",
+        generate_btn: "جرب افتراضياً",
+        generating: "جاري إنشاء تجربتك الافتراضية…",
+        remove_aria: "إزالة {name}",
+      },
+      output: {
+        heading: "تجربتك الافتراضية",
+        save_btn: "أضف إلى الخزانة",
+        saving: "جاري الإضافة…",
+        style_match: "تطابق الأسلوب {percent}٪",
+        zoom_aria: "تكبير الصورة",
+      },
+      errors: {
+        generic: "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+        save_failed: "فشلت الإضافة إلى الخزانة.",
+        upload_first: "يرجى رفع النموذج والملابس أولاً.",
+      },
+      warnings: {
+        format_error: "صيغة الملف غير مدعومة. يرجى استخدام {formats}.",
+        max_files: "لا يمكنك رفع أكثر من صورتين للملابس.",
+        size_limit: "يجب أن يكون حجم كل صورة ١٠ ميجابايت أو أقل.",
+      },
+      mock_description:
+        "دمج الذكاء الاصطناعي قطعك المرفوعة في إطلالة متناسقة. يوازن القص بين البنية والانسيابية لعرض تجربة افتراضية مصقولة.",
+    },
+    store: {
+      title: "المتاجر",
+      promo_prefix:
+        "يمكنك الحصول على خصم على جميع علاماتك التجارية المفضلة الآن، عندما",
+      promo_mobile_start: "يمكنك الحصول على",
+      promo_discount: "خصم",
+      promo_mobile_mid: "على جميع علاماتك التجارية المفضلة الآن، عندما",
+      promo_highlight: "تثبّت التطبيق!",
+      search_placeholder: "بحث",
+      filters: "الفلاتر",
+      reset_all: "إعادة تعيين الكل",
+      filter_aria: "فتح الفلاتر",
+      close_filters: "إغلاق الفلاتر",
+      brands: "العلامات التجارية",
+      colors: "الألوان",
+      season: "الموسم",
+      categories: "الفئات",
+      price_range: "نطاق السعر",
+      seasons: {
+        summer: "الصيف",
+        spring: "الربيع",
+        fall: "الخريف",
+        winter: "الشتاء",
+      },
+      category_options: {
+        dress: "فستان",
+        top: "علوي",
+        bottom: "سفلي",
+        outerwear: "ملابس خارجية",
+      },
+      brand_options: {
+        hm: "إتش آند إم",
+        zara: "زارا",
+      },
+      product: {
+        view: "عرض",
+        view_store: "عرض المتجر",
+        view_on_store: "عرض في المتجر",
+        brand: "العلامة",
+        try_on: "جرب افتراضياً",
+        wishlist_aria: "أضف إلى المفضلة",
+      },
+      loading: "جاري تحميل المنتجات...",
+      no_products: "لا توجد منتجات تطابق البحث أو الفلاتر.",
+      currency: "ج.م",
+    },
+    wardrobe: {
+      title: "خزانة الملابس",
+      promo_prefix: "هنا كل ",
+      promo_highlight: "عناصر خزانة الملابس المستدامة",
+      loading: "جاري تحميل خزانة ملابسك...",
+      empty: "خزانة ملابسك فارغة. ابدأ بإضافة قطعك الآن!",
+    },
     // pricing: {
     //   title: 'أسعار ريدولابي',
     //   subtitle: 'اختر الخطة التي تناسب رحلتك في الموضة.',
@@ -732,6 +994,15 @@ const messages = {
       header_title: "مولد تصاميم إعادة التدوير من ري دولابي",
       header_subtitle: "ارفع قطع ملابسك · اختر تصميماً · شاهده ينبض بالحياة",
 
+      steps: {
+        upload: "رفع الملابس",
+        upload_subtitle: "ارفع صورة أو صورتين للقطعة",
+        choose: "اختيار الفكرة",
+        choose_subtitle: "اختر التصميم المفضل لديك",
+        result: "التوليد",
+        result_subtitle: "شاهد قطعتك المعاد تدويرها",
+      },
+
       upload: {
         title: "ارفع قطع الملابس الخاصة بك",
         support_text:
@@ -745,6 +1016,38 @@ const messages = {
           max_files: "لا يمكنك رفع أكثر من صورتين فقط.",
           size_limit: "يجب أن يكون حجم كل صورة ١٠ ميجابايت أو أقل.",
         },
+      },
+
+      ideas: {
+        title: "اختر فكرة الأسلوب",
+        badge: "مقترح بالذكاء الاصطناعي",
+        ai_engine: "محرك الذكاء الاصطناعي",
+        aspect_ratio: "نسبة العرض إلى الارتفاع",
+        submit: "توليد التصميم المختار",
+        loading: "جاري التوليد...",
+      },
+
+      card: {
+        see_more: "عرض المزيد",
+        see_less: "عرض أقل",
+        selected: "محدد",
+        remove_piece: "إزالة القطعة {n}",
+      },
+
+      output: {
+        heading: "تصميمك المُولَّد",
+        save_btn: "حفظ المواصفات",
+        saving: "جاري التحميل...",
+      },
+
+      errors: {
+        upload_first: "يرجى رفع قطع الملابس واكتشاف أفكار التصميم أولاً.",
+        save_failed: "فشل تحميل الصورة.",
+        login_required: "يرجى تسجيل الدخول لتحليل الملابس وتوليد التصاميم.",
+        missing_github_key:
+          "مفتاح GitHub API مفقود. أضف VITE_GITHUB_TOKEN إلى ملف .env.",
+        missing_dashscope_key:
+          "مفتاح DashScope API مفقود. أضف VITE_DASHSCOPE_API_KEY إلى ملف .env.",
       },
     },
     aboutRecycle: {
@@ -838,6 +1141,110 @@ const messages = {
       step3_description:
         "دع معالجنا الذكي يحلل مدخلاتك ليركب لك عرضاً واقعياً للتصميم بشكل فوري وعالي الدقة.",
     },
+    // auth: {
+    //   tabs: {
+    //     signUp: "إنشاء حساب",
+    //     login: "تسجيل الدخول",
+    //   },
+    //   signup: {
+    //     title: "أنشئ ملفك الشخصي",
+    //     subtitle: "ابدأ في بناء خزانة ملابس مخصصة لك",
+    //     firstName: "الاسم الأول",
+    //     firstNamePlaceholder: "مثال: إنجي",
+    //     lastName: "اسم العائلة",
+    //     lastNamePlaceholder: "مثال: أحمد",
+    //     email: "البريد الإلكتروني",
+    //     emailPlaceholder: "أدخل بريدك الإلكتروني",
+    //     password: "كلمة المرور",
+    //     passwordPlaceholder: "أنشئ كلمة مرور قوية",
+    //     confirmPassword: "تأكيد كلمة المرور",
+    //     confirmPasswordPlaceholder: "أكد كلمة المرور التي أنشأتها",
+    //     submit: "التالي",
+    //     loading: "يرجى الانتظار...",
+    //     switchText: "هل لديك حساب بالفعل؟",
+    //     switchLink: "سجّل الدخول الآن",
+    //     successMessage:
+    //       "لقد أرسلنا بريدًا إلكترونيًا للتحقق من حسابك. تحقق من صندوق الوارد.",
+    //   },
+    //   login: {
+    //     title: "مرحبًا بعودتك",
+    //     subtitle: "سجّل الدخول إلى حسابك",
+    //     email: "البريد الإلكتروني",
+    //     emailPlaceholder: "أدخل بريدك الإلكتروني",
+    //     password: "كلمة المرور",
+    //     passwordPlaceholder: "أدخل كلمة المرور",
+    //     forgotPassword: "نسيت كلمة المرور؟",
+    //     submit: "تسجيل الدخول",
+    //     loading: "يرجى الانتظار...",
+    //     switchText: "ليس لديك حساب؟",
+    //     switchLink: "سجّل الآن",
+    //   },
+    //   panel: {
+    //     welcomeBack: "مرحبًا<br/>بعودتك",
+    //     welcomeTo: "مرحبًا بك في<br/>Redolapy",
+    //     noAccount: "ليس لديك حساب؟",
+    //     alreadyHaveAccount: "هل لديك حساب بالفعل؟",
+    //     signUp: "إنشاء حساب",
+    //     login: "تسجيل الدخول",
+    //   },
+    //   common: {
+    //     orDivider: "——— أو ———",
+    //     continueWithGoogle: "المتابعة مع Google",
+    //     error: {
+    //       somethingWentWrong: "حدث خطأ ما",
+    //     },
+    //   },
+    // },
+    // fp: {
+    //   forgotTitle: "هل نسيت كلمة المرور؟",
+    //   forgotSubtitle:
+    //     "لا تقلق! يحدث هذا للجميع. أدخل عنوان البريد الإلكتروني المرتبط بحسابك وسنرسل لك رمزاً لإعادة تعيين كلمة المرور الخاصة بك.",
+    //   emailLabel: "البريد الإلكتروني",
+    //   emailPlaceholder: "أدخل بريدك الإلكتروني",
+    //   sending: "جاري الإرسال...",
+    //   next: "التالي",
+    //   hintSpam:
+    //     "لم يصلك البريد الإلكتروني؟ تحقق من ملف الرسائل غير المرغوب فيها",
+    //   or: "أو",
+    //   hintDifferent: "جرّب عنوان بريد إلكتروني آخر",
+    //   backToLogin: "العودة لتسجيل الدخول",
+    //   verificationTitle: "أدخل رمز التحقق",
+    //   verificationSubtitle:
+    //     "لقد أرسلنا رمزاً مكوناً من 6 أرقام إلى {email}. أدخله أدناه للمتابعة.",
+    //   verifying: "جاري التحقق...",
+    //   verifyContinue: "التحقق والمتابعة",
+    //   didnotReceiveCode: "لم يصلك الرمز؟",
+    //   resendCode: "إعادة إرسال الرمز",
+    //   requestCodeIn: "إعادة طلب الرمز خلال {timer}",
+    //   setNewPasswordTitle: "تعيين كلمة مرور جديدة",
+    //   setNewPasswordSubtitle:
+    //     "اختر كلمة مرور فريدة وقوية لم تستخدمها من قبل لهذا الحساب.",
+    //   passwordLabel: "كلمة المرور",
+    //   passwordPlaceholder: "أنشئ كلمة مرور قوية",
+    //   confirmPasswordLabel: "تأكيد كلمة المرور",
+    //   confirmPasswordPlaceholder: "تأكيد كلمة المرور التي أنشأتها",
+    //   securityTip:
+    //     "استخدم 8 أحرف أو أكثر تحتوي على أحرف وأرقام ورموز للحصول على كلمة مرور أقوى.",
+    //   saving: "جاري الحفظ...",
+    //   resetPassword: "إعادة تعيين كلمة المرور",
+    //   strength: {
+    //     none: "",
+    //     weak: "ضعيفة ❌",
+    //     fair: "مقبولة ⚠️",
+    //     good: "جيدة 👍",
+    //     strong: "قوية جداً 💪",
+    //   },
+    //   panel: {
+    //     emailTitle: "لا تقلق،",
+    //     emailSubtitle:
+    //       "سنساعدك على استعادة الوصول إلى ملفك الشخصي بأمان في غضون ثوانٍ.",
+    //     otpTitle: "تحقق من بريدك",
+    //     otpSubtitle: "تم إرسال رمز أمان للتحقق من هويتك وتأمين حسابك.",
+    //     resetTitle: "تأمين الحساب",
+    //     resetSubtitle:
+    //       "أوشكت على الانتهاء! قم بتعيين بيانات الاعتماد الجديدة للعودة إلى حسابك.",
+    //   },
+    // },
     upload: {
       piece: "القطعة",
       analyzing: "جاري إنشاء أفكار التصميم...",
@@ -880,11 +1287,11 @@ const messages = {
         login: "تسجيل الدخول",
       },
       signup: {
-        title: "أنشئ ملفك الشخصي",
-        subtitle: "ابدأ في بناء خزانة ملابس مخصصة لك",
+        title: "أنشئ ملفك الشخصي للأزياء",
+        subtitle: "ابدأ في بناء خزانة ملابسك المخصصة",
         firstName: "الاسم الأول",
         firstNamePlaceholder: "مثال: إنجي",
-        lastName: "اسم العائلة",
+        lastName: "الاسم الأخير",
         lastNamePlaceholder: "مثال: أحمد",
         email: "البريد الإلكتروني",
         emailPlaceholder: "أدخل بريدك الإلكتروني",
@@ -894,35 +1301,36 @@ const messages = {
         confirmPasswordPlaceholder: "أكد كلمة المرور التي أنشأتها",
         submit: "التالي",
         loading: "يرجى الانتظار...",
-        switchText: "هل لديك حساب بالفعل؟",
-        switchLink: "سجّل الدخول الآن",
+        switchText: "لديك حساب بالفعل؟",
+        switchLink: "سجل دخولك الآن",
         successMessage:
-          "لقد أرسلنا بريدًا إلكترونيًا للتحقق من حسابك. تحقق من صندوق الوارد.",
+          "لقد أرسلنا بريدًا إلكترونيًا للتحقق من حسابك. افحص صندوق الوارد الخاص بك.",
       },
       login: {
-        title: "مرحبًا بعودتك",
-        subtitle: "سجّل الدخول إلى حسابك",
+        title: "مرحباً بعودتك",
+        subtitle: "قم بتسجيل الدخول إلى حسابك",
         email: "البريد الإلكتروني",
         emailPlaceholder: "أدخل بريدك الإلكتروني",
         password: "كلمة المرور",
-        passwordPlaceholder: "أدخل كلمة المرور",
-        forgotPassword: "نسيت كلمة المرور؟",
+        passwordPlaceholder: "أدخل كلمة المرور الخاصة بك",
+        forgotPassword: "هل نسيت كلمة المرور؟",
         submit: "تسجيل الدخول",
         loading: "يرجى الانتظار...",
         switchText: "ليس لديك حساب؟",
-        switchLink: "سجّل الآن",
+        switchLink: "أنشئ حساباً الآن",
       },
       panel: {
-        welcomeBack: "مرحبًا<br/>بعودتك",
-        welcomeTo: "مرحبًا بك في<br/>Redolapy",
+        emailTitle: "لا تقلق،",
+        welcomeBack: "مرحباً بك <br/>من جديد",
+        welcomeTo: "مرحباً بك في <br/>ريدولابي",
         noAccount: "ليس لديك حساب؟",
-        alreadyHaveAccount: "هل لديك حساب بالفعل؟",
+        alreadyHaveAccount: "لديك حساب بالفعل؟",
         signUp: "إنشاء حساب",
         login: "تسجيل الدخول",
       },
       common: {
         orDivider: "——— أو ———",
-        continueWithGoogle: "المتابعة مع Google",
+        continueWithGoogle: "المتابعة باستخدام Google",
         error: {
           somethingWentWrong: "حدث خطأ ما",
         },
@@ -930,54 +1338,139 @@ const messages = {
     },
     fp: {
       forgotTitle: "هل نسيت كلمة المرور؟",
-      forgotSubtitle:
-        "لا تقلق! يحدث هذا للجميع. أدخل عنوان البريد الإلكتروني المرتبط بحسابك وسنرسل لك رمزاً لإعادة تعيين كلمة المرور الخاصة بك.",
+      forgotSubtitle: "لا تقلق، أدخل بريدك الإلكتروني أدناه لتلقي رمز التحقق.",
       emailLabel: "البريد الإلكتروني",
       emailPlaceholder: "أدخل بريدك الإلكتروني",
       sending: "جاري الإرسال...",
       next: "التالي",
       hintSpam:
-        "لم يصلك البريد الإلكتروني؟ تحقق من ملف الرسائل غير المرغوب فيها",
+        "تأكد من فحص مجلد الرسائل غير المرغوب فيها (Spam) إذا لم تجد الرمز.",
       or: "أو",
-      hintDifferent: "جرّب عنوان بريد إلكتروني آخر",
+      hintDifferent: "جرّب بريداً إلكترونياً آخر إذا لم تتمكن من العثور عليه.",
       backToLogin: "العودة لتسجيل الدخول",
-      verificationTitle: "أدخل رمز التحقق",
-      verificationSubtitle:
-        "لقد أرسلنا رمزاً مكوناً من 6 أرقام إلى {email}. أدخله أدناه للمتابعة.",
+      verificationTitle: "التحقق من البريد الإلكتروني",
+      verificationSubtitle: "لقد أرسلنا رمز تحقق مكوناً من 6 أرقام إلى {email}",
       verifying: "جاري التحقق...",
       verifyContinue: "التحقق والمتابعة",
       didnotReceiveCode: "لم يصلك الرمز؟",
       resendCode: "إعادة إرسال الرمز",
-      requestCodeIn: "إعادة طلب الرمز خلال {timer}",
+      requestCodeIn: "طلب رمز جديد خلال {timer}",
       setNewPasswordTitle: "تعيين كلمة مرور جديدة",
-      setNewPasswordSubtitle:
-        "اختر كلمة مرور فريدة وقوية لم تستخدمها من قبل لهذا الحساب.",
-      passwordLabel: "كلمة المرور",
+      setNewPasswordSubtitle: "أنشئ كلمة مرور قوية وفريدة لتأمين حسابك.",
+      passwordLabel: "كلمة المرور الجديدة",
       passwordPlaceholder: "أنشئ كلمة مرور قوية",
-      confirmPasswordLabel: "تأكيد كلمة المرور",
-      confirmPasswordPlaceholder: "تأكيد كلمة المرور التي أنشأتها",
+      confirmPasswordLabel: "تأكيد كلمة المرور الجديدة",
+      confirmPasswordPlaceholder: "أكّد كلمة المرور الجديدة",
       securityTip:
-        "استخدم 8 أحرف أو أكثر تحتوي على أحرف وأرقام ورموز للحصول على كلمة مرور أقوى.",
+        "تأكد من أن كلمة المرور لا تقل عن 8 أحرف وتحتوي على حروف كبيرة وصغيرة.",
       saving: "جاري الحفظ...",
       resetPassword: "إعادة تعيين كلمة المرور",
-      strength: {
-        none: "",
-        weak: "ضعيفة ❌",
-        fair: "مقبولة ⚠️",
-        good: "جيدة 👍",
-        strong: "قوية جداً 💪",
-      },
-      panel: {
-        emailTitle: "لا تقلق،",
-        emailSubtitle:
-          "سنساعدك على استعادة الوصول إلى ملفك الشخصي بأمان في غضون ثوانٍ.",
-        otpTitle: "تحقق من بريدك",
-        otpSubtitle: "تم إرسال رمز أمان للتحقق من هويتك وتأمين حسابك.",
-        resetTitle: "تأمين الحساب",
-        resetSubtitle:
-          "أوشكت على الانتهاء! قم بتعيين بيانات الاعتماد الجديدة للعودة إلى حسابك.",
-      },
     },
+    // auth: {
+    //   tabs: {
+    //     signUp: "Sign Up",
+    //     login: "Login",
+    //   },
+    //   signup: {
+    //     title: "Create Your Style Profile",
+    //     subtitle: "Start building your personalized wardrobe",
+    //     firstName: "First name",
+    //     firstNamePlaceholder: "e.g. Engy",
+    //     lastName: "Last name",
+    //     lastNamePlaceholder: "e.g. Ahmed",
+    //     email: "Email",
+    //     emailPlaceholder: "enter your email",
+    //     password: "Password",
+    //     passwordPlaceholder: "create strong password",
+    //     confirmPassword: "Confirm password",
+    //     confirmPasswordPlaceholder: "confirm the password that you created",
+    //     submit: "Next",
+    //     loading: "Please wait...",
+    //     switchText: "Already have an account?",
+    //     switchLink: "Login now",
+    //     successMessage:
+    //       "We sent an email to verify your account. Check your inbox.",
+    //   },
+    //   login: {
+    //     title: "Welcome Back",
+    //     subtitle: "Log in to your account",
+    //     email: "Email",
+    //     emailPlaceholder: "enter your email",
+    //     password: "Password",
+    //     passwordPlaceholder: "enter your password",
+    //     forgotPassword: "Forgot password?",
+    //     submit: "Login",
+    //     loading: "Please wait...",
+    //     switchText: "Don't have an account?",
+    //     switchLink: "Sign up now",
+    //   },
+    //   panel: {
+    //     emailTitle: "Don't Worry,",
+    //     welcomeBack: "Welcome <br/>Back",
+    //     welcomeTo: "Welcome To<br/>Redolapy",
+    //     noAccount: "Don't Have an account?",
+    //     alreadyHaveAccount: "Already have an account?",
+    //     signUp: "Sign up",
+    //     login: "Login",
+    //   },
+    //   common: {
+    //     orDivider: "——— OR ———",
+    //     continueWithGoogle: "Continue with Google",
+    //     error: {
+    //       somethingWentWrong: "Something went wrong",
+    //     },
+    //   },
+    // },
+    // fp: {
+    //   forgotTitle: "Forgot Password?",
+    //   forgotSubtitle:
+    //     "No worries! It happens to the best of us. Enter the email address associated with your account and we'll send you a link to reset your password.",
+    //   emailLabel: "Email",
+    //   emailPlaceholder: "enter your email",
+    //   sending: "Sending...",
+    //   next: "Next",
+    //   hintSpam: "Didn't receive the email? Check your spam folder",
+    //   or: "OR",
+    //   hintDifferent: "Try a different email address",
+    //   backToLogin: "Back to Login",
+    //   verificationTitle: "Enter Verification Code",
+    //   verificationSubtitle:
+    //     "We sent a 6-digit code to {email}. Enter it below to proceed.",
+    //   verifying: "Verifying...",
+    //   verifyContinue: "Verify & Continue",
+    //   didnotReceiveCode: "Didn't receive the code?",
+    //   resendCode: "Resend Code",
+    //   requestCodeIn: "Request a new code in {timer}",
+    //   setNewPasswordTitle: "Set New Password",
+    //   setNewPasswordSubtitle:
+    //     "Choose a unique, strong password that you haven't used before for this account.",
+    //   passwordLabel: "Password",
+    //   passwordPlaceholder: "create strong password",
+    //   confirmPasswordLabel: "Confirm password",
+    //   confirmPasswordPlaceholder: "confirm the password that you created",
+    //   securityTip:
+    //     "Use 8+ characters with letters, numbers & symbols for a stronger password.",
+    //   saving: "Saving...",
+    //   resetPassword: "Reset Password",
+    //   strength: {
+    //     none: "",
+    //     weak: "Weak ❌",
+    //     fair: "Fair ⚠️",
+    //     good: "Good 👍",
+    //     strong: "Strong 💪",
+    //   },
+    //   panel: {
+    //     emailTitle: "Don't Worry,",
+    //     emailSubtitle:
+    //       "We will help you safely recover your profile access within seconds.",
+    //     otpTitle: "Check Your Inbox",
+    //     otpSubtitle:
+    //       "A secure token has been dispatched to establish identity validation.",
+    //     resetTitle: "Secure Account",
+    //     resetSubtitle:
+    //       "Almost completed! Finalize your credentials to log back into your session.",
+    //   },
+    // },
   },
 };
 
