@@ -374,6 +374,7 @@ export default {
             if (popup && !popup.closed) popup.close();
             emit("login-success");
             emit("close");
+            location.reload();
           }
         },
         { once: true },
@@ -426,7 +427,6 @@ export default {
           const token = localStorage.setItem("token", res.data.token);
           localStorage.setItem("_id", res.data._id);
           const userRes = await getUserById(res.data._id); // token is read from localStorage inside the service
-          console.log(userRes.data);
           const userData = {
             first_name: userRes.data.user.profile.first_name,
             last_name: userRes.data.user.profile.last_name,
@@ -440,11 +440,13 @@ export default {
             gender: userRes.data.user.profile.gender,
             date_of_birth: userRes.data.user.profile.date_of_birth,
             has_mobile_app: userRes.data.user.settings.has_mobile_app,
+            notifications:userRes.data.user.settings.notifications_enabled
           };
           localStorage.setItem("user", JSON.stringify(userData));
           emit("login-success");
           emit("submit", userRes.data);
           emit("close");
+          location.reload()
         }
       } catch (err) {
         error.value = err.response?.data?.message ?? "Something went wrong";

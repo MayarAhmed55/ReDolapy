@@ -40,6 +40,7 @@ export default {
             has_mobile_app:  userRes.data.user.settings.has_mobile_app,
             gender:          userRes.data.user.profile.gender,
             date_of_birth:   userRes.data.user.profile.date_of_birth,
+            notifications:   userRes.data.user.settings.notifications_enabled
           };
 
           if (window.opener) {
@@ -52,18 +53,19 @@ export default {
           } else {
             // Redirect flow — save and navigate home
             localStorage.setItem("user", JSON.stringify(userData));
-            router.replace("/");
+            router.replace("/").then(location.reload());
           }
         } catch (err) {
           console.error("Failed to fetch user profile after Google login:", err);
           localStorage.removeItem("token");
-          router.replace("/");
+          router.replace("/").then(location.reload());
         }
       } else if (!window.opener) {
-        router.replace("/");
+        router.replace("/").then(location.reload());
       }
     });
   },
+
 };
 </script>
 

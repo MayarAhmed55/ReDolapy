@@ -67,9 +67,10 @@
                   d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
                 />
               </svg>
-              <span class="text-sm font-medium text-gray-700 max-w-[120px] truncate">{{
-                userFullName
-              }}</span>
+              <span
+                class="text-sm font-medium text-gray-700 max-w-[120px] truncate"
+                >{{ userFullName }}</span
+              >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -287,9 +288,12 @@
                     </svg>
                     <span class="item-title font-normal">Mobile App</span>
                   </div>
-                  <span class="text-sm text-gray-400 font-normal"
-                    >Installed</span
+                  <span
+                    class="text-sm font-normal"
+                    :class="hasMobileApp ? 'text-green-500' : 'text-gray-400'"
                   >
+                    {{ hasMobileApp ? "Installed" : "Not Installed" }}
+                  </span>
                 </div>
 
                 <div class="dropdown-item-row cursor-pointer" role="menuitem">
@@ -374,8 +378,12 @@
                   </div>
                 </div>
 
-                <div class="edit-profile-warber">
-                  <router-link :to="`/Profile/${userId}`" class="edit-profile-btn cursor-pointer" @click="closeUserDropdown">
+                <div class="edit-profile-warber w-full">
+                  <router-link
+                    :to="`/Profile/${userId}`"
+                    class="edit-profile-btn cursor-pointer"
+                    @click="closeUserDropdown"
+                  >
                     <span>Edit Profile</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -580,7 +588,8 @@
                           d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
                         />
                       </svg>
-                      <span class="text-sm font-medium text-gray-700 truncate min-w-0"
+                      <span
+                        class="text-sm font-medium text-gray-700 truncate min-w-0"
                         >{{ userFullName }}</span
                       >
                     </div>
@@ -607,66 +616,186 @@
                     >
                       <!-- Email -->
                       <div class="flex items-center gap-2 px-4 py-2.5">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gray-400 shrink-0">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="w-4 h-4 text-gray-400 shrink-0"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
+                          />
                         </svg>
-                        <span class="text-sm text-gray-500 truncate min-w-0">{{ userEmail }}</span>
+                        <span class="text-sm text-gray-500 truncate min-w-0">{{
+                          userEmail
+                        }}</span>
                       </div>
 
                       <!-- Notifications -->
-                      <div class="flex items-center justify-between px-4 py-2.5">
+                      <div
+                        class="flex items-center justify-between px-4 py-2.5"
+                      >
                         <div class="flex items-center gap-2.5">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gray-500 shrink-0">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-4 h-4 text-gray-500 shrink-0"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
+                            />
                           </svg>
-                          <span class="text-sm font-medium text-gray-700">Notifications</span>
+                          <span class="text-sm font-medium text-gray-700"
+                            >Notifications</span
+                          >
                         </div>
-                        <button @click="toggleNotifications" class="toggle-switch" :class="{ 'toggle-active': notificationsEnabled }">
+                        <button
+                          @click="toggleNotifications"
+                          class="toggle-switch"
+                          :class="{ 'toggle-active': notificationsEnabled }"
+                        >
                           <span class="toggle-circle"></span>
                         </button>
                       </div>
 
                       <!-- Theme -->
-                      <div class="flex items-center justify-between px-4 py-2.5">
+                      <div
+                        class="flex items-center justify-between px-4 py-2.5"
+                      >
                         <div class="flex items-center gap-2.5">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gray-500 shrink-0">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1.5m0 15V21m9-9h-1.5m-13.5 0H3m16.364-6.364l-1.06 1.06m-11.314 11.314l-1.06 1.06m11.314 0l-1.06-1.06m-11.314-11.314l-1.06-1.06M12 7.25a4.75 4.75 0 1 0 0 9.5 4.75 4.75 0 0 0 0-9.5z" />
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-4 h-4 text-gray-500 shrink-0"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M12 3v1.5m0 15V21m9-9h-1.5m-13.5 0H3m16.364-6.364l-1.06 1.06m-11.314 11.314l-1.06 1.06m11.314 0l-1.06-1.06m-11.314-11.314l-1.06-1.06M12 7.25a4.75 4.75 0 1 0 0 9.5 4.75 4.75 0 0 0 0-9.5z"
+                            />
                           </svg>
-                          <span class="text-sm font-medium text-gray-700">Theme</span>
+                          <span class="text-sm font-medium text-gray-700"
+                            >Theme</span
+                          >
                         </div>
-                        <button @click="toggleTheme" class="toggle-switch" :class="{ 'toggle-active': isDarkMode }">
+                        <button
+                          @click="toggleTheme"
+                          class="toggle-switch"
+                          :class="{ 'toggle-active': isDarkMode }"
+                        >
                           <span class="toggle-circle"></span>
                         </button>
                       </div>
 
                       <!-- Language -->
                       <div class="relative">
-                        <div class="flex items-center justify-between px-4 py-2.5 cursor-pointer" @click="languageDropdownOpen = !languageDropdownOpen">
+                        <div
+                          class="flex items-center justify-between px-4 py-2.5 cursor-pointer"
+                          @click="languageDropdownOpen = !languageDropdownOpen"
+                        >
                           <div class="flex items-center gap-2.5">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gray-500 shrink-0">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138A44.26 44.26 0 0115.5 12m-2 1.157a26.792 26.792 0 01-1.884 4.354" />
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.5"
+                              stroke="currentColor"
+                              class="w-4 h-4 text-gray-500 shrink-0"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138A44.26 44.26 0 0115.5 12m-2 1.157a26.792 26.792 0 01-1.884 4.354"
+                              />
                             </svg>
-                            <span class="text-sm font-medium text-gray-700">Language</span>
+                            <span class="text-sm font-medium text-gray-700"
+                              >Language</span
+                            >
                           </div>
                           <div class="flex items-center gap-1">
-                            <span class="text-xs font-medium text-gray-900 uppercase">{{ $i18n.locale }}</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3 h-3 text-gray-500 transition-transform duration-200" :class="{ 'rotate-90': !languageDropdownOpen, 'rotate-180': languageDropdownOpen }">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            <span
+                              class="text-xs font-medium text-gray-900 uppercase"
+                              >{{ $i18n.locale }}</span
+                            >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="2"
+                              stroke="currentColor"
+                              class="w-3 h-3 text-gray-500 transition-transform duration-200"
+                              :class="{
+                                'rotate-90': !languageDropdownOpen,
+                                'rotate-180': languageDropdownOpen,
+                              }"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                              />
                             </svg>
                           </div>
                         </div>
                         <Transition name="sub-dropdown">
-                          <div v-if="languageDropdownOpen" class="mx-3 mb-1 bg-gray-50 rounded-lg border border-gray-100 py-1">
-                            <button @click="setLanguage('en')" class="lang-option-btn" :class="{ 'active-lang': $i18n.locale === 'en' }">
+                          <div
+                            v-if="languageDropdownOpen"
+                            class="mx-3 mb-1 bg-gray-50 rounded-lg border border-gray-100 py-1"
+                          >
+                            <button
+                              @click="setLanguage('en')"
+                              class="lang-option-btn"
+                              :class="{ 'active-lang': $i18n.locale === 'en' }"
+                            >
                               <span>English (EN)</span>
-                              <svg v-if="$i18n.locale === 'en'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 text-green-600">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                              <svg
+                                v-if="$i18n.locale === 'en'"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="2"
+                                stroke="currentColor"
+                                class="w-4 h-4 text-green-600"
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M4.5 12.75l6 6 9-13.5"
+                                />
                               </svg>
                             </button>
-                            <button @click="setLanguage('ar')" class="lang-option-btn text-right" :class="{ 'active-lang': $i18n.locale === 'ar' }">
+                            <button
+                              @click="setLanguage('ar')"
+                              class="lang-option-btn text-right"
+                              :class="{ 'active-lang': $i18n.locale === 'ar' }"
+                            >
                               <span>العربية (AR)</span>
-                              <svg v-if="$i18n.locale === 'ar'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 text-green-600">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                              <svg
+                                v-if="$i18n.locale === 'ar'"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="2"
+                                stroke="currentColor"
+                                class="w-4 h-4 text-green-600"
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M4.5 12.75l6 6 9-13.5"
+                                />
                               </svg>
                             </button>
                           </div>
@@ -674,26 +803,74 @@
                       </div>
 
                       <!-- Mobile App -->
-                      <div class="flex items-center justify-between px-4 py-2.5">
+                      <div
+                        class="flex items-center justify-between px-4 py-2.5"
+                      >
                         <div class="flex items-center gap-2.5">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gray-700 shrink-0">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-6 15h9" />
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-4 h-4 text-gray-700 shrink-0"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-6 15h9"
+                            />
                           </svg>
-                          <span class="text-sm font-medium text-gray-700">Mobile App</span>
+                          <span class="text-sm font-medium text-gray-700"
+                            >Mobile App</span
+                          >
                         </div>
-                        <span class="text-xs text-gray-400">Installed</span>
+                        <span
+                          class="text-xs"
+                          :class="
+                            hasMobileApp ? 'text-green-500' : 'text-gray-400'
+                          "
+                        >
+                          {{ hasMobileApp ? "Installed" : "Not Installed" }}
+                        </span>
                       </div>
 
                       <!-- My Wardrobe -->
-                      <div class="flex items-center justify-between px-4 py-2.5 cursor-pointer hover:bg-gray-50 transition-colors">
+                      <div
+                        class="flex items-center justify-between px-4 py-2.5 cursor-pointer hover:bg-gray-50 transition-colors"
+                      >
                         <div class="flex items-center gap-2.5">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gray-700 shrink-0">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 .621-.504 1.125-1.125 1.125H4.875A1.125 1.125 0 013.75 18.4V14.15m16.5 0c0-1.243-1.007-2.25-2.25-2.25H6c-1.243 0-2.25 1.007-2.25 2.25m16.5 0V6.3c0-.621-.504-1.125-1.125-1.125H4.875A1.125 1.125 0 003.75 6.3v7.85m16.5 0V5.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25v8.65" />
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-4 h-4 text-gray-700 shrink-0"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M20.25 14.15v4.25c0 .621-.504 1.125-1.125 1.125H4.875A1.125 1.125 0 013.75 18.4V14.15m16.5 0c0-1.243-1.007-2.25-2.25-2.25H6c-1.243 0-2.25 1.007-2.25 2.25m16.5 0V6.3c0-.621-.504-1.125-1.125-1.125H4.875A1.125 1.125 0 003.75 6.3v7.85m16.5 0V5.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25v8.65"
+                            />
                           </svg>
-                          <span class="text-sm font-medium text-gray-700">My Wardrobe</span>
+                          <span class="text-sm font-medium text-gray-700"
+                            >My Wardrobe</span
+                          >
                         </div>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3.5 h-3.5 text-gray-700 shrink-0">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="2"
+                          stroke="currentColor"
+                          class="w-3.5 h-3.5 text-gray-700 shrink-0"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                          />
                         </svg>
                       </div>
 
@@ -701,19 +878,43 @@
                       <div class="px-3 py-2.5 flex flex-col gap-2">
                         <div class="feature-card cursor-pointer">
                           <div class="card-icon-container">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-600">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.5"
+                              stroke="currentColor"
+                              class="w-5 h-5 text-gray-600"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"
+                              />
                             </svg>
                           </div>
                           <div class="card-details">
                             <span class="card-title">Payment Methods</span>
-                            <span class="card-desc">Manage your payment options</span>
+                            <span class="card-desc"
+                              >Manage your payment options</span
+                            >
                           </div>
                         </div>
                         <div class="feature-card cursor-pointer">
                           <div class="card-icon-container">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-600">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.5"
+                              stroke="currentColor"
+                              class="w-5 h-5 text-gray-600"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                              />
                             </svg>
                           </div>
                           <div class="card-details">
@@ -731,22 +932,49 @@
                           @click="closeMobileMenu"
                         >
                           <span>Edit Profile</span>
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="2"
+                            stroke="currentColor"
+                            class="w-4 h-4"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                            />
                           </svg>
                         </router-link>
                       </div>
 
                       <!-- Log out -->
-                      <div class="px-3 py-2 flex justify-end border-t border-gray-50">
+                      <div
+                        class="px-3 py-2 flex justify-end border-t border-gray-50"
+                      >
                         <button
-                          @click="handleLogout(); closeMobileMenu();"
+                          @click="
+                            handleLogout();
+                            closeMobileMenu();
+                          "
                           class="flex items-center gap-2 px-3 py-2 text-sm cursor-pointer"
                         >
                           <span class="logout-text">Log out</span>
                           <span class="logout-icon-box">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 00 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75" />
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="2"
+                              stroke="currentColor"
+                              class="w-4 h-4"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 00 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"
+                              />
                             </svg>
                           </span>
                         </button>
@@ -775,6 +1003,8 @@
 import LangSwitcher from "./LangSwitcher.vue";
 import AuthModal from "./modal.vue";
 import { isAuthModalOpen, authModalMode } from "../authState.js";
+import { notifications, darkMode, getUserById } from "../services/services.js";
+import { ref } from "vue";
 
 export default {
   name: "Navbar",
@@ -800,10 +1030,32 @@ export default {
       mobileOpen: false,
       userDropdownOpen: false,
       mobileUserExpanded: false,
-      userDropdownOpen: false,
-      notificationsEnabled: false,
-      isDarkMode: false,
       languageDropdownOpen: false,
+      notificationsEnabled: (() => {
+        try {
+          return (
+            JSON.parse(localStorage.getItem("user"))?.notifications ?? false
+          );
+        } catch {
+          return false;
+        }
+      })(),
+      isDarkMode: (() => {
+        try {
+          return JSON.parse(localStorage.getItem("user"))?.darkMode ?? false;
+        } catch {
+          return false;
+        }
+      })(),
+      hasMobileApp: (() => {
+        try {
+          return (
+            JSON.parse(localStorage.getItem("user"))?.has_mobile_app ?? false
+          );
+        } catch {
+          return false;
+        }
+      })(),
       user: null,
       navLinks: [
         { to: "/", label: "Home", mobileLabel: "Features" },
@@ -817,9 +1069,10 @@ export default {
   setup() {
     const sharedAuthOpen = isAuthModalOpen;
     const sharedAuthMode = authModalMode;
-    const userData = JSON.parse(localStorage.getItem("user"));
-    const userEmail = userData?.email || "";
-    // const alnguage= userData?.language || "en";
+    const userEmail = ref(
+      JSON.parse(localStorage.getItem("user"))?.email || "",
+    );
+    console.log(userEmail);
 
     function openModal(mode) {
       sharedAuthMode.value = mode;
@@ -845,18 +1098,65 @@ export default {
   },
   methods: {
     setLanguage(lang) {
-    // this.$i18n.locale = lang; // تغيير لغة التطبيق
-    localStorage.setItem('user-lang', lang); // حفظ خيار المستخدم بالمتصفح
-    this.languageDropdownOpen = false; // غلق قائمة اللغات بعد الاختيار
-    
-    // اختياري: إذا أردت غلق القائمة الرئيسية كاملة بعد تغيير اللغة
-    this.userDropdownOpen = false; 
-  },
-    toggleNotifications() {
-      this.notificationsEnabled = !this.notificationsEnabled;
+      // this.$i18n.locale = lang; // تغيير لغة التطبيق
+      localStorage.setItem("user-lang", lang); // حفظ خيار المستخدم بالمتصفح
+      location.reload();
     },
-    toggleTheme() {
-      this.isDarkMode = !this.isDarkMode;
+    async toggleNotifications() {
+      const newVal = !this.notificationsEnabled;
+      this.notificationsEnabled = newVal;
+      try {
+        await notifications(newVal);
+        const { data } = await getUserById(this.userId);
+        const u = data.user;
+        const userData = {
+          first_name: u.profile.first_name,
+          last_name: u.profile.last_name,
+          email: u.email,
+          id: u._id,
+          userImage: u.userImage,
+          language: u.settings.language,
+          avatars: u.avatars,
+          darkMode: u.darkMode,
+          has_mobile_app: u.settings.has_mobile_app,
+          gender: u.profile.gender,
+          date_of_birth: u.profile.date_of_birth,
+          notifications: u.settings.notifications_enabled,
+        };
+        localStorage.setItem("user", JSON.stringify(userData));
+        this.notificationsEnabled = userData.notifications ?? newVal;
+      } catch (e) {
+        this.notificationsEnabled = !newVal;
+        console.error("Failed to update notifications setting:", e);
+      }
+    },
+    async toggleTheme() {
+      const newVal = !this.isDarkMode;
+      this.isDarkMode = newVal;
+      try {
+        await darkMode(newVal);
+        const { data } = await getUserById(this.userId);
+        const u = data.user;
+        const userData = {
+          first_name: u.profile.first_name,
+          last_name: u.profile.last_name,
+          email: u.email,
+          id: u._id,
+          userImage: u.userImage,
+          language: u.settings.language,
+          avatars: u.avatars,
+          darkMode: u.darkMode,
+          has_mobile_app: u.settings.has_mobile_app,
+          gender: u.profile.gender,
+          date_of_birth: u.profile.date_of_birth,
+          notifications: u.settings.notifications_enabled,
+        };
+        localStorage.setItem("user", JSON.stringify(userData));
+        this.isDarkMode = userData.darkMode ?? newVal;
+      } catch (e) {
+        this.isDarkMode = !newVal;
+        console.error("Failed to update dark mode setting:", e);
+      }
     },
     closeUserDropdown() {
       this.userDropdownOpen = false;
@@ -873,12 +1173,21 @@ export default {
       this.$router.push(path);
     },
     handleLogout() {
+      // 1. Purge data infrastructure completely
       localStorage.removeItem("user");
       localStorage.removeItem("token");
       localStorage.removeItem("_id");
       this.user = null;
+
+      // 2. Clear state dynamically or force synchronization execution
       if (this.$route.meta.requiresAuth) {
-        this.$router.push("/");
+        // If on a private route, force them home and refresh the canvas configuration instances
+        this.$router.push("/").then(() => {
+          window.location.reload();
+        });
+      } else {
+        // If already on a public page (e.g., Home), refresh right here to update the navbar text values instantly
+        window.location.reload();
       }
     },
     checkUserSession() {
@@ -893,26 +1202,11 @@ export default {
         this.user = null;
       }
     },
-    // onHashLinkClick(e, hash) {
-    //   e.preventDefault();
-    //   this.closeMobileMenu();
-    //   const sectionId = hash.replace("#", "");
-    //   if (this.$route.path === "/") {
-    //     document
-    //       .getElementById(sectionId)
-    //       ?.scrollIntoView({ behavior: "smooth", block: "start" });
-    //     return;
-    //   }
-    //   this.$router.push({ path: "/", hash }).then(() => {
-    //     this.$nextTick(() => {
-    //       document
-    //         .getElementById(sectionId)
-    //         ?.scrollIntoView({ behavior: "smooth", block: "start" });
-    //     });
-    //   });
-    // },
   },
   computed: {
+    userEmail() {
+      return JSON.parse(localStorage.getItem("user"))?.email || "";
+    },
     isLoggedIn() {
       return !!this.user;
     },
@@ -1329,9 +1623,9 @@ export default {
   justify-content: space-between;
   width: 100%;
   padding: 8px 16px;
-  font-family: 'Inter', 'Roboto', sans-serif;
+  font-family: "Inter", "Roboto", sans-serif;
   font-size: 14px;
-  color: #1E1E24;
+  color: #1e1e24;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -1339,14 +1633,19 @@ export default {
 }
 
 .lang-option-btn:hover {
-  background-color: rgba(64, 185, 255, 0.08); /* خلفية خفيفة متناسقة مع كروت الدفع */
+  background-color: rgba(
+    64,
+    185,
+    255,
+    0.08
+  ); /* خلفية خفيفة متناسقة مع كروت الدفع */
   border-radius: 6px;
 }
 
 /* نمط اللغة النشطة حالياً */
 .lang-option-btn.active-lang {
   font-weight: 600;
-  color: #8ED321; /* لون البراند الأخضر لديك */
+  color: #8ed321; /* لون البراند الأخضر لديك */
 }
 
 /* أنيميشن القائمة الفرعية */
@@ -1358,5 +1657,8 @@ export default {
 .sub-dropdown-leave-to {
   opacity: 0;
   transform: translateY(-5px);
+}
+.edit-profile-warber:hover{
+  scale: 1.08;
 }
 </style>
