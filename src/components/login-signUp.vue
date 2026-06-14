@@ -478,7 +478,8 @@ export default {
   /* both sides rounded */
   background-image:
     linear-gradient(rgba(128, 128, 128, 0.2), rgba(128, 128, 128, 0.2)),
-    url("../../public/ChatGPT Image Jun 7, 2026, 10_22_25 PM.jpg");
+    /* url("../../public/ChatGPT Image Jun 7, 2026, 10_22_25 PM.jpg"); */
+    url("../assets/Login.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

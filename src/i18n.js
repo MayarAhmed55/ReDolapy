@@ -81,6 +81,16 @@ const messages = {
         "The Redolapy Virtual Try-On uses hyper-realistic rendering to show you exactly how clothes will look and drape on your body.",
       button: "Try On",
     },
+    brands: {
+    viewAll: "View all",
+    title: "Our Brand Partners:",
+    subtitle: "Discover and shop from your favorite fashion Stores with exclusive discounts found only on",
+    appName: "ReDolapy Application.",
+    hm: {
+      title: "H&M",
+      description: "Discover your Favorite Items in H&M and get the discount on what you love from the Application"
+    }
+  },
 
     // pricing: {
     //   completeSubscription: "Complete Subscription",
@@ -684,7 +694,15 @@ const messages = {
         },
       },
     },
-
+  brands: {     "viewAll": "عرض الكل",
+    title: "شركاء علامتنا التجارية:",
+    subtitle: "اكتشف وتسوق من متاجر الأزياء المفضلة لديك بخصومات حصرية فقط على",
+    appName: "تطبيق ReDolapy.",
+    hm: {
+      title: "اتش آند ام",
+      description: "اكتشف قطعك المفضلة في اتش آند ام واحصل على الخصم لما تحبه من خلال التطبيق"
+    }
+  },
     faq: {
       title: "الأسئلة الشائعة",
       questions: [

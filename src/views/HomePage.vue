@@ -74,7 +74,7 @@
     </section>
   
 
-        <section>
+        <!-- <section>
           <div class="relative">
            <router-link><span class="absolute top-3 right-1 flex gap-2 text-[#8ED321]">View all <ChevronRight class="text-lg"/> </span></router-link> 
             <p id="FeaturesTitle" class=" text-5xl font-bold m-auto PrimaryTxt flex">Our Brand Partners: </p>
@@ -109,9 +109,62 @@
                     <p class="serviceDescription Secondary-grayTxt ">Discover your Favorite Items in H&M and get the discount on what you love from the Application</p>
                 </div>
             </div>
-        </section>
+        </section> -->
  
-    <section id="PricingSection">
+  <section :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'">
+    <div class="relative">
+      <router-link to="/">
+        <span class="absolute top-3  flex gap-2 text-[#8ED321]" :class="$i18n.locale === 'ar' ? 'left-1' : 'right-1'">
+          {{ $t('brands.viewAll') }} 
+          <ChevronRight class="text-lg" :class="{ 'rotate-180': $i18n.locale === 'ar' }"/>
+        </span>
+      </router-link> 
+      
+      <p id="FeaturesTitle" class="text-5xl font-bold m-auto PrimaryTxt flex">
+        {{ $t('brands.title') }}
+      </p>
+      
+      <p class="mb-[1rem] font-medium grayTxt">
+        {{ $t('brands.subtitle') }} 
+        <span class="gradientColor">{{ $t('brands.appName') }}</span>
+      </p>
+    </div>
+
+    <div class="cardsContainer flex gap-8 justify-center my-[3rem]">
+      <div class="card bg-white dark:bg-[#0d0d0d] h-[25rem] shadow-lg">
+        <div class="flex justify-between items-center gap-4 w-[fit-content] m-auto mb-[2rem]">
+          <img src="../assets/H&M.jpg" class="h-[10rem] w-[10rem] mb-[1rem]" alt="H&M">
+        </div>
+        <p class="serviceTitle PrimaryTxt">{{ $t('brands.hm.title') }}</p>
+        <p class="serviceDescription Secondary-grayTxt">
+          {{ $t('brands.hm.description') }}
+        </p>
+      </div>
+
+      <div class="card bg-white dark:bg-[#0d0d0d] h-[25rem] shadow-xl">
+        <div class="flex justify-between items-center gap-4 w-[fit-content] m-auto mb-[2rem]">
+          <img src="../assets/H&M.jpg" class="h-[10rem] w-[10rem]" alt="H&M">
+        </div>
+        <p class="serviceTitle PrimaryTxt">{{ $t('brands.hm.title') }}</p>
+        <p class="serviceDescription Secondary-grayTxt">
+          {{ $t('brands.hm.description') }}
+        </p>
+      </div>
+
+      <div class="card bg-white dark:bg-[#0d0d0d] h-[25rem] shadow-lg">
+        <div class="flex justify-between items-center gap-4 w-[fit-content] m-auto mb-[2rem]">
+          <img src="../assets/H&M.jpg" class="h-[10rem] w-[10rem]" alt="H&M">
+          <ArrowRight :class="{ 'rotate-180': $i18n.locale === 'ar' }"/>
+          <img :src="imgSrc6" alt="">
+        </div>
+        <p class="serviceTitle PrimaryTxt">{{ $t('brands.hm.title') }}</p>
+        <p class="serviceDescription Secondary-grayTxt">
+          {{ $t('brands.hm.description') }}
+        </p>
+      </div>
+    </div>
+  </section>
+        <section id="PricingSection">
     <p class="w-[fit-content] m-auto mb-[1rem] font-bold text-4xl gradientColor PrimaryTxt">
       {{ $t("pricing.title") }}
     </p>
