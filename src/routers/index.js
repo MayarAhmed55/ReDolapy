@@ -15,7 +15,6 @@ import Wardrobe from '../views/Wardrobe.vue'
 import Wishlist from '../views/Wishlist.vue'
 import Avatar from '../views/Avatar.vue'
 import {isAuthModalOpen, triggerLoginModal} from '../authState.js';
-import { createRouter, createWebHistory } from "vue-router";
 import ContactUs from "../views/ContactUs.vue";
 
 const routes = [

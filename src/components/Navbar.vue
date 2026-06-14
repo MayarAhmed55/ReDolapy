@@ -431,7 +431,7 @@
           </svg>
         </button>
 
-        <button @click="toggleTheme" type="button"
+        <button @click="toggleThemeNavBtn" type="button"
           class="p-2.5 rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-700 dark:text-zinc-300 transition-all duration-200 hover:scale-105">
           <span v-if="isDark" class="text-yellow-500">
             <SunMedium></SunMedium>
@@ -1088,7 +1088,7 @@ export default {
     document.body.style.overflow = "";
   },
   methods: {
-      toggleTheme() {
+      toggleThemeNavBtn() {
       this.isDark = !this.isDark;
 
       if (this.isDark) {
@@ -1240,6 +1240,16 @@ export default {
   },
   mounted() {
     this.checkUserSession();
+    const savedTheme = localStorage.getItem('theme');
+    
+    // 2. If it's 'dark', or if they haven't chosen yet but their system prefers dark mode
+    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      this.isDark = true;
+      document.documentElement.classList.add('dark');
+    } else {
+      this.isDark = false;
+      document.documentElement.classList.remove('dark');
+    }
   },
 };
 </script>
