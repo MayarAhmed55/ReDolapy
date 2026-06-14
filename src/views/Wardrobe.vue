@@ -86,6 +86,7 @@ export default {
       colors: [],
       seasons: [],
       categories: [],
+      minPrice: 0,
       maxPrice: 0,
     },
   }),
@@ -102,7 +103,10 @@ export default {
   },
   computed: {
     filteredProducts() {
-      return filterProducts(this.products, this.filters, this.searchQuery)
+      return filterProducts(this.products, this.filters, this.searchQuery, {
+        min: this.filterOptions.minPrice,
+        max: this.filterOptions.maxPrice,
+      })
     },
   },
   methods: {

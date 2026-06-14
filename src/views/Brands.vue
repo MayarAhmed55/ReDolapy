@@ -41,6 +41,7 @@
         v-else
         :products="filteredProducts"
         @try-on="onTryOn"
+        @wishlist-error="onWishlistError"
       />
     </main>
   </div>
@@ -58,6 +59,7 @@ import {
   filterProducts,
   normalizeProduct,
 } from '../utils/storeHelpers.js'
+import { useFavorites } from '../composables/useFavorites.js'
 
 export default {
   name: 'Brands',
@@ -65,6 +67,10 @@ export default {
     FilterSidebar,
     StoreSearchbar,
     StoreProducts,
+  },
+  setup() {
+    const { loadFavorites } = useFavorites()
+    return { loadFavorites }
   },
   data: () => ({
     searchQuery: '',
@@ -86,6 +92,7 @@ export default {
       colors: [],
       seasons: [],
       categories: [],
+      minPrice: 0,
       maxPrice: 0,
     },
   }),
@@ -95,14 +102,17 @@ export default {
     },
   },
   async mounted() {
-    await this.loadStoreData()
+    await Promise.all([this.loadStoreData(), this.loadFavorites()])
   },
   beforeUnmount() {
     document.body.style.overflow = ''
   },
   computed: {
     filteredProducts() {
-      return filterProducts(this.products, this.filters, this.searchQuery)
+      return filterProducts(this.products, this.filters, this.searchQuery, {
+        min: this.filterOptions.minPrice,
+        max: this.filterOptions.maxPrice,
+      })
     },
   },
   methods: {
@@ -136,6 +146,11 @@ export default {
         path: '/TryOn',
         query: { productId: product.id },
       })
+    },
+    onWishlistError(err) {
+      if (err.code === 'LOGIN_REQUIRED' || err.message === 'LOGIN_REQUIRED') {
+        this.$router.push({ path: '/login', query: { redirect: this.$route.fullPath } })
+      }
     },
   },
 }

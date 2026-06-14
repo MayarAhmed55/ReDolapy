@@ -11,6 +11,8 @@ import UserWardrobe from '../views/userWardrobe.vue'
 import Pricing from '../views/pricing.vue'
 import AboutTryon from '../views/AboutTryon.vue'
 import Wardrobe from '../views/Wardrobe.vue'
+import Wishlist from '../views/Wishlist.vue'
+import Avatar from '../views/Avatar.vue'
 
 
 const routes = [
@@ -19,10 +21,12 @@ const routes = [
   { path: '/SignUp', component: SignUp },
   { path: '/AboutPage', component: AboutPage },
   { path: '/Brands', component: Brands }, 
+  { path: '/Wishlist', component: Wishlist },
   { path: '/AboutRecycle', component:  AboutRecycle},
   { path: '/AboutTryon', component: AboutTryon },
   { path: '/Recycle', component: Recycle },
   { path: '/TryOn', component: TryOn },
+  { path: '/Avatar', component: Avatar },
   { path: '/pricing', component: Pricing },
   {path: '/wardrobe', component: Wardrobe},    
   { path: '/userWardrobe', component: UserWardrobe },

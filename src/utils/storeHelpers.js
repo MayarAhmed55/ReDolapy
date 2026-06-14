@@ -101,12 +101,17 @@ export function createDefaultFilters(filterOptions) {
     colors: [],
     seasons: [],
     categories: [],
+    minPrice: filterOptions.minPrice,
     maxPrice: filterOptions.maxPrice,
   }
 }
 
-export function filterProducts(products, filters, searchQuery = '') {
+export function filterProducts(products, filters, searchQuery = '', priceBounds = null) {
   const query = searchQuery.trim().toLowerCase()
+  const bounds = priceBounds || {
+    min: filters.minPrice,
+    max: filters.maxPrice,
+  }
 
   return products.filter((product) => {
     if (query && !product.name.toLowerCase().includes(query)) return false
@@ -114,7 +119,10 @@ export function filterProducts(products, filters, searchQuery = '') {
     if (filters.colors.length && !product.colors.some((color) => filters.colors.includes(color))) return false
     if (filters.seasons.length && !product.seasons.some((season) => filters.seasons.includes(season))) return false
     if (filters.categories.length && !filters.categories.includes(product.category)) return false
-    if (product.price > filters.maxPrice) return false
+
+    if (filters.minPrice > bounds.min && product.price < filters.minPrice) return false
+    if (filters.maxPrice < bounds.max && product.price > filters.maxPrice) return false
+
     return true
   })
 }
@@ -128,6 +136,7 @@ export function productToTryOnGarment(product, categoryLabel) {
     id: `store-${product.id}`,
     source: 'store',
     productId: product.id,
+    category: product.category,
     url: product.image,
     title: product.name,
     subtitle: categoryLabel,

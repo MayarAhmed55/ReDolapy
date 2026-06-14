@@ -96,20 +96,19 @@
       </FilterSection>
 
       <FilterSection :title="$t('store.categories')" :open="openSections.categories" @toggle="toggleSection('categories')">
-        <div class="filter-sidebar__category-grid">
+        <div class="filter-sidebar__checkbox-list filter-sidebar__checkbox-list--between">
           <label
             v-for="category in categoryOptions"
             :key="category.id"
-            class="filter-sidebar__category-btn"
-            :class="{ 'filter-sidebar__category-btn--active': filters.categories.includes(category.id) }"
+            class="filter-sidebar__checkbox filter-sidebar__checkbox--between"
           >
+            <span>{{ category.label }}</span>
             <input
               type="checkbox"
               class="filter-sidebar__checkbox-input filter-sidebar__checkbox-input--square"
               :checked="filters.categories.includes(category.id)"
               @change="toggleCategory(category.id)"
             />
-            <span>{{ category.label }}</span>
           </label>
         </div>
       </FilterSection>
@@ -120,18 +119,33 @@
         :open="openSections.price"
         @toggle="toggleSection('price')"
       >
-        <div class="filter-sidebar__price">
+        <div class="filter-sidebar__price" :class="{ 'filter-sidebar__price--rtl': isRtl }">
           <div class="filter-sidebar__price-value">
             {{ priceDisplay }}
           </div>
-          <input
-            type="range"
-            class="filter-sidebar__slider"
-            :min="minPrice"
-            :max="maxPrice"
-            :value="filters.maxPrice"
-            @input="onPriceChange"
-          />
+          <div class="filter-sidebar__range-wrap">
+            <div class="filter-sidebar__range-track" aria-hidden="true">
+              <div class="filter-sidebar__range-fill" :style="rangeFillStyle" />
+            </div>
+            <input
+              type="range"
+              class="filter-sidebar__slider filter-sidebar__slider--min"
+              :min="minPrice"
+              :max="maxPrice"
+              :value="filters.minPrice"
+              :aria-label="$t('store.min_price')"
+              @input="onMinPriceChange"
+            />
+            <input
+              type="range"
+              class="filter-sidebar__slider filter-sidebar__slider--max"
+              :min="minPrice"
+              :max="maxPrice"
+              :value="filters.maxPrice"
+              :aria-label="$t('store.max_price')"
+              @input="onMaxPriceChange"
+            />
+          </div>
           <div class="filter-sidebar__price-labels">
             <span>{{ minPrice }} {{ currencyLabel }}</span>
             <span>{{ maxPrice }} {{ currencyLabel }}</span>
@@ -209,8 +223,20 @@ export default {
     currencyLabel() {
       return this.filterOptions.currency || this.$t('store.currency')
     },
+    isRtl() {
+      return this.$i18n.locale === 'ar'
+    },
     priceDisplay() {
-      return `${this.minPrice} — ${this.filters.maxPrice} ${this.currencyLabel}`
+      return `${this.filters.minPrice} — ${this.filters.maxPrice} ${this.currencyLabel}`
+    },
+    rangeFillStyle() {
+      const span = this.maxPrice - this.minPrice || 1
+      const start = ((this.filters.minPrice - this.minPrice) / span) * 100
+      const end = ((this.filters.maxPrice - this.minPrice) / span) * 100
+      return {
+        insetInlineStart: `${start}%`,
+        width: `${Math.max(end - start, 0)}%`,
+      }
     },
   },
   mounted() {
@@ -244,6 +270,7 @@ export default {
         colors: [],
         seasons: [],
         categories: [],
+        minPrice: this.minPrice,
         maxPrice: this.maxPrice,
       })
     },
@@ -271,8 +298,13 @@ export default {
         : [...this.filters.categories, id]
       this.emitFilters({ ...this.filters, categories })
     },
-    onPriceChange(e) {
-      this.emitFilters({ ...this.filters, maxPrice: Number(e.target.value) })
+    onMinPriceChange(e) {
+      const nextMin = Math.min(Number(e.target.value), this.filters.maxPrice)
+      this.emitFilters({ ...this.filters, minPrice: nextMin })
+    },
+    onMaxPriceChange(e) {
+      const nextMax = Math.max(Number(e.target.value), this.filters.minPrice)
+      this.emitFilters({ ...this.filters, maxPrice: nextMax })
     },
   },
 }
@@ -525,42 +557,109 @@ export default {
   font-weight: var(--Semi-Bold);
 }
 
-.filter-sidebar__category-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.625rem;
-}
-
-@media (min-width: 1024px) {
-  .filter-sidebar__category-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 0.875rem;
-  }
-}
-
-.filter-sidebar__category-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.625rem 0.75rem;
-  border-radius: 0.625rem;
-
-  background: white;
-  font-size: 0.875rem;
-  color: var(--store-filter-text);
-  cursor: pointer;
-  transition: border-color 0.2s, background-color 0.2s;
-}
-
-.filter-sidebar__category-btn--active {
-  background: #eef6fc;
-  color: var(--Primary-Text-color);
-  font-weight: var(--Semi-Bold);
+.filter-sidebar__checkbox-list--between {
+  gap: 1rem;
 }
 
 .filter-sidebar__price {
   padding-top: 0.25rem;
+}
+
+.filter-sidebar__range-wrap {
+  position: relative;
+  height: 1.125rem;
+  display: flex;
+  align-items: center;
+}
+
+.filter-sidebar__range-track {
+  position: absolute;
+  inset-inline: 0;
+  height: 0.375rem;
+  border-radius: 9999px;
+  background: #e8eaee;
+  overflow: hidden;
+}
+
+.filter-sidebar__range-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 9999px;
+  background: var(--Primary-Brand-color);
+  transition: inset-inline-start 0.1s, width 0.1s;
+}
+
+.filter-sidebar__slider {
+  position: absolute;
+  inset-inline: 0;
+  width: 100%;
+  height: 1.125rem;
+  margin: 0;
+  appearance: none;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  pointer-events: none;
+}
+
+.filter-sidebar__slider::-webkit-slider-runnable-track {
+  appearance: none;
+  background: transparent;
+}
+
+.filter-sidebar__slider::-moz-range-track {
+  background: transparent;
+  border: none;
+}
+
+.filter-sidebar__slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  border-radius: 9999px;
+  background: var(--Primary-Brand-color);
+  box-shadow: 0 2px 6px rgba(64, 185, 255, 0.4);
+  cursor: pointer;
+  pointer-events: auto;
+  border: 2px solid #ffffff;
+}
+
+.filter-sidebar__slider::-moz-range-thumb {
+  width: 1.125rem;
+  height: 1.125rem;
+  border: 2px solid #ffffff;
+  border-radius: 9999px;
+  background: var(--Primary-Brand-color);
+  box-shadow: 0 2px 6px rgba(64, 185, 255, 0.4);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.filter-sidebar__slider--max {
+  z-index: 2;
+}
+
+.filter-sidebar__slider--min {
+  z-index: 3;
+}
+
+.filter-sidebar__slider--min::-webkit-slider-thumb {
+  background: #ffffff;
+  border: 2px solid var(--Primary-Brand-color);
+}
+
+.filter-sidebar__slider--min::-moz-range-thumb {
+  background: #ffffff;
+  border: 2px solid var(--Primary-Brand-color);
+}
+
+.filter-sidebar__slider--max::-webkit-slider-thumb {
+  background: var(--Primary-Brand-color);
+}
+
+.filter-sidebar__slider--max::-moz-range-thumb {
+  background: var(--Primary-Brand-color);
 }
 
 .filter-sidebar__price-value {
@@ -575,36 +674,6 @@ export default {
   .filter-sidebar__price-value {
     display: none;
   }
-}
-
-.filter-sidebar__slider {
-  width: 100%;
-  height: 0.375rem;
-  appearance: none;
-  background: #d6ecfa;
-  border-radius: 9999px;
-  outline: none;
-  cursor: pointer;
-}
-
-.filter-sidebar__slider::-webkit-slider-thumb {
-  appearance: none;
-  width: 1.125rem;
-  height: 1.125rem;
-  border-radius: 9999px;
-  background: var(--Primary-Brand-color);
-  box-shadow: 0 2px 6px rgba(64, 185, 255, 0.4);
-  cursor: pointer;
-}
-
-.filter-sidebar__slider::-moz-range-thumb {
-  width: 1.125rem;
-  height: 1.125rem;
-  border: none;
-  border-radius: 9999px;
-  background: var(--Primary-Brand-color);
-  box-shadow: 0 2px 6px rgba(64, 185, 255, 0.4);
-  cursor: pointer;
 }
 
 .filter-sidebar__price-labels {

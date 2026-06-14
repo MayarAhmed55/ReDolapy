@@ -17,6 +17,7 @@
     />
 
     <UserModelUpload
+      ref="userModelUpload"
       v-model:model="model"
       class="mb-6 sm:mb-8"
     />
@@ -30,32 +31,33 @@
       @generate="onGenerate"
     />
 
-    <GeneratedDesign
+    <TryOnResult
       v-if="tryOnResult"
-      :design="tryOnResult"
+      :image-url="tryOnResult.image"
+      :heading="$t('tryOn.output.heading')"
+      :save-label="$t('tryOn.output.download_btn')"
+      :try-again-label="$t('tryOn.output.try_again_btn')"
+      :saving-label="$t('tryOn.output.downloading')"
       :saving="saving"
       :error="saveError"
-      :heading="$t('tryOn.output.heading')"
-      :action-label="$t('tryOn.output.save_btn')"
-      :action-loading-label="$t('tryOn.output.saving')"
-      :match-badge-label="$t('tryOn.output.style_match', { percent: 98 })"
-      :zoom-aria-label="$t('tryOn.output.zoom_aria')"
       scroll-id="tryon-result"
-      show-match-badge
-      @save="onAddToWardrobe"
+      @try-again="onTryAgain"
+      @save="onSaveResult"
     />
   </main>
 </template>
 
 <script>
 import AppStepper from '../components/sharedRecycleTryon/AppStepper.vue'
-import GeneratedDesign from '../components/sharedRecycleTryon/GeneratedDesign.vue'
+import TryOnResult from '../components/TryOn/TryOnResult.vue'
 import UserModelUpload from '../components/TryOn/UserModelUpload.vue'
 import TryOnUploadArea from '../components/TryOn/TryOnUploadArea.vue'
 import { fetchProductById } from '../api/store.js'
+import { generateOutfitTryOn } from '../api/tryOn.js'
+import { downloadImage } from '../utils/downloadImage.js'
 import { mapApiError } from '../utils/mapApiError.js'
 import { normalizeProduct, productToTryOnGarment } from '../utils/storeHelpers.js'
-import mockResultImage from '../assets/HeaderImage.png'
+import { pickTopAndBottomGarments, resolveImageFile, resolvePersonForTryOn } from '../utils/tryOnHelpers.js'
 
 export default {
   name: 'TryOn',
@@ -63,7 +65,7 @@ export default {
     AppStepper,
     UserModelUpload,
     TryOnUploadArea,
-    GeneratedDesign,
+    TryOnResult,
   },
   data: () => ({
     model: null,
@@ -117,12 +119,20 @@ export default {
         }
       },
     },
+    '$route.query.avatarId': {
+      immediate: false,
+      handler() {
+        this.applyAvatarFromRoute()
+      },
+    },
   },
   mounted() {
     const productId = this.$route.query.productId
     if (productId) {
       this.loadStoreProduct(productId)
     }
+    this.applyAvatarFromRoute()
+    this.applyUploadedModelFromRoute()
   },
   methods: {
     categoryLabel(category) {
@@ -147,39 +157,79 @@ export default {
       this.generateError = ''
       this.saveError = ''
     },
+    applyAvatarFromRoute() {
+      const avatarId = this.$route.query.avatarId
+      if (!avatarId) return
+      this.$nextTick(() => {
+        this.$refs.userModelUpload?.applyAvatarById(String(avatarId))
+      })
+    },
+    applyUploadedModelFromRoute() {
+      const file = history.state?.uploadedModelFile
+      if (!(file instanceof File)) return
+
+      this.$nextTick(() => {
+        this.$refs.userModelUpload?.addModelFile(file)
+      })
+
+      const { uploadedModelFile, ...rest } = history.state || {}
+      window.history.replaceState(rest, '')
+    },
     async onGenerate() {
-      if (!this.model || !this.garments.length || this.generating) return
+      if (!this.model || this.garments.length < 2 || this.generating) {
+        if (!this.model || this.garments.length < 2) {
+          this.generateError = this.$t('tryOn.errors.need_two_garments')
+        }
+        return
+      }
 
       this.generating = true
       this.generateError = ''
 
       try {
-        await new Promise(resolve => setTimeout(resolve, 1800))
+        const { top, bottom } = pickTopAndBottomGarments(this.garments)
+        const person = resolvePersonForTryOn(this.model)
+        const [topImage, bottomImage] = await Promise.all([
+          resolveImageFile(top, 'top.jpg'),
+          resolveImageFile(bottom, 'bottom.jpg'),
+        ])
 
-        const garmentNames = this.garments.map(g => g.title).join(' & ')
+        const result = await generateOutfitTryOn({
+          ...person,
+          topImage,
+          bottomImage,
+        })
+
         this.tryOnResult = {
-          title: garmentNames || this.$t('tryOn.output.heading'),
-          image: mockResultImage,
-          description: this.$t('tryOn.mock_description'),
+          image: result.imageUrl,
         }
 
         this.$nextTick(() => {
           document.getElementById('tryon-result')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
         })
       } catch (err) {
-        this.generateError = mapApiError(err, this.$t.bind(this))
+        if (err.message === 'NEED_TWO_GARMENTS') {
+          this.generateError = this.$t('tryOn.errors.need_two_garments')
+        } else {
+          this.generateError = mapApiError(err, this.$t.bind(this))
+        }
       } finally {
         this.generating = false
       }
     },
-    async onAddToWardrobe() {
-      if (this.saving) return
+    onTryAgain() {
+      this.model = null
+      this.garments = []
+      this.resetResult()
+    },
+    async onSaveResult() {
+      if (this.saving || !this.tryOnResult?.image) return
 
       this.saving = true
       this.saveError = ''
 
       try {
-        await new Promise(resolve => setTimeout(resolve, 800))
+        await downloadImage(this.tryOnResult.image, this.$t('tryOn.output.heading'))
       } catch (err) {
         this.saveError = err.message || this.$t('tryOn.errors.save_failed')
       } finally {

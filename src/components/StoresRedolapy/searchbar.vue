@@ -75,19 +75,14 @@ export default {
   height: 1.125rem;
   color: #a0a6b2;
   pointer-events: none;
-}
-
-
-.store-search--rtl .store-search__icon {
-  top: 0.625rem;
-  inset-inline-start: 50%;
-  inset-inline-end: auto;
-  transform: translateX(-50%);
+  flex-shrink: 0;
 }
 
 .store-search__input {
   width: 100%;
-  padding: 0.875rem 1rem 0.875rem 2.75rem;
+  padding-block: 0.875rem;
+  padding-inline-start: 2.75rem;
+  padding-inline-end: 1rem;
   border: 1px solid #e8eaee;
   border-radius: 9999px;
   background: #ffffff;
@@ -96,11 +91,7 @@ export default {
   color: var(--Primary-Text-color);
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.store-search--rtl .store-search__input {
-  padding: 2.125rem 1rem 0.75rem;
-  text-align: center;
+  text-align: start;
 }
 
 .store-search__input::placeholder {
@@ -140,18 +131,6 @@ export default {
 @media (min-width: 1024px) {
   .store-search__filter-btn {
     display: none;
-  }
-
-  .store-search--rtl .store-search__icon {
-    top: 50%;
-    inset-inline-start: auto;
-    inset-inline-end: 1.125rem;
-    transform: translateY(-50%);
-  }
-
-  .store-search--rtl .store-search__input {
-    padding: 0.875rem 2.75rem 0.875rem 1rem;
-    text-align: start;
   }
 }
 </style>

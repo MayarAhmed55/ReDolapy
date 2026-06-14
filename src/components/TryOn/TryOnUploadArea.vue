@@ -144,7 +144,7 @@ export default {
           type: 'model',
           title: this.model.type === 'avatar' ? this.model.name : this.$t('tryOn.model.your_photo'),
           subtitle: this.model.type === 'avatar' ? this.$t('tryOn.model.avatar_label') : this.$t('tryOn.model.personal_label'),
-          url: this.model.url,
+          url: this.model.stableUrl || this.model.url,
         })
       }
       this.garments.forEach((g) => {
@@ -159,7 +159,7 @@ export default {
       return items
     },
     canGenerate() {
-      return Boolean(this.model) && this.garments.length >= 1
+      return Boolean(this.model) && this.garments.length >= 2
     },
   },
   beforeUnmount() {
