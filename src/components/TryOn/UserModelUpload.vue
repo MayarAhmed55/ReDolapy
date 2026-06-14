@@ -4,8 +4,8 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl">
       <button
         type="button"
-        class="model-choice-card"
-        :class="{ 'model-choice-card--active': modelSource === 'personal' }"
+        class="model-choice-card  bg-white dark:bg-[#0d0d0d]"
+        :class="{ 'model-choice-card--active': modelSource === 'personal' } "
         @click="selectModelSource('personal')"
       >
         <span class="model-choice-card__icon" aria-hidden="true">
@@ -22,7 +22,7 @@
 
       <button
         type="button"
-        class="model-choice-card"
+        class="model-choice-card bg-white dark:bg-[#0d0d0d]"
         :class="{ 'model-choice-card--active': modelSource === 'avatar' }"
         @click="selectModelSource('avatar')"
       >
@@ -184,7 +184,7 @@ export default {
   padding: 0.875rem 1rem;
   border-radius: 1rem;
   border: 1.5px solid #D8DCE3;
-  background: white;
+  /* background: white; */
   text-align: start;
   transition: border-color 0.2s, box-shadow 0.2s;
 }

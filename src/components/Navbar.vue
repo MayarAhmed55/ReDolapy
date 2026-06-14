@@ -3,16 +3,17 @@
     <nav class="relative bg-(--primary-bgc)">
       <div class="mx-auto flex h-14 sm:h-16 items-center justify-between gap-4 px-1 sm:px-2">
         <router-link to="/" class="shrink-0">
-          <img src="../assets/Logo.png" alt="Redolapy" class="h-7 sm:h-8 w-auto" />
+          <img :src="adaptiveHeroImage" alt="Redolapy" class="h-7  sm:h-8 w-auto" />
+          <!-- <img src="../assets/Logo Dark mode.png" alt="Redolapy" class=" hidden dark:block h-7 sm:h-8 w-auto" /> -->
         </router-link>
 
         <div class="hidden lg:flex flex-1 items-center justify-center gap-6 xl:gap-10">
           <template v-for="link in navLinks" :key="link.to">
-            <a v-if="link.hash" :href="link.hash" class="nav-link-item text-sm xl:text-base"
+            <a v-if="link.hash" :href="link.hash" class="nav-link-item text-sm xl:text-base PrimaryTxt"
               @click="onHashLinkClick($event, link.hash)">
               {{ link.label }}
             </a>
-            <router-link v-else :to="link.to" class="nav-link-item text-sm xl:text-base">
+            <router-link v-else :to="link.to" class="nav-link-item text-sm xl:text-base PrimaryTxt ">
               {{ link.label }}
             </router-link>
           </template>
@@ -50,6 +51,16 @@
             aria-hidden="true">
             <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
+        </button>
+
+        <button @click="toggleTheme" type="button"
+          class="p-2.5 rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-700 dark:text-zinc-300 transition-all duration-200 hover:scale-105">
+          <span v-if="isDark" class="text-yellow-500">
+            <SunMedium></SunMedium>
+          </span>
+          <span v-else class="text-indigo-600">
+            <Moon></Moon>
+          </span>
         </button>
       </div>
     </nav>
@@ -129,30 +140,43 @@
       <AuthModal :open="sharedAuthOpen" :mode="sharedAuthMode" @close="sharedAuthOpen = false" @switch-mode="switchMode"
         @login-success="checkUserSession" />
     </Teleport>
+
+
+
+
   </div>
 </template>
 
 <script>
+import Logo from '../assets/Logo.png'
+import LogoDark from '../assets/Logo Dark mode.png'
+import LogoDark2 from '../assets/Logo Dark mode2.png'
 import LangSwitcher from "./LangSwitcher.vue";
 import AuthModal from "./modal.vue";
 import { isAuthModalOpen, authModalMode } from "../authState.js";
+import { SunMedium, Moon } from '@lucide/vue';
+import { ref } from 'vue';
 
 export default {
   name: "Navbar",
   components: {
     LangSwitcher,
     AuthModal,
+    SunMedium,
+    Moon
   },
   data() {
     return {
       mobileOpen: false,
       user: null,
+      isDark: false,
       navLinks: [
         { to: "/", label: "Home", mobileLabel: "Features" },
         { to: "/TryOn", label: "TryOn", mobileLabel: "Try-On" },
         { to: "/Recycle", label: "Recycle" },
         { to: "/#PricingSection", label: "Pricing", hash: "#PricingSection" },
-        { to: "/AboutPage", label: "About" },
+        { to: "/AboutPage", label: "About Us" },
+        { to: "/ContactUS", label: "Contact US" },
       ],
     };
   },
@@ -182,7 +206,20 @@ export default {
   beforeUnmount() {
     document.body.style.overflow = "";
   },
+ 
   methods: {
+
+    toggleTheme() {
+      this.isDark = !this.isDark;
+
+      if (this.isDark) {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      }
+    },
     openMobileMenu() {
       this.mobileOpen = true;
     },
@@ -195,8 +232,8 @@ export default {
     },
     handleLogout() {
       localStorage.removeItem("user");
-      localStorage.removeItem("token")
-      localStorage.removeItem("_id")
+      localStorage.removeItem("token");
+      localStorage.removeItem("_id");
       this.user = null;
       if (this.$route.meta.requiresAuth) {
         this.$router.push("/");
@@ -239,17 +276,18 @@ export default {
     },
     userFullName() {
       if (!this.user) return "";
-      // Google OAuth payload uses firstName/lastName
       const first = this.user.firstName || this.user.first_name || this.user.given_name || "";
       const last = this.user.lastName || this.user.last_name || this.user.family_name || "";
       if (first || last) return `${first} ${last}`.trim();
       if (this.user.name) return this.user.name;
       if (this.user.displayName) return this.user.displayName;
       return "User";
-    }
-  },
-  mounted() {
-    this.checkUserSession();
+    },
+      adaptiveHeroImage() {
+        return this.isDark
+          ?LogoDark2 : Logo
+      }
+    
   }
 };
 </script>
@@ -283,7 +321,7 @@ export default {
 .nav-link-item {
   position: relative;
   text-decoration: none;
-  color: #1e293b;
+  /* color: #1e293b; */
   font-weight: 500;
   padding: 0.5rem 0;
   white-space: nowrap;

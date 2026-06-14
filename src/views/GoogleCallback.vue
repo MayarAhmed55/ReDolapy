@@ -31,7 +31,8 @@ export default {
           // Opened as a popup — send data back to the main window and close
           window.opener.postMessage(
             { type: "GOOGLE_AUTH_SUCCESS", payload: userData },
-            window.origin
+            // window.origin
+            "http://localhost:5173" // 🟢 Change from window.origin to this!
           );
           
 

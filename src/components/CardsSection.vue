@@ -7,7 +7,7 @@
 
 
             <div class="cardsContainer flex gap-8 justify-center my-[3rem]">
-                <div class="card ">
+                <div class="card !bg-white dark:!bg-[#0d0d0d] ">
                     <div class="Sparkle Icon PrimaryTxt ">
                             <slot name="Icon1"></slot>
                     </div>
@@ -15,7 +15,7 @@
                     <p class="serviceDescription Secondary-grayTxt">{{Card1Description}}</p>
                 </div>
 
-                <div class="card">
+                <div class="card  bg-white dark:bg-[#0d0d0d]">
                     <div class="TryOn Icon  ">
                             <slot name="Icon2"></slot>
                     </div>
@@ -23,7 +23,7 @@
                     <p class="serviceDescription Secondary-grayTxt">{{Card2Description}}</p>
                 </div>
 
-                <div class="card Secondary-grayTxt">
+                <div class="card  bg-white dark:bg-[#0d0d0d] Secondary-grayTxt">
                     <div class="Recycle Icon ">
                             <slot name="Icon3"></slot>
                     </div>
@@ -62,13 +62,14 @@
     }
 </script>
 
-<style scoped>
-@import '../assets/Style.css';
+<style >
+/* @import '../assets/Style.css'; */
+/* @reference "tailwindcss"; */
 
 .card {
     width: 32%;
-    background-color: white;
-    border-radius: 1em;
+    /* background-color: white; */
+/* @apply bg-white dark:bg-[#0d0d0d] transition-colors duration-300;    border-radius: 1em; */
     padding: 2rem;
     padding-bottom: 4rem;
     box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.1), -0.1rem -0.1rem 0.1rem rgba(0, 0, 0, 0.1);
@@ -94,7 +95,7 @@
 }
 
 .TryOn {
-    background-color: #FEEFE5;
+    background-color: #FEEFE580 ;
     color: var(--Secondary-Orange-Brand-color);
 
 }

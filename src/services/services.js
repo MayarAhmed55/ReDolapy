@@ -1,8 +1,8 @@
 import axios from "axios";
-const API = "http://localhost:5000/api";
+const API = ""; // Use relative paths to trigger the Vite proxy
 
-export const login = (credi) => axios.post(`${API}/auth/login`, credi);
-export const signUp = (userData) => axios.post(`${API}/auth/signup`, userData);
+export const login = (credi) => axios.post(`${API}/login`, credi);
+export const signUp = (userData) => axios.post(`${API}/signup`, userData);
 export const updateProfile = (profileData, token) => {
   return axios.put(`${API}/users/profile`, profileData, {
     headers: {
@@ -19,7 +19,7 @@ export const getUserById = (userId) => {
 };
 export const emailVerification = (token) => {
   return axios.post(
-    `${API}/auth/send-verification`,
+    `${API}/send-verification`,
     {}, // body
     {
       headers: {
@@ -30,15 +30,15 @@ export const emailVerification = (token) => {
 };
 
 export const mailingOTP = (email) => {
-  return axios.post(`${API}/auth/forgot-password`, email);
+  return axios.post(`${API}/forgot-password`, email);
 };
 
 export const verifyOTP = (data) => {
-  return axios.post(`${API}/auth/verify-otp`, data);
+  return axios.post(`${API}/verify-otp`, data);
 }
 
 export const resetPassword = (data) => {
-  return axios.put(`${API}/auth/reset-password`, data);
+  return axios.put(`${API}/reset-password`, data);
 }
 export const deleteAccount = (email) => {
   return axios.delete(`${API}/users/account`, {

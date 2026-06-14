@@ -7,7 +7,7 @@
 
 
             <div class="cardsContainer flex gap-8 justify-center my-[3rem]">
-                <div class="card ">
+                <div class="card bg-white dark:bg-[#0d0d0d]">
                  <div class="flex justify-between items-center gap-4 w-[fit-content] m-auto mb-[1rem]">
                     <img :src="imgSrc1" alt="">
                     <ArrowRight/>
@@ -17,7 +17,7 @@
                     <p class="serviceTitle PrimaryTxt w-[fit-content] m-auto">{{Card1Title}}</p>
                 </div>
 
-                <div class="card">
+                <div class="card bg-white dark:bg-[#0d0d0d]">
                    <div class="flex justify-between items-center gap-4 w-[fit-content] m-auto mb-[1rem]">
                     <img :src="imgSrc3" alt="">
                     <ArrowRight/>
@@ -27,7 +27,7 @@
                     <p class="serviceTitle PrimaryTxt w-[fit-content] m-auto">{{Card2Title}}</p>
                 </div>
 
-                <div class="card Secondary-grayTxt">
+                <div class="card Secondary-grayTxt bg-white dark:bg-[#0d0d0d]">
                  <div class="flex justify-between items-center gap-4 w-[fit-content] m-auto mb-[1rem]">
                     <img :src="imgSrc5" alt="">
                     <ArrowRight/>
@@ -79,7 +79,7 @@ import { ArrowRight } from '@lucide/vue';
 
 .card {
     width: 32%;
-    background-color: white;
+    /* background-color: white; */
     border-radius: 1em;
     padding: 2rem;
     box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.1), -0.1rem -0.1rem 0.1rem rgba(0, 0, 0, 0.1);

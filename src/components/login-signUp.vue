@@ -265,8 +265,11 @@ export default {
     const form = ref({
       first_name: "",
       last_name: "",
-      email: "",
-      password: "",
+      email: "", // used for login
+      password: "", // used for login
+      emailSignup: "",
+      passwordSignup: "",
+      confirmPasswordSignup: "",
       confirmPassword: "",
     });
 
@@ -278,6 +281,34 @@ export default {
     const error = ref(null);
     const { locale } = useI18n()
     const isRTL = computed(() => locale.value === 'ar')
+
+    // function handleGoogle() {
+    //   const popup = window.open(
+    //     "/google",
+    //     "Google Login",
+    //     "width=500,height=600,left=400,top=100",
+    //   );
+
+    //   window.addEventListener(
+    //     "message",
+    //     (event) => {
+    //       // Allow messages from the expected Google callback origin during development
+    //       // In a production environment, this check should be more robust and ideally match window.origin
+    //       // or a list of trusted origins.
+    //       if (event.origin !== window.origin && event.origin !== "http://localhost:5173") return;
+    //       if (event.data?.type === "GOOGLE_AUTH_SUCCESS") {
+    //         const { token, ...user } = event.data.payload;
+    //         localStorage.setItem("token", token);
+    //         localStorage.setItem("user", JSON.stringify(user));
+    //         if (popup && !popup.closed) popup.close();
+    //         emit("login-success");
+    //         emit("close");
+    //       }
+    //     },
+    //     { once: true },
+    //   );
+    // }
+
 
     function handleGoogle() {
       const popup = window.open(
@@ -297,12 +328,13 @@ export default {
             if (popup && !popup.closed) popup.close();
             emit("login-success");
             emit("close");
+            location.reload();
           }
         },
         { once: true },
       );
     }
-
+    
     function switchTo(newMode) {
       if (newMode === props.mode) return;
       // 1. Fade content out
@@ -363,6 +395,7 @@ export default {
           emit("close");
         }
       } catch (err) {
+        console.error("Authentication error:", err);
         error.value = err.response?.data?.message ?? "Something went wrong";
       } finally {
         isLoading.value = false;

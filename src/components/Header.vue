@@ -2,7 +2,7 @@
     <div>
  <section id="Header" class="  flex items-center justify-between px-[5rem]">
             <div id="slogan" class="w-[40%] my-[5rem]"> 
-                <p class="text-5xl font-bold mb-[1rem] PrimaryTxt">{{ primaryText }}</p>
+                <p class="text-5xl font-bold mb-[1rem] PrimaryTxt ">{{ primaryText }}</p>
                 <p class="text-5xl gradientColor font-bold mb-[1rem]">{{ gradientText }}</p>
                 <p class="w-[60%] mb-[1rem] grayTxt">{{ Description }}</p>
 
@@ -35,7 +35,7 @@
 </script>
 
 <style scoped>
-@import '../assets/Style.css';
+/* @import '../assets/Style.css'; */
 .gradientColor {
     background: var(--Gradient-bgc);
     -webkit-background-clip: text;

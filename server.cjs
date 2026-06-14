@@ -1,3 +1,14 @@
+// 🔴 DIAGNOSTIC BLOCK: Add this at the absolute top of server.cjs
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('❌ CRITICAL CRASH: Unhandled Promise Rejection!');
+    console.error('Reason:', reason);
+});
+
+process.on('uncaughtException', (err) => {
+    console.error('❌ CRITICAL CRASH: Uncaught Exception thrown!');
+    console.error(err.stack || err);
+});
+
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -10,6 +21,12 @@ const PORT = process.env.PORT || 7000;
 
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
+
+// 🔴 DEBUG LOGGING: Add this to see every incoming request in your terminal
+app.use((req, res, next) => {
+  console.log(`📡 Incoming Request: ${req.method} ${req.path}`);
+  next();
+});
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } });
@@ -337,6 +354,139 @@ app.post('/generate', express.json(), async (req, res) => {
   }
 });
 
+// Placeholder for authentication routes
+// IMPORTANT: If you have your routes in a separate file using express.Router(), 
+// you MUST mount it like this:
+// const authRouter = require('./path/to/your/auth/file');
+// app.use('/', authRouter); 
+
+app.post('/signup', (req, res) => {
+  console.log('Signup request received:', req.body);
+  const { email, password, confirmPassword } = req.body;
+
+  if (!email || !password || !confirmPassword) {
+    return res.status(400).json({ message: 'All fields are required for signup.' });
+  }
+  if (password !== confirmPassword) {
+    return res.status(400).json({ message: 'Passwords do not match.' });
+  }
+
+  // In a real app: hash password, save user, generate token
+  res.status(201).json({
+    message: 'User registered successfully (dummy response)',
+    token: 'dummy_jwt_token_signup_' + Date.now(),
+    _id: 'dummy_user_id_signup_' + Date.now(),
+  });
+});
+
+app.post('/login', (req, res) => {
+  console.log('Login request received:', req.body);
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email and password are required for login.' });
+  }
+
+  // In a real app: verify credentials, generate token
+  res.status(200).json({
+    message: 'User logged in successfully (dummy response)',
+    token: 'dummy_jwt_token_login_' + Date.now(),
+    _id: 'dummy_user_id_login_' + Date.now(),
+    user: {
+      profile: { first_name: 'Dummy', last_name: 'User' },
+      email: email,
+      _id: 'dummy_user_id_login_' + Date.now(),
+      userImage: null, // Placeholder
+    }
+  });
+});
+
+app.put('/users/profile', (req, res) => {
+  console.log('Update profile request received:', req.body);
+  const { firstName, lastName } = req.body;
+  const token = req.headers.authorization?.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ message: 'Unauthorized: No token provided.' });
+  }
+  if (!firstName || !lastName) {
+    return res.status(400).json({ message: 'First name and last name are required.' });
+  }
+
+  // In a real app: verify token, update user profile in DB
+  res.status(200).json({ message: 'Profile updated successfully (dummy response).' });
+});
+
+app.post('/send-verification', (req, res) => {
+  console.log('Email verification request received.');
+  const token = req.headers.authorization?.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ message: 'Unauthorized: No token provided.' });
+  }
+
+  // In a real app: send verification email
+  res.status(200).json({ message: 'Verification email sent (dummy response).' });
+});
+
+app.get('/users/:userId', (req, res) => {
+  console.log('Get user by ID request received:', req.params.userId);
+  const token = req.headers.authorization?.split(' ')[1];
+  const userId = req.params.userId;
+
+  if (!token) {
+    return res.status(401).json({ message: 'Unauthorized: No token provided.' });
+  }
+
+  // In a real app: verify token, fetch user from DB
+  res.status(200).json({
+    user: {
+      _id: userId,
+      email: 'dummy@example.com', // Placeholder
+      profile: { first_name: 'Dummy', last_name: 'User' },
+      userImage: null,
+    }
+  });
+});
+
+app.get('/google', (req, res) => {
+  console.log('Google auth initiation received.');
+  const dummyToken = 'google_dummy_jwt_token_' + Date.now();
+  const dummyUser = {
+    _id: 'google_dummy_user_id_' + Date.now(),
+    email: 'google.dummy@example.com',
+    first_name: 'Google',
+    last_name: 'User'
+  };
+  res.send(`<script>window.opener.postMessage({type: 'GOOGLE_AUTH_SUCCESS', payload: {token: '${dummyToken}', _id: '${dummyUser._id}', email: '${dummyUser.email}', first_name: '${dummyUser.first_name}', last_name: '${dummyUser.last_name}'}}, window.location.origin);window.close();</script>`);
+});
+
+// Placeholder for password reset and account management routes
+app.post('/forgot-password', (req, res) => {
+  console.log('Forgot password request received:', req.body);
+  res.status(200).json({ message: 'OTP sent to email (dummy response).' });
+});
+
+app.post('/verify-otp', (req, res) => {
+  console.log('Verify OTP request received:', req.body);
+  res.status(200).json({ message: 'OTP verified (dummy response).' });
+});
+
+app.put('/reset-password', (req, res) => {
+  console.log('Reset password request received:', req.body);
+  res.status(200).json({ message: 'Password reset successfully (dummy response).' });
+});
+
+app.delete('/users/account', (req, res) => {
+  console.log('Delete account request received:', req.body);
+  res.status(200).json({ message: 'Account deleted successfully (dummy response).' });
+});
+
+app.post('/users/settings', (req, res) => {
+  console.log('User settings update received:', req.body);
+  res.status(200).json({ message: 'User settings updated successfully (dummy response).' });
+});
+
 const distPath = path.join(__dirname, 'dist');
 if (require('fs').existsSync(distPath)) {
   app.use(express.static(distPath));
@@ -345,6 +495,10 @@ if (require('fs').existsSync(distPath)) {
   });
 }
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+// app.listen(PORT, () => {
+//   console.log(`Server running on http://localhost:${PORT}`);
+// });
+
+app.listen(5000, () => {
+    console.log('Server running on http://localhost:5000');
 });

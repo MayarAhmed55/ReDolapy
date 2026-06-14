@@ -1,34 +1,57 @@
 <template>
-    <div>
- <div id="ProPricing" class="relative ">
-                    <div class=" pro-card-inner flex flex-col justify-center items-center gap-8 ">
-                        <p class="PricingTitle text-4xl font-bold">{{ cardTitle }}</p>
-                        <p class="Price font-medium"><span class="text-4xl font-bold">{{ Price }}</span>{{ permonth }}</p>
-                        <div class="planFeatures">
-                            <p class="flex items-center gap-2 font-medium text-lg mb-1"><span class="text-[#8ED321]">
-                                    <CircleCheckBig />
-                                </span>{{ firstPoint }}</p>
-                            <p class="flex items-center gap-2 font-medium text-lg  mb-1"><span class="text-[#8ED321]">
-                                    <CircleCheckBig />
-                                </span>{{ secondPoint }}</p>
-                            <p class="flex items-center gap-2 font-medium text-lg  mb-1"><span class="text-[#8ED321]">
-                                    <CircleCheckBig />
-                                </span>{{thirdPoint}}</p>
-                            <p class="flex items-center gap-2 font-medium text-lg  mb-1"><span class="text-[#8ED321]">
-                                    <CircleCheckBig />
-                                </span>{{ fourthPoint }}</p>
 
-                        </div>
-                        <div class="w-full space-y-3">
-                            <slot name="AdditionalFeatures"></slot>
-                        </div>
-                        <button id="ProPricingBtn" class=" PricingCardsButton font-semibold text-lg"> <router-link
-                                to="/pricing" class="no-underline">{{ buttonContent }}</router-link></button>
 
-                                <slot name="AdditionalInfo"></slot>
-                    </div>
-                </div>
+  <div>
+    <div id="ProPricing" class="relative ">
+          
+          <div class="pro-card-inner flex flex-col justify-between items-center gap-6">
+              
+              <div class=" bg-[#FF8E40] self-start text-white  text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full z-10">
+                Popular
+              </div>
+        <div class="text-center PrimaryTxt dark:text-white">
+          <p class="PricingTitle text-4xl font-bold mb-2 ">{{ cardTitle }}</p>
+          <p class="Price font-medium">
+            <span class="text-4xl font-bold ">{{ Price }}</span>{{ permonth }}
+          </p>
+        </div>
+
+        <div class="planFeatures text-start w-full PrimaryTxt dark:text-white">
+          <p class="flex items-center gap-2 font-medium text-base mb-2">
+            <span class="text-[#8ED321] flex-shrink-0"><CircleCheckBig /></span>
+            <span>{{ firstPoint }}</span>
+          </p>
+          <p class="flex items-center gap-2 font-medium text-base mb-2">
+            <span class="text-[#8ED321] flex-shrink-0"><CircleCheckBig /></span>
+            <span>{{ secondPoint }}</span>
+          </p>
+          <p class="flex items-center gap-2 font-medium text-base mb-2">
+            <span class="text-[#8ED321] flex-shrink-0"><CircleCheckBig /></span>
+            <span>{{ thirdPoint }}</span>
+          </p>
+          <p class="flex items-center gap-2 font-medium text-base mb-2">
+            <span class="text-[#8ED321] flex-shrink-0"><CircleCheckBig /></span>
+            <span>{{ fourthPoint }}</span>
+          </p>
+        </div>
+
+        <div class="w-full">
+          <slot name="AdditionalFeatures"></slot>
+        </div>
+
+        <button id="ProPricingBtn" class="PricingCardsButton font-semibold text-lg w-full py-3 rounded-xl transition-transform hover:scale-[1.01]">
+          <router-link to="/pricing" class="no-underline block text-white w-full h-full">
+            {{ buttonContent }}
+          </router-link>
+        </button>
+
+        <div class="w-full flex justify-center">
+          <slot name="AdditionalInfo"></slot>
+        </div>
+
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -73,7 +96,7 @@ export default {
     border-radius: 1rem;
     width: 100%;
     height: 100%;
-    padding: 5rem;
+    padding: 2rem;
 
 }
 #ProPricingBtn {

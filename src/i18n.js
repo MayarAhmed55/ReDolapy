@@ -30,12 +30,12 @@ const messages = {
       tryOn: {
         title: "Try-on",
         description:
-          "Precise body mapping technology ensures you never have to guess your size across different brands again.",
+          "Try on your personal image or on an avatar that Precise body mapping technology.",
       },
       recycle: {
         title: "Recycle",
         description:
-          "Stay ahead of the curve with real-time analysis of global runway trends filtered through your style lens.",
+          "Reimagine your closet. Our AI filters global runway trends to transform your existing clothes into next-season statements.",
       },
     },
     steps: {
@@ -59,15 +59,20 @@ const messages = {
           "Receive personalized daily lookbooks and shopping suggestions that fit your style.",
       },
     },
+
     sustainable: {
-      title: "Sustainable Wardrobe",
+      title: "We make your Wardrobe Sustainable!",
+      titlePart1: "We make your Wardrobe",
+      titlePart2: "Sustainable!",
       description:
-        "AELIA is committed to circular fashion. Our platform doesn't just help you style your clothes—it helps you manage their entire lifecycle. Join our movement to reduce textile waste through smart recycling, reselling, and donation programs.",
+        "ReDolapy is committed to circular fashion. Our platform doesn't just help you style your clothes—it helps you manage their entire lifecycle. Join our movement to reduce textile waste through smart recycling, reselling, and donation programs.",
       recycleRenew: "Recycle & Renew",
       recycleDescription:
         "Easily request a recycling kit for items that have reached the end of their life.",
       learnRecycling: "Learn about Recycling",
       learnTryOn: "Learn about Try On",
+      coreFeaturesTitle: "What We <span class='gradientColor'>make?</span>",
+      coreFeaturesSubtitle: "Let’s Know ReDolapy Core Value",
     },
     tryOnSection: {
       yourMirror: "Your Mirror",
@@ -109,8 +114,11 @@ const messages = {
     // },
 
     pricing: {
-      title: "Simple, Transparent Pricing",
-      subtitle: "Choose the perfect plan for your digital wardrobe needs",
+      title: "Subscription plans",
+      subtitle: "Pick your fav plan to get started",
+      completeSubscription: "Complete Subscription",
+      monthlyToggle: "Monthly",
+      yearlyToggle: "Yearly",
       completeSubscription: "Complete Subscription",
       paymentMethod: "Payment Method",
       cardNumber: "Card Number",
@@ -130,7 +138,7 @@ const messages = {
 
       // 💡 Added Missing Free Plan Block
       free: {
-        name: "Free Wardrobe",
+        name: "Free Plan",
         price: "$0",
         priceUnit: "/ month",
         button: "Get Started Free",
@@ -142,7 +150,7 @@ const messages = {
       },
 
       pro: {
-        name: "Pro Atelier",
+        name: "Pro plan",
         price: "$19",
         priceUnit: "/ month",
         button: "Finalize & Activate Plan",
@@ -169,42 +177,13 @@ const messages = {
             "Yes! You can take photos of your existing wardrobe pieces, and our digital closet system will instantly catalog them and generate fresh style lookbooks combined with new styling recommendations.",
         },
         {
-          title: "How does the AI know my size?",
+          title: "how can i try on if i don't want to upload my photo ?",
           answer:
-            "Yes! You can take photos of your existing wardrobe pieces, and our digital closet system will instantly catalog them and generate fresh style lookbooks combined with new styling recommendations.",
+            "ReDolapy is offering a Virtual Try On using an avatar Exactly Like you by when you sets its pararmeters to be like you",
         },
       ],
     },
-    //   recycle: {
-    //   header_title: 'Redolapy Up-cycling Design Generator',
-    //   header_subtitle: 'Upload your pieces · Pick a design · See it come to life',
-
-    //   steps: {
-    //     upload: 'Upload Pieces',
-    //     choose: 'Pick Design Idea',
-    //     result: 'Upcycled Concept'
-    //   },
-
-    //   upload: {
-    //     title: 'Drag and drop your wardrobe images here',
-    //     button: 'Analyze Garments',
-    //     loading: 'Analyzing fabrics and clothing items...'
-    //   },
-
-    //   ideas: {
-    //     title: 'Discovered Upcycling Recommendations',
-    //     submit: 'Generate AI Transformation View'
-    //   },
-
-    //   output: {
-    //     save_btn: 'Download Design Blueprint Specs'
-    //   },
-
-    //   errors: {
-    //     upload_first: 'Please upload garments and discover design ideas first.',
-    //     save_failed: 'Failed to download image.'
-    //   }
-    // },
+ 
 
     recycle: {
       header_title: "Redolapy Up-cycling Design Generator",
@@ -323,17 +302,7 @@ const messages = {
       analyzing: "Creating your design ideas…",
       discover: "Discover Design Ideas",
     },
-    footer: {
-      brandName: "ReDolapy",
-      tagline:
-        "Elevating digital ateliers through artificial intelligence and human creativity.",
-      platform: "Platform",
-      styleGuide: "Style Guide",
-      tryOn: "Try On",
-      features: "Features",
-      ContactUs: "Contact Us",
-      privacyPolicy: "Privacy Policy",
-    },
+   
     payment: {
       completeSubscription: "Complete Subscription",
       paymentMethod: "Payment Method",
@@ -345,14 +314,14 @@ const messages = {
     footer: {
       brandName: "ReDolapy",
       tagline:
-        "Elevating digital ateliers through artificial intelligence and human creativity.",
+        "Re-think your wardrobe. Re-define your style.",
       platform: "Platform",
       styleGuide: "Style Guide",
       tryOn: "Try On",
       features: "Features",
       ContactUs: "Contact Us",
       telegram: "Telegram",
-      copyright: "© 2026 AELIA AI. All rights reserved.",
+      copyright: "© 2026 ReDolapy AI. All rights reserved.",
       privacyPolicy: "Privacy Policy",
     },
     auth: {
@@ -410,6 +379,23 @@ const messages = {
         },
       },
     },
+
+    
+  "contact": {
+    "titlePart1": "Contact",
+    "titlePart2": "ReDolapy Team",
+    "description": "Have a question, partnership idea, or just want to say hi? Drop us a message and we'll get back to you as soon as possible.",
+    "form": {
+      "nameLabel": "Name",
+      "namePlaceholder": "name",
+      "emailLabel": "Email",
+      "emailPlaceholder": "user@gmail.com",
+      "messageLabel": "Message",
+      "messagePlaceholder": "write your message here",
+      "sendButton": "Send"
+    }
+  
+},
     fp: {
       forgotTitle: "Forgot Password?",
       forgotSubtitle:
@@ -490,39 +476,44 @@ const messages = {
       tryOn: {
         title: "جرب الملابس افتراضياً",
         description:
-          "تقنية المسح الجسدي الدقيقة تضمن أنك لن تخمن مقاسك مرة أخرى عبر العلامات التجارية المختلفة.",
+          "جربها على صورتك الشخصية أو على صورة رمزية باستخدام تقنية رسم خرائط الجسم الدقيقة.",
       },
+      // recycle: {
+      //   header_title: "Redolapy Up-cycling Design Generator",
+      //   header_subtitle:
+      //     "Upload your pieces · Pick a design · See it come to life",
+
+      //   steps: {
+      //     upload: "Upload Pieces",
+      //     choose: "Pick Design Idea",
+      //     result: "Upcycled Concept",
+      //   },
+
+      //   upload: {
+      //     title: "Drag and drop your wardrobe images here",
+      //     button: "Analyze Garments",
+      //     loading: "Analyzing fabrics and clothing items...",
+      //   },
+
+      //   ideas: {
+      //     title: "Discovered Upcycling Recommendations",
+      //     submit: "Generate AI Transformation View",
+      //   },
+
+      //   output: {
+      //     save_btn: "Download Design Blueprint Specs",
+      //   },
+
+      //   errors: {
+      //     upload_first:
+      //       "Please upload garments and discover design ideas first.",
+      //     save_failed: "Failed to download image.",
+      //   },
+      // },
       recycle: {
-        header_title: "Redolapy Up-cycling Design Generator",
-        header_subtitle:
-          "Upload your pieces · Pick a design · See it come to life",
-
-        steps: {
-          upload: "Upload Pieces",
-          choose: "Pick Design Idea",
-          result: "Upcycled Concept",
-        },
-
-        upload: {
-          title: "Drag and drop your wardrobe images here",
-          button: "Analyze Garments",
-          loading: "Analyzing fabrics and clothing items...",
-        },
-
-        ideas: {
-          title: "Discovered Upcycling Recommendations",
-          submit: "Generate AI Transformation View",
-        },
-
-        output: {
-          save_btn: "Download Design Blueprint Specs",
-        },
-
-        errors: {
-          upload_first:
-            "Please upload garments and discover design ideas first.",
-          save_failed: "Failed to download image.",
-        },
+        title: "إعادة التدوير",
+        description:
+          "أعد ابتكار خزانتك. يقوم نظام الذكاء الاصطناعي لدينا بتصفية أحدث صيحات عروض الأزياء العالمية لتحويل ملابسك الحالية إلى قطع مميزة للموسم القادم.",
       },
     },
     steps: {
@@ -546,16 +537,33 @@ const messages = {
           "احصل على اقتراحات أسلوب شخصية يومية وتوصيات للتسوق التي تناسب ذوقك.",
       },
     },
+    // sustainable: {
+    //   title: "خزانة ملابس مستدامة",
+    //   description:
+    //     "نحن ملتزمون بالموضة الدائرية. منصتنا لا تساعدك فقط على تنسيق ملابسك، بل تساعدك على إدارة دورة حياتها بالكامل. انضم إلى حركتنا لتقليل نفايات النسيج من خلال إعادة التدوير والبيع والتبرع الذكي.",
+    //   recycleRenew: "إعادة تدوير وتجديد",
+    //   recycleDescription:
+    //     "قدّم طلب بسهولة لصندوق إعادة تدوير للملابس التي انتهت صلاحيتها.",
+    //   learnRecycling: "تعرّف على إعادة التدوير",
+    //   learnTryOn: "تعرّف على التجربة الافتراضية",
+    // },
+
     sustainable: {
-      title: "خزانة ملابس مستدامة",
+      title: "نحن نجعل خزانة ملابسك مستدامة!",
+      titlePart1: "نحن نجعل خزانة ملابسك",
+      titlePart2: "مستدامة!",
+
       description:
-        "نحن ملتزمون بالموضة الدائرية. منصتنا لا تساعدك فقط على تنسيق ملابسك، بل تساعدك على إدارة دورة حياتها بالكامل. انضم إلى حركتنا لتقليل نفايات النسيج من خلال إعادة التدوير والبيع والتبرع الذكي.",
-      recycleRenew: "إعادة تدوير وتجديد",
+        "منصة ReDolapy ملتزمة بدعم الموضة الدائرية. منصتنا لا تقتصر فقط على مساعدتك في تنسيق ملابسك — بل تساعدك على إدارة دورة حياتها بالكامل. انضم إلى حركتنا لتقليل نفايات المنسوجات من خلال برامج إعادة التدوير الذكية، إعادة البيع، والتبرع.",
+      recycleRenew: "إعادة التدوير والتجديد",
       recycleDescription:
-        "قدّم طلب بسهولة لصندوق إعادة تدوير للملابس التي انتهت صلاحيتها.",
+        "اطلب بسهولة حقيبة إعادة التدوير لقطع الملابس التي وصلت إلى نهاية عمرها الافتراضي.",
       learnRecycling: "تعرّف على إعادة التدوير",
       learnTryOn: "تعرّف على التجربة الافتراضية",
+      coreFeaturesTitle: "ماذا <span class='gradientColor'>نصنع؟</span>",
+      coreFeaturesSubtitle: "دعنا نتعرف على القيم الأساسية لمنصة ReDolapy",
     },
+
     tryOnSection: {
       yourMirror: "مرآتك الشخصية",
       reimagined: "معاد تخيلها.",
@@ -565,42 +573,8 @@ const messages = {
     },
 
     // pricing: {
-    //   title: 'أسعار ريدولابي',
-    //   subtitle: 'اختر الخطة التي تناسب رحلتك في الموضة.',
-    //   free: {
-    //     name: 'خطة مجانية',
-    //     price: '$0',
-    //     priceUnit: '/شهري',
-    //     features: [
-    //       'مزامنة خزانة ملابسك بالذكاء الاصطناعي',
-    //       'كتب الإطلالات اليومية (3 إطلالات)',
-    //       'تجربة الافتراضيةة أساسية'
-    //     ],
-    //     button: 'ابدأ الآن'
-    //   },
-    //   pro: {
-    //     name: 'خطة احترافية',
-    //     price: '$20',
-    //     priceUnit: '/شهري',
-    //     features: [
-    //       'كل ما في الخطة الأساسية',
-    //       'تجربة الافتراضيةة واقعية فائقة',
-    //       'كتب إطلالات غير محدودة',
-    //       'خدمة تدريب الأسلوب الشخصي'
-    //     ],
-    //     button: 'ابدأ التجربة المجانية'
-    //   },
-    //   monthly: 'الاشتراك الشهري',
-    //   monthlyPrice: '$19.99',
-    //   earlyBirdDiscount: 'خصم المبكرين',
-    //   discountAmount: '-$5.00',
-    //   estimatedTax: 'الضريبة المتوقعة',
-    //   taxAmount: '$1.20',
-    //   subscribe: 'الاشتراك في الخطة الاحترافية',
-    //   terms: 'بالاشتراك، أنت توافق على شروط الخدمة وسياسة الخصوصية لريدولابي.'
-    // },
-
-    // pricing: {
+    //   title: "أسعار بسيطة وشفافة",
+    //   subtitle: "اختر الخطة المثالية لاحتياجات خزانتك الرقمية",
     //   completeSubscription: "إتمام الاشتراك",
     //   paymentMethod: "طريقة الدفع",
     //   cardNumber: "رقم البطاقة",
@@ -617,6 +591,20 @@ const messages = {
     //   dueTodayValue: "$١٩٫٠٠",
     //   terms:
     //     "بإتمامك لعملية الشراء، فإنك تفوض ري دولابي لبدء دورات خصم تلقائية متكررة. يمكنك إلغاء الاشتراك في أي وقت من إعدادات مساحة عملك.",
+
+    //   // 💡 Added Missing Free Plan Block
+    //   free: {
+    //     name: "الخزانة المجانية",
+    //     price: "$٠",
+    //     priceUnit: "/ شهرياً",
+    //     button: "ابدأ مجاناً الآن",
+    //     features: [
+    //       "إدارة ما يصل إلى ٢٠ قطعة ملابس",
+    //       "تجارب قياس أساسية لـ 2D Avatar",
+    //       "أفكار أساسية لإعادة تدوير الملابس",
+    //     ],
+    //   },
+
     //   pro: {
     //     name: "المحترف (Pro)",
     //     price: "$١٩",
@@ -631,52 +619,72 @@ const messages = {
     //   },
     // },
 
+    //   "pricing": {
+    //     "title": "Pick your fav plan",
+    //     "free": {
+    //       "name": "Essential",
+    //       "price": "0",
+    //       "priceUnit": "/mo"
+    //     },
+    //     "pro": {
+    //       "name": "Pro plan",
+    //       "price": "19.99",
+    //       "priceUnit": "/mo",
+    //       "yearlyPrice": "16.19",
+    //       "yearlyPriceUnit": "/mo (billed annually)",
+    //       "features": [
+    //         "Cancel anytime, no commitment",
+    //         "Trial reminders via email",
+    //         "Unlimited message & outfit uploads",
+    //         "Advanced high-fidelity image creation"
+    //       ],
+    //       "button": "Subscribe to pro"
+    //     }
+
+    // },
+
     pricing: {
-      title: "أسعار بسيطة وشفافة",
-      subtitle: "اختر الخطة المثالية لاحتياجات خزانتك الرقمية",
+      title: "اختر خطتك المفضلة للبدء",
+      subtitle: "اختر الخطة التي تناسب احتياجاتك وتطلعاتك في عالم الموضة",
+      monthlyToggle: "شهرياً",
+      yearlyToggle: "سنوياً",
       completeSubscription: "إتمام الاشتراك",
-      paymentMethod: "طريقة الدفع",
-      cardNumber: "رقم البطاقة",
-      dateFormat: "شهر / سنة",
-      cvv: "الرمز السري (CVV)",
-      savePayment: "حفظ معلومات الدفع لتسهيل التجديد التلقائي لاحقاً",
-      monthly: "الاشتراك الشهري",
-      monthlyPrice: "$٢٩٫٠٠",
-      earlyBirdDiscount: "خصم الانضمام المبكر",
-      discountAmount: "-$١٠٫٠٠",
-      estimatedTax: "الضريبة التقديرية",
-      taxAmount: "$٠٫٠٠",
-      dueToday: "المستحق اليوم",
-      dueTodayValue: "$١٩٫٠٠",
-      terms:
-        "بإتمامك لعملية الشراء، فإنك تفوض ري دولابي لبدء دورات خصم تلقائية متكررة. يمكنك إلغاء الاشتراك في أي وقت من إعدادات مساحة عملك.",
-
-      // 💡 Added Missing Free Plan Block
       free: {
-        name: "الخزانة المجانية",
-        price: "$٠",
-        priceUnit: "/ شهرياً",
-        button: "ابدأ مجاناً الآن",
+        name: "الأساسية",
+        price: "0",
+        priceUnit: "/شهرياً",
         features: [
-          "إدارة ما يصل إلى ٢٠ قطعة ملابس",
-          "تجارب قياس أساسية لـ 2D Avatar",
-          "أفكار أساسية لإعادة تدوير الملابس",
+          "مزامنة خزانة الملابس بالذكاء الاصطناعي",
+          "كتيب إطلالات يومي (3 إطلالات)",
+          "تجربة افتراضية أساسية للملابس",
         ],
+        button: "خطة الحالية",
       },
-
       pro: {
-        name: "المحترف (Pro)",
-        price: "$١٩",
-        priceUnit: "/ شهرياً",
-        button: "تأكيد وتفعيل الخطة الآن",
+        name: "الخطة الاحترافية",
+        price: "19.99",
+        priceUnit: "/شهرياً",
+        yearlyPrice: "16.19",
+        yearlyPriceUnit: "/شهرياً (تُدفع سنوياً)",
         features: [
-          "تجارب قياس ثنائية الأبعاد غير محدودة وبدقة عالية",
-          "مصفوفة الذكاء الاصطناعي الذكية لتنسيق ألوان الخزانة",
-          "تصدير لوحات العمل بصيغ فيكتور عالية الجودة",
-          "أولوية المعالجة السريعة في خوادم رندرة التصاميم",
+          "إلغاء في أي وقت، بدون التزامات",
+          "تنبيهات تذكيرية للفترة التجريبية عبر البريد الإلكتروني",
+          "تحميل غير محدود للرسائل وتنسيقات الملابس",
+          "توليد صور متقدمة وعالية الدقة بالذكاء الاصطناعي",
         ],
+        button: "اشترك في الخطة الاحترافية",
+        breakdown: {
+          monthlySub: "اشتراك شهري",
+          annualSub: "اشتراك سنوي",
+          discount: "خصم التسجيل المبكر",
+          tax: "الضريبة المضافة التقريبية",
+          due: "المستحق اليوم",
+          terms:
+            "بالاشتراك، أنت توافق على شروط الخدمة وسياسة الخصوصية الخاصة بـ ReDolapy.",
+        },
       },
     },
+
     faq: {
       title: "الأسئلة الشائعة",
       questions: [
@@ -691,9 +699,9 @@ const messages = {
             "نعم! يمكنك التقاط صور قطع الملابس الموجودة لديك، وسيقوم نظامنا بفهرستها فوراً وإنشاء كتب إطلالات جديدة وتوصيات أسلوب مخصصة لك.",
         },
         {
-          title: "كيف يعرف الذكاء الاصطناعي مقاسي؟",
+          title: "كيف يمكنني تجربة الملابس إذا لم أرغب في تحميل صورتي؟",
           answer:
-            "نعم! يمكنك التقاط صور قطع الملابس الموجودة لديك، وسيقوم نظامنا بفهرستها فوراً وإنشاء كتب إطلالات جديدة وتوصيات أسلوب مخصصة لك",
+          "تقدم ReDolapy خدمة تجربة الملابس افتراضياً باستخدام صورة رمزية مطابقة لك تماماً، وذلك بمجرد ضبط إعداداتها لتكون مطابقة لك."
         },
       ],
     },
@@ -843,16 +851,7 @@ const messages = {
       analyzing: "جاري إنشاء أفكار التصميم...",
       discover: "اكتشف أفكار التصميم",
     },
-    // footer: {
-    //   brandName: 'ريدولابي',
-    //   tagline: 'نرفع مستوى الأتيليهات الرقمية من خلال الذكاء الاصطناعي والإبداع البشري.',
-    //   platform: 'المنصة',
-    //   styleGuide: 'دليل الأسلوب',
-    //   tryOn: 'التجربة الافتراضيةة',
-    //   features: 'المميزات',
-    //   ContactUs: 'تواصل معنا',
-    //   privacyPolicy: 'سياسة الخصوصية'
-    // },
+  
     payment: {
       completeSubscription: "إكمال الاشتراك",
       paymentMethod: "طريقة الدفع",
@@ -864,14 +863,14 @@ const messages = {
     footer: {
       brandName: "ري دولابي",
       tagline:
-        "نرفع مستوى الأتيليهات الرقمية من خلال الذكاء الاصطناعي والإبداع البشري.",
+        "أعد التفكير في خزانة ملابسك. أعد تعريف أسلوبك.",
       platform: "المنصة",
       styleGuide: "دليل الأسلوب",
       tryOn: "التجربة الافتراضية",
       features: "المميزات",
       ContactUs: "تواصل معنا",
       telegram: "تيليجرام",
-      copyright: "© ٢٠٢٦ أيليا للذكاء الاصطناعي. جميع الحقوق محفوظة.",
+      copyright: "© ٢٠٢٦ ReDolapy للذكاء الاصطناعي. جميع الحقوق محفوظة.",
       privacyPolicy: "سياسة الخصوصية",
     },
     auth: {
@@ -928,6 +927,20 @@ const messages = {
         },
       },
     },
+  "contact": {
+    "titlePart1": "تواصل مع",
+    "titlePart2": "فريق ReDolapy",
+    "description": "لديك سؤال، فكرة شراكة، أو تريد فقط إلقاء التحية؟ اترك لنا رسالة وسنرد عليك في أقرب وقت ممكن.",
+    "form": {
+      "nameLabel": "الاسم",
+      "namePlaceholder": "الاسم بالكامل",
+      "emailLabel": "البريد الإلكتروني",
+      "emailPlaceholder": "user@gmail.com",
+      "messageLabel": "الرسالة",
+      "messagePlaceholder": "اكتب رسالتك هنا...",
+      "sendButton": "إرسال"
+    }
+},
     fp: {
       forgotTitle: "هل نسيت كلمة المرور؟",
       forgotSubtitle:

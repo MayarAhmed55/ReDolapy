@@ -1,21 +1,21 @@
 <template>
     <Section class="flex justify-around">
-        <div class="creditInfo card w-[40%]">
-            <div class="creditInfoTitle flex gap-2 items-center w-[80%] m-auto">
-                <ArrowLeft />
-                <p class="text-3xl font-bold">{{ $t('pricing.completeSubscription') }}</p>
+        <div class="creditInfo card  bg-white dark:bg-[#0d0d0d] w-[40%]">
+            <div class="creditInfoTitle flex gap-2 items-center w-[100%] m-auto">
+                <ArrowLeft class="PrimaryTxt"/>
+                <p class="text-3xl font-bold PrimaryTxt">{{ $t('pricing.completeSubscription') }}</p>
                 <!-- <ArrowLeft /> -->
             </div>
             <div class="form mt-[3rem] w-[90%] mx-auto">
-                <p class="text-2xl font-bold">{{ $t('pricing.paymentMethod') }}</p>
+                <p class="text-2xl font-bold PrimaryTxt">{{ $t('pricing.paymentMethod') }}</p>
                 <form action="">
-                    <input id="cardNumber" class="border-2 border-gray-200 rounded-lg w-full p-[0.8rem] my-[2rem]" type="text" :placeholder="$t('pricing.cardNumber')" />
+                    <input id="cardNumber" class="border-2 border-gray-200 rounded-lg w-full p-[0.8rem] my-[1.5rem] placeholder:text-gray-400 dark:placeholder:text-zinc-600" type="text" :placeholder="$t('pricing.cardNumber')" />
                     <div class="flex justify-between gap-4">
-                        <input id="Date" class="border-2 border-gray-200 rounded-lg p-[0.8rem] w-[49%]" type="text" :placeholder="$t('pricing.dateFormat')" />
-                        <input id="CVV" class="border-2 border-gray-200 rounded-lg p-[0.8rem] w-[49%]" type="text" :placeholder="$t('pricing.cvv')" />
+                        <input id="Date" class="border-2 border-gray-200 rounded-lg p-[0.8rem] w-[49%] placeholder:text-gray-400 dark:placeholder:text-zinc-600" type="text" :placeholder="$t('pricing.dateFormat')" />
+                        <input id="CVV" class="border-2 border-gray-200 rounded-lg p-[0.8rem] w-[49%] placeholder:text-gray-400 dark:placeholder:text-zinc-600" type="text" :placeholder="$t('pricing.cvv')" />
                     </div>
                     <div class="form-check mt-[2rem]">
-                        <label class="form-check-label inline-flex items-center gap-2">
+                        <label class="form-check-label inline-flex items-center gap-2 PrimaryTxt">
                             <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" />
                             {{ $t('pricing.savePayment') }}
                         </label>
@@ -83,8 +83,7 @@ export default {
 @import '../assets/Style.css';
 
 .card {
-    /* width: 32%; */
-    background-color: white;
+    width:40% ;
     border-radius: 1em;
     padding-top: 1rem;
     padding-bottom:3rem;
