@@ -1,16 +1,26 @@
 <template>
   <div class="auth-wrapper">
     <div class="auth-tabs">
-      <button class="auth-tab" :class="{ active: mode === 'signup' }" @click="switchTo('signup')">
+      <button
+        class="auth-tab"
+        :class="{ active: mode === 'signup' }"
+        @click="switchTo('signup')"
+      >
         {{ $t("auth.tabs.signUp") }}
       </button>
-      <button class="auth-tab" :class="{ active: mode === 'login' }" @click="switchTo('login')">
+      <button
+        class="auth-tab"
+        :class="{ active: mode === 'login' }"
+        @click="switchTo('login')"
+      >
         {{ $t("auth.tabs.login") }}
       </button>
     </div>
 
-    <!-- Signup form (always on the left side) -->
-    <div class="form-panel form-panel--signup" :data-active="String(mode === 'signup')">
+    <div
+      class="form-panel form-panel--signup"
+      :data-active="String(mode === 'signup')"
+    >
       <div class="form-container">
         <div class="form-header">
           <h2 class="form-title">{{ $t("auth.signup.title") }}</h2>
@@ -23,8 +33,12 @@
                 $t("auth.signup.firstName")
               }}</label>
               <div class="input-box">
-                <input v-model="form.first_name" type="text" :placeholder="$t('auth.signup.firstNamePlaceholder')"
-                  class="field-input" />
+                <input
+                  v-model="form.first_name"
+                  type="text"
+                  :placeholder="$t('auth.signup.firstNamePlaceholder')"
+                  class="field-input"
+                />
               </div>
             </div>
             <div class="field-group">
@@ -32,24 +46,40 @@
                 $t("auth.signup.lastName")
               }}</label>
               <div class="input-box">
-                <input v-model="form.last_name" type="text" :placeholder="$t('auth.signup.lastNamePlaceholder')"
-                  class="field-input" />
+                <input
+                  v-model="form.last_name"
+                  type="text"
+                  :placeholder="$t('auth.signup.lastNamePlaceholder')"
+                  class="field-input"
+                />
               </div>
             </div>
           </div>
           <div class="field-group full-width">
             <label class="field-label">{{ $t("auth.signup.email") }}</label>
             <div class="input-box">
-              <input v-model="form.emailSignup" type="email" :placeholder="$t('auth.signup.emailPlaceholder')"
-                class="field-input" />
+              <input
+                v-model="form.emailSignup"
+                type="email"
+                :placeholder="$t('auth.signup.emailPlaceholder')"
+                class="field-input"
+              />
             </div>
           </div>
           <div class="field-group full-width">
             <label class="field-label">{{ $t("auth.signup.password") }}</label>
             <div class="input-box input-box--icon">
-              <input v-model="form.passwordSignup" :type="showPassword ? 'text' : 'password'"
-                :placeholder="$t('auth.signup.passwordPlaceholder')" class="field-input" />
-              <button class="eye-btn" @click="showPassword = !showPassword" type="button">
+              <input
+                v-model="form.passwordSignup"
+                :type="showPassword ? 'text' : 'password'"
+                :placeholder="$t('auth.signup.passwordPlaceholder')"
+                class="field-input"
+              />
+              <button
+                class="eye-btn"
+                @click="showPassword = !showPassword"
+                type="button"
+              >
                 <EyeIcon :open="showPassword" />
               </button>
             </div>
@@ -59,9 +89,17 @@
               $t("auth.signup.confirmPassword")
             }}</label>
             <div class="input-box input-box--icon">
-              <input v-model="form.confirmPasswordSignup" :type="showConfirm ? 'text' : 'password'"
-                :placeholder="$t('auth.signup.confirmPasswordPlaceholder')" class="field-input" />
-              <button class="eye-btn" @click="showConfirm = !showConfirm" type="button">
+              <input
+                v-model="form.confirmPasswordSignup"
+                :type="showConfirm ? 'text' : 'password'"
+                :placeholder="$t('auth.signup.confirmPasswordPlaceholder')"
+                class="field-input"
+              />
+              <button
+                class="eye-btn"
+                @click="showConfirm = !showConfirm"
+                type="button"
+              >
                 <EyeIcon :open="showConfirm" />
               </button>
             </div>
@@ -69,9 +107,13 @@
         </div>
         <p v-if="error" style="color: red; font-size: 12px">{{ error }}</p>
         <p v-if="successMessage" class="success-message">
-          {{ successMessage }}
+          {{ $t("auth.signup.successMessage") }}
         </p>
-        <button class="submit-btn" @click="handleSubmit('signup')" :disabled="isLoading">
+        <button
+          class="submit-btn"
+          @click="handleSubmit('signup')"
+          :disabled="isLoading"
+        >
           {{ isLoading ? $t("auth.signup.loading") : $t("auth.signup.submit") }}
         </button>
         <div class="divider">
@@ -89,8 +131,10 @@
       </div>
     </div>
 
-    <!-- Login form (always on the right side) -->
-    <div class="form-panel form-panel--login" :data-active="String(mode === 'login')">
+    <div
+      class="form-panel form-panel--login"
+      :data-active="String(mode === 'login')"
+    >
       <div class="form-container">
         <div class="form-header">
           <h2 class="form-title">{{ $t("auth.login.title") }}</h2>
@@ -100,16 +144,28 @@
           <div class="field-group full-width">
             <label class="field-label">{{ $t("auth.login.email") }}</label>
             <div class="input-box">
-              <input v-model="form.email" type="email" :placeholder="$t('auth.login.emailPlaceholder')"
-                class="field-input" />
+              <input
+                v-model="form.email"
+                type="email"
+                :placeholder="$t('auth.login.emailPlaceholder')"
+                class="field-input"
+              />
             </div>
           </div>
           <div class="field-group full-width">
             <label class="field-label">{{ $t("auth.login.password") }}</label>
             <div class="input-box input-box--icon">
-              <input v-model="form.password" :type="showPassword ? 'text' : 'password'"
-                :placeholder="$t('auth.login.passwordPlaceholder')" class="field-input" />
-              <button class="eye-btn" @click="showPassword = !showPassword" type="button">
+              <input
+                v-model="form.password"
+                :type="showPassword ? 'text' : 'password'"
+                :placeholder="$t('auth.login.passwordPlaceholder')"
+                class="field-input"
+              />
+              <button
+                class="eye-btn"
+                @click="showPassword = !showPassword"
+                type="button"
+              >
                 <EyeIcon :open="showPassword" />
               </button>
             </div>
@@ -121,7 +177,11 @@
           </div>
         </div>
         <p v-if="error" style="color: red; font-size: 12px">{{ error }}</p>
-        <button class="submit-btn" @click="handleSubmit('login')" :disabled="isLoading">
+        <button
+          class="submit-btn"
+          @click="handleSubmit('login')"
+          :disabled="isLoading"
+        >
           {{ isLoading ? $t("auth.login.loading") : $t("auth.login.submit") }}
         </button>
         <div class="divider">
@@ -139,15 +199,27 @@
       </div>
     </div>
 
-    <!-- Sliding blue panel -->
-    <div class="left-panel" :class="{ 'left-panel--right': isRTL ? mode === 'login' : mode === 'signup' }">
+    <div
+      class="left-panel"
+      :class="{
+        'left-panel--right': isRTL ? mode === 'login' : mode === 'signup',
+      }"
+    >
       <div class="left-content">
         <div class="brand-header">
-          <h1 class="brand-title" :class="{ 'content-hidden': !contentVisible }" v-html="mode === 'login'
-            ? $t('auth.panel.welcomeBack')
-            : $t('auth.panel.welcomeTo')
-            " />
-          <p class="brand-subtitle" :class="{ 'content-hidden': !contentVisible }">
+          <h1
+            class="brand-title"
+            :class="{ 'content-hidden': !contentVisible }"
+            v-html="
+              mode === 'login'
+                ? $t('auth.panel.welcomeBack')
+                : $t('auth.panel.welcomeTo')
+            "
+          />
+          <p
+            class="brand-subtitle"
+            :class="{ 'content-hidden': !contentVisible }"
+          >
             {{
               mode === "login"
                 ? $t("auth.panel.noAccount")
@@ -155,8 +227,11 @@
             }}
           </p>
         </div>
-        <button class="switch-btn" :class="{ 'content-hidden': !contentVisible }"
-          @click="switchTo(mode === 'login' ? 'signup' : 'login')">
+        <button
+          class="switch-btn"
+          :class="{ 'content-hidden': !contentVisible }"
+          @click="switchTo(mode === 'login' ? 'signup' : 'login')"
+        >
           {{
             mode === "login" ? $t("auth.panel.signUp") : $t("auth.panel.login")
           }}
@@ -177,47 +252,46 @@ import {
   emailVerification,
 } from "../services/services";
 
-
 const EyeIcon = defineComponent({
   props: { open: Boolean },
   render() {
     return this.open
       ? h(
-        "svg",
-        {
-          width: 20,
-          height: 20,
-          viewBox: "0 0 24 24",
-          fill: "none",
-          stroke: "#6B7280",
-          "stroke-width": 2,
-          "stroke-linecap": "round",
-          "stroke-linejoin": "round",
-        },
-        [
-          h("path", {
-            d: "M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24",
-          }),
-          h("line", { x1: 1, y1: 1, x2: 23, y2: 23 }),
-        ],
-      )
+          "svg",
+          {
+            width: 20,
+            height: 20,
+            viewBox: "0 0 24 24",
+            fill: "none",
+            stroke: "#6B7280",
+            "stroke-width": 2,
+            "stroke-linecap": "round",
+            "stroke-linejoin": "round",
+          },
+          [
+            h("path", {
+              d: "M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24",
+            }),
+            h("line", { x1: 1, y1: 1, x2: 23, y2: 23 }),
+          ],
+        )
       : h(
-        "svg",
-        {
-          width: 20,
-          height: 20,
-          viewBox: "0 0 24 24",
-          fill: "none",
-          stroke: "#6B7280",
-          "stroke-width": 2,
-          "stroke-linecap": "round",
-          "stroke-linejoin": "round",
-        },
-        [
-          h("path", { d: "M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" }),
-          h("circle", { cx: 12, cy: 12, r: 3 }),
-        ],
-      );
+          "svg",
+          {
+            width: 20,
+            height: 20,
+            viewBox: "0 0 24 24",
+            fill: "none",
+            stroke: "#6B7280",
+            "stroke-width": 2,
+            "stroke-linecap": "round",
+            "stroke-linejoin": "round",
+          },
+          [
+            h("path", { d: "M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" }),
+            h("circle", { cx: 12, cy: 12, r: 3 }),
+          ],
+        );
   },
 });
 
@@ -265,11 +339,8 @@ export default {
     const form = ref({
       first_name: "",
       last_name: "",
-      email: "", // used for login
-      password: "", // used for login
-      emailSignup: "",
-      passwordSignup: "",
-      confirmPasswordSignup: "",
+      email: "",
+      password: "",
       confirmPassword: "",
     });
 
@@ -279,36 +350,8 @@ export default {
     const isLoading = ref(false);
     const successMessage = ref("");
     const error = ref(null);
-    const { locale } = useI18n()
-    const isRTL = computed(() => locale.value === 'ar')
-
-    // function handleGoogle() {
-    //   const popup = window.open(
-    //     "/google",
-    //     "Google Login",
-    //     "width=500,height=600,left=400,top=100",
-    //   );
-
-    //   window.addEventListener(
-    //     "message",
-    //     (event) => {
-    //       // Allow messages from the expected Google callback origin during development
-    //       // In a production environment, this check should be more robust and ideally match window.origin
-    //       // or a list of trusted origins.
-    //       if (event.origin !== window.origin && event.origin !== "http://localhost:5173") return;
-    //       if (event.data?.type === "GOOGLE_AUTH_SUCCESS") {
-    //         const { token, ...user } = event.data.payload;
-    //         localStorage.setItem("token", token);
-    //         localStorage.setItem("user", JSON.stringify(user));
-    //         if (popup && !popup.closed) popup.close();
-    //         emit("login-success");
-    //         emit("close");
-    //       }
-    //     },
-    //     { once: true },
-    //   );
-    // }
-
+    const { locale } = useI18n();
+    const isRTL = computed(() => locale.value === "ar");
 
     function handleGoogle() {
       const popup = window.open(
@@ -334,7 +377,7 @@ export default {
         { once: true },
       );
     }
-    
+
     function switchTo(newMode) {
       if (newMode === props.mode) return;
       // 1. Fade content out
@@ -381,21 +424,28 @@ export default {
           const token = localStorage.setItem("token", res.data.token);
           localStorage.setItem("_id", res.data._id);
           const userRes = await getUserById(res.data._id); // token is read from localStorage inside the service
-          console.log(userRes.data);
           const userData = {
             first_name: userRes.data.user.profile.first_name,
             last_name: userRes.data.user.profile.last_name,
             email: userRes.data.user.email,
             id: userRes.data.user._id,
             userImage: userRes.data.user.userImage,
+            language: userRes.data.user.settings.language,
+            avatars: userRes.data.user.avatars,
+            darkMode: userRes.data.user.darkMode,
+            has_mobile_app: userRes.data.user.settings.has_mobile_app,
+            gender: userRes.data.user.profile.gender,
+            date_of_birth: userRes.data.user.profile.date_of_birth,
+            has_mobile_app: userRes.data.user.settings.has_mobile_app,
+            notifications:userRes.data.user.settings.notifications_enabled
           };
           localStorage.setItem("user", JSON.stringify(userData));
           emit("login-success");
           emit("submit", userRes.data);
           emit("close");
+          location.reload()
         }
       } catch (err) {
-        console.error("Authentication error:", err);
         error.value = err.response?.data?.message ?? "Something went wrong";
       } finally {
         isLoading.value = false;
@@ -432,7 +482,6 @@ export default {
   font-family: "Roboto", sans-serif;
   background: #ffffff;
 }
-
 
 .success-message {
   color: #155724;
@@ -478,7 +527,6 @@ export default {
   /* both sides rounded */
   background-image:
     linear-gradient(rgba(128, 128, 128, 0.2), rgba(128, 128, 128, 0.2)),
-    /* url("../../public/ChatGPT Image Jun 7, 2026, 10_22_25 PM.jpg"); */
     url("../assets/Login.jpg");
   background-size: cover;
   background-position: center;

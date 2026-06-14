@@ -8,9 +8,9 @@
       
       ></TeamMembers>
       <TeamMembers
-      name="Mayar Ahmed "
+      name="Mayar Ahmed"
       title="UI/UX Development Track"
-      link=""
+      link="https://www.linkedin.com/in/mayar-ahmed-39934925a?utm_source=share_via&utm_content=profile&utm_medium=member_android"
       
       ></TeamMembers>
       <TeamMembers
@@ -22,7 +22,7 @@
       <TeamMembers
       name="Samira Abdullah "
       title="UI/UX Development Track"
-      link=""
+      link="https://www.linkedin.com/in/samira-abdullah?utm_source=share_via&utm_content=profile&utm_medium=member_android"
       
       ></TeamMembers>
       <TeamMembers
@@ -52,13 +52,13 @@
       <TeamMembers
       name="Nouran Sherif"
       title="FrontEnd Track"
-      link=""
+      link="https://www.linkedin.com/in/nouran-sherif-46bab929a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
       
       ></TeamMembers>
       <TeamMembers
       name="Kariman Ayman"
       title="FrontEnd Track"
-      link=""
+      link="https://www.linkedin.com/in/kariman-ayman-1a6788200?utm_source=share_via&utm_content=profile&utm_medium=member_android"
       
       ></TeamMembers>
         </section>
@@ -162,7 +162,7 @@
                                 :class="{ 'bg-slate-50/50': activeIndex === index }">
                                 <span class="PrimaryTxt text-start">{{ $rt(item.title) }}</span>
 
-                                <svg class="w-5 h-5 text-slate-800 transform transition-transform duration-300 ease-in-out shrink-0 mx-2"
+                                <svg class="w-5 h-5 text-slate-800 dark:text-white transform transition-transform duration-300 ease-in-out shrink-0 mx-2"
                                     :class="{ 'rotate-180': activeIndex === index }" fill="none" stroke="currentColor"
                                     stroke-width="2.5" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round"

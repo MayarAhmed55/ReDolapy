@@ -1,6 +1,6 @@
 <template>
     <div class="no-underline block w-[40%]">
-        <button class="font-semibold gradient-btn-border w-[100%]">
+        <button class="font-semibold gradient-btn-border p-[0.2rem] w-[100%]">
             <div class="gradient-btn-content flex gap-5 items-center">
                 <img class="rounded-[50%] w-[5rem] h-[5rem]" src="../assets/person 1.png" alt="">
 
@@ -9,7 +9,7 @@
                     <p class="PrimaryTxt">{{name}}</p>
                     <p class="font-medium grayTxt">{{title}}</p>
                     </div>
-                    <div class="gradient-btn-border w-fit text-white flex px-[0.5rem]">
+                    <div class="gradient-btn-border w-fit text-white flex px-[1rem] py-[0.2rem]">
                          <a :href="link" class=" font-medium items-center gap-2 " target="_blank">Linkedin Profile </a>
                         <ChevronRight/>
                     </div>
@@ -64,7 +64,7 @@ export default {
     /* width: 100%; */
     border-radius: 0.5em;
     background: linear-gradient(90deg, #40B9FF 0%, #8ED321 100%);
-    padding: 0.2rem;
+    /* padding: 0.2rem; */
     cursor: pointer;
 }
 

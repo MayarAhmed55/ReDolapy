@@ -7,10 +7,17 @@ const messages = {
       features: "Features",
       tryOn: "Try-On",
       recycle: "Recycle",
+      store: "Store",
+      store: "Store",
       pricing: "Pricing",
       about: "About",
       login: "Login",
       signup: "Sign up",
+    },
+    errors: {
+      generic: "Something went wrong. Please try again.",
+      api_not_found: "API endpoint not found. Start the TryOn backend on port 5000.",
+      invalid_response: "Unexpected server response ({status}).",
     },
     header: {
       primaryText: "Your Personal",
@@ -81,7 +88,182 @@ const messages = {
         "The Redolapy Virtual Try-On uses hyper-realistic rendering to show you exactly how clothes will look and drape on your body.",
       button: "Try On",
     },
-    brands: {
+    tryOn: {
+      header_title: "Redolapy Virtual Try-on",
+      header_subtitle: "Upload your pieces · Pick a style · See it come to life",
+      steps: {
+        image: "Upload Your image",
+        image_subtitle: "Upload a photo or pick an avatar",
+        clothes: "Upload Your clothes",
+        clothes_subtitle: "Upload 1-2 garment photos",
+        tryon: "Virtual Try-on",
+        tryon_subtitle: "See your outfit come to life",
+      },
+      model: {
+        choose_title: "Choose your model",
+        personal_photo: "Personal Photo",
+        personal_subtitle: "Upload your own image",
+        personal_card_desc: "Upload your own photo for realistic try-on",
+        use_avatar: "Use Avatar",
+        avatar_subtitle: "Pick a preset model",
+        avatar_card_desc: "Create your digital twin and try outfits instantly",
+        upload_prompt: "Upload your photo (JPG, PNG, WEBP)",
+        select_avatar: "Select an avatar",
+        your_photo: "Your Photo",
+        avatar_label: "Avatar",
+        personal_label: "Personal image",
+        avatar_classic: "Classic Model",
+        avatar_casual: "Casual Look",
+        avatar_studio: "Studio Pose",
+        select_avatar_aria: "Select {name}",
+      },
+      garments: {
+        title: "Upload Your Garments",
+        support_text: "Support for JPG, PNG, WEBP (max 10MB each)",
+        drag_prompt: "Click or drag images here",
+        current_selection: "Current Selection",
+        no_items: "No items selected yet",
+        add_more: "Add More Pieces",
+        uploaded_garment: "Uploaded garment",
+        generate_btn: "Try-on",
+        generating: "Generating your try-on…",
+        remove_aria: "Remove {name}",
+      },
+      output: {
+        heading: "Your Virtual Try-on",
+        save_btn: "Add to Wardrobe",
+        download_btn: "Save",
+        try_again_btn: "Try again",
+        saving: "Adding…",
+        downloading: "Saving…",
+        style_match: "{percent}% Style Match",
+        zoom_aria: "Zoom image",
+      },
+      errors: {
+        generic: "Something went wrong. Please try again.",
+        save_failed: "Failed to add to wardrobe.",
+        upload_first: "Please upload your model and garments first.",
+        need_two_garments: "Upload a top and a bottom garment to try on a full outfit.",
+        missing_kie_key: "KIE API key is missing. Add VITE_KIE_API_KEY to your .env file.",
+        missing_hf_token: "Hugging Face token is missing. Add VITE_HF_TOKEN to your .env file.",
+        kie_upload_quota: "KIE upload limit reached (30 files per 30 days on free plan). Wait for the limit to reset, upgrade your KIE plan, or use a different API key.",
+      },
+      warnings: {
+        format_error: "Unsupported file format. Use {formats}.",
+        max_files: "You can only upload up to 2 garment images.",
+        size_limit: "Each image must be 10MB or smaller.",
+      },
+      mock_description:
+        "Our AI has seamlessly combined your uploaded garments into a cohesive look. The silhouette balances structure and flow, pairing your pieces for a polished virtual try-on preview.",
+    },
+    avatar: {
+      page: {
+        title_prefix: "Create your ",
+        title_highlight: "Personal Avatar",
+        subtitle: "Make it exactly like you!",
+      },
+      form: {
+        title: "Set your Avatar Parameters",
+        age: "Age",
+        age_placeholder: "e.g. 25",
+        gender: "Gender",
+        male: "Male",
+        female: "Female",
+        weight: "Weight (kg)",
+        weight_placeholder: "e.g. 70",
+        height: "Height (cm)",
+        height_placeholder: "e.g. 175",
+        skin_tone: "Skin tone",
+        hair_color: "Hair color",
+        skin_very_light: "Very light",
+        skin_light: "Light",
+        skin_medium: "Medium",
+        skin_tan: "Tan",
+        skin_brown: "Brown",
+        skin_dark: "Dark",
+        hair_black: "Black",
+        hair_dark_brown: "Dark brown",
+        hair_brown: "Brown",
+        hair_light_brown: "Light brown",
+        hair_blonde: "Blonde",
+        hair_red: "Red",
+        generate_btn: "Generate Avatar",
+        generating: "Generating your avatar…",
+      },
+      preview: {
+        placeholder: "Your avatar will appear here",
+      },
+      result: {
+        alt: "Generated avatar",
+        use_hover: "Use for try-on",
+        use_aria: "Use this avatar for try-on",
+        download_aria: "Download avatar",
+        download_hover: "Download",
+        try_on_btn: "Virtual Try on",
+        try_again: "Try again",
+      },
+      selector: {
+        title: "Select an avatar",
+        create_aria: "Create another avatar",
+        upgrade_aria: "Upgrade to create more avatars",
+        select_aria: "Select {name}",
+      },
+      default_name: "My Avatar",
+      errors: {
+        generate_failed: "Could not generate avatar. Please try again.",
+        download_failed: "Could not download avatar. Please try again.",
+        kie_credits: "Avatar generation credits are exhausted and no fallback is configured. Add VITE_DASHSCOPE_API_KEY and VITE_DASHSCOPE_ENDPOINT to your .env file, then restart the dev server.",
+        quota_used: "You have already used your free avatar generation. Upgrade your plan to create more.",
+        missing_dashscope_endpoint: "DashScope endpoint is missing. Add VITE_DASHSCOPE_ENDPOINT to your .env file (same value as DASHSCOPE_ENDPOINT in the backend).",
+      },
+    },
+    store: {
+      title: "Stores",
+      promo_prefix: "you can get Discount on all your Favorite Brands Now, when you",
+      promo_highlight: "install the application!",
+      search_placeholder: "Search",
+      filters: "Filters",
+      brands: "Brands",
+      colors: "Colors",
+      season: "Season",
+      categories: "Categories",
+      reset_all: "Reset All",
+      price_range: "Price Range",
+      seasons: {
+        summer: "Summer",
+        spring: "Spring",
+        fall: "Fall",
+        winter: "Winter",
+      },
+      category_options: {
+        dress: "Dress",
+        top: "Top",
+        bottom: "Bottom",
+      },
+      brand_options: {
+        hm: "HM",
+        zara: "ZARA",
+      },
+      product: {
+        view: "View",
+        brand: "Brand",
+        try_on: "Try-on",
+        wishlist_aria: "Add to wishlist",
+        remove_wishlist_aria: "Remove from wishlist",
+        view_on_store: "View on store",
+      },
+      currency: "EGP",
+    },
+    wishlist: {
+      title: "Wishlist",
+      subtitle_prefix: "Save the pieces you love and come back to them anytime when you",
+      subtitle_highlight: "heart a product!",
+      loading: "Loading your wishlist…",
+      empty: "No items match your filters.",
+      empty_lonely: "Your favorites are lonely.",
+      no_matches: "No wishlist items match your search or filters.",
+    },
+     brands: {
     viewAll: "View all",
     title: "Our Brand Partners:",
     subtitle: "Discover and shop from your favorite fashion Stores with exclusive discounts found only on",
@@ -91,38 +273,7 @@ const messages = {
       description: "Discover your Favorite Items in H&M and get the discount on what you love from the Application"
     }
   },
-
-    // pricing: {
-    //   completeSubscription: "Complete Subscription",
-    //   paymentMethod: "Payment Method",
-    //   cardNumber: "Card Number",
-    //   dateFormat: "MM / YY",
-    //   cvv: "CVV",
-    //   savePayment: "Save payment information for subsequent renewals",
-    //   monthly: "Monthly Subscription",
-    //   monthlyPrice: "$29.00",
-    //   earlyBirdDiscount: "Early Bird Discount",
-    //   discountAmount: "-$10.00",
-    //   estimatedTax: "Estimated Tax",
-    //   taxAmount: "$0.00",
-    //   dueToday: "Due Today",
-    //   dueTodayValue: "$19.00",
-    //   terms:
-    //     "By finalizing your purchase, you authorize ReDolapy to initiate recurring automatic processing cycles. Cancel anytime inside workspace configurations.",
-    //   pro: {
-    //     name: "Pro Atelier",
-    //     price: "$19",
-    //     priceUnit: "/ month",
-    //     button: "Finalize & Activate Plan",
-    //     features: [
-    //       "Infinite High-Fidelity 2D Avatar Fittings",
-    //       "Intelligent Wardrobe Color Match Matrix",
-    //       "Advanced High-Resolution Vector Canvas Exports",
-    //       "Priority Graphics Rendering Pipeline Lanes",
-    //     ],
-    //   },
-    // },
-
+   
     pricing: {
       title: "Subscription plans",
       subtitle: "Pick your fav plan to get started",
@@ -173,7 +324,8 @@ const messages = {
       },
     },
 
-    faq: {
+
+     faq: {
       title: "Frequently Asked Questions",
       questions: [
         {
@@ -194,11 +346,19 @@ const messages = {
       ],
     },
  
-
     recycle: {
       header_title: "Redolapy Up-cycling Design Generator",
       header_subtitle:
         "Upload your pieces · Pick a design · See it come to life",
+
+      steps: {
+        upload: "Upload",
+        upload_subtitle: "Upload 1-2 garment photos",
+        choose: "Choose Idea",
+        choose_subtitle: "Pick your favorite design",
+        result: "Generate",
+        result_subtitle: "Visualize your upcycled piece",
+      },
 
       upload: {
         title: "Upload Your Garments",
@@ -213,7 +373,37 @@ const messages = {
           size_limit: "Each image must be 10MB or smaller.",
         },
       },
-    },
+
+      ideas: {
+        title: "Choose Your Style Idea",
+        badge: "AI Suggested",
+        ai_engine: "AI Engine",
+        aspect_ratio: "Aspect Ratio",
+        submit: "Generate Selected Design",
+        loading: "Generating…",
+      },
+
+      card: {
+        see_more: "See more",
+        see_less: "See less",
+        selected: "Selected",
+        remove_piece: "Remove piece {n}",
+      },
+
+      output: {
+        heading: "Your Generated Design",
+        save_btn: "Save Specs",
+        saving: "Downloading…",
+      },
+
+  errors: {
+    upload_first: 'Please upload garments and discover design ideas first.',
+    save_failed: 'Failed to download image.',
+    login_required: 'Please log in to analyze garments and generate designs.',
+    missing_github_key: 'GitHub API key is missing. Add VITE_GITHUB_TOKEN to your .env file.',
+    missing_dashscope_key: 'DashScope API key is missing. Add VITE_DASHSCOPE_API_KEY to your .env file.',
+  },
+},
 
     aboutRecycle: {
       header_primary: "Why Upcycling Matters",
@@ -320,6 +510,118 @@ const messages = {
       dateFormat: "MM/YY",
       cvv: "CVV",
       savePayment: "Save payment details for future use",
+    },
+     auth: {
+      tabs: {
+        signUp: "Sign Up",
+        login: "Login",
+      },
+      signup: {
+        title: "Create Your Style Profile",
+        subtitle: "Start building your personalized wardrobe",
+        firstName: "First name",
+        firstNamePlaceholder: "e.g. Engy",
+        lastName: "Last name",
+        lastNamePlaceholder: "e.g. Ahmed",
+        email: "Email",
+        emailPlaceholder: "Enter your email",
+        password: "Password",
+        passwordPlaceholder: "Create strong password",
+        confirmPassword: "Confirm password",
+        confirmPasswordPlaceholder: "Confirm the password that you created",
+        submit: "Next",
+        loading: "Please wait...",
+        switchText: "Already have an account?",
+        switchLink: "Login now",
+        successMessage:
+          "We sent an email to verify your account. Check your inbox.",
+      },
+      login: {
+        title: "Welcome Back",
+        subtitle: "Log in to your account",
+        email: "Email",
+        emailPlaceholder: "Enter your email",
+        password: "Password",
+        passwordPlaceholder: "Enter your password",
+        forgotPassword: "Forgot password?",
+        submit: "Login",
+        loading: "Please wait...",
+        switchText: "Don't have an account?",
+        switchLink: "Sign up now",
+      },
+      panel: {
+        emailTitle: "Don't Worry,",
+        welcomeBack: "Welcome <br/>Back",
+        welcomeTo: "Welcome To<br/>Redolapy",
+        noAccount: "Don't Have an account?",
+        alreadyHaveAccount: "Already have an account?",
+        signUp: "Sign up",
+        login: "Login",
+      },
+      common: {
+        orDivider: "——— OR ———",
+        continueWithGoogle: "Continue with Google",
+        error: {
+          somethingWentWrong: "Something went wrong",
+        },
+      },
+    },
+    fp: {
+      forgotTitle: "Forgot Password?",
+      forgotSubtitle:
+        "No worries, enter your email below to receive a verification code.",
+      emailLabel: "Email Address",
+      emailPlaceholder: "Enter your email address",
+      sending: "Sending...",
+      next: "Next",
+      hintSpam:
+        "Be sure to check your spam or junk folder if you don't see it.",
+      or: "OR",
+      hintDifferent:
+        "Try a different email address if you still can't find it.",
+      backToLogin: "Back to login",
+      verificationTitle: "Verify Your Email",
+      verificationSubtitle: "We sent a 6-digit verification code to {email}",
+      verifying: "Verifying...",
+      verifyContinue: "Verify & Continue",
+      didnotReceiveCode: "Didn't receive the code?",
+      resendCode: "Resend Code",
+      requestCodeIn: "Request a new code in {timer}",
+      setNewPasswordTitle: "Set New Password",
+      setNewPasswordSubtitle:
+        "Create a strong, unique password to secure your account.",
+      passwordLabel: "New Password",
+      passwordPlaceholder: "Create a strong password",
+      confirmPasswordLabel: "Confirm New Password",
+      confirmPasswordPlaceholder: "Confirm your new password",
+      securityTip:
+        "Make sure your password is at least 8 characters long and contains mixed case letters.",
+      saving: "Saving...",
+      resetPassword: "Reset Password",
+      panel: {
+        emailTitle: "Don't Worry,",
+        welcomeBack: "Welcome <br/>Back",
+        welcomeTo: "Welcome To<br/>Redolapy",
+        noAccount: "Don't Have an account?",
+        alreadyHaveAccount: "Already have an account?",
+        signUp: "Sign up",
+        login: "Login",
+        emailSubtitle:
+          "We will help you safely recover your profile access within seconds.",
+        otpTitle: "Check Your Inbox",
+        otpSubtitle:
+          "A secure token has been dispatched to establish identity validation.",
+        resetTitle: "Secure Account",
+        resetSubtitle:
+          "Almost completed! Finalize your credentials to log back into your session.",
+        },
+        strength: {
+          none: "",
+          weak: "Weak ❌",
+          fair: "Fair ⚠️",
+          good: "Good 👍",
+          strong: "Strong 💪",
+        }
     },
     footer: {
       brandName: "ReDolapy",
@@ -463,10 +765,17 @@ const messages = {
       features: "المميزات",
       tryOn: "جرب الآن",
       recycle: "إعادة التدوير",
+      store: "المتجر",
+      store: "المتجر",
       pricing: "الأسعار",
       about: "حول",
       login: "دخول",
       signup: "إنشاء حساب",
+    },
+    errors: {
+      generic: "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+      api_not_found: "لم يتم العثور على واجهة البرمجة. شغّل الخادم الخلفي على المنفذ 5000.",
+      invalid_response: "استجابة غير متوقعة من الخادم ({status}).",
     },
     header: {
       primaryText: "مستشارك الشخصي",
@@ -488,42 +797,13 @@ const messages = {
         description:
           "جربها على صورتك الشخصية أو على صورة رمزية باستخدام تقنية رسم خرائط الجسم الدقيقة.",
       },
-      // recycle: {
-      //   header_title: "Redolapy Up-cycling Design Generator",
-      //   header_subtitle:
-      //     "Upload your pieces · Pick a design · See it come to life",
-
-      //   steps: {
-      //     upload: "Upload Pieces",
-      //     choose: "Pick Design Idea",
-      //     result: "Upcycled Concept",
-      //   },
-
-      //   upload: {
-      //     title: "Drag and drop your wardrobe images here",
-      //     button: "Analyze Garments",
-      //     loading: "Analyzing fabrics and clothing items...",
-      //   },
-
-      //   ideas: {
-      //     title: "Discovered Upcycling Recommendations",
-      //     submit: "Generate AI Transformation View",
-      //   },
-
-      //   output: {
-      //     save_btn: "Download Design Blueprint Specs",
-      //   },
-
-      //   errors: {
-      //     upload_first:
-      //       "Please upload garments and discover design ideas first.",
-      //     save_failed: "Failed to download image.",
-      //   },
-      // },
       recycle: {
         title: "إعادة التدوير",
         description:
-          "أعد ابتكار خزانتك. يقوم نظام الذكاء الاصطناعي لدينا بتصفية أحدث صيحات عروض الأزياء العالمية لتحويل ملابسك الحالية إلى قطع مميزة للموسم القادم.",
+          "ابقَ في الطليعة مع تحليل فوري لاتجاهات أزياء العروض العالمية مفلترة عبر عدسة أسلوبك الشخصي.",
+        title: "إعادة التدوير",
+        description:
+          "ابقَ في الطليعة مع تحليل فوري لاتجاهات أزياء العروض العالمية مفلترة عبر عدسة أسلوبك الشخصي.",
       },
     },
     steps: {
@@ -581,79 +861,183 @@ const messages = {
         "تقنية التجربة الافتراضي من ريدولابي تستخدم عرضاً واقعياً فائق الدقة لتوضيح كيفية ملاءمة الملابس لجسدك تماماً.",
       button: "جرب الآن",
     },
-
-    // pricing: {
-    //   title: "أسعار بسيطة وشفافة",
-    //   subtitle: "اختر الخطة المثالية لاحتياجات خزانتك الرقمية",
-    //   completeSubscription: "إتمام الاشتراك",
-    //   paymentMethod: "طريقة الدفع",
-    //   cardNumber: "رقم البطاقة",
-    //   dateFormat: "شهر / سنة",
-    //   cvv: "الرمز السري (CVV)",
-    //   savePayment: "حفظ معلومات الدفع لتسهيل التجديد التلقائي لاحقاً",
-    //   monthly: "الاشتراك الشهري",
-    //   monthlyPrice: "$٢٩٫٠٠",
-    //   earlyBirdDiscount: "خصم الانضمام المبكر",
-    //   discountAmount: "-$١٠٫٠٠",
-    //   estimatedTax: "الضريبة التقديرية",
-    //   taxAmount: "$٠٫٠٠",
-    //   dueToday: "المستحق اليوم",
-    //   dueTodayValue: "$١٩٫٠٠",
-    //   terms:
-    //     "بإتمامك لعملية الشراء، فإنك تفوض ري دولابي لبدء دورات خصم تلقائية متكررة. يمكنك إلغاء الاشتراك في أي وقت من إعدادات مساحة عملك.",
-
-    //   // 💡 Added Missing Free Plan Block
-    //   free: {
-    //     name: "الخزانة المجانية",
-    //     price: "$٠",
-    //     priceUnit: "/ شهرياً",
-    //     button: "ابدأ مجاناً الآن",
-    //     features: [
-    //       "إدارة ما يصل إلى ٢٠ قطعة ملابس",
-    //       "تجارب قياس أساسية لـ 2D Avatar",
-    //       "أفكار أساسية لإعادة تدوير الملابس",
-    //     ],
-    //   },
-
-    //   pro: {
-    //     name: "المحترف (Pro)",
-    //     price: "$١٩",
-    //     priceUnit: "/ شهرياً",
-    //     button: "تأكيد وتفعيل الخطة الآن",
-    //     features: [
-    //       "تجارب قياس ثنائية الأبعاد غير محدودة وبدقة عالية",
-    //       "مصفوفة الذكاء الاصطناعي الذكية لتنسيق ألوان الخزانة",
-    //       "تصدير لوحات العمل بصيغ فيكتور عالية الجودة",
-    //       "أولوية المعالجة السريعة في خوادم رندرة التصاميم",
-    //     ],
-    //   },
-    // },
-
-    //   "pricing": {
-    //     "title": "Pick your fav plan",
-    //     "free": {
-    //       "name": "Essential",
-    //       "price": "0",
-    //       "priceUnit": "/mo"
-    //     },
-    //     "pro": {
-    //       "name": "Pro plan",
-    //       "price": "19.99",
-    //       "priceUnit": "/mo",
-    //       "yearlyPrice": "16.19",
-    //       "yearlyPriceUnit": "/mo (billed annually)",
-    //       "features": [
-    //         "Cancel anytime, no commitment",
-    //         "Trial reminders via email",
-    //         "Unlimited message & outfit uploads",
-    //         "Advanced high-fidelity image creation"
-    //       ],
-    //       "button": "Subscribe to pro"
-    //     }
-
-    // },
-
-    pricing: {
+    tryOn: {
+      header_title: "التجربة الافتراضية من ريدولابي",
+      header_subtitle: "ارفع قطعك · اختر أسلوباً · شاهد النتيجة تنبض بالحياة",
+      steps: {
+        image: "ارفع صورتك",
+        image_subtitle: "ارفع صورة أو اختر أفاتار",
+        clothes: "ارفع ملابسك",
+        clothes_subtitle: "ارفع صورة أو صورتين للقطع",
+        tryon: "تجربة افتراضية",
+        tryon_subtitle: "شاهد إطلالتك تنبض بالحياة",
+      },
+      model: {
+        choose_title: "اختر نموذجك",
+        personal_photo: "صورة شخصية",
+        personal_subtitle: "ارفع صورتك الخاصة",
+        personal_card_desc: "ارفع صورتك الخاصة لتجربة واقعية للملابس",
+        use_avatar: "استخدم أفاتار",
+        avatar_subtitle: "اختر نموذجاً جاهزاً",
+        avatar_card_desc: "أنشئ نسختك الرقمية وجرب الإطلالات فوراً",
+        upload_prompt: "ارفع صورتك (JPG، PNG، WEBP)",
+        select_avatar: "اختر أفاتار",
+        your_photo: "صورتك",
+        avatar_label: "أفاتار",
+        personal_label: "صورة شخصية",
+        avatar_classic: "نموذج كلاسيكي",
+        avatar_casual: "مظهر عادي",
+        avatar_studio: "وضعية استوديو",
+        select_avatar_aria: "اختر {name}",
+      },
+      garments: {
+        title: "ارفع قطع الملابس",
+        support_text: "صيغ الملفات المدعومة: JPG، PNG، WEBP (الحد الأقصى ١٠ ميجابايت لكل صورة)",
+        drag_prompt: "اضغط هنا أو اسحب الصور إلى هذا المربع",
+        current_selection: "الاختيار الحالي",
+        no_items: "لم يتم اختيار أي قطع بعد",
+        add_more: "أضف المزيد من القطع",
+        uploaded_garment: "قطعة مرفوعة",
+        generate_btn: "جرب افتراضياً",
+        generating: "جاري إنشاء تجربتك الافتراضية…",
+        remove_aria: "إزالة {name}",
+      },
+      output: {
+        heading: "تجربتك الافتراضية",
+        save_btn: "أضف إلى الخزانة",
+        download_btn: "حفظ",
+        try_again_btn: "حاول مرة أخرى",
+        saving: "جاري الإضافة…",
+        downloading: "جاري الحفظ…",
+        style_match: "تطابق الأسلوب {percent}٪",
+        zoom_aria: "تكبير الصورة",
+      },
+      errors: {
+        generic: "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+        save_failed: "فشلت الإضافة إلى الخزانة.",
+        upload_first: "يرجى رفع النموذج والملابس أولاً.",
+        need_two_garments: "ارفع قطعة علوية وسفلية لتجربة إطلالة كاملة.",
+        missing_kie_key: "مفتاح KIE API مفقود. أضف VITE_KIE_API_KEY إلى ملف .env.",
+        missing_hf_token: "رمز Hugging Face مفقود. أضف VITE_HF_TOKEN إلى ملف .env.",
+        kie_upload_quota: "تم الوصول إلى حد رفع KIE (30 ملفاً خلال 30 يوماً في الخطة المجانية). انتظر إعادة التعيين أو قم بترقية خطتك.",
+      },
+      warnings: {
+        format_error: "صيغة الملف غير مدعومة. يرجى استخدام {formats}.",
+        max_files: "لا يمكنك رفع أكثر من صورتين للملابس.",
+        size_limit: "يجب أن يكون حجم كل صورة ١٠ ميجابايت أو أقل.",
+      },
+      mock_description:
+        "دمج الذكاء الاصطناعي قطعك المرفوعة في إطلالة متناسقة. يوازن القص بين البنية والانسيابية لعرض تجربة افتراضية مصقولة.",
+    },
+    avatar: {
+      page: {
+        title_prefix: "أنشئ ",
+        title_highlight: "أفاتارك الشخصي",
+        subtitle: "اجعله يشبهك تماماً!",
+      },
+      form: {
+        title: "حدد معايير الأفاتار",
+        age: "العمر",
+        age_placeholder: "مثال: 25",
+        gender: "الجنس",
+        male: "ذكر",
+        female: "أنثى",
+        weight: "الوزن (كجم)",
+        weight_placeholder: "مثال: 70",
+        height: "الطول (سم)",
+        height_placeholder: "مثال: 175",
+        skin_tone: "لون البشرة",
+        hair_color: "لون الشعر",
+        skin_very_light: "فاتح جداً",
+        skin_light: "فاتح",
+        skin_medium: "متوسط",
+        skin_tan: "أسمر",
+        skin_brown: "بني",
+        skin_dark: "داكن",
+        hair_black: "أسود",
+        hair_dark_brown: "بني داكن",
+        hair_brown: "بني",
+        hair_light_brown: "بني فاتح",
+        hair_blonde: "أشقر",
+        hair_red: "أحمر",
+        generate_btn: "إنشاء الأفاتار",
+        generating: "جاري إنشاء أفاتارك…",
+      },
+      preview: {
+        placeholder: "سيظهر أفاتارك هنا",
+      },
+      result: {
+        alt: "الأفاتار المُنشأ",
+        use_hover: "استخدم للتجربة",
+        use_aria: "استخدم هذا الأفاتار للتجربة الافتراضية",
+        download_aria: "تنزيل الأفاتار",
+        download_hover: "تنزيل",
+        try_on_btn: "تجربة افتراضية",
+        try_again: "حاول مرة أخرى",
+      },
+      selector: {
+        title: "اختر أفاتار",
+        create_aria: "إنشاء أفاتار آخر",
+        upgrade_aria: "ترقية لإنشاء المزيد من الأفاتارات",
+        select_aria: "اختر {name}",
+      },
+      default_name: "أفاتاري",
+      errors: {
+        generate_failed: "تعذر إنشاء الأفاتار. يرجى المحاولة مرة أخرى.",
+        download_failed: "تعذر تنزيل الأفاتار. يرجى المحاولة مرة أخرى.",
+        kie_credits: "نفدت رصيد إنشاء الأفاتار ولا يوجد بديل مُعد. أضف VITE_DASHSCOPE_API_KEY و VITE_DASHSCOPE_ENDPOINT إلى ملف .env ثم أعد تشغيل الخادم.",
+        quota_used: "لقد استخدمت محاولة إنشاء الأفاتار المجانية. قم بترقية خطتك لإنشاء المزيد.",
+        missing_dashscope_endpoint: "عنوان DashScope مفقود. أضف VITE_DASHSCOPE_ENDPOINT إلى ملف .env.",
+      },
+    },
+    store: {
+      title: "المتاجر",
+      promo_prefix: "يمكنك الحصول على خصم على جميع علاماتك التجارية المفضلة الآن، عندما",
+      promo_highlight: "تثبّت التطبيق!",
+      search_placeholder: "بحث",
+      filters: "الفلاتر",
+      brands: "العلامات التجارية",
+      colors: "الألوان",
+      season: "الموسم",
+      categories: "الفئات",
+      reset_all: "إعادة تعيين الكل",
+      price_range: "نطاق السعر",
+      seasons: {
+        summer: "الصيف",
+        spring: "الربيع",
+        fall: "الخريف",
+        winter: "الشتاء",
+      },
+      category_options: {
+        dress: "فستان",
+        top: "علوي",
+        bottom: "سفلي",
+      },
+      brand_options: {
+        hm: "إتش آند إم",
+        zara: "زارا",
+      },
+      product: {
+        view: "عرض",
+        brand: "العلامة",
+        try_on: "جرب افتراضياً",
+        wishlist_aria: "أضف إلى المفضلة",
+        remove_wishlist_aria: "إزالة من المفضلة",
+        view_on_store: "عرض في المتجر",
+      },
+      currency: "ج.م",
+    },
+    wishlist: {
+      title: "المفضلة",
+      subtitle_prefix: "احفظ القطع التي تحبها وعد إليها في أي وقت عندما",
+      subtitle_highlight: "تضيف منتجاً إلى المفضلة!",
+      loading: "جاري تحميل المفضلة…",
+      empty: "لا توجد عناصر تطابق الفلاتر.",
+      empty_lonely: "مفضلتك فارغة.",
+      no_matches: "لا توجد عناصر في المفضلة تطابق بحثك أو فلاترك.",
+    },
+    
+  pricing: {
       title: "اختر خطتك المفضلة للبدء",
       subtitle: "اختر الخطة التي تناسب احتياجاتك وتطلعاتك في عالم الموضة",
       monthlyToggle: "شهرياً",
@@ -723,40 +1107,19 @@ const messages = {
         },
       ],
     },
-    // recycle: {
-    //   header_title: "مولد تصاميم إعادة التدوير من ري دولابي",
-    //   header_subtitle: "ارفع قطع ملابسك · اختر تصميماً · شاهده ينبض بالحياة",
-
-    //   steps: {
-    //     upload: "رفع قطع الملابس",
-    //     choose: "اختيار فكرة التصميم",
-    //     result: "المفهوم المعاد تدويره",
-    //   },
-
-    //   upload: {
-    //     title: "اسحب وأفلت صور ملابسك هنا",
-    //     button: "تحليل قطع الملابس",
-    //     loading: "جاري تحليل الأقمشة وعناصر الملابس...",
-    //   },
-
-    //   ideas: {
-    //     title: "توصيات إعادة التدوير المكتشفة",
-    //     submit: "توليد مظهر التحول بالذكاء الاصطناعي",
-    //   },
-
-    //   output: {
-    //     save_btn: "تحميل مواصفات ومخطط التصميم",
-    //   },
-
-    //   errors: {
-    //     upload_first: "يرجى رفع قطع الملابس واكتشاف أفكار التصميم أولاً.",
-    //     save_failed: "فشل تحميل وصيانة الصورة الاستعراضية.",
-    //   },
-    // },
 
     recycle: {
       header_title: "مولد تصاميم إعادة التدوير من ري دولابي",
       header_subtitle: "ارفع قطع ملابسك · اختر تصميماً · شاهده ينبض بالحياة",
+
+      steps: {
+        upload: "رفع الملابس",
+        upload_subtitle: "ارفع صورة أو صورتين للقطعة",
+        choose: "اختيار الفكرة",
+        choose_subtitle: "اختر التصميم المفضل لديك",
+        result: "التوليد",
+        result_subtitle: "شاهد قطعتك المعاد تدويرها",
+      },
 
       upload: {
         title: "ارفع قطع الملابس الخاصة بك",
@@ -772,7 +1135,37 @@ const messages = {
           size_limit: "يجب أن يكون حجم كل صورة ١٠ ميجابايت أو أقل.",
         },
       },
-    },
+
+      ideas: {
+        title: "اختر فكرة الأسلوب",
+        badge: "مقترح بالذكاء الاصطناعي",
+        ai_engine: "محرك الذكاء الاصطناعي",
+        aspect_ratio: "نسبة العرض إلى الارتفاع",
+        submit: "توليد التصميم المختار",
+        loading: "جاري التوليد...",
+      },
+
+      card: {
+        see_more: "عرض المزيد",
+        see_less: "عرض أقل",
+        selected: "محدد",
+        remove_piece: "إزالة القطعة {n}",
+      },
+
+      output: {
+        heading: "تصميمك المُولَّد",
+        save_btn: "حفظ المواصفات",
+        saving: "جاري التحميل...",
+      },
+
+  errors: {
+    upload_first: 'يرجى رفع قطع الملابس واكتشاف أفكار التصميم أولاً.',
+    save_failed: 'فشل تحميل الصورة.',
+    login_required: 'يرجى تسجيل الدخول لتحليل الملابس وتوليد التصاميم.',
+    missing_github_key: 'مفتاح GitHub API مفقود. أضف VITE_GITHUB_TOKEN إلى ملف .env.',
+    missing_dashscope_key: 'مفتاح DashScope API مفقود. أضف VITE_DASHSCOPE_API_KEY إلى ملف .env.',
+  },
+},
     aboutRecycle: {
       header_primary: "لماذا إعادة التدوير مهمة؟",
       header_gradient: "الموضة المستدامة",
@@ -863,6 +1256,91 @@ const messages = {
       step3_title: "توليد المظهر بالذكاء الاصطناعي",
       step3_description:
         "دع معالجنا الذكي يحلل مدخلاتك ليركب لك عرضاً واقعياً للتصميم بشكل فوري وعالي الدقة.",
+    },
+ auth: {
+      tabs: {
+        signUp: "إنشاء حساب",
+        login: "تسجيل الدخول",
+      },
+      signup: {
+        title: "أنشئ ملفك الشخصي للأزياء",
+        subtitle: "ابدأ في بناء خزانة ملابسك المخصصة",
+        firstName: "الاسم الأول",
+        firstNamePlaceholder: "مثال: إنجي",
+        lastName: "الاسم الأخير",
+        lastNamePlaceholder: "مثال: أحمد",
+        email: "البريد الإلكتروني",
+        emailPlaceholder: "أدخل بريدك الإلكتروني",
+        password: "كلمة المرور",
+        passwordPlaceholder: "أنشئ كلمة مرور قوية",
+        confirmPassword: "تأكيد كلمة المرور",
+        confirmPasswordPlaceholder: "أكد كلمة المرور التي أنشأتها",
+        submit: "التالي",
+        loading: "يرجى الانتظار...",
+        switchText: "لديك حساب بالفعل؟",
+        switchLink: "سجل دخولك الآن",
+        successMessage:
+          "لقد أرسلنا بريدًا إلكترونيًا للتحقق من حسابك. افحص صندوق الوارد الخاص بك.",
+      },
+      login: {
+        title: "مرحباً بعودتك",
+        subtitle: "قم بتسجيل الدخول إلى حسابك",
+        email: "البريد الإلكتروني",
+        emailPlaceholder: "أدخل بريدك الإلكتروني",
+        password: "كلمة المرور",
+        passwordPlaceholder: "أدخل كلمة المرور الخاصة بك",
+        forgotPassword: "هل نسيت كلمة المرور؟",
+        submit: "تسجيل الدخول",
+        loading: "يرجى الانتظار...",
+        switchText: "ليس لديك حساب؟",
+        switchLink: "أنشئ حساباً الآن",
+      },
+      panel: {
+        emailTitle: "لا تقلق،",
+        welcomeBack: "مرحباً بك <br/>من جديد",
+        welcomeTo: "مرحباً بك في <br/>ريدولابي",
+        noAccount: "ليس لديك حساب؟",
+        alreadyHaveAccount: "لديك حساب بالفعل؟",
+        signUp: "إنشاء حساب",
+        login: "تسجيل الدخول",
+      },
+      common: {
+        orDivider: "——— أو ———",
+        continueWithGoogle: "المتابعة باستخدام Google",
+        error: {
+          somethingWentWrong: "حدث خطأ ما",
+        },
+      },
+    },
+    fp: {
+      forgotTitle: "هل نسيت كلمة المرور؟",
+      forgotSubtitle: "لا تقلق، أدخل بريدك الإلكتروني أدناه لتلقي رمز التحقق.",
+      emailLabel: "البريد الإلكتروني",
+      emailPlaceholder: "أدخل بريدك الإلكتروني",
+      sending: "جاري الإرسال...",
+      next: "التالي",
+      hintSpam:
+        "تأكد من فحص مجلد الرسائل غير المرغوب فيها (Spam) إذا لم تجد الرمز.",
+      or: "أو",
+      hintDifferent: "جرّب بريداً إلكترونياً آخر إذا لم تتمكن من العثور عليه.",
+      backToLogin: "العودة لتسجيل الدخول",
+      verificationTitle: "التحقق من البريد الإلكتروني",
+      verificationSubtitle: "لقد أرسلنا رمز تحقق مكوناً من 6 أرقام إلى {email}",
+      verifying: "جاري التحقق...",
+      verifyContinue: "التحقق والمتابعة",
+      didnotReceiveCode: "لم يصلك الرمز؟",
+      resendCode: "إعادة إرسال الرمز",
+      requestCodeIn: "طلب رمز جديد خلال {timer}",
+      setNewPasswordTitle: "تعيين كلمة مرور جديدة",
+      setNewPasswordSubtitle: "أنشئ كلمة مرور قوية وفريدة لتأمين حسابك.",
+      passwordLabel: "كلمة المرور الجديدة",
+      passwordPlaceholder: "أنشئ كلمة مرور قوية",
+      confirmPasswordLabel: "تأكيد كلمة المرور الجديدة",
+      confirmPasswordPlaceholder: "أكّد كلمة المرور الجديدة",
+      securityTip:
+        "تأكد من أن كلمة المرور لا تقل عن 8 أحرف وتحتوي على حروف كبيرة وصغيرة.",
+      saving: "جاري الحفظ...",
+      resetPassword: "إعادة تعيين كلمة المرور",
     },
     upload: {
       piece: "القطعة",
