@@ -91,3 +91,32 @@ export const darkMode = (darkMode) => {
     },
   );
 };
+export const getNotifications = () => {
+  return axios.get(`${API}/notifications`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+export const markAsReadAll = () => {
+  return axios.patch(
+    `${API}/notifications/read-all`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
+  );
+};
+export const markAsRead = (notificationID) => {
+  return axios.patch(
+    `${API}/notifications/${notificationID}/read`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
+  );
+};

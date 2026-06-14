@@ -4,7 +4,6 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         
         <div class="bg-white border border-[#E9EBEF] shadow-sm rounded-2xl p-8 flex flex-col items-center justify-center min-h-[270px] gap-4">
-          <!-- Avatar circle -->
           <div class="relative w-32 h-32">
             <div class="w-full h-full rounded-full bg-[url('Checker.png')] bg-cover shadow-[0_0_0_4px_rgba(64,185,255,0.2)] overflow-hidden">
               <img
@@ -18,7 +17,6 @@
                 class="w-full h-full object-cover"
               />
             </div>
-            <!-- Loading spinner overlay -->
             <div v-if="imageLoading" class="absolute inset-0 rounded-full bg-black/30 flex items-center justify-center">
               <svg class="w-6 h-6 text-white animate-spin" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
@@ -29,7 +27,6 @@
 
           <h2 class="text-xl font-semibold PrimaryTxt">{{ fullName }}</h2>
 
-          <!-- Add / Delete image buttons -->
           <div class="flex items-center gap-3">
             <button
               type="button"
@@ -40,7 +37,7 @@
               <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5V19a1 1 0 001 1h16a1 1 0 001-1v-2.5M12 3v13m-4-4l4 4 4-4"/>
               </svg>
-              Add Image
+              {{ $t('profile.addImage') }}
             </button>
             <button
               type="button"
@@ -51,7 +48,7 @@
               <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
               </svg>
-              Delete Image
+              {{ $t('profile.deleteImage') }}
             </button>
           </div>
         </div>
@@ -62,30 +59,30 @@
               <div class="w-full h-full rounded-full bg-[url('Checker.png')] bg-cover shadow-[0_0_0_4px_rgba(64,185,255,0.2)] overflow-hidden">
                 <img src="../assets/avatar-placeholder.png" alt="Avatar Preview" class="w-full h-full object-cover hidden" />
               </div>
-              <button type="button" class="absolute bottom-0 right-0 w-10 h-10 bg-[#40B9FF] text-white rounded-full flex items-center justify-center shadow-md hover:bg-[#29aaff] transition-colors" aria-label="Add Avatar Layer">
+              <button type="button" class="absolute bottom-0 right-0 w-10 h-10 bg-[#40B9FF] text-white rounded-full flex items-center justify-center shadow-md hover:bg-[#29aaff] transition-colors" :aria-label="$t('profile.createAvatar')">
                 <svg class="w-6 h-6 border border-[#F1F5F9] rounded" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                 </svg>
               </button>
             </div>
-            <p class="text-sm text-[#717182]">Create your Avatar</p>
+            <p class="text-sm text-[#717182]">{{ $t('profile.createAvatar') }}</p>
           </div>
           <div class="flex items-center gap-4 w-full justify-center mt-4">
-            <button type="button" class="w-24 h-[26px] bg-[#EA0234] text-white rounded-md text-xs font-medium shadow-sm hover:opacity-90 transition-opacity">Delete</button>
-            <button type="button" class="w-24 h-[26px] bg-[#AAE338] text-white rounded-md text-xs font-medium shadow-sm hover:opacity-90 transition-opacity">Edit</button>
+            <button type="button" class="w-24 h-[26px] bg-[#EA0234] text-white rounded-md text-xs font-medium shadow-sm hover:opacity-90 transition-opacity">{{ $t('profile.delete') }}</button>
+            <button type="button" class="w-24 h-[26px] bg-[#AAE338] text-white rounded-md text-xs font-medium shadow-sm hover:opacity-90 transition-opacity">{{ $t('profile.edit') }}</button>
           </div>
         </div>
       </div>
 
       <div class="bg-white border border-[#E9EBEF] shadow-sm rounded-2xl p-8">
-        <h3 class="text-lg font-semibold PrimaryTxt mb-6">Personal Information</h3>
+        <h3 class="text-lg font-semibold PrimaryTxt mb-6">{{ $t('profile.personalInformation') }}</h3>
         <form @submit.prevent="saveChanges" class="space-y-6">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div class="flex flex-col">
-              <label class="text-sm font-medium PrimaryTxt mb-2">First Name</label>
+              <label class="text-sm font-medium PrimaryTxt mb-2">{{ $t('profile.firstName') }}</label>
               <div class="relative flex items-center">
-                <input v-model="form.firstName" type="text" class="w-full h-12 px-4 bg-[#F9FAFB] border border-[#E9EBEF] rounded-xl text-base text-[#0A0A0A] focus:outline-none focus:border-[#40B9FF]" />
-                <div class="absolute right-4 text-[#1E1E1E]">
+                <input v-model="form.firstName" type="text" class="w-full h-12 ps-4 pe-10 bg-[#F9FAFB] border border-[#E9EBEF] rounded-xl text-base text-[#0A0A0A] focus:outline-none focus:border-[#40B9FF]" />
+                <div class="absolute end-4 text-[#1E1E1E]">
                   <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                   </svg>
@@ -93,10 +90,10 @@
               </div>
             </div>
             <div class="flex flex-col">
-              <label class="text-sm font-medium PrimaryTxt mb-2">Last Name</label>
+              <label class="text-sm font-medium PrimaryTxt mb-2">{{ $t('profile.lastName') }}</label>
               <div class="relative flex items-center">
-                <input v-model="form.lastName" type="text" class="w-full h-12 px-4 bg-[#F9FAFB] border border-[#E9EBEF] rounded-xl text-base text-[#0A0A0A] focus:outline-none focus:border-[#40B9FF]" />
-                <div class="absolute right-4 text-[#1E1E1E]">
+                <input v-model="form.lastName" type="text" class="w-full h-12 ps-4 pe-10 bg-[#F9FAFB] border border-[#E9EBEF] rounded-xl text-base text-[#0A0A0A] focus:outline-none focus:border-[#40B9FF]" />
+                <div class="absolute end-4 text-[#1E1E1E]">
                   <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                   </svg>
@@ -106,28 +103,28 @@
           </div>
 
           <div class="flex flex-col">
-            <label class="text-sm font-medium PrimaryTxt mb-2">Email</label>
+            <label class="text-sm font-medium PrimaryTxt mb-2">{{ $t('profile.email') }}</label>
             <div class="relative flex items-center">
-              <div class="absolute left-4 text-[#717182]">
+              <div class="absolute start-4 text-[#717182]">
                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.67">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 002-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <input v-model="form.email" disabled type="email" class="w-full h-12 pl-12 pr-4 bg-gray-100 text-gray-500 border border-[#E9EBEF] rounded-xl text-base cursor-not-allowed focus:outline-none focus:border-[#40B9FF]" />
+              <input v-model="form.email" disabled type="email" class="w-full h-12 ps-12 pe-4 bg-gray-100 text-gray-500 border border-[#E9EBEF] rounded-xl text-base cursor-not-allowed focus:outline-none focus:border-[#40B9FF]" />
             </div>
           </div>
 
           <div class="flex flex-col">
-            <label class="text-sm font-medium PrimaryTxt mb-3">Gender</label>
+            <label class="text-sm font-medium PrimaryTxt mb-3">{{ $t('profile.gender') }}</label>
             <div class="flex items-center gap-3">
-              <button type="button" @click="form.gender = 'Male'" class="w-[84px] h-12 rounded-xl text-base font-medium transition-all shadow-sm" :class="form.gender === 'Male' ? 'bg-[#40B9FF] text-white' : 'bg-[#F9FAFB] text-[#717182]'">Male</button>
-              <button type="button" @click="form.gender = 'Female'" class="w-[100px] h-12 rounded-xl text-base font-medium transition-all shadow-sm" :class="form.gender === 'Female' ? 'bg-[#40B9FF] text-white' : 'bg-[#F9FAFB] text-[#717182]'">Female</button>
+              <button type="button" @click="form.gender = 'Male'" class="w-[84px] h-12 rounded-xl text-base font-medium transition-all shadow-sm" :class="form.gender === 'Male' ? 'bg-[#40B9FF] text-white' : 'bg-[#F9FAFB] text-[#717182]'">{{ $t('profile.male') }}</button>
+              <button type="button" @click="form.gender = 'Female'" class="w-[100px] h-12 rounded-xl text-base font-medium transition-all shadow-sm" :class="form.gender === 'Female' ? 'bg-[#40B9FF] text-white' : 'bg-[#F9FAFB] text-[#717182]'">{{ $t('profile.female') }}</button>
             </div>
           </div>
 
           <div class="pt-8 border-t border-[#E9EBEF] flex items-center gap-4">
-            <button type="button" @click="cancelEdits" class="flex-1 h-[51px] border border-[#E9EBEF] rounded-xl text-base font-medium text-[#717182] hover:bg-gray-50 transition-colors">Cancel</button>
-            <button type="submit" class="flex-1 h-[51px] bg-[#8ED321] text-white rounded-xl text-base font-medium shadow-md hover:opacity-90 transition-opacity">Save Changes</button>
+            <button type="button" @click="cancelEdits" class="flex-1 h-[51px] border border-[#E9EBEF] rounded-xl text-base font-medium text-[#717182] hover:bg-gray-50 transition-colors">{{ $t('profile.cancel') }}</button>
+            <button type="submit" class="flex-1 h-[51px] bg-[#8ED321] text-white rounded-xl text-base font-medium shadow-md hover:opacity-90 transition-opacity">{{ $t('profile.saveChanges') }}</button>
           </div>
         </form>
       </div>
@@ -139,7 +136,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
           </div>
-          <span class="text-base font-medium text-[#D4183D]">Delete Account</span>
+          <span class="text-base font-medium text-[#D4183D]">{{ $t('profile.deleteAccount') }}</span>
         </button>
       </div>
     </div>
@@ -157,31 +154,31 @@
         </div>
 
         <div class="heading-layout-container">
-          <h2 class="delete-modal-title">Delete Account?</h2>
+          <h2 class="delete-modal-title">{{ $t('profile.deleteModal.title') }}</h2>
         </div>
 
         <div class="paragraph-layout-container">
           <p class="delete-modal-description">
-            This action cannot be undone. All your data, credentials, and settings will be permanently scrubbed.
+            {{ $t('profile.deleteModal.description') }}
           </p>
         </div>
 
         <div class="actions-outer-container">
           <div class="actions-inner-stack">
             <button type="button" @click="handleDeleteConfirmation" :disabled="isDeleting" class="action-btn-danger">
-              <span v-if="!isDeleting" class="btn-text-white">Yes, Delete Account</span>
-              <span v-else class="btn-text-white">Deleting...</span>
+              <span v-if="!isDeleting" class="btn-text-white">{{ $t('profile.deleteModal.confirm') }}</span>
+              <span v-else class="btn-text-white">{{ $t('profile.deleteModal.deleting') }}</span>
             </button>
             
             <button type="button" @click="showDeleteModal = false" :disabled="isDeleting" class="action-btn-cancel">
-              <span class="btn-text-muted">Cancel</span>
+              <span class="btn-text-muted">{{ $t('profile.deleteModal.cancel') }}</span>
             </button>
           </div>
         </div>
 
       </div>
     </div>
-    <!-- Success Modal -->
+
     <div v-if="showSuccessModal" class="success-modal-overlay" @click.self="showSuccessModal = false">
       <div class="success-modal-container">
 
@@ -194,15 +191,15 @@
         </div>
 
         <div class="success-heading-layout">
-          <h2 class="success-modal-title">Changes Saved!</h2>
+          <h2 class="success-modal-title">{{ $t('profile.successModal.title') }}</h2>
         </div>
 
         <div class="success-paragraph-layout">
-          <p class="success-modal-description">Your profile has been updated successfully.</p>
+          <p class="success-modal-description">{{ $t('profile.successModal.description') }}</p>
         </div>
 
         <button type="button" @click="showSuccessModal = false" class="success-action-btn">
-          <span class="success-btn-text">Continue</span>
+          <span class="success-btn-text">{{ $t('profile.successModal.continue') }}</span>
         </button>
 
       </div>
@@ -214,12 +211,12 @@
 import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { updateProfile, deleteAccount, getUserById,addImage ,deleteImage  } from "../services/services";
+import imageCompression from "browser-image-compression";
 
 export default {
   name: "EditProfile",
   setup() {
     const router = useRouter();
-
     const form = ref({
       firstName: "",
       lastName: "",
@@ -258,34 +255,59 @@ export default {
     const imageLoading = ref(false);
 
     const handleAddImage = () => {
-      const input = document.createElement("input");
-      input.type = "file";
-      input.accept = "image/*";
-      input.onchange = async (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-        imageLoading.value = true;
-        const reader = new FileReader();
-        reader.onload = async () => {
-          try {
-            const base64 = reader.result; // data URL: "data:image/png;base64,..."
-            await addImage({ userImage: base64 });
-            userImage.value = base64;
-            // Persist in localStorage so navbar/other pages stay in sync
-            const stored = JSON.parse(localStorage.getItem("user") || "{}");
-            stored.userImage = base64;
-            localStorage.setItem("user", JSON.stringify(stored));
-            window.dispatchEvent(new Event("storage"));
-          } catch (err) {
-            console.error("Failed to upload image:", err);
-          } finally {
-            imageLoading.value = false;
-          }
-        };
-        reader.readAsDataURL(file);
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = "image/*";
+
+  input.onchange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    imageLoading.value = true;
+
+    try {
+      // Compress image
+      const compressedFile = await imageCompression(file, {
+        maxSizeMB: 0.000000000001,
+        maxWidthOrHeight: 500,
+        useWebWorker: true,
+      });
+
+      // Convert compressed image to Base64
+      const reader = new FileReader();
+
+      reader.onload = async () => {
+        try {
+          const base64 = reader.result;
+
+          await addImage({
+            userImage: base64,
+          });
+
+          userImage.value = base64;
+
+          // Persist in localStorage so navbar/other pages stay in sync
+          const stored = JSON.parse(localStorage.getItem("user") || "{}");
+          stored.userImage = base64;
+          localStorage.setItem("user", JSON.stringify(stored));
+
+          window.dispatchEvent(new Event("storage"));
+        } catch (err) {
+          console.error("Failed to upload image:", err);
+        } finally {
+          imageLoading.value = false;
+        }
       };
-      input.click();
-    };
+
+      reader.readAsDataURL(compressedFile);
+    } catch (err) {
+      console.error("Image compression failed:", err);
+      imageLoading.value = false;
+    }
+  };
+
+  input.click();
+};
 
     const handleDeleteImage = async () => {
       if (!userImage.value) return;

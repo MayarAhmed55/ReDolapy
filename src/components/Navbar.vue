@@ -33,7 +33,6 @@
             </router-link>
           </template>
         </div>
-
         <div class="hidden lg:flex items-center gap-2 xl:gap-3 shrink-0">
           <LangSwitcher />
 
@@ -69,8 +68,9 @@
               </svg>
               <span
                 class="text-sm font-medium text-gray-700 max-w-[120px] truncate"
-                >{{ userFullName }}</span
               >
+                {{ userFullName }}
+              </span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -129,7 +129,9 @@
                         d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
                       />
                     </svg>
-                    <span class="item-title">Notifications</span>
+                    <span class="item-title">{{
+                      $t("nav.notifications")
+                    }}</span>
                   </div>
                   <button
                     @click="toggleNotifications"
@@ -156,7 +158,7 @@
                         d="M12 3v1.5m0 15V21m9-9h-1.5m-13.5 0H3m16.364-6.364l-1.06 1.06m-11.314 11.314l-1.06 1.06m11.314 0l-1.06-1.06m-11.314-11.314l-1.06-1.06M12 7.25a4.75 4.75 0 1 0 0 9.5 4.75 4.75 0 0 0 0-9.5z"
                       />
                     </svg>
-                    <span class="item-title">Theme</span>
+                    <span class="item-title">{{ $t("nav.theme") }}</span>
                   </div>
                   <button
                     @click="toggleTheme"
@@ -187,14 +189,13 @@
                           d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138A44.26 44.26 0 0115.5 12m-2 1.157a26.792 26.792 0 01-1.884 4.354"
                         />
                       </svg>
-                      <span class="item-title">Language</span>
+                      <span class="item-title">{{ $t("nav.language") }}</span>
                     </div>
 
                     <div class="flex items-center gap-1">
-                      <span
-                        class="text-sm font-medium text-gray-900 uppercase"
-                        >{{ $i18n.locale }}</span
-                      >
+                      <span class="text-sm font-medium text-gray-900 uppercase">
+                        {{ $i18n.locale }}
+                      </span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -204,7 +205,10 @@
                         class="w-3.5 h-3.5 text-gray-600 transition-transform duration-200"
                         :class="{
                           'rotate-180': languageDropdownOpen,
-                          'rotate-90': !languageDropdownOpen,
+                          'rotate-90':
+                            !languageDropdownOpen && $i18n.locale !== 'ar',
+                          '-rotate-90':
+                            !languageDropdownOpen && $i18n.locale === 'ar',
                         }"
                       >
                         <path
@@ -286,13 +290,19 @@
                         d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-6 15h9"
                       />
                     </svg>
-                    <span class="item-title font-normal">Mobile App</span>
+                    <span class="item-title font-normal">{{
+                      $t("nav.mobileApp")
+                    }}</span>
                   </div>
                   <span
                     class="text-sm font-normal"
                     :class="hasMobileApp ? 'text-green-500' : 'text-gray-400'"
                   >
-                    {{ hasMobileApp ? "Installed" : "Not Installed" }}
+                    {{
+                      hasMobileApp
+                        ? $t("nav.appStatus.installed")
+                        : $t("nav.appStatus.notInstalled")
+                    }}
                   </span>
                 </div>
 
@@ -312,7 +322,9 @@
                         d="M20.25 14.15v4.25c0 .621-.504 1.125-1.125 1.125H4.875A1.125 1.125 0 013.75 18.4V14.15m16.5 0c0-1.243-1.007-2.25-2.25-2.25H6c-1.243 0-2.25 1.007-2.25 2.25m16.5 0V6.3c0-.621-.504-1.125-1.125-1.125H4.875A1.125 1.125 0 003.75 6.3v7.85m16.5 0V5.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25v8.65"
                       />
                     </svg>
-                    <span class="item-title font-normal">My Wardrobe</span>
+                    <span class="item-title font-normal">{{
+                      $t("nav.myWardrobe")
+                    }}</span>
                   </div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -321,6 +333,7 @@
                     stroke-width="2"
                     stroke="currentColor"
                     class="w-4 h-4 text-gray-900"
+                    :class="{ 'rotate-180': $i18n.locale === 'ar' }"
                   >
                     <path
                       stroke-linecap="round"
@@ -349,8 +362,12 @@
                       </svg>
                     </div>
                     <div class="card-details">
-                      <span class="card-title">Payment Methods</span>
-                      <span class="card-desc">Manage your payment options</span>
+                      <span class="card-title">{{
+                        $t("nav.paymentMethods")
+                      }}</span>
+                      <span class="card-desc">{{
+                        $t("nav.paymentMethodsDesc")
+                      }}</span>
                     </div>
                   </div>
 
@@ -372,8 +389,10 @@
                       </svg>
                     </div>
                     <div class="card-details">
-                      <span class="card-title">Wishlist</span>
-                      <span class="card-desc">View your saved items</span>
+                      <span class="card-title">{{ $t("nav.wishlist") }}</span>
+                      <span class="card-desc">{{
+                        $t("nav.wishlistDesc")
+                      }}</span>
                     </div>
                   </div>
                 </div>
@@ -384,7 +403,7 @@
                     class="edit-profile-btn cursor-pointer"
                     @click="closeUserDropdown"
                   >
-                    <span>Edit Profile</span>
+                    <span>{{ $t("nav.editProfile") }}</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -392,6 +411,7 @@
                       stroke-width="2"
                       stroke="currentColor"
                       class="w-4 h-4 flex"
+                      :class="{ 'rotate-180': $i18n.locale === 'ar' }"
                     >
                       <path
                         stroke-linecap="round"
@@ -413,7 +433,7 @@
                     class="logout-action-btn"
                     role="menuitem"
                   >
-                    <span class="logout-text">Log out</span>
+                    <span class="logout-text">{{ $t("nav.logout") }}</span>
                     <span class="logout-icon-box">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -422,6 +442,7 @@
                         stroke-width="2"
                         stroke="currentColor"
                         class="w-4 h-4"
+                        :class="{ 'rotate-180': $i18n.locale !== 'ar' }"
                       >
                         <path
                           stroke-linecap="round"
@@ -435,6 +456,8 @@
               </div>
             </Transition>
           </div>
+
+          <Notificationdropdown v-if="isLoggedIn" />
         </div>
 
         <button
@@ -518,6 +541,7 @@
               </div>
 
               <nav class="flex-1 overflow-y-auto px-5 py-6">
+                <Notificationdropdown />
                 <template v-for="(link, i) in navLinks" :key="link.to">
                   <a
                     v-if="link.hash"
@@ -1005,12 +1029,14 @@ import AuthModal from "./modal.vue";
 import { isAuthModalOpen, authModalMode } from "../authState.js";
 import { notifications, darkMode, getUserById } from "../services/services.js";
 import { ref } from "vue";
+import Notificationdropdown from "./Notificationdropdown.vue";
 
 export default {
   name: "Navbar",
   components: {
     LangSwitcher,
     AuthModal,
+    Notificationdropdown,
   },
   directives: {
     "click-outside": {
@@ -1658,7 +1684,7 @@ export default {
   opacity: 0;
   transform: translateY(-5px);
 }
-.edit-profile-warber:hover{
+.edit-profile-warber:hover {
   scale: 1.08;
 }
 </style>
