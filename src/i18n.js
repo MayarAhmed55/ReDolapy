@@ -8,6 +8,7 @@ const messages = {
       tryOn: "Try-On",
       recycle: "Recycle",
       store: "Store",
+      store: "Store",
       pricing: "Pricing",
       about: "About",
       login: "Login",
@@ -288,54 +289,54 @@ const messages = {
     //     ],
     //   },
     // },
-  
+
     pricing: {
-  title: "Simple, Transparent Pricing",
-  subtitle: "Choose the perfect plan for your digital wardrobe needs",
-  completeSubscription: "Complete Subscription",
-  paymentMethod: "Payment Method",
-  cardNumber: "Card Number",
-  dateFormat: "MM / YY",
-  cvv: "CVV",
-  savePayment: "Save payment information for subsequent renewals",
-  monthly: "Monthly Subscription",
-  monthlyPrice: "$29.00",
-  earlyBirdDiscount: "Early Bird Discount",
-  discountAmount: "-$10.00",
-  estimatedTax: "Estimated Tax",
-  taxAmount: "$0.00",
-  dueToday: "Due Today",
-  dueTodayValue: "$19.00",
-  terms: "By finalizing your purchase, you authorize ReDolapy to initiate recurring automatic processing cycles. Cancel anytime inside workspace configurations.",
-  
-  // 💡 Added Missing Free Plan Block
-  free: {
-    name: "Free Wardrobe",
-    price: "$0",
-    priceUnit: "/ month",
-    button: "Get Started Free",
-    features: [
-      "Manage up to 20 clothing items",
-      "Standard 2D Avatar fittings",
-      "Basic upcycling design ideas"
-    ]
-  },
-  
-  pro: {
-    name: "Pro Atelier",
-    price: "$19",
-    priceUnit: "/ month",
-    button: "Finalize & Activate Plan",
-    features: [
-      "Infinite High-Fidelity 2D Avatar Fittings",
-      "Intelligent Wardrobe Color Match Matrix",
-      "Advanced High-Resolution Vector Canvas Exports",
-      "Priority Graphics Rendering Pipeline Lanes",
-    ],
-  },
-},
-  
-  
+      title: "Simple, Transparent Pricing",
+      subtitle: "Choose the perfect plan for your digital wardrobe needs",
+      completeSubscription: "Complete Subscription",
+      paymentMethod: "Payment Method",
+      cardNumber: "Card Number",
+      dateFormat: "MM / YY",
+      cvv: "CVV",
+      savePayment: "Save payment information for subsequent renewals",
+      monthly: "Monthly Subscription",
+      monthlyPrice: "$29.00",
+      earlyBirdDiscount: "Early Bird Discount",
+      discountAmount: "-$10.00",
+      estimatedTax: "Estimated Tax",
+      taxAmount: "$0.00",
+      dueToday: "Due Today",
+      dueTodayValue: "$19.00",
+      terms:
+        "By finalizing your purchase, you authorize ReDolapy to initiate recurring automatic processing cycles. Cancel anytime inside workspace configurations.",
+
+      // 💡 Added Missing Free Plan Block
+      free: {
+        name: "Free Wardrobe",
+        price: "$0",
+        priceUnit: "/ month",
+        button: "Get Started Free",
+        features: [
+          "Manage up to 20 clothing items",
+          "Standard 2D Avatar fittings",
+          "Basic upcycling design ideas",
+        ],
+      },
+
+      pro: {
+        name: "Pro Atelier",
+        price: "$19",
+        priceUnit: "/ month",
+        button: "Finalize & Activate Plan",
+        features: [
+          "Infinite High-Fidelity 2D Avatar Fittings",
+          "Intelligent Wardrobe Color Match Matrix",
+          "Advanced High-Resolution Vector Canvas Exports",
+          "Priority Graphics Rendering Pipeline Lanes",
+        ],
+      },
+    },
+
     faq: {
       title: "Frequently Asked Questions",
       questions: [
@@ -356,85 +357,86 @@ const messages = {
         },
       ],
     },
-//   recycle: {
-//   header_title: 'Redolapy Up-cycling Design Generator',
-//   header_subtitle: 'Upload your pieces · Pick a design · See it come to life',
-  
-//   steps: {
-//     upload: 'Upload Pieces',
-//     choose: 'Pick Design Idea',
-//     result: 'Upcycled Concept'
-//   },
-  
-//   upload: {
-//     title: 'Drag and drop your wardrobe images here',
-//     button: 'Analyze Garments',
-//     loading: 'Analyzing fabrics and clothing items...'
-//   },
-  
-//   ideas: {
-//     title: 'Discovered Upcycling Recommendations',
-//     submit: 'Generate AI Transformation View'
-//   },
-  
-//   output: {
-//     save_btn: 'Download Design Blueprint Specs'
-//   },
-  
-//   errors: {
-//     upload_first: 'Please upload garments and discover design ideas first.',
-//     save_failed: 'Failed to download image.'
-//   }
-// },
-  
-recycle: {
-  header_title: 'Redolapy Up-cycling Design Generator',
-  header_subtitle: 'Upload your pieces · Pick a design · See it come to life',
+    //   recycle: {
+    //   header_title: 'Redolapy Up-cycling Design Generator',
+    //   header_subtitle: 'Upload your pieces · Pick a design · See it come to life',
 
-  steps: {
-    upload: 'Upload',
-    upload_subtitle: 'Upload 1-2 garment photos',
-    choose: 'Choose Idea',
-    choose_subtitle: 'Pick your favorite design',
-    result: 'Generate',
-    result_subtitle: 'Visualize your upcycled piece',
-  },
+    //   steps: {
+    //     upload: 'Upload Pieces',
+    //     choose: 'Pick Design Idea',
+    //     result: 'Upcycled Concept'
+    //   },
 
-  upload: {
-    title: 'Upload Your Garments',
-    support_text: 'Support for JPG, PNG, WEBP (max 10MB each)',
-    drag_prompt: 'Click or drag images here',
-    piece_prefix: 'Piece',
-    button: 'Discover Design Ideas',
-    loading: 'Creating your design ideas…',
-    warnings: {
-      format_error: 'Unsupported file format. Use',
-      max_files: 'You cannot upload more than 2 images.',
-      size_limit: 'Each image must be 10MB or smaller.',
-    },
-  },
+    //   upload: {
+    //     title: 'Drag and drop your wardrobe images here',
+    //     button: 'Analyze Garments',
+    //     loading: 'Analyzing fabrics and clothing items...'
+    //   },
 
-  ideas: {
-    title: 'Choose Your Style Idea',
-    badge: 'AI Suggested',
-    ai_engine: 'AI Engine',
-    aspect_ratio: 'Aspect Ratio',
-    submit: 'Generate Selected Design',
-    loading: 'Generating…',
-  },
+    //   ideas: {
+    //     title: 'Discovered Upcycling Recommendations',
+    //     submit: 'Generate AI Transformation View'
+    //   },
 
-  card: {
-    see_more: 'See more',
-    see_less: 'See less',
-    selected: 'Selected',
-    remove_piece: 'Remove piece {n}',
-  },
+    //   output: {
+    //     save_btn: 'Download Design Blueprint Specs'
+    //   },
 
-  output: {
-    heading: 'Your Generated Design',
-    save_btn: 'Save Specs',
-    saving: 'Downloading…',
-  },
+    //   errors: {
+    //     upload_first: 'Please upload garments and discover design ideas first.',
+    //     save_failed: 'Failed to download image.'
+    //   }
+    // },
+
+    recycle: {
+      header_title: "Redolapy Up-cycling Design Generator",
+      header_subtitle:
+        "Upload your pieces · Pick a design · See it come to life",
+
+      steps: {
+        upload: "Upload",
+        upload_subtitle: "Upload 1-2 garment photos",
+        choose: "Choose Idea",
+        choose_subtitle: "Pick your favorite design",
+        result: "Generate",
+        result_subtitle: "Visualize your upcycled piece",
+      },
+
+      upload: {
+        title: "Upload Your Garments",
+        support_text: "Support for JPG, PNG, WEBP (max 10MB each)",
+        drag_prompt: "Click or drag images here",
+        piece_prefix: "Piece",
+        button: "Discover Design Ideas",
+        loading: "Creating your design ideas…",
+        warnings: {
+          format_error: "Unsupported file format. Use",
+          max_files: "You cannot upload more than 2 images.",
+          size_limit: "Each image must be 10MB or smaller.",
+        },
+      },
+
+      ideas: {
+        title: "Choose Your Style Idea",
+        badge: "AI Suggested",
+        ai_engine: "AI Engine",
+        aspect_ratio: "Aspect Ratio",
+        submit: "Generate Selected Design",
+        loading: "Generating…",
+      },
+
+      card: {
+        see_more: "See more",
+        see_less: "See less",
+        selected: "Selected",
+        remove_piece: "Remove piece {n}",
+      },
+
+      output: {
+        heading: "Your Generated Design",
+        save_btn: "Save Specs",
+        saving: "Downloading…",
+      },
 
   errors: {
     upload_first: 'Please upload garments and discover design ideas first.',
@@ -445,7 +447,7 @@ recycle: {
   },
 },
 
-aboutRecycle: {
+    aboutRecycle: {
       header_primary: "Why Upcycling Matters",
       header_gradient: "Sustainable Fashion",
       header_description:
@@ -561,6 +563,118 @@ aboutRecycle: {
       cvv: "CVV",
       savePayment: "Save payment details for future use",
     },
+     auth: {
+      tabs: {
+        signUp: "Sign Up",
+        login: "Login",
+      },
+      signup: {
+        title: "Create Your Style Profile",
+        subtitle: "Start building your personalized wardrobe",
+        firstName: "First name",
+        firstNamePlaceholder: "e.g. Engy",
+        lastName: "Last name",
+        lastNamePlaceholder: "e.g. Ahmed",
+        email: "Email",
+        emailPlaceholder: "Enter your email",
+        password: "Password",
+        passwordPlaceholder: "Create strong password",
+        confirmPassword: "Confirm password",
+        confirmPasswordPlaceholder: "Confirm the password that you created",
+        submit: "Next",
+        loading: "Please wait...",
+        switchText: "Already have an account?",
+        switchLink: "Login now",
+        successMessage:
+          "We sent an email to verify your account. Check your inbox.",
+      },
+      login: {
+        title: "Welcome Back",
+        subtitle: "Log in to your account",
+        email: "Email",
+        emailPlaceholder: "Enter your email",
+        password: "Password",
+        passwordPlaceholder: "Enter your password",
+        forgotPassword: "Forgot password?",
+        submit: "Login",
+        loading: "Please wait...",
+        switchText: "Don't have an account?",
+        switchLink: "Sign up now",
+      },
+      panel: {
+        emailTitle: "Don't Worry,",
+        welcomeBack: "Welcome <br/>Back",
+        welcomeTo: "Welcome To<br/>Redolapy",
+        noAccount: "Don't Have an account?",
+        alreadyHaveAccount: "Already have an account?",
+        signUp: "Sign up",
+        login: "Login",
+      },
+      common: {
+        orDivider: "——— OR ———",
+        continueWithGoogle: "Continue with Google",
+        error: {
+          somethingWentWrong: "Something went wrong",
+        },
+      },
+    },
+    fp: {
+      forgotTitle: "Forgot Password?",
+      forgotSubtitle:
+        "No worries, enter your email below to receive a verification code.",
+      emailLabel: "Email Address",
+      emailPlaceholder: "Enter your email address",
+      sending: "Sending...",
+      next: "Next",
+      hintSpam:
+        "Be sure to check your spam or junk folder if you don't see it.",
+      or: "OR",
+      hintDifferent:
+        "Try a different email address if you still can't find it.",
+      backToLogin: "Back to login",
+      verificationTitle: "Verify Your Email",
+      verificationSubtitle: "We sent a 6-digit verification code to {email}",
+      verifying: "Verifying...",
+      verifyContinue: "Verify & Continue",
+      didnotReceiveCode: "Didn't receive the code?",
+      resendCode: "Resend Code",
+      requestCodeIn: "Request a new code in {timer}",
+      setNewPasswordTitle: "Set New Password",
+      setNewPasswordSubtitle:
+        "Create a strong, unique password to secure your account.",
+      passwordLabel: "New Password",
+      passwordPlaceholder: "Create a strong password",
+      confirmPasswordLabel: "Confirm New Password",
+      confirmPasswordPlaceholder: "Confirm your new password",
+      securityTip:
+        "Make sure your password is at least 8 characters long and contains mixed case letters.",
+      saving: "Saving...",
+      resetPassword: "Reset Password",
+      panel: {
+        emailTitle: "Don't Worry,",
+        welcomeBack: "Welcome <br/>Back",
+        welcomeTo: "Welcome To<br/>Redolapy",
+        noAccount: "Don't Have an account?",
+        alreadyHaveAccount: "Already have an account?",
+        signUp: "Sign up",
+        login: "Login",
+        emailSubtitle:
+          "We will help you safely recover your profile access within seconds.",
+        otpTitle: "Check Your Inbox",
+        otpSubtitle:
+          "A secure token has been dispatched to establish identity validation.",
+        resetTitle: "Secure Account",
+        resetSubtitle:
+          "Almost completed! Finalize your credentials to log back into your session.",
+        },
+        strength: {
+          none: "",
+          weak: "Weak ❌",
+          fair: "Fair ⚠️",
+          good: "Good 👍",
+          strong: "Strong 💪",
+        }
+    },
     footer: {
       brandName: "ReDolapy",
       tagline:
@@ -581,6 +695,7 @@ aboutRecycle: {
       features: "المميزات",
       tryOn: "جرب الآن",
       recycle: "إعادة التدوير",
+      store: "المتجر",
       store: "المتجر",
       pricing: "الأسعار",
       about: "حول",
@@ -613,6 +728,9 @@ aboutRecycle: {
           "تقنية المسح الجسدي الدقيقة تضمن أنك لن تخمن مقاسك مرة أخرى عبر العلامات التجارية المختلفة.",
       },
       recycle: {
+        title: "إعادة التدوير",
+        description:
+          "ابقَ في الطليعة مع تحليل فوري لاتجاهات أزياء العروض العالمية مفلترة عبر عدسة أسلوبك الشخصي.",
         title: "إعادة التدوير",
         description:
           "ابقَ في الطليعة مع تحليل فوري لاتجاهات أزياء العروض العالمية مفلترة عبر عدسة أسلوبك الشخصي.",
@@ -899,50 +1017,51 @@ aboutRecycle: {
     // },
 
     pricing: {
-  title: "أسعار بسيطة وشفافة",
-  subtitle: "اختر الخطة المثالية لاحتياجات خزانتك الرقمية",
-  completeSubscription: "إتمام الاشتراك",
-  paymentMethod: "طريقة الدفع",
-  cardNumber: "رقم البطاقة",
-  dateFormat: "شهر / سنة",
-  cvv: "الرمز السري (CVV)",
-  savePayment: "حفظ معلومات الدفع لتسهيل التجديد التلقائي لاحقاً",
-  monthly: "الاشتراك الشهري",
-  monthlyPrice: "$٢٩٫٠٠",
-  earlyBirdDiscount: "خصم الانضمام المبكر",
-  discountAmount: "-$١٠٫٠٠",
-  estimatedTax: "الضريبة التقديرية",
-  taxAmount: "$٠٫٠٠",
-  dueToday: "المستحق اليوم",
-  dueTodayValue: "$١٩٫٠٠",
-  terms: "بإتمامك لعملية الشراء، فإنك تفوض ري دولابي لبدء دورات خصم تلقائية متكررة. يمكنك إلغاء الاشتراك في أي وقت من إعدادات مساحة عملك.",
-  
-  // 💡 Added Missing Free Plan Block
-  free: {
-    name: "الخزانة المجانية",
-    price: "$٠",
-    priceUnit: "/ شهرياً",
-    button: "ابدأ مجاناً الآن",
-    features: [
-      "إدارة ما يصل إلى ٢٠ قطعة ملابس",
-      "تجارب قياس أساسية لـ 2D Avatar",
-      "أفكار أساسية لإعادة تدوير الملابس"
-    ]
-  },
-  
-  pro: {
-    name: "المحترف (Pro)",
-    price: "$١٩",
-    priceUnit: "/ شهرياً",
-    button: "تأكيد وتفعيل الخطة الآن",
-    features: [
-      "تجارب قياس ثنائية الأبعاد غير محدودة وبدقة عالية",
-      "مصفوفة الذكاء الاصطناعي الذكية لتنسيق ألوان الخزانة",
-      "تصدير لوحات العمل بصيغ فيكتور عالية الجودة",
-      "أولوية المعالجة السريعة في خوادم رندرة التصاميم",
-    ],
-  },
-},
+      title: "أسعار بسيطة وشفافة",
+      subtitle: "اختر الخطة المثالية لاحتياجات خزانتك الرقمية",
+      completeSubscription: "إتمام الاشتراك",
+      paymentMethod: "طريقة الدفع",
+      cardNumber: "رقم البطاقة",
+      dateFormat: "شهر / سنة",
+      cvv: "الرمز السري (CVV)",
+      savePayment: "حفظ معلومات الدفع لتسهيل التجديد التلقائي لاحقاً",
+      monthly: "الاشتراك الشهري",
+      monthlyPrice: "$٢٩٫٠٠",
+      earlyBirdDiscount: "خصم الانضمام المبكر",
+      discountAmount: "-$١٠٫٠٠",
+      estimatedTax: "الضريبة التقديرية",
+      taxAmount: "$٠٫٠٠",
+      dueToday: "المستحق اليوم",
+      dueTodayValue: "$١٩٫٠٠",
+      terms:
+        "بإتمامك لعملية الشراء، فإنك تفوض ري دولابي لبدء دورات خصم تلقائية متكررة. يمكنك إلغاء الاشتراك في أي وقت من إعدادات مساحة عملك.",
+
+      // 💡 Added Missing Free Plan Block
+      free: {
+        name: "الخزانة المجانية",
+        price: "$٠",
+        priceUnit: "/ شهرياً",
+        button: "ابدأ مجاناً الآن",
+        features: [
+          "إدارة ما يصل إلى ٢٠ قطعة ملابس",
+          "تجارب قياس أساسية لـ 2D Avatar",
+          "أفكار أساسية لإعادة تدوير الملابس",
+        ],
+      },
+
+      pro: {
+        name: "المحترف (Pro)",
+        price: "$١٩",
+        priceUnit: "/ شهرياً",
+        button: "تأكيد وتفعيل الخطة الآن",
+        features: [
+          "تجارب قياس ثنائية الأبعاد غير محدودة وبدقة عالية",
+          "مصفوفة الذكاء الاصطناعي الذكية لتنسيق ألوان الخزانة",
+          "تصدير لوحات العمل بصيغ فيكتور عالية الجودة",
+          "أولوية المعالجة السريعة في خوادم رندرة التصاميم",
+        ],
+      },
+    },
     faq: {
       title: "الأسئلة الشائعة",
       questions: [
@@ -993,55 +1112,56 @@ aboutRecycle: {
     //     save_failed: "فشل تحميل وصيانة الصورة الاستعراضية.",
     //   },
     // },
-    
+
     recycle: {
-  header_title: 'مولد تصاميم إعادة التدوير من ري دولابي',
-  header_subtitle: 'ارفع قطع ملابسك · اختر تصميماً · شاهده ينبض بالحياة',
+      header_title: "مولد تصاميم إعادة التدوير من ري دولابي",
+      header_subtitle: "ارفع قطع ملابسك · اختر تصميماً · شاهده ينبض بالحياة",
 
-  steps: {
-    upload: 'رفع الملابس',
-    upload_subtitle: 'ارفع صورة أو صورتين للقطعة',
-    choose: 'اختيار الفكرة',
-    choose_subtitle: 'اختر التصميم المفضل لديك',
-    result: 'التوليد',
-    result_subtitle: 'شاهد قطعتك المعاد تدويرها',
-  },
+      steps: {
+        upload: "رفع الملابس",
+        upload_subtitle: "ارفع صورة أو صورتين للقطعة",
+        choose: "اختيار الفكرة",
+        choose_subtitle: "اختر التصميم المفضل لديك",
+        result: "التوليد",
+        result_subtitle: "شاهد قطعتك المعاد تدويرها",
+      },
 
-  upload: {
-    title: 'ارفع قطع الملابس الخاصة بك',
-    support_text: 'صيغ الملفات المدعومة: JPG، PNG، WEBP (الحد الأقصى ١٠ ميجابايت لكل صورة)',
-    drag_prompt: 'اضغط هنا أو اسحب الصور إلى هذا المربع',
-    piece_prefix: 'قطعة',
-    button: 'اكتشف أفكار التصميم',
-    loading: 'جاري ابتكار أفكار التصميم الخاصة بك...',
-    warnings: {
-      format_error: 'صيغة الملف غير مدعومة. يرجى استخدام',
-      max_files: 'لا يمكنك رفع أكثر من صورتين فقط.',
-      size_limit: 'يجب أن يكون حجم كل صورة ١٠ ميجابايت أو أقل.',
-    },
-  },
+      upload: {
+        title: "ارفع قطع الملابس الخاصة بك",
+        support_text:
+          "صيغ الملفات المدعومة: JPG، PNG، WEBP (الحد الأقصى ١٠ ميجابايت لكل صورة)",
+        drag_prompt: "اضغط هنا أو اسحب الصور إلى هذا المربع",
+        piece_prefix: "قطعة",
+        button: "اكتشف أفكار التصميم",
+        loading: "جاري ابتكار أفكار التصميم الخاصة بك...",
+        warnings: {
+          format_error: "صيغة الملف غير مدعومة. يرجى استخدام",
+          max_files: "لا يمكنك رفع أكثر من صورتين فقط.",
+          size_limit: "يجب أن يكون حجم كل صورة ١٠ ميجابايت أو أقل.",
+        },
+      },
 
-  ideas: {
-    title: 'اختر فكرة الأسلوب',
-    badge: 'مقترح بالذكاء الاصطناعي',
-    ai_engine: 'محرك الذكاء الاصطناعي',
-    aspect_ratio: 'نسبة العرض إلى الارتفاع',
-    submit: 'توليد التصميم المختار',
-    loading: 'جاري التوليد...',
-  },
+      ideas: {
+        title: "اختر فكرة الأسلوب",
+        badge: "مقترح بالذكاء الاصطناعي",
+        ai_engine: "محرك الذكاء الاصطناعي",
+        aspect_ratio: "نسبة العرض إلى الارتفاع",
+        submit: "توليد التصميم المختار",
+        loading: "جاري التوليد...",
+      },
 
-  card: {
-    see_more: 'عرض المزيد',
-    see_less: 'عرض أقل',
-    selected: 'محدد',
-    remove_piece: 'إزالة القطعة {n}',
-  },
+      card: {
+        see_more: "عرض المزيد",
+        see_less: "عرض أقل",
+        selected: "محدد",
+        remove_piece: "إزالة القطعة {n}",
+      },
 
-  output: {
-    heading: 'تصميمك المُولَّد',
-    save_btn: 'حفظ المواصفات',
-    saving: 'جاري التحميل...',
-  },
+      output: {
+        heading: "تصميمك المُولَّد",
+        save_btn: "حفظ المواصفات",
+        saving: "جاري التحميل...",
+      },
 
   errors: {
     upload_first: 'يرجى رفع قطع الملابس واكتشاف أفكار التصميم أولاً.',
@@ -1141,6 +1261,91 @@ aboutRecycle: {
       step3_title: "توليد المظهر بالذكاء الاصطناعي",
       step3_description:
         "دع معالجنا الذكي يحلل مدخلاتك ليركب لك عرضاً واقعياً للتصميم بشكل فوري وعالي الدقة.",
+    },
+ auth: {
+      tabs: {
+        signUp: "إنشاء حساب",
+        login: "تسجيل الدخول",
+      },
+      signup: {
+        title: "أنشئ ملفك الشخصي للأزياء",
+        subtitle: "ابدأ في بناء خزانة ملابسك المخصصة",
+        firstName: "الاسم الأول",
+        firstNamePlaceholder: "مثال: إنجي",
+        lastName: "الاسم الأخير",
+        lastNamePlaceholder: "مثال: أحمد",
+        email: "البريد الإلكتروني",
+        emailPlaceholder: "أدخل بريدك الإلكتروني",
+        password: "كلمة المرور",
+        passwordPlaceholder: "أنشئ كلمة مرور قوية",
+        confirmPassword: "تأكيد كلمة المرور",
+        confirmPasswordPlaceholder: "أكد كلمة المرور التي أنشأتها",
+        submit: "التالي",
+        loading: "يرجى الانتظار...",
+        switchText: "لديك حساب بالفعل؟",
+        switchLink: "سجل دخولك الآن",
+        successMessage:
+          "لقد أرسلنا بريدًا إلكترونيًا للتحقق من حسابك. افحص صندوق الوارد الخاص بك.",
+      },
+      login: {
+        title: "مرحباً بعودتك",
+        subtitle: "قم بتسجيل الدخول إلى حسابك",
+        email: "البريد الإلكتروني",
+        emailPlaceholder: "أدخل بريدك الإلكتروني",
+        password: "كلمة المرور",
+        passwordPlaceholder: "أدخل كلمة المرور الخاصة بك",
+        forgotPassword: "هل نسيت كلمة المرور؟",
+        submit: "تسجيل الدخول",
+        loading: "يرجى الانتظار...",
+        switchText: "ليس لديك حساب؟",
+        switchLink: "أنشئ حساباً الآن",
+      },
+      panel: {
+        emailTitle: "لا تقلق،",
+        welcomeBack: "مرحباً بك <br/>من جديد",
+        welcomeTo: "مرحباً بك في <br/>ريدولابي",
+        noAccount: "ليس لديك حساب؟",
+        alreadyHaveAccount: "لديك حساب بالفعل؟",
+        signUp: "إنشاء حساب",
+        login: "تسجيل الدخول",
+      },
+      common: {
+        orDivider: "——— أو ———",
+        continueWithGoogle: "المتابعة باستخدام Google",
+        error: {
+          somethingWentWrong: "حدث خطأ ما",
+        },
+      },
+    },
+    fp: {
+      forgotTitle: "هل نسيت كلمة المرور؟",
+      forgotSubtitle: "لا تقلق، أدخل بريدك الإلكتروني أدناه لتلقي رمز التحقق.",
+      emailLabel: "البريد الإلكتروني",
+      emailPlaceholder: "أدخل بريدك الإلكتروني",
+      sending: "جاري الإرسال...",
+      next: "التالي",
+      hintSpam:
+        "تأكد من فحص مجلد الرسائل غير المرغوب فيها (Spam) إذا لم تجد الرمز.",
+      or: "أو",
+      hintDifferent: "جرّب بريداً إلكترونياً آخر إذا لم تتمكن من العثور عليه.",
+      backToLogin: "العودة لتسجيل الدخول",
+      verificationTitle: "التحقق من البريد الإلكتروني",
+      verificationSubtitle: "لقد أرسلنا رمز تحقق مكوناً من 6 أرقام إلى {email}",
+      verifying: "جاري التحقق...",
+      verifyContinue: "التحقق والمتابعة",
+      didnotReceiveCode: "لم يصلك الرمز؟",
+      resendCode: "إعادة إرسال الرمز",
+      requestCodeIn: "طلب رمز جديد خلال {timer}",
+      setNewPasswordTitle: "تعيين كلمة مرور جديدة",
+      setNewPasswordSubtitle: "أنشئ كلمة مرور قوية وفريدة لتأمين حسابك.",
+      passwordLabel: "كلمة المرور الجديدة",
+      passwordPlaceholder: "أنشئ كلمة مرور قوية",
+      confirmPasswordLabel: "تأكيد كلمة المرور الجديدة",
+      confirmPasswordPlaceholder: "أكّد كلمة المرور الجديدة",
+      securityTip:
+        "تأكد من أن كلمة المرور لا تقل عن 8 أحرف وتحتوي على حروف كبيرة وصغيرة.",
+      saving: "جاري الحفظ...",
+      resetPassword: "إعادة تعيين كلمة المرور",
     },
     upload: {
       piece: "القطعة",

@@ -1,55 +1,78 @@
 <template>
   <div class="auth-wrapper">
-    <!-- Signup form (always on the left side) -->
-    <div class="form-panel form-panel--signup">
+    <div class="auth-tabs">
+      <button
+        class="auth-tab"
+        :class="{ active: mode === 'signup' }"
+        @click="switchTo('signup')"
+      >
+        {{ $t("auth.tabs.signUp") }}
+      </button>
+      <button
+        class="auth-tab"
+        :class="{ active: mode === 'login' }"
+        @click="switchTo('login')"
+      >
+        {{ $t("auth.tabs.login") }}
+      </button>
+    </div>
+
+    <div
+      class="form-panel form-panel--signup"
+      :data-active="String(mode === 'signup')"
+    >
       <div class="form-container">
         <div class="form-header">
-          <h2 class="form-title">Create Your Style Profile</h2>
-          <p class="form-subtitle">Start building your personalized wardrobe</p>
+          <h2 class="form-title">{{ $t("auth.signup.title") }}</h2>
+          <p class="form-subtitle">{{ $t("auth.signup.subtitle") }}</p>
         </div>
         <div class="fields-wrapper">
           <div class="field-row">
             <div class="field-group">
-              <label class="field-label">First name</label>
+              <label class="field-label">{{
+                $t("auth.signup.firstName")
+              }}</label>
               <div class="input-box">
                 <input
                   v-model="form.first_name"
                   type="text"
-                  placeholder="e.g. Engy"
+                  :placeholder="$t('auth.signup.firstNamePlaceholder')"
                   class="field-input"
                 />
               </div>
             </div>
             <div class="field-group">
-              <label class="field-label">Last name</label>
+              <label class="field-label">{{
+                $t("auth.signup.lastName")
+              }}</label>
               <div class="input-box">
                 <input
                   v-model="form.last_name"
                   type="text"
-                  placeholder="e.g. Ahmed"
+                  :placeholder="$t('auth.signup.lastNamePlaceholder')"
                   class="field-input"
                 />
               </div>
             </div>
           </div>
           <div class="field-group full-width">
-            <label class="field-label">Email</label>
+            <label class="field-label">{{ $t("auth.signup.email") }}</label>
             <div class="input-box">
               <input
                 v-model="form.emailSignup"
                 type="email"
-                placeholder="enter your email"
+                :placeholder="$t('auth.signup.emailPlaceholder')"
                 class="field-input"
               />
             </div>
           </div>
           <div class="field-group full-width">
-            <label class="field-label">Password</label>
+            <label class="field-label">{{ $t("auth.signup.password") }}</label>
             <div class="input-box input-box--icon">
               <input
                 v-model="form.passwordSignup"
                 :type="showPassword ? 'text' : 'password'"
-                placeholder="create strong password"
+                :placeholder="$t('auth.signup.passwordPlaceholder')"
                 class="field-input"
               />
               <button
@@ -62,12 +85,14 @@
             </div>
           </div>
           <div class="field-group full-width">
-            <label class="field-label">Confirm password</label>
+            <label class="field-label">{{
+              $t("auth.signup.confirmPassword")
+            }}</label>
             <div class="input-box input-box--icon">
               <input
                 v-model="form.confirmPasswordSignup"
                 :type="showConfirm ? 'text' : 'password'"
-                placeholder="confirm the password that you created"
+                :placeholder="$t('auth.signup.confirmPasswordPlaceholder')"
                 class="field-input"
               />
               <button
@@ -81,52 +106,59 @@
           </div>
         </div>
         <p v-if="error" style="color: red; font-size: 12px">{{ error }}</p>
+        <p v-if="successMessage" class="success-message">
+          {{ $t("auth.signup.successMessage") }}
+        </p>
         <button
           class="submit-btn"
           @click="handleSubmit('signup')"
           :disabled="isLoading"
         >
-          {{ isLoading ? "Please wait..." : "Next" }}
+          {{ isLoading ? $t("auth.signup.loading") : $t("auth.signup.submit") }}
         </button>
-        <div class="divider"><span class="divider-text">——— OR ———</span></div>
+        <div class="divider">
+          <span class="divider-text">{{ $t("auth.common.orDivider") }}</span>
+        </div>
         <button class="google-btn" type="button" @click="handleGoogle()">
-          <GoogleIcon />Continue with Google
+          <GoogleIcon />{{ $t("auth.common.continueWithGoogle") }}
         </button>
         <p class="switch-text">
-          Already have an account?
+          {{ $t("auth.signup.switchText") }}
           <button class="switch-link" @click="switchTo('login')">
-            Login now
+            {{ $t("auth.signup.switchLink") }}
           </button>
         </p>
       </div>
     </div>
 
-    <!-- Login form (always on the right side) -->
-    <div class="form-panel form-panel--login">
+    <div
+      class="form-panel form-panel--login"
+      :data-active="String(mode === 'login')"
+    >
       <div class="form-container">
         <div class="form-header">
-          <h2 class="form-title">Welcome Back</h2>
-          <p class="form-subtitle">Log in to your account</p>
+          <h2 class="form-title">{{ $t("auth.login.title") }}</h2>
+          <p class="form-subtitle">{{ $t("auth.login.subtitle") }}</p>
         </div>
         <div class="fields-wrapper">
           <div class="field-group full-width">
-            <label class="field-label">Email</label>
+            <label class="field-label">{{ $t("auth.login.email") }}</label>
             <div class="input-box">
               <input
                 v-model="form.email"
                 type="email"
-                placeholder="enter your email"
+                :placeholder="$t('auth.login.emailPlaceholder')"
                 class="field-input"
               />
             </div>
           </div>
           <div class="field-group full-width">
-            <label class="field-label">Password</label>
+            <label class="field-label">{{ $t("auth.login.password") }}</label>
             <div class="input-box input-box--icon">
               <input
                 v-model="form.password"
                 :type="showPassword ? 'text' : 'password'"
-                placeholder="enter your password"
+                :placeholder="$t('auth.login.passwordPlaceholder')"
                 class="field-input"
               />
               <button
@@ -139,7 +171,9 @@
             </div>
           </div>
           <div class="forgot-row">
-            <button class="forgot-link" @click="$emit('forgot-password')">Forgot password?</button>
+            <button class="forgot-link" @click="$emit('forgot-password')">
+              {{ $t("auth.login.forgotPassword") }}
+            </button>
           </div>
         </div>
         <p v-if="error" style="color: red; font-size: 12px">{{ error }}</p>
@@ -148,42 +182,48 @@
           @click="handleSubmit('login')"
           :disabled="isLoading"
         >
-          {{ isLoading ? "Please wait..." : "Login" }}
+          {{ isLoading ? $t("auth.login.loading") : $t("auth.login.submit") }}
         </button>
-        <div class="divider"><span class="divider-text">——— OR ———</span></div>
+        <div class="divider">
+          <span class="divider-text">{{ $t("auth.common.orDivider") }}</span>
+        </div>
         <button class="google-btn" type="button" @click="handleGoogle()">
-          <GoogleIcon />Continue with Google
+          <GoogleIcon />{{ $t("auth.common.continueWithGoogle") }}
         </button>
         <p class="switch-text">
-          Don't have an account?
+          {{ $t("auth.login.switchText") }}
           <button class="switch-link" @click="switchTo('signup')">
-            Sign up now
+            {{ $t("auth.login.switchLink") }}
           </button>
         </p>
       </div>
     </div>
 
-    <!-- Sliding blue panel -->
-    <div class="left-panel" :class="{ 'left-panel--right': mode === 'signup' }">
+    <div
+      class="left-panel"
+      :class="{
+        'left-panel--right': isRTL ? mode === 'login' : mode === 'signup',
+      }"
+    >
       <div class="left-content">
         <div class="brand-header">
-          <!-- Title slot: swap with fade mid-transition -->
           <h1
             class="brand-title"
             :class="{ 'content-hidden': !contentVisible }"
             v-html="
-              mode === 'login' ? 'Welcome <br/>Back' : 'Welcome To<br/>Redolapy'
+              mode === 'login'
+                ? $t('auth.panel.welcomeBack')
+                : $t('auth.panel.welcomeTo')
             "
           />
           <p
             class="brand-subtitle"
             :class="{ 'content-hidden': !contentVisible }"
           >
-            <!-- Replace this text when you're ready -->
             {{
               mode === "login"
-                ? "Don’t Have an account?"
-                : "Already have an account?"
+                ? $t("auth.panel.noAccount")
+                : $t("auth.panel.alreadyHaveAccount")
             }}
           </p>
         </div>
@@ -192,7 +232,9 @@
           :class="{ 'content-hidden': !contentVisible }"
           @click="switchTo(mode === 'login' ? 'signup' : 'login')"
         >
-          {{ mode === "login" ? "Sign up" : "Login" }}
+          {{
+            mode === "login" ? $t("auth.panel.signUp") : $t("auth.panel.login")
+          }}
         </button>
       </div>
     </div>
@@ -200,12 +242,14 @@
 </template>
 
 <script>
-import { ref, defineComponent, h, onUnmounted } from "vue";
+import { ref, defineComponent, h, onUnmounted, computed } from "vue";
+import { useI18n } from "vue-i18n";
 import {
   login,
   signUp,
   updateProfile,
   getUserById,
+  emailVerification,
 } from "../services/services";
 
 const EyeIcon = defineComponent({
@@ -299,11 +343,16 @@ export default {
       password: "",
       confirmPassword: "",
     });
+
     const showPassword = ref(false);
     const showConfirm = ref(false);
     const contentVisible = ref(true);
     const isLoading = ref(false);
+    const successMessage = ref("");
     const error = ref(null);
+    const { locale } = useI18n();
+    const isRTL = computed(() => locale.value === "ar");
+
     function handleGoogle() {
       const popup = window.open(
         "http://localhost:5000/api/auth/google",
@@ -319,14 +368,14 @@ export default {
             const { token, ...user } = event.data.payload;
             localStorage.setItem("token", token);
             localStorage.setItem("user", JSON.stringify(user));
-            emit("submit", event.data.payload);
             if (popup && !popup.closed) popup.close();
-            emit("close")
+            emit("login-success");
+            emit("close");
+            location.reload();
           }
         },
         { once: true },
       );
-
     }
 
     function switchTo(newMode) {
@@ -362,28 +411,39 @@ export default {
             },
             token,
           );
+          await emailVerification(token);
+          successMessage.value =
+            "We sent an email to verify your account. Check your inbox.";
           emit("submit", res.data);
-          switchTo("login"); // on success, slide to login
         } else {
           const res = await login({
             email: form.value.email,
             password: form.value.password,
           });
 
-          localStorage.setItem("token", res.data.token);
+          const token = localStorage.setItem("token", res.data.token);
           localStorage.setItem("_id", res.data._id);
           const userRes = await getUserById(res.data._id); // token is read from localStorage inside the service
-          console.log(userRes.data);
           const userData = {
             first_name: userRes.data.user.profile.first_name,
             last_name: userRes.data.user.profile.last_name,
             email: userRes.data.user.email,
             id: userRes.data.user._id,
-            userImage:userRes.data.user.userImage
+            userImage: userRes.data.user.userImage,
+            language: userRes.data.user.settings.language,
+            avatars: userRes.data.user.avatars,
+            darkMode: userRes.data.user.darkMode,
+            has_mobile_app: userRes.data.user.settings.has_mobile_app,
+            gender: userRes.data.user.profile.gender,
+            date_of_birth: userRes.data.user.profile.date_of_birth,
+            has_mobile_app: userRes.data.user.settings.has_mobile_app,
+            notifications:userRes.data.user.settings.notifications_enabled
           };
           localStorage.setItem("user", JSON.stringify(userData));
+          emit("login-success");
           emit("submit", userRes.data);
           emit("close");
+          location.reload()
         }
       } catch (err) {
         error.value = err.response?.data?.message ?? "Something went wrong";
@@ -391,14 +451,16 @@ export default {
         isLoading.value = false;
       }
     }
-    
+
     return {
+      isRTL,
       form,
       showPassword,
       showConfirm,
       contentVisible,
       isLoading,
       error,
+      successMessage,
       switchTo,
       handleSubmit,
       handleGoogle,
@@ -421,6 +483,18 @@ export default {
   background: #ffffff;
 }
 
+.success-message {
+  color: #155724;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  font-size: 14px;
+  padding: 12px;
+  margin-top: 10px;
+
+  border-radius: 4px;
+  font-weight: 500;
+}
+
 /* ─── Static form panels ──────────────────────────────── */
 /* Each form panel occupies half the wrapper, sitting behind the blue panel */
 .form-panel {
@@ -437,6 +511,7 @@ export default {
 .form-panel--signup {
   order: 1;
 }
+
 .form-panel--login {
   order: 2;
 }
@@ -448,7 +523,8 @@ export default {
   left: 0;
   width: 530px;
   height: 100%;
-  border-radius: 35px; /* both sides rounded */
+  border-radius: 35px;
+  /* both sides rounded */
   background-image:
     linear-gradient(rgba(128, 128, 128, 0.2), rgba(128, 128, 128, 0.2)),
     url("../../public/ChatGPT Image Jun 7, 2026, 10_22_25 PM.jpg");
@@ -637,6 +713,7 @@ export default {
 .input-box:focus-within {
   border-color: #40b9ff;
 }
+
 .input-box--icon {
   justify-content: space-between;
 }
@@ -678,6 +755,7 @@ export default {
   color: #40b9ff;
   text-decoration: none;
 }
+
 .forgot-link:hover {
   text-decoration: underline;
 }
@@ -699,6 +777,7 @@ export default {
   cursor: pointer;
   transition: background 0.2s;
 }
+
 .submit-btn:hover {
   background: #29aaff;
 }
@@ -736,6 +815,7 @@ export default {
   cursor: pointer;
   transition: background 0.2s;
 }
+
 .google-btn:hover {
   background: #f8f8f8;
 }
@@ -759,5 +839,123 @@ export default {
   color: #40b9ff;
   cursor: pointer;
   text-decoration: underline;
+}
+
+/* ─── Responsive: mid-size (tablets 600px – 1024px) ──── */
+@media (max-width: 1024px) {
+  .auth-wrapper {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    max-height: none;
+    flex-direction: column;
+    border-radius: 24px;
+  }
+
+  /* Hide the sliding blue panel on tablets — replaced by tab switcher */
+  .left-panel {
+    display: none;
+  }
+
+  /* Only show the active form panel */
+  .form-panel {
+    width: 100%;
+    padding: 32px 40px;
+    display: none;
+  }
+
+  .form-panel--signup[data-active="true"],
+  .form-panel--login[data-active="true"] {
+    display: flex;
+  }
+
+  /* Tab-style switcher bar at top */
+  .auth-wrapper::before {
+    content: "";
+    display: block;
+  }
+
+  .form-title {
+    font-size: 26px;
+    line-height: 36px;
+  }
+}
+
+/* ─── Responsive: small screens (< 600px) ────────────── */
+@media (max-width: 599px) {
+  .auth-wrapper {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 16px;
+  }
+
+  .form-panel {
+    padding: 24px 20px;
+  }
+
+  .form-title {
+    font-size: 22px;
+    line-height: 30px;
+  }
+
+  .form-subtitle {
+    font-size: 13px;
+  }
+
+  /* Stack first/last name fields vertically on small screens */
+  .field-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .submit-btn,
+  .google-btn {
+    height: 48px;
+    font-size: 15px;
+  }
+
+  .brand-title {
+    font-size: 36px;
+    line-height: 48px;
+  }
+}
+
+/* ─── Tab switcher (visible on ≤ 1024px) ─────────────── */
+.auth-tabs {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .auth-tabs {
+    display: flex;
+    width: 100%;
+    border-bottom: 2px solid #e5e9ef;
+  }
+
+  .auth-tab {
+    flex: 1;
+    padding: 16px;
+    background: none;
+    border: none;
+    font-family: "Roboto", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #6b7280;
+    cursor: pointer;
+    transition:
+      color 0.2s,
+      border-bottom 0.2s;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+  }
+
+  .auth-tab.active {
+    color: #40b9ff;
+    border-bottom-color: #40b9ff;
+  }
+
+  .auth-tab:hover:not(.active) {
+    color: #374151;
+  }
 }
 </style>
