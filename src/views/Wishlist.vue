@@ -12,7 +12,11 @@
 
     <main class="store-page__main">
       <header class="store-page__header">
-        <h1 class="store-page__title">{{ $t('store.title') }}</h1>
+        <h1 class="store-page__title">{{ $t('wishlist.title') }}</h1>
+        <p class="store-page__subtitle">
+          {{ $t('wishlist.subtitle_prefix') }}
+          <span class="store-page__subtitle-highlight">{{ $t('wishlist.subtitle_highlight') }}</span>
+        </p>
       </header>
 
       <StoreSearchbar
@@ -21,28 +25,24 @@
         @open-filters="filterOpen = true"
       />
 
-      <div class="store-page__promo store-page__promo--mobile">
-        {{ $t('store.promo_mobile_start') }}
-         {{ $t('store.promo_discount') }}
-        {{ $t('store.promo_mobile_mid') }}
-        <span class="store-page__promo-install">{{ $t('store.promo_highlight') }}</span>
-      </div>
-
-      <p class="store-page__promo store-page__promo--desktop">
-        {{ $t('store.promo_prefix') }}
-        <span class="store-page__promo-highlight">{{ $t('store.promo_highlight') }}</span>
-      </p>
-
       <p v-if="loadError" class="store-page__error">{{ loadError }}</p>
 
-      <div v-if="loading" class="store-page__loading">{{ $t('store.loading') }}</div>
+      <div v-if="loading" class="store-page__loading">{{ $t('wishlist.loading') }}</div>
 
-      <StoreProducts
-        v-else
-        :products="filteredProducts"
-        @try-on="onTryOn"
-        @wishlist-error="onWishlistError"
-      />
+      <WishlistEmpty v-else-if="!wishlistProducts.length" />
+
+      <template v-else>
+        <p v-if="!filteredProducts.length" class="store-page__no-matches">
+          {{ $t('wishlist.no_matches') }}
+        </p>
+
+        <StoreProducts
+          v-else
+          :products="filteredProducts"
+          @try-on="onTryOn"
+          @wishlist-error="onWishlistError"
+        />
+      </template>
     </main>
   </div>
 </template>
@@ -51,26 +51,28 @@
 import FilterSidebar from '../components/StoresRedolapy/filterSidebar.vue'
 import StoreSearchbar from '../components/StoresRedolapy/searchbar.vue'
 import StoreProducts from '../components/StoresRedolapy/StoreProducts.vue'
+import WishlistEmpty from '../components/StoresRedolapy/WishlistEmpty.vue'
 import { fetchProducts, fetchStores } from '../api/store.js'
 import { mapApiError } from '../utils/mapApiError.js'
+import { useFavorites } from '../composables/useFavorites.js'
 import {
   buildFilterOptions,
   createDefaultFilters,
   filterProducts,
   normalizeProduct,
 } from '../utils/storeHelpers.js'
-import { useFavorites } from '../composables/useFavorites.js'
 
 export default {
-  name: 'Brands',
+  name: 'Wishlist',
   components: {
     FilterSidebar,
     StoreSearchbar,
     StoreProducts,
+    WishlistEmpty,
   },
   setup() {
-    const { loadFavorites } = useFavorites()
-    return { loadFavorites }
+    const { favorites, loadFavorites, normalizeFavoriteId } = useFavorites()
+    return { favorites, loadFavorites, normalizeFavoriteId }
   },
   data: () => ({
     searchQuery: '',
@@ -102,21 +104,35 @@ export default {
     },
   },
   async mounted() {
-    await Promise.all([this.loadStoreData(), this.loadFavorites()])
+    if (!localStorage.getItem('token')) {
+      this.$router.push({ path: '/login', query: { redirect: this.$route.fullPath } })
+      return
+    }
+
+    await this.loadFavorites(true)
+    await this.loadWishlistData()
   },
   beforeUnmount() {
     document.body.style.overflow = ''
   },
   computed: {
+    wishlistProducts() {
+      const favoriteIds = new Set(
+        this.favorites
+          .filter((entry) => entry.itemType === 'PRODUCT')
+          .map((entry) => this.normalizeFavoriteId(entry.itemId)),
+      )
+      return this.products.filter((product) => favoriteIds.has(this.normalizeFavoriteId(product.id)))
+    },
     filteredProducts() {
-      return filterProducts(this.products, this.filters, this.searchQuery, {
+      return filterProducts(this.wishlistProducts, this.filters, this.searchQuery, {
         min: this.filterOptions.minPrice,
         max: this.filterOptions.maxPrice,
       })
     },
   },
   methods: {
-    async loadStoreData() {
+    async loadWishlistData() {
       this.loading = true
       this.loadError = ''
 
@@ -132,7 +148,7 @@ export default {
 
         this.filterOptions = buildFilterOptions(
           Array.isArray(stores) ? stores : [],
-          this.products,
+          this.wishlistProducts.length ? this.wishlistProducts : this.products,
         )
         this.filters = createDefaultFilters(this.filterOptions)
       } catch (err) {
@@ -148,9 +164,7 @@ export default {
       })
     },
     onWishlistError(err) {
-      if (err.code === 'LOGIN_REQUIRED' || err.message === 'LOGIN_REQUIRED') {
-        this.$router.push({ path: '/login', query: { redirect: this.$route.fullPath } })
-      }
+      this.loadError = mapApiError(err, this.$t.bind(this))
     },
   },
 }
@@ -215,7 +229,19 @@ export default {
   font-size: clamp(1.5rem, 4vw, 2.25rem);
   font-weight: var(--Bold);
   color: var(--Primary-Text-color);
+  margin: 0 0 0.5rem;
+}
+
+.store-page__subtitle {
   margin: 0;
+  font-size: 0.9375rem;
+  color: var(--Secondary-Text-color);
+  line-height: 1.55;
+}
+
+.store-page__subtitle-highlight {
+  font-weight: var(--Semi-Bold);
+  color: var(--Primary-Brand-color);
 }
 
 .store-page__search {
@@ -226,53 +252,6 @@ export default {
   .store-page__search {
     margin-bottom: 1.25rem;
   }
-}
-
-.store-page__promo {
-  font-size: 0.9375rem;
-  color: var(--Secondary-Text-color);
-  line-height: 1.55;
-  margin-bottom: 1.25rem;
-}
-
-.store-page__promo--mobile {
-  display: block;
-  padding: 1rem 1.125rem;
-  border-radius: 0.875rem;
-  font-size: 0.875rem;
-}
-
-.store-page__promo--desktop {
-  display: none;
-}
-
-@media (min-width: 1024px) {
-  .store-page__promo--mobile {
-    display: none;
-  }
-
-  .store-page__promo--desktop {
-    display: block;
-    margin-bottom: 1.5rem;
-  }
-}
-
-
-
-.store-page__promo-install {
-  font-weight: var(--Bold);
-  background: var(--Gradient-bgc);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.store-page__promo-highlight {
-  font-weight: var(--Semi-Bold);
-  background: var(--Gradient-bgc);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 .store-page__loading,
@@ -287,6 +266,13 @@ export default {
 }
 
 .store-page__loading {
+  color: var(--Secondary-Text-color);
+}
+
+.store-page__no-matches {
+  padding: 2rem 1rem;
+  text-align: center;
+  font-size: 0.9375rem;
   color: var(--Secondary-Text-color);
 }
 </style>

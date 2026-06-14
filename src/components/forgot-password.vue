@@ -1,13 +1,7 @@
-<template>
-  <!-- ═══════════════════════════════════════════════════════
-       Arabic mode → single-column responsive card (no image panel)
-       LTR mode    → full two-panel desktop card
-  ════════════════════════════════════════════════════════════ -->
+<!-- <template>
 
-  <!-- ── ARABIC: responsive single-column card ────────────── -->
   <div v-if="isRTL" class="fp-wrapper fp-wrapper--rtl">
 
-    <!-- Email step -->
     <div v-if="mode === 'email'" class="form-container">
       <div class="form-header">
         <h2 class="form-title">{{ $t("fp.forgotTitle") }}</h2>
@@ -41,7 +35,6 @@
       </button>
     </div>
 
-    <!-- OTP step -->
     <div v-else-if="mode === 'otp'" class="form-container">
       <div class="form-header">
         <h2 class="form-title">{{ $t("fp.verificationTitle") }}</h2>
@@ -92,7 +85,6 @@
       </button>
     </div>
 
-    <!-- Reset step -->
     <div v-else-if="mode === 'reset'" class="form-container">
       <div class="form-header">
         <h2 class="form-title">{{ $t("fp.setNewPasswordTitle") }}</h2>
@@ -157,7 +149,324 @@
 
   </div>
 
-  <!-- ── LTR: full desktop two-panel card ──────────────────── -->
+  <div v-else class="fp-wrapper">
+
+    <div
+      class="form-panel form-panel--left"
+      :data-active="String(mode === 'email' || mode === 'otp')"
+    >
+      <div class="form-container" v-show="mode === 'email'">
+        <div class="form-header">
+          <h2 class="form-title">{{ $t("fp.forgotTitle") }}</h2>
+          <p class="form-subtitle">{{ $t("fp.forgotSubtitle") }}</p>
+        </div>
+        <div class="fields-wrapper">
+          <div class="field-group full-width">
+            <label class="field-label">{{ $t("fp.emailLabel") }}</label>
+            <div class="input-box" :class="{ 'input-box--error': errors.email }">
+              <input
+                v-model="form.email"
+                type="email"
+                :placeholder="$t('fp.emailPlaceholder')"
+                class="field-input"
+              />
+            </div>
+            <span v-if="errors.email" class="field-error">{{ errors.email }}</span>
+          </div>
+        </div>
+        <p v-if="apiError" class="api-error">{{ apiError }}</p>
+        <button class="submit-btn" @click="handleEmail" :disabled="isLoading">
+          {{ isLoading ? $t("fp.sending") : $t("fp.next") }}
+        </button>
+        <div class="hint-block">
+          <p class="hint-text">{{ $t("fp.hintSpam") }}</p>
+          <span class="hint-divider">——— {{ $t("fp.or") }} ———</span>
+          <p class="hint-text">{{ $t("fp.hintDifferent") }}</p>
+        </div>
+        <button class="back-btn" @click="$emit('back-to-login')">
+          <span class="back-icon">←</span> {{ $t("fp.backToLogin") }}
+        </button>
+      </div>
+
+      <div class="form-container" v-show="mode === 'otp'">
+        <div class="form-header">
+          <h2 class="form-title">{{ $t("fp.verificationTitle") }}</h2>
+          <p
+            class="form-subtitle"
+            v-html="$t('fp.verificationSubtitle', { email: `<strong>${maskedEmail}</strong>` })"
+          />
+        </div>
+        <div class="otp-row">
+          <input
+            v-for="(_, i) in otpDigits"
+            :key="i"
+            :ref="(el) => { if (el) otpRefs[i] = el }"
+            v-model="otpDigits[i]"
+            type="text"
+            inputmode="numeric"
+            maxlength="1"
+            class="otp-box"
+            :class="{ 'otp-box--filled': otpDigits[i], 'otp-box--active': otpFocus === i }"
+            @focus="otpFocus = i"
+            @blur="otpFocus = -1"
+            @input="onOtpInput(i, $event)"
+            @keydown="onOtpKeydown(i, $event)"
+          />
+        </div>
+        <p v-if="apiError" class="api-error">{{ apiError }}</p>
+        <button
+          class="submit-btn"
+          @click="handleOtp"
+          :disabled="isLoading || otpDigits.join('').length < 6"
+        >
+          {{ isLoading ? $t("fp.verifying") : $t("fp.verifyContinue") }}
+        </button>
+        <div class="otp-footer">
+          <div class="resend-row">
+            <span class="resend-label">{{ $t("fp.didnotReceiveCode") }}</span>
+            <button class="resend-btn" :disabled="resendTimer > 0" @click="handleResend">
+              {{ $t("fp.resendCode") }}
+            </button>
+          </div>
+          <div v-if="resendTimer > 0" class="timer-row">
+            <span class="timer-icon">⏱</span>
+            <span class="timer-text">{{ $t("fp.requestCodeIn", { timer: formattedTimer }) }}</span>
+          </div>
+        </div>
+        <button class="back-btn" @click="switchMode('email')">
+          <span class="back-icon">←</span> {{ $t("fp.backToLogin") }}
+        </button>
+      </div>
+    </div>
+
+    <div
+      class="form-panel form-panel--right"
+      :data-active="String(mode === 'reset')"
+    >
+      <div class="form-container" v-show="mode === 'reset'">
+        <div class="form-header">
+          <h2 class="form-title">{{ $t("fp.setNewPasswordTitle") }}</h2>
+          <p class="form-subtitle">{{ $t("fp.setNewPasswordSubtitle") }}</p>
+        </div>
+        <div class="fields-wrapper">
+          <div class="field-group full-width">
+            <label class="field-label">{{ $t("fp.passwordLabel") }}</label>
+            <div class="input-box input-box--icon">
+              <input
+                v-model="form.password"
+                :type="showPassword ? 'text' : 'password'"
+                :placeholder="$t('fp.passwordPlaceholder')"
+                class="field-input"
+                @input="calcStrength"
+              />
+              <button class="eye-btn" type="button" @click="showPassword = !showPassword">
+                <EyeIcon :open="showPassword" />
+              </button>
+            </div>
+            <div class="strength-bar">
+              <div
+                v-for="n in 4"
+                :key="n"
+                class="strength-segment"
+                :class="{ 'strength-segment--active': n <= passwordStrength }"
+              />
+            </div>
+            <span class="strength-label">{{ strengthLabel }}</span>
+          </div>
+          <div class="field-group full-width">
+            <label class="field-label">{{ $t("fp.confirmPasswordLabel") }}</label>
+            <div
+              class="input-box input-box--icon"
+              :class="{ 'input-box--error': errors.confirmPassword }"
+            >
+              <input
+                v-model="form.confirmPassword"
+                :type="showConfirm ? 'text' : 'password'"
+                :placeholder="$t('fp.confirmPasswordPlaceholder')"
+                class="field-input"
+              />
+              <button class="eye-btn" type="button" @click="showConfirm = !showConfirm">
+                <EyeIcon :open="showConfirm" />
+              </button>
+            </div>
+            <span v-if="errors.confirmPassword" class="field-error">{{ errors.confirmPassword }}</span>
+          </div>
+          <div class="security-tip">
+            <span class="tip-icon">🔒</span>
+            <span class="tip-text">{{ $t("fp.securityTip") }}</span>
+          </div>
+        </div>
+        <p v-if="apiError" class="api-error">{{ apiError }}</p>
+        <button class="submit-btn" @click="handleReset" :disabled="isLoading">
+          {{ isLoading ? $t("fp.saving") : $t("fp.resetPassword") }}
+        </button>
+        <button class="back-btn" @click="$emit('back-to-login')">
+          <span class="back-icon">←</span> {{ $t("fp.backToLogin") }}
+        </button>
+      </div>
+    </div>
+
+    <div class="image-panel" :class="slidingPanelClass">
+      <div class="image-panel__tint" />
+      <div class="image-panel__content" :class="{ 'content-hidden': !contentVisible }">
+        <h1 class="panel-title">{{ panelTitle }}</h1>
+        <p class="panel-subtitle">{{ panelSubtitle }}</p>
+      </div>
+    </div>
+
+  </div>
+</template> -->
+
+<template>
+  <div v-if="isRTL" class="fp-wrapper fp-wrapper--rtl">
+
+    <div v-if="mode === 'email'" class="form-container">
+      <div class="form-header">
+        <h2 class="form-title">{{ $t("fp.forgotTitle") }}</h2>
+        <p class="form-subtitle">{{ $t("fp.forgotSubtitle") }}</p>
+      </div>
+      <div class="fields-wrapper">
+        <div class="field-group full-width">
+          <label class="field-label">{{ $t("fp.emailLabel") }}</label>
+          <div class="input-box" :class="{ 'input-box--error': errors.email }">
+            <input
+              v-model="form.email"
+              type="email"
+              :placeholder="$t('fp.emailPlaceholder')"
+              class="field-input"
+            />
+          </div>
+          <span v-if="errors.email" class="field-error">{{ errors.email }}</span>
+        </div>
+      </div>
+      <p v-if="apiError" class="api-error">{{ apiError }}</p>
+      <button class="submit-btn" @click="handleEmail" :disabled="isLoading">
+        {{ isLoading ? $t("fp.sending") : $t("fp.next") }}
+      </button>
+      <div class="hint-block">
+        <p class="hint-text">{{ $t("fp.hintSpam") }}</p>
+        <span class="hint-divider">——— {{ $t("fp.or") }} ———</span>
+        <p class="hint-text">{{ $t("fp.hintDifferent") }}</p>
+      </div>
+      <button class="back-btn" @click="$emit('back-to-login')">
+        <span class="back-icon">←</span> {{ $t("fp.backToLogin") }}
+      </button>
+    </div>
+
+    <div v-else-if="mode === 'otp'" class="form-container">
+      <div class="form-header">
+        <h2 class="form-title">{{ $t("fp.verificationTitle") }}</h2>
+        <p
+          class="form-subtitle"
+          v-html="$t('fp.verificationSubtitle', { email: `<strong>${maskedEmail}</strong>` })"
+        />
+      </div>
+      <div class="otp-row">
+        <input
+          v-for="(_, i) in otpDigits"
+          :key="i"
+          :ref="(el) => { if (el) otpRefs[i] = el }"
+          v-model="otpDigits[i]"
+          type="text"
+          inputmode="numeric"
+          maxlength="1"
+          class="otp-box"
+          :class="{ 'otp-box--filled': otpDigits[i], 'otp-box--active': otpFocus === i }"
+          @focus="otpFocus = i"
+          @blur="otpFocus = -1"
+          @input="onOtpInput(i, $event)"
+          @keydown="onOtpKeydown(i, $event)"
+        />
+      </div>
+      <p v-if="apiError" class="api-error">{{ apiError }}</p>
+      <button
+        class="submit-btn"
+        @click="handleOtp"
+        :disabled="isLoading || otpDigits.join('').length < 6"
+      >
+        {{ isLoading ? $t("fp.verifying") : $t("fp.verifyContinue") }}
+      </button>
+      <div class="otp-footer">
+        <div class="resend-row">
+          <span class="resend-label">{{ $t("fp.didnotReceiveCode") }}</span>
+          <button class="resend-btn" :disabled="resendTimer > 0" @click="handleResend">
+            {{ $t("fp.resendCode") }}
+          </button>
+        </div>
+        <div v-if="resendTimer > 0" class="timer-row">
+          <span class="timer-icon">⏱</span>
+          <span class="timer-text">{{ $t("fp.requestCodeIn", { timer: formattedTimer }) }}</span>
+        </div>
+      </div>
+      <button class="back-btn" @click="switchMode('email')">
+        <span class="back-icon">←</span> {{ $t("fp.backToLogin") }}
+      </button>
+    </div>
+
+    <div v-else-if="mode === 'reset'" class="form-container">
+      <div class="form-header">
+        <h2 class="form-title">{{ $t("fp.setNewPasswordTitle") }}</h2>
+        <p class="form-subtitle">{{ $t("fp.setNewPasswordSubtitle") }}</p>
+      </div>
+      <div class="fields-wrapper">
+        <div class="field-group full-width">
+          <label class="field-label">{{ $t("fp.passwordLabel") }}</label>
+          <div class="input-box input-box--icon">
+            <input
+              v-model="form.password"
+              :type="showPassword ? 'text' : 'password'"
+              :placeholder="$t('fp.passwordPlaceholder')"
+              class="field-input"
+              @input="calcStrength"
+            />
+            <button class="eye-btn" type="button" @click="showPassword = !showPassword">
+              <EyeIcon :open="showPassword" />
+            </button>
+          </div>
+          <div class="strength-bar">
+            <div
+              v-for="n in 4"
+              :key="n"
+              class="strength-segment"
+              :class="{ 'strength-segment--active': n <= passwordStrength }"
+            />
+          </div>
+          <span class="strength-label">{{ strengthLabel }}</span>
+        </div>
+        <div class="field-group full-width">
+          <label class="field-label">{{ $t("fp.confirmPasswordLabel") }}</label>
+          <div
+            class="input-box input-box--icon"
+            :class="{ 'input-box--error': errors.confirmPassword }"
+          >
+            <input
+              v-model="form.confirmPassword"
+              :type="showConfirm ? 'text' : 'password'"
+              :placeholder="$t('fp.confirmPasswordPlaceholder')"
+              class="field-input"
+            />
+            <button class="eye-btn" type="button" @click="showConfirm = !showConfirm">
+              <EyeIcon :open="showConfirm" />
+            </button>
+          </div>
+          <span v-if="errors.confirmPassword" class="field-error">{{ errors.confirmPassword }}</span>
+        </div>
+        <div class="security-tip">
+          <span class="tip-icon">🔒</span>
+          <span class="tip-text">{{ $t("fp.securityTip") }}</span>
+        </div>
+      </div>
+      <p v-if="apiError" class="api-error">{{ apiError }}</p>
+      <button class="submit-btn" @click="handleReset" :disabled="isLoading">
+        {{ isLoading ? $t("fp.saving") : $t("fp.resetPassword") }}
+      </button>
+      <button class="back-btn" @click="$emit('back-to-login')">
+        <span class="back-icon">←</span> {{ $t("fp.backToLogin") }}
+      </button>
+    </div>
+
+  </div>
+
   <div v-else class="fp-wrapper">
 
     <div

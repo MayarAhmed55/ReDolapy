@@ -36,7 +36,7 @@
         <img
           v-if="selected"
           :src="checkIcon"
-          alt="Selected"
+          :alt="$t('recycle.card.selected')"
           class="w-5 h-5 shrink-0"
         />
       </div>
@@ -51,7 +51,7 @@
           class="text-xs font-semibold text-(--Primary-Brand-color)"
           @click.stop="$emit('toggle-expand')"
         >
-          {{ expanded ? 'See less' : 'See more' }}
+          {{ expanded ? $t('recycle.card.see_less') : $t('recycle.card.see_more') }}
         </button>
       </div>
     </div>

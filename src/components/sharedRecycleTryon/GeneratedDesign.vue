@@ -25,14 +25,14 @@
                 </svg>
               </span>
               <span class="text-[11px] sm:text-xs font-semibold text-(--Primary-Text-color) whitespace-nowrap">
-                {{ matchPercent }}% Style Match
+                {{ matchBadgeLabel || `${matchPercent}% Style Match` }}
               </span>
             </div>
 
             <button
               type="button"
               class="w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm shadow-sm flex items-center justify-center text-(--Primary-Text-color) hover:bg-white transition-colors"
-              aria-label="Zoom image"
+              :aria-label="zoomAriaLabel || 'Zoom image'"
               @click="zoomOpen = true"
             >
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -106,6 +106,8 @@ export default {
     scrollId: { type: String, default: 'generated-design' },
     showMatchBadge: { type: Boolean, default: false },
     matchPercent: { type: Number, default: 98 },
+    matchBadgeLabel: { type: String, default: '' },
+    zoomAriaLabel: { type: String, default: '' },
   },
   data: () => ({
     headerIcon: logoIcon,

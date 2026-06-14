@@ -74,7 +74,7 @@
     </section>
   
 
-        <section>
+        <!-- <section>
           <div class="relative">
            <router-link><span class="absolute top-3 right-1 flex gap-2 text-[#8ED321]">View all <ChevronRight class="text-lg"/> </span></router-link> 
             <p id="FeaturesTitle" class=" text-5xl font-bold m-auto PrimaryTxt flex">Our Brand Partners: </p>
@@ -109,9 +109,62 @@
                     <p class="serviceDescription Secondary-grayTxt ">Discover your Favorite Items in H&M and get the discount on what you love from the Application</p>
                 </div>
             </div>
-        </section>
+        </section> -->
  
-    <section id="PricingSection">
+  <section :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'">
+    <div class="relative">
+      <router-link to="/">
+        <span class="absolute top-3  flex gap-2 text-[#8ED321]" :class="$i18n.locale === 'ar' ? 'left-1' : 'right-1'">
+          {{ $t('brands.viewAll') }} 
+          <ChevronRight class="text-lg" :class="{ 'rotate-180': $i18n.locale === 'ar' }"/>
+        </span>
+      </router-link> 
+      
+      <p id="FeaturesTitle" class="text-5xl font-bold m-auto PrimaryTxt flex">
+        {{ $t('brands.title') }}
+      </p>
+      
+      <p class="mb-[1rem] font-medium grayTxt">
+        {{ $t('brands.subtitle') }} 
+        <span class="gradientColor">{{ $t('brands.appName') }}</span>
+      </p>
+    </div>
+
+    <div class="cardsContainer flex gap-8 justify-center my-[3rem]">
+      <div class="card bg-white dark:bg-[#0d0d0d] h-[25rem] shadow-lg">
+        <div class="flex justify-between items-center gap-4 w-[fit-content] m-auto mb-[2rem]">
+          <img src="../assets/H&M.jpg" class="h-[10rem] w-[10rem] mb-[1rem]" alt="H&M">
+        </div>
+        <p class="serviceTitle PrimaryTxt">{{ $t('brands.hm.title') }}</p>
+        <p class="serviceDescription Secondary-grayTxt">
+          {{ $t('brands.hm.description') }}
+        </p>
+      </div>
+
+      <div class="card bg-white dark:bg-[#0d0d0d] h-[25rem] shadow-xl">
+        <div class="flex justify-between items-center gap-4 w-[fit-content] m-auto mb-[2rem]">
+          <img src="../assets/H&M.jpg" class="h-[10rem] w-[10rem]" alt="H&M">
+        </div>
+        <p class="serviceTitle PrimaryTxt">{{ $t('brands.hm.title') }}</p>
+        <p class="serviceDescription Secondary-grayTxt">
+          {{ $t('brands.hm.description') }}
+        </p>
+      </div>
+
+      <div class="card bg-white dark:bg-[#0d0d0d] h-[25rem] shadow-lg">
+        <div class="flex justify-between items-center gap-4 w-[fit-content] m-auto mb-[2rem]">
+          <img src="../assets/H&M.jpg" class="h-[10rem] w-[10rem]" alt="H&M">
+          <ArrowRight :class="{ 'rotate-180': $i18n.locale === 'ar' }"/>
+          <img :src="imgSrc6" alt="">
+        </div>
+        <p class="serviceTitle PrimaryTxt">{{ $t('brands.hm.title') }}</p>
+        <p class="serviceDescription Secondary-grayTxt">
+          {{ $t('brands.hm.description') }}
+        </p>
+      </div>
+    </div>
+  </section>
+        <section id="PricingSection">
     <p class="w-[fit-content] m-auto mb-[1rem] font-bold text-4xl gradientColor PrimaryTxt">
       {{ $t("pricing.title") }}
     </p>
@@ -324,6 +377,14 @@ beforeUnmount() {
   width: fit-content;
   line-height: 1.3;
   padding-bottom: 0.15em;
+  background: var(--Gradient-bgc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  width: fit-content;
+  line-height: 1.3;
+  padding-bottom: 0.15em;
 }
 
 #TryBtn {
@@ -333,9 +394,23 @@ beforeUnmount() {
   cursor: pointer;
   background: var(--Primary-Brand-color);
   color: white;
+  border-radius: 0.5em;
+  padding: 0.8em 4em;
+  font-weight: var(--Semi-Bold);
+  cursor: pointer;
+  background: var(--Primary-Brand-color);
+  color: white;
 }
 
 #StartBtn {
+  border-radius: 0.5em;
+  padding: 0.8em 1.8em;
+  font-weight: var(--Semi-Bold);
+  cursor: pointer;
+  background: var(--Gradient-bgc);
+  border-color: transparent;
+  color: white;
+  box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.1);
   border-radius: 0.5em;
   padding: 0.8em 1.8em;
   font-weight: var(--Semi-Bold);
@@ -364,9 +439,18 @@ beforeUnmount() {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 5rem;
+  height: 5rem;
+  margin-bottom: 2rem;
+  border-radius: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Sparkle {
+  background-color: #40b9ff40;
+  color: var(--Primary-Brand-color);
   background-color: #40b9ff40;
   color: var(--Primary-Brand-color);
 }
@@ -374,22 +458,31 @@ beforeUnmount() {
 .TryOn {
   background-color: #feefe5;
   color: var(--Secondary-Orange-Brand-color);
+  background-color: #feefe5;
+  color: var(--Secondary-Orange-Brand-color);
 }
 
 .Recycle {
+  background-color: #84cc1640;
+  color: var(--Secondary-Brand-color);
   background-color: #84cc1640;
   color: var(--Secondary-Brand-color);
 }
 
 .RecycleIcon {
   color: var(--Secondary-Brand-color);
+  color: var(--Secondary-Brand-color);
 }
 
 .serviceDescription {
   color: var(--Secondary-Text-color);
+  color: var(--Secondary-Text-color);
 }
 
 .serviceTitle {
+  font-size: 1.5rem;
+  font-weight: var(--Bold);
+  margin-bottom: 1rem;
   font-size: 1.5rem;
   font-weight: var(--Bold);
   margin-bottom: 1rem;
@@ -408,14 +501,31 @@ beforeUnmount() {
   align-items: center;
   font-weight: var(--Semi-Bold);
   margin-right: 1.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: var(--Secondary-Orange-Brand-color);
+  color: white;
+  line-height: 3rem;
+  margin: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: var(--Semi-Bold);
+  margin-right: 1.5rem;
 }
 
 .step {
   display: flex;
   margin-top: 2rem;
+  display: flex;
+  margin-top: 2rem;
 }
 
 .stepTitle {
+  font-size: 1.25rem;
+  font-weight: var(--Bold);
+  margin-bottom: 0.5rem;
   font-size: 1.25rem;
   font-weight: var(--Bold);
   margin-bottom: 0.5rem;
@@ -428,13 +538,25 @@ beforeUnmount() {
   align-items: center;
   justify-content: center;
   transition: background-color 0.2s ease;
+  background-color: var(--primary-bgc);
+  border-radius: 0.5rem;
+  padding: 1rem 2rem;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
 }
 
 .gradient-btn-border {
   width: 100%;
   border-radius: 0.5em;
   margin-top: 3rem;
+  width: 100%;
+  border-radius: 0.5em;
+  margin-top: 3rem;
 
+  background: linear-gradient(90deg, #8ed321 0%, #40b9ff 50%, #ff8e40 100%);
+  padding: 0.2rem;
+  cursor: pointer;
   background: linear-gradient(90deg, #8ed321 0%, #40b9ff 50%, #ff8e40 100%);
   padding: 0.2rem;
   cursor: pointer;
@@ -446,9 +568,17 @@ beforeUnmount() {
   padding: 0.5em 1.8em;
   justify-self: flex-end;
   margin-top: 4rem;
+  border: 0.1em solid;
+  border-radius: 0.5em;
+  padding: 0.5em 1.8em;
+  justify-self: flex-end;
+  margin-top: 4rem;
 }
 
 #FreePricingBtn {
+  background-color: white;
+  border-color: var(--Secondary-Brand-color);
+  cursor: pointer;
   background-color: white;
   border-color: var(--Secondary-Brand-color);
   cursor: pointer;

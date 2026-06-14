@@ -10,7 +10,12 @@ import TryOn from "../views/TryOn.vue";
 import UserWardrobe from "../views/userWardrobe.vue";
 import Pricing from "../views/pricing.vue";
 import AboutTryon from "../views/AboutTryon.vue";
+import Profile from "../views/Profile.vue";
+import Wardrobe from '../views/Wardrobe.vue'
+import Wishlist from '../views/Wishlist.vue'
+import Avatar from '../views/Avatar.vue'
 import {isAuthModalOpen, triggerLoginModal} from '../authState.js';
+import { createRouter, createWebHistory } from "vue-router";
 import ContactUs from "../views/ContactUs.vue";
 
 const routes = [
@@ -25,11 +30,25 @@ const routes = [
   { path: "/TryOn", component: TryOn, meta: { requiresAuth: true } },
   { path: "/pricing", component: Pricing, meta: { requiresAuth: true } },
   { path: "/userWardrobe", component: UserWardrobe },
-  { path: "/ContactUs", component: ContactUs },
+  {path: '/wardrobe', component: Wardrobe},  
+  { path: '/Wishlist', component: Wishlist },
+  { path: '/Avatar', component: Avatar },
+  { path: "/Profile/:id", component: () => import("../views/Profile.vue"), meta: { requiresAuth: true } },
+    { path: "/ContactUs", component: ContactUs },
+
+  {
+    path: "/Profile",
+    redirect: () => {
+      const user = JSON.parse(localStorage.getItem("user") || "{}");
+      const id = user.id || user._id;
+      return id ? `/Profile/${id}` : "/";
+    },
+  },
   {
     path: "/auth/callback",
     component: () => import("../views/GoogleCallback.vue"),
-  },
+     meta: { layout: "blank" }
+  }
 ];
 
 const router = createRouter({
