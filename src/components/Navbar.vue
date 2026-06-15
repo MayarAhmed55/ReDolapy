@@ -33,24 +33,24 @@
 
           <div v-else class="relative" v-click-outside="closeUserDropdown">
             <button @click="userDropdownOpen = !userDropdownOpen"
-              class="flex items-center gap-2 px-3 py-1.5 rounded-md bg-gray-50 border border-gray-100 hover:bg-gray-100 transition-colors"
+              class="flex items-center gap-2 px-3 py-1.5 rounded-md bg-gray-50 dark:bg-[#0d0d0d] border border-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
               :aria-expanded="userDropdownOpen" aria-haspopup="true">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-5 h-5 text-gray-600">
+                stroke="currentColor" class="w-5 h-5 PrimaryTxt">
                 <path stroke-linecap="round" stroke-linejoin="round"
                   d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
               </svg>
-              <span class="text-sm font-medium text-gray-700 max-w-[120px] truncate">{{ userFullName }}</span>
+              <span class="text-sm font-medium PrimaryTxt max-w-[120px] truncate">{{ userFullName }}</span>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                stroke="currentColor" class="w-3.5 h-3.5 text-gray-500 transition-transform duration-200"
-                :class="{ 'rotate-180': userDropdownOpen }">
+                stroke="currentColor" class="w-3.5 h-3.5 text-gray-500  dark:text-white transition-transform duration-200"
+                :class="{ 'rotate-180': userDropdownOpen }" PrimaryTxt>
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
               </svg>
             </button>
 
             <Transition name="dropdown">
               <div v-if="userDropdownOpen"
-                class="profile-dropdown-menu absolute mt-2 bg-white rounded-2xl shadow-xl border border-gray-100 z-50 overflow-hidden text-right"
+                class="profile-dropdown-menu absolute mt-2 bg-white dark:bg-black rounded-2xl shadow-xl border border-gray-100 z-50 overflow-hidden text-right"
                 :class="$i18n.locale === 'ar' ? 'left-0' : 'right-0'" role="menu">
                 <div class="user-email-row">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -61,14 +61,14 @@
                   <span class="email-text">{{ userEmail }}</span>
                 </div>
 
-                <div class="dropdown-item-row">
-                  <div class="item-leading">
+                <div class="dropdown-item-row PrimaryTxt ">
+                  <div class="item-leading PrimaryTxt">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                      stroke="currentColor" class="w-5 h-5 text-gray-500">
+                      stroke="currentColor" class="w-5 h-5 ">
                       <path stroke-linecap="round" stroke-linejoin="round"
                         d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
                     </svg>
-                    <span class="item-title">Notifications</span>
+                    <span class="item-title PrimaryTxt">Notifications</span>
                   </div>
                   <button @click="toggleNotifications" class="toggle-switch"
                     :class="{ 'toggle-active': notificationsEnabled }">
@@ -76,14 +76,14 @@
                   </button>
                 </div>
 
-                <div class="dropdown-item-row">
-                  <div class="item-leading">
+                <div class="dropdown-item-row PrimaryTxt">
+                  <div class="item-leading PrimaryTxt">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                      stroke="currentColor" class="w-5 h-5 text-gray-500">
+                      stroke="currentColor" class="w-5 h-5 ">
                       <path stroke-linecap="round" stroke-linejoin="round"
                         d="M12 3v1.5m0 15V21m9-9h-1.5m-13.5 0H3m16.364-6.364l-1.06 1.06m-11.314 11.314l-1.06 1.06m11.314 0l-1.06-1.06m-11.314-11.314l-1.06-1.06M12 7.25a4.75 4.75 0 1 0 0 9.5 4.75 4.75 0 0 0 0-9.5z" />
                     </svg>
-                    <span class="item-title">Theme</span>
+                    <span class="item-title PrimaryTxt">Theme</span>
                   </div>
                   <button @click="toggleTheme" class="toggle-switch" :class="{ 'toggle-active': isDarkMode }">
                     <span class="toggle-circle"></span>
@@ -91,21 +91,21 @@
                 </div>
 
                 <div class="relative w-full">
-                  <div class="dropdown-item-row cursor-pointer flex justify-between items-center"
+                  <div class="dropdown-item-row PrimaryTxt cursor-pointer flex justify-between items-center"
                     @click="languageDropdownOpen = !languageDropdownOpen">
-                    <div class="item-leading flex items-center gap-2">
+                    <div class="item-leading PrimaryTxt flex items-center gap-2">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="w-5 h-5 text-gray-500">
+                        stroke="currentColor" class="w-5 h-5 ">
                         <path stroke-linecap="round" stroke-linejoin="round"
                           d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138A44.26 44.26 0 0115.5 12m-2 1.157a26.792 26.792 0 01-1.884 4.354" />
                       </svg>
-                      <span class="item-title">Language</span>
+                      <span class="item-title PrimaryTxt">Language</span>
                     </div>
 
                     <div class="flex items-center gap-1">
-                      <span class="text-sm font-medium text-gray-900 uppercase">{{ $i18n.locale }}</span>
+                      <span class="text-sm font-medium  uppercase">{{ $i18n.locale }}</span>
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                        stroke="currentColor" class="w-3.5 h-3.5 text-gray-600 transition-transform duration-200"
+                        stroke="currentColor" class="w-3.5 h-3.5  transition-transform duration-200"
                         :class="{
                           'rotate-180': languageDropdownOpen,
                           'rotate-90': !languageDropdownOpen,
@@ -139,38 +139,38 @@
                   </Transition>
                 </div>
 
-                <div class="dropdown-item-row">
-                  <div class="item-leading">
+                <div class="dropdown-item-row PrimaryTxt">
+                  <div class="item-leading PrimaryTxt">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                      stroke="currentColor" class="w-5 h-5 text-gray-900">
+                      stroke="currentColor" class="w-5 h-5 ">
                       <path stroke-linecap="round" stroke-linejoin="round"
                         d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-6 15h9" />
                     </svg>
-                    <span class="item-title font-normal">Mobile App</span>
+                    <span class="item-title PrimaryTxt font-normal">Mobile App</span>
                   </div>
                   <span class="text-sm font-normal" :class="hasMobileApp ? 'text-green-500' : 'text-gray-400'">
                     {{ hasMobileApp ? "Installed" : "Not Installed" }}
                   </span>
                 </div>
 
-                <router-link to="/wardrobe" class="dropdown-item-row cursor-pointer" role="menuitem"
+                <router-link to="/wardrobe" class="dropdown-item-row PrimaryTxt cursor-pointer" role="menuitem"
                   @click="closeUserDropdown">
-                  <div class="item-leading">
+                  <div class="item-leading PrimaryTxt">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                      stroke="currentColor" class="w-5 h-5 text-gray-900">
+                      stroke="currentColor" class="w-5 h-5 ">
                       <path stroke-linecap="round" stroke-linejoin="round"
                         d="M20.25 14.15v4.25c0 .621-.504 1.125-1.125 1.125H4.875A1.125 1.125 0 013.75 18.4V14.15m16.5 0c0-1.243-1.007-2.25-2.25-2.25H6c-1.243 0-2.25 1.007-2.25 2.25m16.5 0V6.3c0-.621-.504-1.125-1.125-1.125H4.875A1.125 1.125 0 003.75 6.3v7.85m16.5 0V5.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25v8.65" />
                     </svg>
-                    <span class="item-title font-normal">My Wardrobe</span>
+                    <span class="item-title PrimaryTxt font-normal">My Wardrobe</span>
                   </div>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                    stroke="currentColor" class="w-4 h-4 text-gray-900">
+                    stroke="currentColor" class="w-4 h-4 ">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                   </svg>
                 </router-link>
 
-                <div class="dropdown-item-row cursor-pointer" role="menuitem">
-                  <div class="item-leading">
+                <div class="dropdown-item-row PrimaryTxt cursor-pointer" role="menuitem">
+                  <div class="item-leading PrimaryTxt">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                       stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                       class="lucide lucide-receipt-text-icon lucide-receipt-text">
@@ -180,16 +180,16 @@
                       <path
                         d="M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z" />
                     </svg>
-                    <span class="item-title font-normal">Current Plan</span>
+                    <span class="item-title PrimaryTxt font-normal">Current Plan</span>
                   </div>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                    stroke="currentColor" class="w-4 h-4 text-gray-900">
+                    stroke="currentColor" class="w-4 h-4 ">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                   </svg>
                 </div>
 
                 <div class="cards-block-wrapper">
-                  <div class="feature-card cursor-pointer">
+                  <div class="feature-card bg-[rgba(64,185,255,0.1)] dark:bg-[rgba(64,185,255,1)] cursor-pointer">
                     <div class="card-icon-container">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5 text-gray-600">
@@ -203,7 +203,7 @@
                     </div>
                   </div>
 
-                  <router-link to="/wishlist" class="feature-card cursor-pointer" @click="closeUserDropdown">
+                  <router-link to="/wishlist" class="feature-card bg-[rgba(64,185,255,0.1)] dark:bg-[rgba(64,185,255,1)]  cursor-pointer" @click="closeUserDropdown">
                     <div class="card-icon-container">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5 text-gray-600">
@@ -219,7 +219,7 @@
                 </div>
 
                 <div class="edit-profile-warber w-full">
-                  <router-link :to="`/Profile/${userId}`" class="edit-profile-btn cursor-pointer"
+                  <router-link :to="`/Profile/${userId}`" class="edit-profile-btn bg-white dark:bg-[#0d0d0d] cursor-pointer"
                     @click="closeUserDropdown">
                     <span>Edit Profile</span>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -417,7 +417,7 @@
                             <span class="text-sm font-medium text-(--Primary-Text-color)">Language</span>
                           </div>
                           <div class="flex items-center gap-1">
-                            <span class="text-xs font-medium text-gray-900 uppercase">{{ $i18n.locale }}</span>
+                            <span class="text-xs font-medium  uppercase">{{ $i18n.locale }}</span>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                               stroke="currentColor" class="w-3 h-3 text-gray-500 transition-transform duration-200"
                               :class="{
@@ -488,7 +488,7 @@
 
                       <!-- Feature Cards -->
                       <div class="px-3 py-2.5 flex flex-col gap-2">
-                        <div class="feature-card cursor-pointer">
+                        <div class="feature-card bg-[rgba(64,185,255,0.1)] dark:bg-[rgba(64,185,255,1)]  cursor-pointer">
                           <div class="card-icon-container">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                               stroke="currentColor" class="w-5 h-5 text-gray-600">
@@ -501,7 +501,7 @@
                             <span class="card-desc">Manage your payment options</span>
                           </div>
                         </div>
-                        <router-link to="/wishlist" class="feature-card cursor-pointer" @click="closeMobileMenu">
+                        <router-link to="/wishlist" class="feature-card bg-[rgba(64,185,255,0.1)] dark:bg-[rgba(64,185,255,1)]  cursor-pointer" @click="closeMobileMenu">
                           <div class="card-icon-container">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                               stroke="currentColor" class="w-5 h-5 text-gray-600">
@@ -1023,7 +1023,6 @@ export default {
   width: min(411px, calc(100vw - 24px));
   max-height: calc(100svh - 80px);
   overflow-y: auto;
-  background: #ffffff;
 }
 
 /* 1. حقل الإيميل */
@@ -1063,7 +1062,7 @@ export default {
   padding: 7px 10px;
   width: 100%;
   min-height: 38px;
-  background: #ffffff;
+  /* background: #ffffff; */
   align-self: stretch;
 }
 
@@ -1078,7 +1077,6 @@ export default {
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;
-  color: #1e1e24;
 }
 
 /* أزرار التبديل الـ Switches */
@@ -1143,7 +1141,7 @@ export default {
   gap: 20px;
   width: 100%;
   min-height: 58px;
-  background: rgba(64, 185, 255, 0.1);
+  /* background: rgba(64, 185, 255, 0.1); */
   border-radius: 16px;
   align-self: stretch;
 }
@@ -1191,7 +1189,7 @@ export default {
   min-height: 50px;
   border: 1px solid #8ed321;
   border-radius: 10px;
-  background: #ffffff;
+  /* background: #ffffff; */
   color: #a6e22e;
   font-family: "Inter", sans-serif;
   font-weight: 500;

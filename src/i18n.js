@@ -796,17 +796,17 @@ const messages = {
 
     
   "contact": {
-    "titlePart1": "Contact",
-    "titlePart2": "ReDolapy Team",
-    "description": "Have a question, partnership idea, or just want to say hi? Drop us a message and we'll get back to you as soon as possible.",
-    "form": {
-      "nameLabel": "Name",
-      "namePlaceholder": "name",
-      "emailLabel": "Email",
-      "emailPlaceholder": "user@gmail.com",
-      "messageLabel": "Message",
-      "messagePlaceholder": "write your message here",
-      "sendButton": "Send"
+    titlePart1: "Contact",
+    titlePart2: "ReDolapy Team",
+    description: "Have a question, partnership idea, or just want to say hi? Drop us a message and we'll get back to you as soon as possible.",
+    form: {
+    nameLabel: "Name",
+      namePlaceholder: "name",
+      emailLabel: "Email",
+      emailPlaceholder: "user{'@'}gmail.com",
+      messageLabel: "Message",
+      messagePlaceholder: "write your message here",
+      sendButton: "Send"
     }
   
 },
