@@ -1,14 +1,14 @@
 <template>
 
-  <div class="w-full mb-6 sm:mb-8">
+  <div class="w-full mb-6 sm:mb-8 ">
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-3xl">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-3xl ">
 
       <button
 
         type="button"
-
-        class="model-choice-card"
+            
+        class="model-choice-card "
 
         :class="{ 'model-choice-card--active': activeSource === 'avatar' }"
 
@@ -469,9 +469,9 @@ export default {
 
   border-radius: 1rem;
 
-  border: 1.5px solid #D8DCE3;
+  border: 1.5px solid var(--input-border);
 
-  background: white;
+  background: var(--card-surface);
 
   text-align: start;
 
@@ -513,7 +513,7 @@ export default {
 
   border-radius: 9999px;
 
-  border: 1.5px solid #D8DCE3;
+  border: 1.5px solid var(--input-border);
 
   display: flex;
 
@@ -521,7 +521,7 @@ export default {
 
   justify-content: center;
 
-  background: white;
+  background: var(--card-surface);
 
 }
 

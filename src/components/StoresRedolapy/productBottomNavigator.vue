@@ -1,6 +1,7 @@
 <template>
   <nav
     class="product-nav"
+    :class="{ 'product-nav--rtl': isRtl }"
     :aria-label="$t('store.pagination.aria')"
   >
     <button
@@ -11,7 +12,7 @@
       @click="goToPage(currentPage - 1)"
     >
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        <path stroke-linecap="round" stroke-linejoin="round" :d="prevArrowPath" />
       </svg>
     </button>
 
@@ -38,7 +39,7 @@
       @click="goToPage(currentPage + 1)"
     >
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        <path stroke-linecap="round" stroke-linejoin="round" :d="nextArrowPath" />
       </svg>
     </button>
   </nav>
@@ -59,6 +60,15 @@ export default {
   },
   emits: ['update:currentPage'],
   computed: {
+    isRtl() {
+      return this.$i18n?.locale === 'ar'
+    },
+    prevArrowPath() {
+      return this.isRtl ? 'M9 5l7 7-7 7' : 'M15 19l-7-7 7-7'
+    },
+    nextArrowPath() {
+      return this.isRtl ? 'M15 19l-7-7 7-7' : 'M9 5l7 7-7 7'
+    },
     visiblePages() {
       const total = this.totalPages
       const current = this.currentPage
@@ -95,7 +105,14 @@ export default {
   gap: 0.75rem;
   margin-top: 2rem;
   padding-top: 1.5rem;
-  border-top: 1px solid #e8eaee;
+}
+
+.product-nav--rtl {
+  flex-direction: row-reverse;
+}
+
+.product-nav--rtl .product-nav__pages {
+  flex-direction: row-reverse;
 }
 
 .product-nav__arrow {
@@ -105,8 +122,8 @@ export default {
   width: 2.25rem;
   height: 2.25rem;
   border-radius: 9999px;
-  border: 1px solid #e8eaee;
-  background: #fff;
+  border: 1px solid var(--store-border);
+  background: var(--card-surface);
   color: var(--Primary-Text-color);
   cursor: pointer;
   transition: border-color 0.2s, color 0.2s, background-color 0.2s;
@@ -149,7 +166,7 @@ export default {
 
 .product-nav__page:hover:not(.product-nav__page--active) {
   color: var(--Primary-Text-color);
-  background: #f4f5f7;
+  background: var(--surface-muted);
 }
 
 .product-nav__page--active {

@@ -39,7 +39,7 @@ export default {
 
 <style scoped>
 .filter-section {
-  border-top: 1px solid #e8eaee;
+  border-top: 1px solid var(--store-border);
   padding: 1rem 0;
 }
 
@@ -64,7 +64,7 @@ export default {
 .filter-section__chevron {
   width: 1rem;
   height: 1rem;
-  color: #a0a6b2;
+  color: var(--store-muted);
   transition: transform 0.2s;
 }
 

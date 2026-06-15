@@ -153,7 +153,8 @@
                   </span>
                 </div>
 
-                <div class="dropdown-item-row cursor-pointer" role="menuitem">
+                <router-link to="/wardrobe" class="dropdown-item-row cursor-pointer" role="menuitem"
+                  @click="closeUserDropdown">
                   <div class="item-leading">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                       stroke="currentColor" class="w-5 h-5 text-gray-900">
@@ -166,7 +167,7 @@
                     stroke="currentColor" class="w-4 h-4 text-gray-900">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                   </svg>
-                </div>
+                </router-link>
 
                 <div class="dropdown-item-row cursor-pointer" role="menuitem">
                   <div class="item-leading">
@@ -202,7 +203,7 @@
                     </div>
                   </div>
 
-                  <div class="feature-card cursor-pointer">
+                  <router-link to="/wishlist" class="feature-card cursor-pointer" @click="closeUserDropdown">
                     <div class="card-icon-container">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5 text-gray-600">
@@ -214,7 +215,7 @@
                       <span class="card-title">Wishlist</span>
                       <span class="card-desc">View your saved items</span>
                     </div>
-                  </div>
+                  </router-link>
                 </div>
 
                 <div class="edit-profile-warber w-full">
@@ -247,10 +248,22 @@
               </div>
             </Transition>
           </div>
+
+          <button @click="toggleThemeNavBtn" type="button"
+            class="p-2.5 rounded-xl border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-gray-700 dark:text-zinc-300 transition-all duration-200 hover:scale-105"
+            :aria-label="isDark ? $t('nav.theme_light') : $t('nav.theme_dark')">
+            <span v-if="isDark" class="text-yellow-500">
+              <SunMedium></SunMedium>
+            </span>
+            <span v-else class="text-indigo-600">
+              <Moon></Moon>
+            </span>
+          </button>
         </div>
 
+        <div class="lg:hidden flex items-center gap-2 shrink-0">
         <button type="button"
-          class="lg:hidden inline-flex items-center justify-center rounded-md p-2 text-(--Primary-Text-color) hover:bg-black/5 transition-colors"
+          class="inline-flex items-center justify-center rounded-md p-2 text-(--Primary-Text-color) hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
           :aria-expanded="mobileOpen" aria-label="Open menu" @click="openMobileMenu">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="size-6"
             aria-hidden="true">
@@ -259,7 +272,8 @@
         </button>
 
         <button @click="toggleThemeNavBtn" type="button"
-          class="p-2.5 rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-700 dark:text-zinc-300 transition-all duration-200 hover:scale-105">
+          class="p-2.5 rounded-xl border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-gray-700 dark:text-zinc-300 transition-all duration-200 hover:scale-105"
+          :aria-label="isDark ? $t('nav.theme_light') : $t('nav.theme_dark')">
           <span v-if="isDark" class="text-yellow-500">
             <SunMedium></SunMedium>
           </span>
@@ -267,6 +281,7 @@
             <Moon></Moon>
           </span>
         </button>
+        </div>
       </div>
     </nav>
 
@@ -276,15 +291,15 @@
           <div class="absolute inset-0 bg-black/40" aria-hidden="true" @click="closeMobileMenu" />
 
           <Transition name="mobile-drawer">
-            <aside v-if="mobileOpen" class="absolute inset-y-0 w-[78%] max-w-xs bg-white flex flex-col shadow-xl"
+            <aside v-if="mobileOpen" class="mobile-drawer absolute inset-y-0 w-[78%] max-w-xs flex flex-col shadow-xl"
               :class="$i18n.locale === 'ar' ? 'left-0' : 'right-0'" role="dialog" aria-modal="true"
               aria-label="Navigation menu">
-              <div class="flex items-center justify-between px-5 pt-5 pb-4 border-b border-gray-100">
+              <div class="flex items-center justify-between px-5 pt-5 pb-4 border-b border-gray-100 dark:border-zinc-800">
                 <router-link to="/" @click="closeMobileMenu">
-                  <img src="../assets/Logo.png" alt="Redolapy" class="h-7 w-auto" />
+                  <img :src="adaptiveHeroImage" alt="Redolapy" class="h-7 w-auto" />
                 </router-link>
                 <button type="button"
-                  class="p-1.5 text-(--Primary-Text-color) hover:bg-gray-50 rounded-md transition-colors"
+                  class="p-1.5 text-(--Primary-Text-color) hover:bg-gray-50 dark:hover:bg-zinc-800 rounded-md transition-colors"
                   aria-label="Close menu" @click="closeMobileMenu">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="size-6"
                     aria-hidden="true">
@@ -308,7 +323,7 @@
                 </template>
               </nav>
 
-              <div class="flex flex-col gap-3 px-5 pb-6 pt-4 border-t border-gray-100">
+              <div class="flex flex-col gap-3 px-5 pb-6 pt-4 border-t border-gray-100 dark:border-zinc-800">
                 <LangSwitcher full-width />
 
                 <template v-if="!isLoggedIn">
@@ -326,16 +341,16 @@
                   </button>
                 </template>
 
-                <div v-else class="rounded-md border border-gray-100 overflow-hidden">
+                <div v-else class="rounded-md border border-gray-100 dark:border-zinc-800 overflow-hidden">
                   <button @click="mobileUserExpanded = !mobileUserExpanded"
-                    class="w-full flex items-center justify-between p-2.5 bg-gray-50 hover:bg-gray-100 transition-colors">
+                    class="w-full flex items-center justify-between p-2.5 bg-gray-50 dark:bg-zinc-900 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors">
                     <div class="flex items-center gap-2 min-w-0">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5 text-gray-600 shrink-0">
                         <path stroke-linecap="round" stroke-linejoin="round"
                           d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                       </svg>
-                      <span class="text-sm font-medium text-gray-700 truncate min-w-0">{{ userFullName }}</span>
+                      <span class="text-sm font-medium text-(--Primary-Text-color) truncate min-w-0">{{ userFullName }}</span>
                     </div>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                       stroke="currentColor"
@@ -345,7 +360,7 @@
                     </svg>
                   </button>
                   <Transition name="accordion">
-                    <div v-if="mobileUserExpanded" class="bg-white border-t border-gray-100 divide-y divide-gray-50">
+                    <div v-if="mobileUserExpanded" class="mobile-drawer-panel border-t border-gray-100 dark:border-zinc-800 divide-y divide-gray-50 dark:divide-zinc-800">
                       <!-- Email -->
                       <div class="flex items-center gap-2 px-4 py-2.5">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -366,7 +381,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round"
                               d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
                           </svg>
-                          <span class="text-sm font-medium text-gray-700">Notifications</span>
+                          <span class="text-sm font-medium text-(--Primary-Text-color)">Notifications</span>
                         </div>
                         <button @click="toggleNotifications" class="toggle-switch"
                           :class="{ 'toggle-active': notificationsEnabled }">
@@ -382,7 +397,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round"
                               d="M12 3v1.5m0 15V21m9-9h-1.5m-13.5 0H3m16.364-6.364l-1.06 1.06m-11.314 11.314l-1.06 1.06m11.314 0l-1.06-1.06m-11.314-11.314l-1.06-1.06M12 7.25a4.75 4.75 0 1 0 0 9.5 4.75 4.75 0 0 0 0-9.5z" />
                           </svg>
-                          <span class="text-sm font-medium text-gray-700">Theme</span>
+                          <span class="text-sm font-medium text-(--Primary-Text-color)">Theme</span>
                         </div>
                         <button @click="toggleTheme" class="toggle-switch" :class="{ 'toggle-active': isDarkMode }">
                           <span class="toggle-circle"></span>
@@ -399,7 +414,7 @@
                               <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138A44.26 44.26 0 0115.5 12m-2 1.157a26.792 26.792 0 01-1.884 4.354" />
                             </svg>
-                            <span class="text-sm font-medium text-gray-700">Language</span>
+                            <span class="text-sm font-medium text-(--Primary-Text-color)">Language</span>
                           </div>
                           <div class="flex items-center gap-1">
                             <span class="text-xs font-medium text-gray-900 uppercase">{{ $i18n.locale }}</span>
@@ -446,7 +461,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round"
                               d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-6 15h9" />
                           </svg>
-                          <span class="text-sm font-medium text-gray-700">Mobile App</span>
+                          <span class="text-sm font-medium text-(--Primary-Text-color)">Mobile App</span>
                         </div>
                         <span class="text-xs" :class="hasMobileApp ? 'text-green-500' : 'text-gray-400'
                           ">
@@ -454,22 +469,22 @@
                         </span>
                       </div>
 
-                      <!-- My Wardrobe -->
-                      <div
-                        class="flex items-center justify-between px-4 py-2.5 cursor-pointer hover:bg-gray-50 transition-colors">
+                      <router-link to="/wardrobe"
+                        class="flex items-center justify-between px-4 py-2.5 cursor-pointer hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors"
+                        @click="closeMobileMenu">
                         <div class="flex items-center gap-2.5">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-4 h-4 text-gray-700 shrink-0">
                             <path stroke-linecap="round" stroke-linejoin="round"
                               d="M20.25 14.15v4.25c0 .621-.504 1.125-1.125 1.125H4.875A1.125 1.125 0 013.75 18.4V14.15m16.5 0c0-1.243-1.007-2.25-2.25-2.25H6c-1.243 0-2.25 1.007-2.25 2.25m16.5 0V6.3c0-.621-.504-1.125-1.125-1.125H4.875A1.125 1.125 0 003.75 6.3v7.85m16.5 0V5.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25v8.65" />
                           </svg>
-                          <span class="text-sm font-medium text-gray-700">My Wardrobe</span>
+                          <span class="text-sm font-medium text-(--Primary-Text-color)">My Wardrobe</span>
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                           stroke="currentColor" class="w-3.5 h-3.5 text-gray-700 shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                         </svg>
-                      </div>
+                      </router-link>
 
                       <!-- Feature Cards -->
                       <div class="px-3 py-2.5 flex flex-col gap-2">
@@ -486,7 +501,7 @@
                             <span class="card-desc">Manage your payment options</span>
                           </div>
                         </div>
-                        <div class="feature-card cursor-pointer">
+                        <router-link to="/wishlist" class="feature-card cursor-pointer" @click="closeMobileMenu">
                           <div class="card-icon-container">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                               stroke="currentColor" class="w-5 h-5 text-gray-600">
@@ -498,7 +513,7 @@
                             <span class="card-title">Wishlist</span>
                             <span class="card-desc">View your saved items</span>
                           </div>
-                        </div>
+                        </router-link>
                       </div>
 
                       <!-- Edit Profile -->
@@ -611,15 +626,6 @@ export default {
         }
       })(),
       user: null,
-      navLinks: [
-        { to: "/", label: "Home", mobileLabel: "Features" },
-        { to: "/TryOn", label: "TryOn", mobileLabel: "Try-On" },
-        { to: "/Recycle", label: "Recycle" },
-        { to: "/#PricingSection", label: "Pricing", hash: "#PricingSection" },
-        { to: "/AboutPage", label: "About" },
-        { to: "/ContactUS", label: "Contact US" },
-
-      ],
     };
   },
   setup() {
@@ -739,6 +745,20 @@ export default {
       this.closeMobileMenu();
       this.$router.push(path);
     },
+    onHashLinkClick(event, hash) {
+      event.preventDefault();
+      this.closeMobileMenu();
+      const scrollToHash = () => {
+        document.querySelector(hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      };
+      if (this.$route.path !== '/') {
+        this.$router.push('/').then(() => {
+          this.$nextTick(scrollToHash);
+        });
+      } else {
+        scrollToHash();
+      }
+    },
     handleLogout() {
       // 1. Purge data infrastructure completely
       localStorage.removeItem("user");
@@ -771,6 +791,16 @@ export default {
     },
   },
   computed: {
+    navLinks() {
+      return [
+        { to: "/", label: this.$t("nav.features"), mobileLabel: this.$t("nav.features") },
+        { to: "/TryOn", label: this.$t("nav.tryOn"), mobileLabel: this.$t("nav.tryOn") },
+        { to: "/Recycle", label: this.$t("nav.recycle") },
+        { to: "/#PricingSection", label: this.$t("nav.pricing"), hash: "#PricingSection" },
+        { to: "/AboutPage", label: this.$t("nav.about") },
+        { to: "/ContactUS", label: this.$t("nav.contact_us") },
+      ];
+    },
     userEmail() {
       return JSON.parse(localStorage.getItem("user"))?.email || "";
     },
@@ -920,7 +950,7 @@ export default {
 }
 
 .mobile-auth-btn--login {
-  background-color: white;
+  background-color: var(--card-surface);
   border: 1.5px solid var(--Secondary-Brand-color);
   color: var(--Secondary-Brand-color);
 }
@@ -1275,5 +1305,14 @@ export default {
 
 .edit-profile-warber:hover {
   scale: 1.08;
+}
+
+.mobile-drawer {
+  background: var(--primary-bgc);
+  color: var(--Primary-Text-color);
+}
+
+.mobile-drawer-panel {
+  background: var(--card-surface);
 }
 </style>

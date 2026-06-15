@@ -323,11 +323,6 @@ export default {
 }
 
 .filter-sidebar {
-  --store-card-bg: #ffffff;
-  --store-border: #e8eaee;
-  --store-muted: #a0a6b2;
-  --store-filter-text: #4b5563;
-
   display: none;
   position: fixed;
   inset: 0;
@@ -543,7 +538,7 @@ export default {
   padding: 0.375rem 0.875rem;
   border-radius: 9999px;
   border: 1px solid var(--store-border);
-  background: white;
+  background: var(--card-surface);
   font-size: 0.8125rem;
   color: var(--store-filter-text);
   cursor: pointer;
@@ -552,7 +547,7 @@ export default {
 
 .filter-sidebar__pill--active {
   border-color: var(--Primary-Brand-color);
-  background: #eef6fc;
+  background: var(--surface-active);
   color: var(--Primary-Text-color);
   font-weight: var(--Semi-Bold);
 }
@@ -577,7 +572,7 @@ export default {
   inset-inline: 0;
   height: 0.375rem;
   border-radius: 9999px;
-  background: #e8eaee;
+  background: var(--store-border);
   overflow: hidden;
 }
 
@@ -622,13 +617,13 @@ export default {
   box-shadow: 0 2px 6px rgba(64, 185, 255, 0.4);
   cursor: pointer;
   pointer-events: auto;
-  border: 2px solid #ffffff;
+  border: 2px solid var(--card-surface);
 }
 
 .filter-sidebar__slider::-moz-range-thumb {
   width: 1.125rem;
   height: 1.125rem;
-  border: 2px solid #ffffff;
+  border: 2px solid var(--card-surface);
   border-radius: 9999px;
   background: var(--Primary-Brand-color);
   box-shadow: 0 2px 6px rgba(64, 185, 255, 0.4);
@@ -645,12 +640,12 @@ export default {
 }
 
 .filter-sidebar__slider--min::-webkit-slider-thumb {
-  background: #ffffff;
+  background: var(--card-surface);
   border: 2px solid var(--Primary-Brand-color);
 }
 
 .filter-sidebar__slider--min::-moz-range-thumb {
-  background: #ffffff;
+  background: var(--card-surface);
   border: 2px solid var(--Primary-Brand-color);
 }
 

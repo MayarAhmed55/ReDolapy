@@ -8,19 +8,19 @@
       <article
         v-for="product in paginatedProducts"
         :key="product.id"
-        class="group bg-white border border-gray-200 rounded-3xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
+        class="group bg-(--card-surface) border border-gray-200 dark:border-zinc-800 rounded-3xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
       >
         <!-- Image Section -->
         <a
           :href="product.purchaseUrl"
           target="_blank"
           rel="noopener noreferrer"
-          class="relative block aspect-square bg-slate-100 overflow-hidden"
+          class="relative block aspect-square bg-slate-100 dark:bg-zinc-900 overflow-hidden"
           :aria-label="$t('store.product.view_on_store')"
         >
 <button
   type="button"
-  class="absolute top-3 right-3 z-10 w-9 h-9 rounded-3xl bg-white/80 backdrop-blur-sm border border-gray-200 flex items-center justify-center text-[var(--Disabled-Text-color)] hover:bg-gray-100 hover:text-[var(--Primary-Brand-color)] transition-all group-hover:scale-110 lg:right-auto lg:left-4 lg:border-none lg:bg-transparent lg:hover:bg-white/70"
+  class="absolute top-3 right-3 z-10 w-9 h-9 rounded-3xl bg-(--card-surface)/80 backdrop-blur-sm border border-gray-200 dark:border-zinc-700 flex items-center justify-center text-[var(--Disabled-Text-color)] hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-[var(--Primary-Brand-color)] transition-all group-hover:scale-110 lg:right-auto lg:left-4 lg:border-none lg:bg-transparent lg:hover:bg-(--card-surface)/70"
   :class="{ 
     'text-[var(--Primary-Brand-color)] bg-transparent border-transparent !shadow-none': isProductFavorited(product.id) 
   }"
@@ -58,7 +58,7 @@
 
         <!-- Content -->
         <div class="p-4 lg:p-5">
-          <h3 class="text-[15px] font-semibold text-gray-900 line-clamp-2 mb-3 leading-tight">
+          <h3 class="text-[15px] font-semibold text-gray-900 dark:text-zinc-100 line-clamp-2 mb-3 leading-tight">
             {{ product.name }}
           </h3>
 
@@ -70,14 +70,14 @@
               class="h-4 max-w-[72px] object-contain object-left"
               loading="lazy"
             />
-            <span v-else-if="product.storeName" class="text-[13px] text-gray-500 line-clamp-1">
+            <span v-else-if="product.storeName" class="text-[13px] text-gray-500 dark:text-zinc-400 line-clamp-1">
               {{ product.storeName }}
             </span>
           </div>
 
           <!-- Price + Try-on -->
           <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <span class="text-[15px] font-bold text-gray-900">
+            <span class="text-[15px] font-bold text-gray-900 dark:text-zinc-100">
               {{ formatPrice(product.price) }} {{ product.currency }}
             </span>
 

@@ -5,9 +5,9 @@
       <h2 class="text-lg sm:text-xl font-bold text-(--Primary-Text-color)">{{ heading }}</h2>
     </div>
 
-    <div class="bg-white rounded-2xl sm:rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-(--card-surface) rounded-2xl sm:rounded-3xl shadow-sm border border-gray-100 dark:border-zinc-800 overflow-hidden">
       <div class="grid grid-cols-1 lg:grid-cols-2">
-        <div class="relative bg-white p-4 sm:p-6 flex items-center justify-center">
+        <div class="relative bg-(--card-surface) p-4 sm:p-6 flex items-center justify-center">
           <img
             :src="design.image"
             :alt="design.title"
@@ -18,7 +18,7 @@
             v-if="showMatchBadge"
             class="absolute top-6 sm:top-8 inset-x-6 sm:inset-x-8 flex items-center justify-between gap-2"
           >
-            <div class="flex items-center gap-1.5 bg-white/90 backdrop-blur-sm rounded-full px-2.5 py-1 shadow-sm">
+            <div class="flex items-center gap-1.5 bg-(--card-surface)/90 backdrop-blur-sm rounded-full px-2.5 py-1 shadow-sm">
               <span class="w-5 h-5 rounded-full bg-[var(--Secondary-Brand-color)] flex items-center justify-center shrink-0">
                 <svg class="w-3 h-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true">
                   <polyline points="20 6 9 17 4 12"/>
@@ -31,7 +31,7 @@
 
             <button
               type="button"
-              class="w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm shadow-sm flex items-center justify-center text-(--Primary-Text-color) hover:bg-white transition-colors"
+              class="w-8 h-8 rounded-full bg-(--card-surface)/90 backdrop-blur-sm shadow-sm flex items-center justify-center text-(--Primary-Text-color) hover:bg-(--card-surface) transition-colors"
               :aria-label="zoomAriaLabel || 'Zoom image'"
               @click="zoomOpen = true"
             >

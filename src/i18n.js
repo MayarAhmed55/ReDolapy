@@ -3,16 +3,16 @@ import { createI18n } from "vue-i18n";
 const messages = {
   en: {
     nav: {
-      home: "Home",
-      features: "Features",
+      features: "Home",
       tryOn: "Try-On",
       recycle: "Recycle",
-      store: "Store",
-      store: "Store",
       pricing: "Pricing",
       about: "About",
       login: "Login",
       signup: "Sign up",
+      contact_us: "Contact Us",
+      theme_light: "Switch to light mode",
+      theme_dark: "Switch to dark mode",
     },
     errors: {
       generic: "Something went wrong. Please try again.",
@@ -220,8 +220,13 @@ const messages = {
     store: {
       title: "Stores",
       promo_prefix: "you can get Discount on all your Favorite Brands Now, when you",
+      promo_mobile_start: "Get a",
+      promo_discount: "discount",
+      promo_mobile_mid: "on all your favorite brands when you",
       promo_highlight: "install the application!",
       search_placeholder: "Search",
+      filter_aria: "Open filters",
+      close_filters: "Close filters",
       filters: "Filters",
       brands: "Brands",
       colors: "Colors",
@@ -229,6 +234,10 @@ const messages = {
       categories: "Categories",
       reset_all: "Reset All",
       price_range: "Price Range",
+      min_price: "Minimum price",
+      max_price: "Maximum price",
+      loading: "Loading products…",
+      no_products: "No products found.",
       seasons: {
         summer: "Summer",
         spring: "Spring",
@@ -253,6 +262,12 @@ const messages = {
         view_on_store: "View on store",
       },
       currency: "EGP",
+      pagination: {
+        aria: "Product pagination",
+        prev: "Previous page",
+        next: "Next page",
+        go_to_page: "Go to page {page}",
+      },
     },
     wishlist: {
       title: "Wishlist",
@@ -262,6 +277,22 @@ const messages = {
       empty: "No items match your filters.",
       empty_lonely: "Your favorites are lonely.",
       no_matches: "No wishlist items match your search or filters.",
+    },
+    brands: {
+      viewAll: "View All",
+      title: "Brand Partners",
+      subtitle: "Discover your favorite items and exclusive discounts through",
+      appName: "Redolapy",
+      hm: {
+        title: "H&M",
+        description:
+          "Discover your favorite items in H&M and get a discount on what you love from the application.",
+      },
+      zara: {
+        title: "ZARA",
+        description:
+          "Explore ZARA collections and enjoy exclusive deals when you shop through the app.",
+      },
     },
 
     // pricing: {
@@ -833,7 +864,7 @@ const messages = {
   ar: {
     nav: {
       home: "الرئيسية",
-      features: "المميزات",
+      features: "الرئيسية",
       tryOn: "جرب الآن",
       recycle: "إعادة التدوير",
       store: "المتجر",
@@ -842,6 +873,9 @@ const messages = {
       about: "حول",
       login: "دخول",
       signup: "إنشاء حساب",
+      contact_us: "تواصل معنا",
+      theme_light: "التبديل إلى الوضع الفاتح",
+      theme_dark: "التبديل إلى الوضع الداكن",
     },
     errors: {
       generic: "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
@@ -1093,8 +1127,13 @@ const messages = {
     store: {
       title: "المتاجر",
       promo_prefix: "يمكنك الحصول على خصم على جميع علاماتك التجارية المفضلة الآن، عندما",
+      promo_mobile_start: "احصل على",
+      promo_discount: "خصم",
+      promo_mobile_mid: "على جميع علاماتك التجارية المفضلة عندما",
       promo_highlight: "تثبّت التطبيق!",
       search_placeholder: "بحث",
+      filter_aria: "فتح الفلاتر",
+      close_filters: "إغلاق الفلاتر",
       filters: "الفلاتر",
       brands: "العلامات التجارية",
       colors: "الألوان",
@@ -1102,6 +1141,10 @@ const messages = {
       categories: "الفئات",
       reset_all: "إعادة تعيين الكل",
       price_range: "نطاق السعر",
+      min_price: "الحد الأدنى للسعر",
+      max_price: "الحد الأقصى للسعر",
+      loading: "جاري تحميل المنتجات…",
+      no_products: "لا توجد منتجات.",
       seasons: {
         summer: "الصيف",
         spring: "الربيع",
@@ -1126,6 +1169,12 @@ const messages = {
         view_on_store: "عرض في المتجر",
       },
       currency: "ج.م",
+      pagination: {
+        aria: "التنقل بين صفحات المنتجات",
+        prev: "الصفحة السابقة",
+        next: "الصفحة التالية",
+        go_to_page: "الانتقال إلى الصفحة {page}",
+      },
     },
     wishlist: {
       title: "المفضلة",
@@ -1135,6 +1184,22 @@ const messages = {
       empty: "لا توجد عناصر تطابق الفلاتر.",
       empty_lonely: "مفضلتك فارغة.",
       no_matches: "لا توجد عناصر في المفضلة تطابق بحثك أو فلاترك.",
+    },
+    brands: {
+      viewAll: "عرض الكل",
+      title: "علاماتنا التجارية",
+      subtitle: "اكتشف منتجاتك المفضلة وخصومات حصرية من خلال",
+      appName: "ريدولابي",
+      hm: {
+        title: "إتش آند إم",
+        description:
+          "اكتشف منتجاتك المفضلة في إتش آند إم واحصل على خصم على ما تحبه من التطبيق.",
+      },
+      zara: {
+        title: "زارا",
+        description:
+          "استكشف مجموعات زارا واستمتع بعروض حصرية عند التسوق عبر التطبيق.",
+      },
     },
     // pricing: {
     //   title: 'أسعار ريدولابي',

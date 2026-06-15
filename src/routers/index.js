@@ -29,8 +29,10 @@ const routes = [
   { path: "/TryOn", component: TryOn, meta: { requiresAuth: true } },
   { path: "/pricing", component: Pricing, meta: { requiresAuth: true } },
   { path: "/userWardrobe", component: UserWardrobe },
-  {path: '/wardrobe', component: Wardrobe},  
+  {path: '/wardrobe', component: Wardrobe},
+  { path: '/wordrobe', redirect: '/wardrobe' },
   { path: '/Wishlist', component: Wishlist },
+  { path: '/wishlist', redirect: '/Wishlist' },
   { path: '/Avatar', component: Avatar },
   { path: "/Profile/:id", component: () => import("../views/Profile.vue"), meta: { requiresAuth: true } },
     { path: "/ContactUs", component: ContactUs },
@@ -53,6 +55,15 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    }
+    if (to.hash) {
+      return { el: to.hash, behavior: 'smooth' }
+    }
+    return { top: 0 }
+  },
 });
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("token");

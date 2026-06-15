@@ -1,6 +1,6 @@
 <template>
-  <div class="store-page">
-    <div class="store-page__sidebar">
+  <div class="store-page" :class="{ 'store-page--empty': !hasWishlistItems }">
+    <div v-if="hasWishlistItems" class="store-page__sidebar">
       <FilterSidebar
         :filters="filters"
         :filter-options="filterOptions"
@@ -20,6 +20,7 @@
       </header>
 
       <StoreSearchbar
+        v-if="hasWishlistItems"
         v-model="searchQuery"
         class="store-page__search"
         @open-filters="filterOpen = true"
@@ -116,6 +117,9 @@ export default {
     document.body.style.overflow = ''
   },
   computed: {
+    hasWishlistItems() {
+      return !this.loading && this.wishlistProducts.length > 0
+    },
     wishlistProducts() {
       const favoriteIds = new Set(
         this.favorites
@@ -185,6 +189,11 @@ export default {
     align-items: flex-start;
     gap: 2rem;
   }
+}
+
+.store-page--empty {
+  max-width: 48rem;
+  margin-inline: auto;
 }
 
 .store-page__sidebar {

@@ -113,7 +113,7 @@
  
   <section :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'">
     <div class="relative">
-      <router-link to="/">
+      <router-link to="/Brands">
         <span class="absolute top-3  flex gap-2 text-[#8ED321]" :class="$i18n.locale === 'ar' ? 'left-1' : 'right-1'">
           {{ $t('brands.viewAll') }} 
           <ChevronRight class="text-lg" :class="{ 'rotate-180': $i18n.locale === 'ar' }"/>

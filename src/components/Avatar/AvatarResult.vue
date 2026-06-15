@@ -163,7 +163,7 @@ export default {
 .avatar-result__action--again {
   border: 1.5px solid var(--Primary-Brand-color);
   color: var(--Primary-Brand-color);
-  background: white;
+  background: var(--card-surface);
 }
 
 .avatar-result__action--again:hover {

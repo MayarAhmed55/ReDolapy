@@ -178,9 +178,9 @@ export default {
 .avatar-form-card {
   padding: 1.25rem;
   border-radius: 1.25rem;
-  background: white;
+  background: var(--card-surface);
   border: 2px solid transparent;
-  background-image: linear-gradient(white, white), var(--Gradient-border);
+  background-image: linear-gradient(var(--card-surface), var(--card-surface)), var(--Gradient-border);
   background-origin: border-box;
   background-clip: padding-box, border-box;
 }
@@ -203,10 +203,10 @@ export default {
   width: 100%;
   padding: 0.625rem 0.875rem;
   border-radius: 0.625rem;
-  border: 1px solid #D8DCE3;
+  border: 1px solid var(--input-border);
   font-size: 0.875rem;
   color: var(--Primary-Text-color);
-  background: white;
+  background: var(--card-surface);
   outline: none;
   transition: border-color 0.2s;
 }
@@ -223,17 +223,17 @@ export default {
   flex: 1;
   padding: 0.625rem 0.75rem;
   border-radius: 0.625rem;
-  border: 1px solid #D8DCE3;
+  border: 1px solid var(--input-border);
   font-size: 0.875rem;
   font-weight: var(--Semi-Bold);
   color: var(--Primary-Text-color);
-  background: white;
+  background: var(--card-surface);
   transition: border-color 0.2s, background 0.2s;
 }
 
 .avatar-toggle--active {
   border-color: var(--Primary-Brand-color);
-  background: #EEF6FC;
+  background: var(--surface-active);
   color: var(--Primary-Brand-color);
 }
 

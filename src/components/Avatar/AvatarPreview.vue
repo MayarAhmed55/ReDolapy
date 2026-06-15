@@ -56,8 +56,8 @@ export default {
   align-self: start;
   min-height: 20rem;
   border-radius: 1.25rem;
-  border: 2px dashed #D8DCE3;
-  background: white;
+  border: 2px dashed var(--input-border);
+  background: var(--card-surface);
   display: flex;
   align-items: center;
   justify-content: center;

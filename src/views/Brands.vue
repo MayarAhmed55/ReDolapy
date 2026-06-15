@@ -102,6 +102,7 @@ export default {
     },
   },
   async mounted() {
+    window.scrollTo({ top: 0, left: 0 })
     await Promise.all([this.loadStoreData(), this.loadFavorites()])
   },
   beforeUnmount() {

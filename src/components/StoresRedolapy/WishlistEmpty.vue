@@ -33,7 +33,7 @@ export default {
   width: 5.5rem;
   height: 5.5rem;
   border-radius: 9999px;
-  background: white;
+  background: var(--card-surface);
   display: flex;
   align-items: center;
   justify-content: center;

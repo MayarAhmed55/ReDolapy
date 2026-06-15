@@ -83,9 +83,9 @@ export default {
   padding-block: 0.875rem;
   padding-inline-start: 2.75rem;
   padding-inline-end: 1rem;
-  border: 1px solid #e8eaee;
+  border: 1px solid var(--store-border);
   border-radius: 9999px;
-  background: #ffffff;
+  background: var(--card-surface);
   font-family: 'Roboto', sans-serif;
   font-size: 0.9375rem;
   color: var(--Primary-Text-color);
@@ -110,9 +110,9 @@ export default {
   flex-shrink: 0;
   width: 3rem;
   height: 3rem;
-  border: 1px solid #e8eaee;
+  border: 1px solid var(--store-border);
   border-radius: 0.875rem;
-  background: #ffffff;
+  background: var(--card-surface);
   color: var(--Primary-Text-color);
   cursor: pointer;
   transition: border-color 0.2s, background-color 0.2s;
@@ -120,7 +120,7 @@ export default {
 
 .store-search__filter-btn:hover {
   border-color: var(--Primary-Brand-color);
-  background: #f8fbff;
+  background: var(--surface-muted);
 }
 
 .store-search__filter-btn svg {

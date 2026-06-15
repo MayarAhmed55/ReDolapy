@@ -91,7 +91,7 @@ export default {
 .avatar-selector__item {
   position: relative;
   padding: 0;
-  background: white;
+  background: var(--card-surface);
 }
 
 .avatar-selector__item--active {

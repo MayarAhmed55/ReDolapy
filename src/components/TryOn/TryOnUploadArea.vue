@@ -256,7 +256,7 @@ export default {
   gap: 0.75rem;
   padding: 0.75rem;
   border-radius: 1rem;
-  background: #E8F0F8;
+  background: var(--surface-muted);
 }
 
 .selection-item__thumb {
@@ -265,7 +265,7 @@ export default {
   border-radius: 9999px;
   object-fit: cover;
   flex-shrink: 0;
-  background: white;
+  background: var(--card-surface);
 }
 
 .add-more-btn {
@@ -275,9 +275,9 @@ export default {
   font-size: 0.875rem;
   font-weight: var(--Semi-Bold);
   color: var(--Primary-Text-color);
-  background: white;
+  background: var(--card-surface);
   border: 2px solid transparent;
-  background-image: linear-gradient(white, white), var(--Gradient-bgc);
+  background-image: linear-gradient(var(--card-surface), var(--card-surface)), var(--Gradient-bgc);
   background-origin: border-box;
   background-clip: padding-box, border-box;
   transition: opacity 0.2s;

@@ -5,7 +5,7 @@
       <h2 class="text-lg sm:text-xl font-bold text-(--Primary-Text-color)">{{ heading }}</h2>
     </div>
 
-    <div class="flex flex-col items-center bg-white rounded-2xl sm:rounded-3xl shadow-sm border border-gray-100 p-5 sm:p-8">
+    <div class="flex flex-col items-center bg-(--card-surface) rounded-2xl sm:rounded-3xl shadow-sm border border-gray-100 dark:border-zinc-800 p-5 sm:p-8">
       <div class="tryon-result__image-frame">
         <img
           :src="imageUrl"
@@ -109,10 +109,10 @@ export default {
 .tryon-result-btn--outline {
   border: 1.5px solid var(--Secondary-Brand-color);
   color: var(--Secondary-Brand-color);
-  background: white;
+  background: var(--card-surface);
 }
 
 .tryon-result-btn--outline:hover {
-  background: #EEF9E0;
+  background: var(--surface-muted);
 }
 </style>
