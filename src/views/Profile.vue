@@ -1,9 +1,9 @@
 <template>
-  <div class="edit-profile-page min-h-screen bg-white PrimaryTxt">
+  <div class="edit-profile-page min-h-screen bg-white dark:bg-[#161616] PrimaryTxt">
     <div class="max-w-[894px] mx-auto pt-8 px-4 pb-16 space-y-8">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         
-        <div class="bg-white border border-[#E9EBEF] shadow-sm rounded-2xl p-8 flex flex-col items-center justify-center min-h-[270px] gap-4">
+        <div class="bg-white dark:bg-[#0d0d0d] border  border-[#E9EBEF] shadow-sm rounded-2xl p-8 flex flex-col items-center justify-center min-h-[270px] gap-4">
           <!-- Avatar circle -->
           <div class="relative w-32 h-32">
             <div class="w-full h-full rounded-full bg-[url('Checker.png')] bg-cover shadow-[0_0_0_4px_rgba(64,185,255,0.2)] overflow-hidden">
@@ -56,7 +56,7 @@
           </div>
         </div>
 
-        <div class="bg-white border border-[#E9EBEF] shadow-sm rounded-2xl p-8 flex flex-col items-center justify-between min-h-[277px]">
+        <div class="bg-white dark:bg-[#0d0d0d] border border-[#E9EBEF] shadow-sm rounded-2xl p-8 flex flex-col items-center justify-between min-h-[277px]">
           <div class="flex flex-col items-center w-full mt-2">
             <div class="relative w-32 h-32 mb-4">
               <div class="w-full h-full rounded-full bg-[url('Checker.png')] bg-cover shadow-[0_0_0_4px_rgba(64,185,255,0.2)] overflow-hidden">
@@ -77,7 +77,7 @@
         </div>
       </div>
 
-      <div class="bg-white border border-[#E9EBEF] shadow-sm rounded-2xl p-8">
+      <div class="bg-white dark:bg-[#0d0d0d] border border-[#E9EBEF] shadow-sm rounded-2xl p-8">
         <h3 class="text-lg font-semibold PrimaryTxt mb-6">Personal Information</h3>
         <form @submit.prevent="saveChanges" class="space-y-6">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -133,7 +133,7 @@
       </div>
 
       <div class="w-full flex justify-center pt-4">
-        <button type="button" @click="showDeleteModal = true" class="w-full max-w-[400px] h-[66px] bg-[#FFF5F5] border border-[#FFE5E5] rounded-[14px] px-5 flex items-center gap-3 hover:bg-[#ffebeb] transition-colors">
+        <button type="button" @click="showDeleteModal = true" class="w-full max-w-[400px] h-[66px] justify-center bg-[#FFF5F5] border border-[#FFE5E5] rounded-[14px] px-5 flex items-center gap-3 hover:bg-[#ffebeb] transition-colors">
           <div class="text-[#D4183D] flex items-center justify-center">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.67">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />

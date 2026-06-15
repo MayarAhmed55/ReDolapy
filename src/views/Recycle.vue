@@ -56,7 +56,7 @@
       @save="onSaveSpecs"
     />
   </main>
-</template>
+</template> 
 
 <script>
 import AppStepper from '../components/sharedRecycleTryon/AppStepper.vue'

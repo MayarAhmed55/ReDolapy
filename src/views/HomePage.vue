@@ -2,7 +2,9 @@
   <div>
     <Header :primaryText="$t('header.primaryText')" :gradientText="$t('header.gradientText')"
       :Description="$t('header.description')" :btnCTA="$t('header.cta')" routeTo="/Tryon" :imageSrc="headerImgAsset" />
-    <CardsSection :sectionTitle="$t('features.sectionTitle')" :sectionDescription="$t('features.sectionDescription')"
+
+
+    <CardsSection :key="themeKey" :sectionTitle="$t('features.sectionTitle')" :sectionDescription="$t('features.sectionDescription')"
       :Card1Title="$t('features.aiRecommendations.title')"
       :Card1Description="$t('features.aiRecommendations.description')" :Card2Title="$t('features.tryOn.title')"
       :Card2Description="$t('features.tryOn.description')" :Card3Title="$t('features.recycle.title')"
@@ -21,8 +23,8 @@
     </CardsSection>
 
     <section id="StepsSection" class="flex justify-between">
-      <div class="StepsImg">
-        <img src="../assets/Container.png" class="w-[40rem] h-[30rem]" :alt="$t('features.sectionTitle')" />
+      <div class="StepsImg rounded-xl">
+        <img src="../assets/image 9.png" class="w-[40rem] h-[30rem] rounded-xl" :alt="$t('features.sectionTitle')" />
       </div>
 
       <div id="Steps" class="w-[48%]">
@@ -70,213 +72,196 @@
         </div>
       </div>
     </section>
+  
 
-    <section id="Sustainable" class="my-[5rem] flex justify-around">
-      <div class="SustainableImg">
-        <img src="../assets/Minimalist recycling bin for sustainable fashion.png" :alt="$t('sustainable.title')"
-          class="w-full h-auto rounded-4xl" />
-      </div>
+        <!-- <section>
+          <div class="relative">
+           <router-link><span class="absolute top-3 right-1 flex gap-2 text-[#8ED321]">View all <ChevronRight class="text-lg"/> </span></router-link> 
+            <p id="FeaturesTitle" class=" text-5xl font-bold m-auto PrimaryTxt flex">Our Brand Partners: </p>
+            <p class=" mb-[1rem] font-medium grayTxt">Discover and shop from your favorite fashion Stores with exclusive discounts found only on <Span class="gradientColor">ReDolapy Application.</Span></p>
+</div>
 
-      <div id="SustainableContent" class="w-[40%]">
-        <p class="font-bold text-4xl mb-[1rem] PrimaryTxt">
-          {{ $t("sustainable.title") }}
-        </p>
-        <p class="text-lg Secondary-grayTxt">
-          {{ $t("sustainable.description") }}
-        </p>
 
-        <div class="flex gap-4 mt-[2rem] items-center">
-          <div class="RecycleIcon">
-            <Recycle />
-          </div>
-          <div>
-            <p class="font-bold text-2xl PrimaryTxt">
-              {{ $t("sustainable.recycleRenew") }}
-            </p>
-            <p class="Secondary-grayTxt">
-              {{ $t("sustainable.recycleDescription") }}
-            </p>
-          </div>
-        </div>
-        <div class="flex gap-4 mt-[2rem] items-center">
-          <div class="RecycleIcon">
-            <PersonStanding />
-          </div>
-          <div>
-            <p class="font-bold text-2xl PrimaryTxt">
-              {{ $t("sustainable.learnTryOn") }}
-            </p>
-            <p class="Secondary-grayTxt">
-              {{ $t("tryOnSection.description") }}
-            </p>
-          </div>
-        </div>
+            <div class="cardsContainer flex gap-8 justify-center my-[3rem]">
+                <div class="card bg-white dark:bg-[#0d0d0d] h-[25rem] shadow-lg">
+                 <div class="flex justify-between items-center gap-4 w-[fit-content] m-auto mb-[2rem]">
+                    <img src="../assets/H&M.jpg" class="h-[10rem] w-[10rem] mb-[1rem]"  alt="">
+                 </div>
+                 <p class="serviceTitle PrimaryTxt">H&M</p>
+                    <p class="serviceDescription Secondary-grayTxt  ">Discover your Favorite Items in H&M and get the discount on what you love from the Application</p>
+                </div>
 
-        <div class="flex justify-around mt-[4rem] items-center">
-          <div class="w-[100%]">
-            <GradientBorderBtn :Description="$t('sustainable.learnRecycling')" routeTo="/AboutRecycle" />
-          </div>
-        </div>
-      </div>
-    </section>
+                <div class="card bg-white dark:bg-[#0d0d0d] h-[25rem] shadow-xl">
+                   <div class="flex justify-between items-center gap-4 w-[fit-content] m-auto mb-[2rem]">
+                    <img src="../assets/H&M.jpg" class="h-[10rem] w-[10rem]" alt="">
+                 </div>
+                 <p class="serviceTitle PrimaryTxt">H&M</p>
+                    <p class="serviceDescription Secondary-grayTxt  ">Discover your Favorite Items in H&M and get the discount on what you love from the Application</p>
+                </div>
 
-    <section id="VTryOn" class="my-[5rem] flex items-center justify-between px-[5rem]">
-      <div id="TryOnTxt" class="TxtGradient w-[40%] my-[5rem]">
-        <p class="text-4xl font-bold PrimaryTxt">
-          {{ $t("tryOnSection.yourMirror") }}
-        </p>
-        <p class="text-4xl gradientColor font-bold mb-[1rem]">
-          {{ $t("tryOnSection.reimagined") }}
-        </p>
-        <p class="w-[50%] mb-[1rem] disabledTxt Secondary-grayTxt">
-          {{ $t("tryOnSection.description") }}
-        </p>
-
-        <div class="w-[100%]">
-          <GradientBorderBtn :Description="$t('sustainable.learnTryOn')" routeTo="/AboutTryon" />
-        </div>
-      </div>
-
-      <div id="headerImg" class="w-[50%]">
-        <img src="../assets/Background.png" :alt="$t('tryOnSection.yourMirror')" class="w-full h-auto" />
-      </div>
-    </section>
-
-    <section id="PricingSection">
-      <p class="w-[fit-content] m-auto mb-[1rem] font-bold text-4xl PrimaryTxt">
-        {{ $t("pricing.title") }}
-      </p>
-      <p class="w-[fit-content] m-auto font-medium PrimaryTxt">
-        {{ $t("pricing.subtitle") }}
-      </p>
-
-      <div id="PricingCards" class="flex gap-8 justify-center my-[3rem] items-center">
-        <div id="FreePricing" class="card flex flex-col justify-center items-center gap-8">
-          <p class="PricingTitle text-4xl font-bold PrimaryTxt">
-            {{ $t("pricing.free.name") }}
-          </p>
-          <p class="Price font-medium PrimaryTxt">
-            <span class="text-4xl font-bold">{{
-              $t("pricing.free.price")
-            }}</span>{{ $t("pricing.free.priceUnit") }}
-          </p>
-          <div class="planFeatures">
-            <p class="flex items-center gap-2 font-medium text-lg PrimaryTxt mb-1">
-              <span class="text-[#8ED321]">
-                <CircleCheckBig />
-              </span>
-              {{ $t("pricing.free.features.0") }}
-            </p>
-            <p class="flex items-center gap-2 font-medium text-lg PrimaryTxt mb-1">
-              <span class="text-[#8ED321]">
-                <CircleCheckBig />
-              </span>
-              {{ $t("pricing.free.features.1") }}
-            </p>
-            <p class="flex items-center gap-2 font-medium text-lg PrimaryTxt mb-1">
-              <span class="text-[#8ED321]">
-                <CircleCheckBig />
-              </span>
-              {{ $t("pricing.free.features.2") }}
-            </p>
-          </div>
-
-          <router-link to="/TryOn" id="FreePricingBtn" class="PricingCardsButton font-semibold text-lg">
-            {{ $t("pricing.free.button") }}
-          </router-link>
-        </div>
-
-        <GradientCard :cardTitle="$t('pricing.pro.name')" :Price="$t('pricing.pro.price')"
-          :firstPoint="$t('pricing.pro.features.0')" :secondPoint="$t('pricing.pro.features.1')"
-          :thirdPoint="$t('pricing.pro.features.2')" :fourthPoint="$t('pricing.pro.features.3')"
-          :buttonContent="$t('pricing.pro.button')" :permonth="$t('pricing.pro.priceUnit')"></GradientCard>
-      </div>
-    </section>
-
-    <!-- <section id="Q&A">
-            <p class="text-4xl font-bold mb-[1rem] w-[fit-content] m-auto PrimaryTxt">Frequently Asked Questions</p>
-
-            <div class="w-full max-w-4xl mx-auto flex flex-col gap-6 my-12 px-4">
-
-                <div v-for="(item, index) in accordionItems" :key="index"
-                    class="p-[0.2rem] rounded-[1rem] bg-gradient-to-r from-[#FF8E40] via-[#40B9FF] to-[#8ED321] shadow-sm transition-all duration-300">
-                    <div class="bg-[#FEFEFE] rounded-[1rem] overflow-hidden">
-
-                        <h2>
-                            <button type="button" @click="toggleItem(index)"
-                                class="w-full px-10 py-5 flex items-center justify-between text-left font-bold text-xl text-slate-900 select-none focus:outline-none transition-colors duration-200"
-                                :class="{ 'bg-slate-50/50': activeIndex === index }">
-                                <span class="PrimaryTxt">{{ item.title }}</span>
-
-                                <svg class="w-5 h-5 text-slate-800 transform transition-transform duration-300 ease-in-out"
-                                    :class="{ 'rotate-180': activeIndex === index }" fill="none" stroke="currentColor"
-                                    stroke-width="2.5" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                                </svg>
-                            </button>
-                        </h2>
-
-                        <div v-if="activeIndex === index" class="bg-[#FEFEFE]">
-                            <div class="mx-8 pt-2 border-t border-slate-100"></div>
-
-                            <div class="px-8 pb-6 pt-3 text-slate-600 font-medium text-base leading-relaxed">
-                                <strong v-if="item.strongText" class="text-slate-900 block mb-1">
-                                    {{ item.strongText }}
-                                </strong>
-                                {{ item.bodyText }}
-                            </div>
-                        </div>
-
-                    </div>
-
+                <div class="card bg-white dark:bg-[#0d0d0d] h-[25rem] shadow-lg">
+                 <div class="flex justify-between items-center gap-4 w-[fit-content] m-auto mb-[2rem]">
+                    <img src="../assets/H&M.jpg" class="h-[10rem] w-[10rem]" alt="">
+                    <ArrowRight/>
+                    <img :src="imgSrc6" alt="">
+                 </div>
+                 <p class="serviceTitle PrimaryTxt">H&M</p>
+                    <p class="serviceDescription Secondary-grayTxt ">Discover your Favorite Items in H&M and get the discount on what you love from the Application</p>
                 </div>
             </div>
-
-
-
         </section> -->
-
-    <section id="Q&A">
-      <!-- 💡 Dynamic Section Title -->
-      <p class="text-4xl font-bold mb-[1rem] w-[fit-content] m-auto PrimaryTxt">
-        {{ $t("faq.title") }}
+ 
+  <section :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'">
+    <div class="relative">
+      <router-link to="/">
+        <span class="absolute top-3  flex gap-2 text-[#8ED321]" :class="$i18n.locale === 'ar' ? 'left-1' : 'right-1'">
+          {{ $t('brands.viewAll') }} 
+          <ChevronRight class="text-lg" :class="{ 'rotate-180': $i18n.locale === 'ar' }"/>
+        </span>
+      </router-link> 
+      
+      <p id="FeaturesTitle" class="text-5xl font-bold m-auto PrimaryTxt flex">
+        {{ $t('brands.title') }}
       </p>
+      
+      <p class="mb-[1rem] font-medium grayTxt">
+        {{ $t('brands.subtitle') }} 
+        <span class="gradientColor">{{ $t('brands.appName') }}</span>
+      </p>
+    </div>
 
-      <div class="w-full max-w-4xl mx-auto flex flex-col gap-6 my-12 px-4">
-        <!-- 💡 $tm pulls the questions array dynamically from Translation.js -->
-        <div v-for="(item, index) in $tm('faq.questions')" :key="index"
-          class="p-[0.2rem] rounded-[1rem] bg-gradient-to-r from-[#FF8E40] via-[#40B9FF] to-[#8ED321] shadow-sm transition-all duration-300">
-          <div class="bg-[#FEFEFE] rounded-[1rem] overflow-hidden">
-            <h2>
-              <!-- 💡 Text direction will auto-align to right/left based on language direction -->
-              <button type="button" @click="toggleItem(index)"
-                class="w-full px-10 py-5 flex items-center justify-between font-bold text-xl text-slate-900 select-none focus:outline-none transition-colors duration-200"
-                :class="{ 'bg-slate-50/50': activeIndex === index }">
-                <!-- 💡 $rt safely compiles the localized runtime string data -->
-                <span class="PrimaryTxt text-start">{{ $rt(item.title) }}</span>
+    <div class="cardsContainer flex gap-8 justify-center my-[3rem]">
+      <div class="card bg-white dark:bg-[#0d0d0d] h-[25rem] shadow-lg">
+        <div class="flex justify-between items-center gap-4 w-[fit-content] m-auto mb-[2rem]">
+          <img src="../assets/H&M.jpg" class="h-[10rem] w-[10rem] mb-[1rem]" alt="H&M">
+        </div>
+        <p class="serviceTitle PrimaryTxt">{{ $t('brands.hm.title') }}</p>
+        <p class="serviceDescription Secondary-grayTxt">
+          {{ $t('brands.hm.description') }}
+        </p>
+      </div>
 
-                <!-- Dynamic Arrow Icon -->
-                <svg
-                  class="w-5 h-5 text-slate-800 transform transition-transform duration-300 ease-in-out shrink-0 mx-2"
-                  :class="{ 'rotate-180': activeIndex === index }" fill="none" stroke="currentColor" stroke-width="2.5"
-                  viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                </svg>
-              </button>
-            </h2>
+      <div class="card bg-white dark:bg-[#0d0d0d] h-[25rem] shadow-xl">
+        <div class="flex justify-between items-center gap-4 w-[fit-content] m-auto mb-[2rem]">
+          <img src="../assets/H&M.jpg" class="h-[10rem] w-[10rem]" alt="H&M">
+        </div>
+        <p class="serviceTitle PrimaryTxt">{{ $t('brands.hm.title') }}</p>
+        <p class="serviceDescription Secondary-grayTxt">
+          {{ $t('brands.hm.description') }}
+        </p>
+      </div>
 
-            <!-- Accordion Content Panel -->
-            <div v-if="activeIndex === index" class="bg-[#FEFEFE]">
-              <div class="mx-8 pt-2 border-t border-slate-100"></div>
-              <div class="px-8 pb-6 pt-3 text-slate-600 font-medium text-base leading-relaxed text-start">
-                {{ $rt(item.answer) }}
-              </div>
+      <div class="card bg-white dark:bg-[#0d0d0d] h-[25rem] shadow-lg">
+        <div class="flex justify-between items-center gap-4 w-[fit-content] m-auto mb-[2rem]">
+          <img src="../assets/H&M.jpg" class="h-[10rem] w-[10rem]" alt="H&M">
+          <ArrowRight :class="{ 'rotate-180': $i18n.locale === 'ar' }"/>
+          <img :src="imgSrc6" alt="">
+        </div>
+        <p class="serviceTitle PrimaryTxt">{{ $t('brands.hm.title') }}</p>
+        <p class="serviceDescription Secondary-grayTxt">
+          {{ $t('brands.hm.description') }}
+        </p>
+      </div>
+    </div>
+  </section>
+        <section id="PricingSection">
+    <p class="w-[fit-content] m-auto mb-[1rem] font-bold text-4xl gradientColor PrimaryTxt">
+      {{ $t("pricing.title") }}
+    </p>
+    <p class="w-[fit-content] m-auto font-medium PrimaryTxt">
+      {{ $t("pricing.subtitle") }}
+    </p>
+
+
+    <div class="flex items-center bg-white dark:bg-[#0d0d0d]  p-1.5 rounded-full w-full max-w-[320px] m-auto shadow-inner my-6">
+  <button 
+    @click="isYearly = false"
+    type="button"
+    :class="['flex-1 py-2 text-sm font-semibold rounded-full transition-all duration-300 text-center', !isYearly ? 'bg-white text-black shadow-md' : 'text-gray-500']"
+  >
+    {{ $t('pricing.monthlyToggle') }}
+  </button>
+  
+  <button 
+    @click="isYearly = true"
+    type="button"
+    :class="['flex-1 py-2 text-sm font-semibold rounded-full transition-all duration-300 text-center', isYearly ? 'bg-white text-black shadow-md' : 'text-gray-500']"
+  >
+    {{ $t('pricing.yearlyToggle') }}
+  </button>
+</div>
+
+    <div id="PricingCards" class="flex gap-8 justify-center my-[3rem] items-center">
+      
+      <div id="FreePricing" class="card  bg-white dark:bg-[#0d0d0d] flex flex-col justify-center items-center gap-8">
+        <p class="PricingTitle text-4xl font-bold PrimaryTxt">
+          {{ $t("pricing.free.name") }}
+        </p>
+        <p class="Price font-medium PrimaryTxt">
+          <span class="text-4xl font-bold">{{ $t("pricing.free.price") }}</span>
+          {{ $t("pricing.free.priceUnit") }}
+        </p>
+        <div class="planFeatures">
+          <p class="flex items-center gap-2 font-medium text-lg PrimaryTxt mb-1">
+            <span class="text-[#8ED321]"><CircleCheckBig /></span>
+            {{ $t("pricing.free.features.0") }}
+          </p>
+          <p class="flex items-center gap-2 font-medium text-lg PrimaryTxt mb-1">
+            <span class="text-[#8ED321]"><CircleCheckBig /></span>
+            {{ $t("pricing.free.features.1") }}
+          </p>
+          <p class="flex items-center gap-2 font-medium text-lg PrimaryTxt mb-1">
+            <span class="text-[#8ED321]"><CircleCheckBig /></span>
+            {{ $t("pricing.free.features.2") }}
+          </p>
+        </div>
+
+        <!-- <router-link to="/TryOn" id="FreePricingBtn" class="PricingCardsButton font-semibold text-lg">
+          {{ $t("pricing.free.button") }}
+        </router-link> -->
+      </div>
+
+      <GradientCard 
+        :cardTitle="$t('pricing.pro.name')" 
+        :Price="isYearly ? '$16.19' : '$19.99'"
+        :permonth="$t('pricing.pro.priceUnit')"
+        :firstPoint="$t('pricing.pro.features.0')" 
+        :secondPoint="$t('pricing.pro.features.1')"
+        :thirdPoint="$t('pricing.pro.features.2')" 
+        :fourthPoint="$t('pricing.pro.features.3')"
+        :buttonContent="$t('pricing.pro.button')"
+      >
+        <template #AdditionalFeatures>
+          <div class="w-full text-sm space-y-2 border-t pt-4 border-gray-200 PrimaryTxt text-start">
+            <div class="flex justify-between">
+              <span>{{ isYearly ? 'Annual Subscription' : 'Monthly Subscription' }}</span>
+              <span>{{ isYearly ? '$143.88' : '$19.99' }}</span>
+            </div>
+            <div class="flex justify-between text-green-500">
+              <span>Early Bird Discount</span>
+              <span>{{ isYearly ? '-$30.00' : '-$5.00' }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Estimated Tax</span>
+              <span>{{ isYearly ? '$10.80' : '$1.20' }}</span>
+            </div>
+            <div class="flex justify-between font-bold text-base border-t pt-2 mt-2 border-dashed border-gray-300">
+              <span>Due today</span>
+              <span>{{ isYearly ? '$124.68' : '$16.19' }}</span>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
+        </template>
+
+        <template #AdditionalInfo>
+          <p class="text-[10px] text-gray-400 max-w-[240px] text-center mt-2 leading-tight">
+            By subscribing, you agree to ReDolapy's Terms of Service and Privacy Policy.
+          </p>
+        </template>
+      </GradientCard>
+
+    </div>
+  </section>
+   
   </div>
 </template>
 
@@ -290,18 +275,28 @@ import {
 } from "@lucide/vue";
 import Header from "../components/Header.vue";
 import HeaderImage from "../assets/HeaderImage.png";
+import HeaderImageDark from "../assets/HeaderImageDark.png"
 import GradientBorderBtn from "../components/GradientBorderBtn.vue";
 import CardsSection from "../components/CardsSection.vue";
 import GradientCard from "../components/GradientCard.vue";
 import { isAuthModalOpen, authModalMode } from "../authState.js";
+import { ChevronRight } from '@lucide/vue';
+
 
 export default {
   name: "HomePage",
   data() {
     return {
+      themeKey:0 ,
       navLinks: [
         { to: "/TryOn", label: "TryOn", mobileLabel: "Try-On" }
       ],
+      isYearly: false ,
+      activeIndex: null,
+      // headerImgAsset: HeaderImage,
+      isDark: false, // Fallback local tracker
+
+
     }
   },
   setup() {
@@ -311,6 +306,14 @@ export default {
     }
 
     return { openAuthModal };
+  },
+  mounted() {
+    this.checkCurrentTheme();
+    this.themeObserver = new MutationObserver(() => this.checkCurrentTheme());
+    this.themeObserver.observe(document.documentElement, { 
+      attributes: true, 
+      attributeFilter: ['class'] 
+    });
   },
 
   components: {
@@ -323,38 +326,34 @@ export default {
     CardsSection,
     GradientCard,
     PersonStanding,
+    ChevronRight
   },
-  data() {
-    return {
-      activeIndex: null,
-      // accordionItems: [
-      //     {
-      //         title: 'How does the AI know my size?',
-      //         strongText: '',
-      //         bodyText: 'Our advanced AI analyzer maps your physical body geometry measurements using standard metrics or a quick photo scan to cross-reference fit scales across global retail brands seamlessly.'
-      //     },
-      //     {
-      //         title: 'Can I use Redolapy with my current clothes?',
-      //         strongText: '',
-      //         bodyText: 'Yes! You can take photos of your existing wardrobe pieces, and our digital closet system will instantly catalog them and generate fresh style lookbooks combined with new styling recommendations.'
-      //     },
-      //     {
-      //         title: 'How does the AI know my size?',
-      //         strongText: '',
-      //         bodyText: 'Yes! You can take photos of your existing wardrobe pieces, and our digital closet system will instantly catalog them and generate fresh style lookbooks combined with new styling recommendations.'
-      //     }
-      // ],
-      headerImgAsset: HeaderImage,
-    };
+  // data() {
+  //   return {
+  //     activeIndex: null,
+  
+  //     headerImgAsset: HeaderImage,
+  //   };
+  // },
+
+beforeUnmount() {
+    if (this.themeObserver) this.themeObserver.disconnect();
   },
 
   computed: {
     faqItems() {
       return this.$t("faq.questions") || [];
     },
+    headerImgAsset() {
+      return this.isDark ? HeaderImageDark : HeaderImage;
+    }
   },
 
   methods: {
+  checkCurrentTheme() {
+      this.isDark = document.documentElement.classList.contains('dark');
+    },
+
     toggleItem(index) {
       if (this.activeIndex === index) {
         this.activeIndex = null;
@@ -367,9 +366,17 @@ export default {
 </script>
 
 <style scoped>
-@import "../assets/Style.css";
+/* @import "../assets/Style.css"; */
 
 .gradientColor {
+  background: var(--Gradient-bgc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  width: fit-content;
+  line-height: 1.3;
+  padding-bottom: 0.15em;
   background: var(--Gradient-bgc);
   -webkit-background-clip: text;
   background-clip: text;
@@ -387,9 +394,23 @@ export default {
   cursor: pointer;
   background: var(--Primary-Brand-color);
   color: white;
+  border-radius: 0.5em;
+  padding: 0.8em 4em;
+  font-weight: var(--Semi-Bold);
+  cursor: pointer;
+  background: var(--Primary-Brand-color);
+  color: white;
 }
 
 #StartBtn {
+  border-radius: 0.5em;
+  padding: 0.8em 1.8em;
+  font-weight: var(--Semi-Bold);
+  cursor: pointer;
+  background: var(--Gradient-bgc);
+  border-color: transparent;
+  color: white;
+  box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.1);
   border-radius: 0.5em;
   padding: 0.8em 1.8em;
   font-weight: var(--Semi-Bold);
@@ -402,16 +423,22 @@ export default {
 
 .card {
   width: 32%;
-  background-color: white;
   border-radius: 1em;
   padding: 2rem;
   padding-bottom: 4rem;
-  box-shadow:
+  /* box-shadow:
     0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.1),
-    -0.1rem -0.1rem 0.1rem rgba(0, 0, 0, 0.1);
+    -0.1rem -0.1rem 0.1rem rgba(0, 0, 0, 0.1); */
 }
 
 .Icon {
+  width: 5rem;
+  height: 5rem;
+  margin-bottom: 2rem;
+  border-radius: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 5rem;
   height: 5rem;
   margin-bottom: 2rem;
@@ -424,9 +451,13 @@ export default {
 .Sparkle {
   background-color: #40b9ff40;
   color: var(--Primary-Brand-color);
+  background-color: #40b9ff40;
+  color: var(--Primary-Brand-color);
 }
 
 .TryOn {
+  background-color: #feefe5;
+  color: var(--Secondary-Orange-Brand-color);
   background-color: #feefe5;
   color: var(--Secondary-Orange-Brand-color);
 }
@@ -434,17 +465,24 @@ export default {
 .Recycle {
   background-color: #84cc1640;
   color: var(--Secondary-Brand-color);
+  background-color: #84cc1640;
+  color: var(--Secondary-Brand-color);
 }
 
 .RecycleIcon {
+  color: var(--Secondary-Brand-color);
   color: var(--Secondary-Brand-color);
 }
 
 .serviceDescription {
   color: var(--Secondary-Text-color);
+  color: var(--Secondary-Text-color);
 }
 
 .serviceTitle {
+  font-size: 1.5rem;
+  font-weight: var(--Bold);
+  margin-bottom: 1rem;
   font-size: 1.5rem;
   font-weight: var(--Bold);
   margin-bottom: 1rem;
@@ -463,14 +501,31 @@ export default {
   align-items: center;
   font-weight: var(--Semi-Bold);
   margin-right: 1.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: var(--Secondary-Orange-Brand-color);
+  color: white;
+  line-height: 3rem;
+  margin: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: var(--Semi-Bold);
+  margin-right: 1.5rem;
 }
 
 .step {
   display: flex;
   margin-top: 2rem;
+  display: flex;
+  margin-top: 2rem;
 }
 
 .stepTitle {
+  font-size: 1.25rem;
+  font-weight: var(--Bold);
+  margin-bottom: 0.5rem;
   font-size: 1.25rem;
   font-weight: var(--Bold);
   margin-bottom: 0.5rem;
@@ -483,13 +538,25 @@ export default {
   align-items: center;
   justify-content: center;
   transition: background-color 0.2s ease;
+  background-color: var(--primary-bgc);
+  border-radius: 0.5rem;
+  padding: 1rem 2rem;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
 }
 
 .gradient-btn-border {
   width: 100%;
   border-radius: 0.5em;
   margin-top: 3rem;
+  width: 100%;
+  border-radius: 0.5em;
+  margin-top: 3rem;
 
+  background: linear-gradient(90deg, #8ed321 0%, #40b9ff 50%, #ff8e40 100%);
+  padding: 0.2rem;
+  cursor: pointer;
   background: linear-gradient(90deg, #8ed321 0%, #40b9ff 50%, #ff8e40 100%);
   padding: 0.2rem;
   cursor: pointer;
@@ -501,33 +568,20 @@ export default {
   padding: 0.5em 1.8em;
   justify-self: flex-end;
   margin-top: 4rem;
+  border: 0.1em solid;
+  border-radius: 0.5em;
+  padding: 0.5em 1.8em;
+  justify-self: flex-end;
+  margin-top: 4rem;
 }
 
 #FreePricingBtn {
   background-color: white;
   border-color: var(--Secondary-Brand-color);
   cursor: pointer;
+  background-color: white;
+  border-color: var(--Secondary-Brand-color);
+  cursor: pointer;
 }
 
-/* #ProPricingBtn {
-    background-color: var(--Secondary-Orange-Brand-color);
-    border-color: var(--Secondary-Orange-Brand-color);
-    color: white;
-    cursor: pointer;
-} */
-
-/* #ProPricing {
-    background-color: var(--primary-bgc);
-    padding: 0.5rem;
-    background: linear-gradient(135deg, #FF8E40 0%, #40B9FF 50%, #8ED321 100%);
-    border-radius: 1rem;
-    position: relative;
-} */
-/* 
-.pro-card-inner {
-    background-color: var(--primary-bgc, #FEFEFE);
-    border-radius: 1rem;
-    width: 100%;
-    height: 100%;
-} */
 </style>

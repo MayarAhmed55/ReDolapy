@@ -75,7 +75,7 @@
         <button
           v-if="garments.length < maxGarments"
           type="button"
-          class="add-more-btn mt-4"
+          class="add-more-btn mt-4 "
           @click="$refs.garmentInput.click()"
         >
           {{ $t('tryOn.garments.add_more') }}

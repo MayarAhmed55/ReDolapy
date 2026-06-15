@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@variant dark (html:where(.dark, [data-theme="dark"]) &);
 
 :root {
     --primary-bgc:#F2F1F4;
@@ -15,6 +16,16 @@
     --Disabled-Text-color: #A0A6B2;
     --Bold:700;
     --Semi-Bold: 500;
+}
+
+html.dark {
+  --primary-bgc: #161616;       
+  /* --primary-bgc: #111;      */
+  --Primary-Text-color: #F5F5F5;       
+  --gray-txt: #A0A0A0;  
+  --Secondary-Text-color:#A0A0A0;
+  /* --Disabled-Text-color:#A0A6B2 */
+            
 }
 
 body {
@@ -185,37 +196,42 @@ p{
 
 
 
-
 Section{
     Padding-bottom:2rem;
-    Padding-top:2rem;
+    Padding-top:3rem;
 }
 
 .PrimaryTxt{
     color: var(--Primary-Text-color);
+    transition: color  ease;
 }
 .Secondary-grayTxt{
     color: var(--Secondary-Text-color);
+    transition: color  ease;
 }
 .grayTxt{
     color: var(--Disabled-Text-color);
+    /* transition: color ease; */
 }
 .greenTxt{
- color:var(--Secondary-Brand-color)
+ color:var(--Secondary-Brand-color);
+ transition: color  ease;
 }
 
 .OrangeTxt{
- color:var(--Secondary-Orange-Brand-color)
+ color:var(--Secondary-Orange-Brand-color);
+ transition: color  ease;
 }
 .blueTxt{
- color:var(--Primary-Brand-color)
+ color:var(--Primary-Brand-color);
+ transition: color  ease;
 }
 button:hover{
     cursor: pointer;
     scale:1.08;
 }
 button{
-    transition: all 0.3s ease-in-out;
+    transition: all  ease-in-out;
 }
 .gradientColor {
     background: var(--Gradient-bgc);
