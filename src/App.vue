@@ -1,12 +1,16 @@
 <template>
   <div>
-    <template v-if="$route.meta.layout !== 'blank'">
+    <template
+      v-if="$route.meta.layout !== 'blank' && !$route.meta.requiresAdmin"
+    >
       <Navbar />
     </template>
 
     <router-view />
 
-    <template v-if="$route.meta.layout !== 'blank'">
+    <template
+      v-if="$route.meta.layout !== 'blank' && !$route.meta.requiresAdmin"
+    >
       <Footer />
     </template>
   </div>
