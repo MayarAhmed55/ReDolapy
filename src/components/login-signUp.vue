@@ -437,7 +437,8 @@ export default {
             gender: userRes.data.user.profile.gender,
             date_of_birth: userRes.data.user.profile.date_of_birth,
             has_mobile_app: userRes.data.user.settings.has_mobile_app,
-            notifications:userRes.data.user.settings.notifications_enabled
+            notifications:userRes.data.user.settings.notifications_enabled,
+            role:userRes.data.user.role
           };
           localStorage.setItem("user", JSON.stringify(userData));
           emit("login-success");

@@ -1148,6 +1148,7 @@ export default {
           gender: u.profile.gender,
           date_of_birth: u.profile.date_of_birth,
           notifications: u.settings.notifications_enabled,
+          role:u.role
         };
         localStorage.setItem("user", JSON.stringify(userData));
         this.notificationsEnabled = userData.notifications ?? newVal;
@@ -1176,6 +1177,7 @@ export default {
           gender: u.profile.gender,
           date_of_birth: u.profile.date_of_birth,
           notifications: u.settings.notifications_enabled,
+          role:u.role
         };
         localStorage.setItem("user", JSON.stringify(userData));
         this.isDarkMode = userData.darkMode ?? newVal;

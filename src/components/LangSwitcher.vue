@@ -113,40 +113,34 @@ onUnmounted(() => document.removeEventListener('click', handleClickOutside))
     >
       <div 
         v-if="isOpen"
-        class="absolute mt-2 bg-white border border-gray-200 rounded-xl shadow-lg z-50 overflow-hidden ltr:right-0 rtl:left-0"
-        :class="fullWidth ? 'left-0 right-0 w-full' : 'w-52'"
+        class="absolute bg-white border border-gray-200 rounded-xl shadow-lg z-50 overflow-hidden ltr:right-0 rtl:left-0"
+        :class="fullWidth ? 'left-0 right-0 w-full bottom-full mb-2' : 'w-52 mt-2'"
       >
         <div class="flex flex-col p-1">
-          <div 
-            v-for="(lang, index) in languages" 
-            :key="lang.code"
-            @click="selectLanguage(lang.code)"
-            class="group flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
-          >
-            <div class="flex items-center gap-3">
-              <svg class="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 2a14.5 14.5 0 0 0 0 20M12 2a14.5 14.5 0 0 1 0 20M2 12h20m-20 0a14.5 14.5 0 0 0 20 0"/>
-              </svg>
-              <span class="text-base font-normal text-gray-900">{{ lang.name }}</span>
+          <template v-for="(lang, index) in languages" :key="lang.code">
+            <div 
+              @click="selectLanguage(lang.code)"
+              class="group flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
+            >
+              <div class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 2a14.5 14.5 0 0 0 0 20M12 2a14.5 14.5 0 0 1 0 20M2 12h20m-20 0a14.5 14.5 0 0 0 20 0"/>
+                </svg>
+                <span class="text-base font-normal text-gray-900">{{ lang.name }}</span>
+              </div>
+
+              <div class="w-4 h-4 flex items-center justify-center">
+                <svg v-if="currentLang === lang.code" class="w-4 h-4 text-gray-900" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
             </div>
 
-            <div class="w-4 h-4 flex items-center justify-center">
-              <svg v-if="currentLang === lang.code" class="w-4 h-4 text-gray-900" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-          </div>
-
-          <hr class="border-gray-100 my-0 order-1" />
+            <hr v-if="index < languages.length - 1" class="border-gray-100 my-0" />
+          </template>
         </div>
       </div>
     </transition>
 
   </div>
 </template>
-
-<style scoped>
-div[class="flex flex-col p-1"] > div:first-of-type { order: 0; }
-hr { order: 1; }
-div[class="flex flex-col p-1"] > div:last-of-type { order: 2; }
-</style>

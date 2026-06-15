@@ -13,24 +13,8 @@ import AboutTryon from "../views/AboutTryon.vue";
 import Profile from "../views/Profile.vue";
 import { isAuthModalOpen, triggerLoginModal } from "../authState.js";
 import adminRoutes from "./adminRoutes.js";
-import { getUserById } from "../services/services.js";
 
-// ── Fetch role live from the server ───────────────────────────────────────
-const getUser = () => JSON.parse(localStorage.getItem("user") || "{}");
-
-async function fetchUserRole() {
-  const user = getUser();
-  const id = user.id || user._id;
-  if (!id) return null;
-  try {
-    const res = await getUserById(id);
-    return res.data?.user?.role ?? null;
-  } catch {
-    return null;
-  }
-}
-
-const userRoutes = [
+const routes = [
   { path: "/", component: HomePage },
   { path: "/login", component: LogIn },
   { path: "/SignUp", component: SignUp },
@@ -64,29 +48,36 @@ const userRoutes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes: [...userRoutes, ...adminRoutes],
+  routes: [...routes, ...adminRoutes],
 });
+const getUserRole = () => {
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  return user.role ?? null;
+};
 
-// ── Navigation guard ───────────────────────────────────────────────────────
-router.beforeEach(async (to, from, next) => {
+router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("token");
+  const role = getUserRole();
 
-  // 1. Not logged in — show login modal and block navigation
-  if (to.meta.requiresAuth && !token) {
+  // Walk the full matched chain so child routes inherit parent meta
+  const requiresAdmin = to.matched.some((r) => r.meta?.requiresAdmin);
+  const requiresAuth = to.matched.some((r) => r.meta?.requiresAuth);
+
+  // 1. Any /admin route — must be logged in AND have admin role
+  if (requiresAdmin && (!token || role !== "admin")) {
     triggerLoginModal();
     return next(false);
   }
 
-  // 2. Admin-only route — fetch role live and guard access
-  if (to.meta.requiresAdmin) {
-    const role = await fetchUserRole();
-    if (role !== "admin") return next("/");
+  // 2. Any other protected route — must be logged in
+  if (requiresAuth && !token) {
+    triggerLoginModal();
+    return next(false);
   }
 
-  // 3. Logged-in user hitting "/" — check if admin and redirect to dashboard
-  if (to.path === "/" && token) {
-    const role = await fetchUserRole();
-    if (role === "admin") return next("/admin");
+  // 3. Logged-in admin hitting "/" — redirect to dashboard
+  if (to.path === "/" && token && role === "admin") {
+    return next("/admin");
   }
 
   next();
