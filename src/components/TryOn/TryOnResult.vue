@@ -78,7 +78,7 @@ export default {
   width: 100%;
   height: 100%;
   max-height: 36rem;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
 }
 
