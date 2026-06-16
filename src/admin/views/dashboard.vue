@@ -8,7 +8,7 @@
         <p class="page-subtitle">Here is a summary representation across global system activity matrix data.</p>
       </div>
       <button type="button" class="filter-btn">
-        <img src="../../../assets/Icon (15).svg" alt="" class="filter-icon" />
+        <img src="../../assets/Icon (17).svg" alt="" class="filter-icon" />
         <span>Filter View</span>
       </button>
     </section>
@@ -19,7 +19,7 @@
       <div class="stat-card">
         <div class="stat-card-top">
           <div class="stat-icon-wrap blue">
-            <img src="../../../assets/Icon (15).svg" alt="" />
+            <img src="../../assets/Icon (16).svg" alt="" />
           </div>
           <span class="stat-badge positive">+12.4%</span>
         </div>
@@ -30,7 +30,7 @@
       <div class="stat-card">
         <div class="stat-card-top">
           <div class="stat-icon-wrap green">
-            <img src="../../../assets/Icon (16).svg" alt="" />
+            <img src="../../assets/Icon (18).svg" alt="" />
           </div>
           <span class="stat-badge positive">+8.2%</span>
         </div>
@@ -41,7 +41,7 @@
       <div class="stat-card">
         <div class="stat-card-top">
           <div class="stat-icon-wrap amber">
-            <img src="../../../assets/Icon (17).svg" alt="" />
+            <img src="../../assets/Icon (19).svg" alt="" />
           </div>
           <span class="stat-badge neutral">Steady</span>
         </div>
@@ -52,7 +52,7 @@
       <div class="stat-card">
         <div class="stat-card-top">
           <div class="stat-icon-wrap amber">
-            <img src="../../../assets/Icon (18).svg" alt="" />
+            <img src="../../assets/Icon (19).svg" alt="" />
           </div>
           <span class="stat-badge neutral">Optimal</span>
         </div>
@@ -64,7 +64,7 @@
       <div class="stat-card">
         <div class="stat-card-top">
           <div class="stat-icon-wrap red">
-            <img src="../../../assets/Icon (19).svg" alt="" />
+            <img src="../../assets/Icon (20).svg" alt="" />
           </div>
           <span class="stat-badge positive">Active</span>
         </div>
@@ -97,7 +97,7 @@
         <div class="activity-inner">
           <div class="activity-header-row">
             <span class="activity-metric-label">Avg Session</span>
-            <img src="../../../assets/Icon (20).svg" alt="" class="activity-icon" />
+            <img src="../../assets/Icon (22).svg" alt="" class="activity-icon" />
           </div>
           <span class="activity-value">N/A</span>
         </div>
@@ -113,20 +113,20 @@
         <h3 class="panel-heading white">Quick Actions</h3>
         <div class="actions-grid">
           <button type="button" class="action-btn">
-            <img src="../../../assets/Icon (21).svg" alt="" class="action-icon" />
-            <span>New Store</span>
+            <img src="../../assets/Icon (21).svg" alt="" class="action-icon" />
+            <span>Add Store</span>
           </button>
           <button type="button" class="action-btn">
-            <img src="../../../assets/Icon (22).svg" alt="" class="action-icon" />
+            <img src="../../assets/Icon (23).svg" alt="" class="action-icon" />
             <span>Add Product</span>
           </button>
           <button type="button" class="action-btn">
-            <img src="../../../assets/Icon (23).svg" alt="" class="action-icon" />
-            <span>Reports</span>
+            <img src="../../assets/Icon (24).svg" alt="" class="action-icon" />
+            <span>API Key</span>
           </button>
           <button type="button" class="action-btn">
-            <img src="../../../assets/Icon (24).svg" alt="" class="action-icon" />
-            <span>Manage Users</span>
+            <img src="../../assets/Icon (25).svg" alt="" class="action-icon" />
+            <span>Notify Users</span>
           </button>
         </div>
       </div>

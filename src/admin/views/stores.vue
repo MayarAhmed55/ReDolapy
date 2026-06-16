@@ -1,534 +1,840 @@
 <template>
-  <div class="stores-view">
-    <header class="page-header">
-      <div class="page-title-group">
-        <h2 class="page-title">Stores</h2>
-        <p class="page-subtitle">Manage global storefront instances, localized configurations, and integrated promo active statuses.</p>
-      </div>
-      
-      <div class="view-toggle-bg">
-        <button type="button" class="toggle-btn active-state">
-          <span class="btn-text">All Stores</span>
-        </button>
-        <button type="button" class="toggle-btn">
-          <span class="btn-text">Active Only</span>
-        </button>
-      </div>
-    </header>
-
-    <section class="filter-frame">
-      <div class="search-input-wrapper">
-        <div class="input-inner">
-          <img src="../../assets/checkIcon (3).svg" class="search-icon" alt="Filter search" />
-          <input 
-            type="text" 
-            class="filter-field" 
-            placeholder="Filter by name..." 
-            aria-label="Filter stores by name"
-          />
+  <div class="stores-page">
+    <!-- Content Area -->
+    <main class="content">
+      <!-- Page Header -->
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Stores</h1>
+          <p class="page-subtitle">Manage and monitor all connected storefronts across your platform.</p>
         </div>
       </div>
 
-      <div class="dropdown-wrapper">
-        <div class="dropdown-trigger">
-          <span class="dropdown-text">All Statuses</span>
-          <div class="vector-arrow"></div>
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <!-- Search -->
+          <div class="search-wrap">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="11" cy="11" r="7" /><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35" />
+            </svg>
+            <input type="text" v-model="searchQuery" placeholder="Filter by name..." class="search-input" />
+          </div>
+
+          <!-- Status filter -->
+          <div class="select-wrap">
+            <select v-model="statusFilter" class="status-select">
+              <option value="">All Statuses</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+            <svg class="select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </div>
+        </div>
+
+        <div class="toolbar-right">
+          <button class="btn-icon-only" aria-label="Filter">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="icon-sm">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
+            </svg>
+          </button>
+          <button class="btn-text-link">+ Add New Store</button>
         </div>
       </div>
 
-      <div class="action-buttons-group">
-        <button type="button" class="layout-grid-btn">
-          <div class="grid-icon-bar"></div>
-        </button>
-        <button type="button" class="primary-add-btn">
-          <span class="add-btn-text">Add Store</span>
-        </button>
-      </div>
-    </section>
-
-    <section class="table-container-section">
-      <div class="scrollable-table-window">
-        <table class="stores-data-table">
-          <thead>
-            <tr>
-              <th scope="col" class="header-cell spec-w-162">Store Name</th>
-              <th scope="col" class="header-cell spec-w-139">Domain URL</th>
-              <th scope="col" class="header-cell spec-w-151">Active Promotions</th>
-              <th scope="col" class="header-cell spec-w-144">Products Listed</th>
-              <th scope="col" class="header-cell spec-w-132">Regional Zone</th>
-              <th scope="col" class="header-cell spec-w-96">Actions</th>
-            </tr>
-          </thead>
-          
-          <tbody>
-            <tr class="store-data-row">
-              <td class="data-cell">
-                <div class="brand-cell-group">
-                  <div class="brand-avatar-border">
-                    <div class="avatar-fallback-img"></div>
-                  </div>
-                  <div class="brand-meta-stack">
-                    <span class="main-title-text">Vogue Boutique</span>
-                    <span class="sub-caption-text">ID: #89420</span>
-                  </div>
-                </div>
-              </td>
-              
-              <td class="data-cell">
-                <div class="domain-link-wrapper">
-                  <a href="#" class="inline-domain-link" target="_blank" rel="noopener">vogue.global</a>
-                  <span class="external-icon">↗</span>
-                </div>
-              </td>
-              
-              <td class="data-cell">
-                <div class="promo-stack-container">
-                  <div class="badge-row">
-                    <div class="promo-pill-bg">
-                      <span class="pill-code-text">ACTIVE</span>
+      <!-- Table -->
+      <div class="table-card">
+        <div class="table-scroll">
+          <table class="store-table">
+            <thead>
+              <tr>
+                <th>Store Name</th>
+                <th>Domain</th>
+                <th>Active Campaign</th>
+                <th>Total Orders</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="store in filteredStores" :key="store.id">
+                <!-- Store Name -->
+                <td>
+                  <div class="store-name-cell">
+                    <div class="store-logo-box">
+                      <div class="store-logo-placeholder" :style="{ background: store.logoColor }">
+                        {{ store.name.charAt(0) }}
+                      </div>
                     </div>
-                    <span class="promo-count-weight">1</span>
+                    <div>
+                      <div class="store-name">{{ store.name }}</div>
+                      <div class="store-id">{{ store.storeId }}</div>
+                    </div>
                   </div>
-                  <div class="promo-description-row">
-                    <span class="promo-marketing-text">Storewide Season Sale</span>
+                </td>
+
+                <!-- Domain -->
+                <td>
+                  <a :href="'https://' + store.domain" class="store-link" target="_blank">
+                    {{ store.domain }}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-xs">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                    </svg>
+                  </a>
+                </td>
+
+                <!-- Active Campaign -->
+                <td>
+                  <div class="campaign-cell">
+                    <div class="campaign-top">
+                      <span :class="['discount-badge', store.discountType === 'sale' ? 'badge-green' : 'badge-gray']">
+                        {{ store.discountCode }}
+                      </span>
+                      <span class="campaign-discount-val">{{ store.discountValue }}</span>
+                    </div>
+                    <div class="campaign-name">{{ store.campaignName }}</div>
                   </div>
-                </div>
-              </td>
-              
-              <td class="data-cell">
-                <span class="numerical-metric-text">1,420 items</span>
-              </td>
-              
-              <td class="data-cell">
-                <span class="region-fallback-text">North America</span>
-              </td>
-              
-              <td class="data-cell">
-                <button type="button" class="row-action-trigger">Manage</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                </td>
+
+                <!-- Total Orders -->
+                <td>
+                  <div class="orders-cell">
+                    <span class="orders-count">{{ store.orders.toLocaleString() }}</span>
+                    <div class="orders-bar-track">
+                      <div class="orders-bar-fill" :style="{ width: store.orderPct + '%' }"></div>
+                    </div>
+                  </div>
+                </td>
+
+                <!-- Status -->
+                <td>
+                  <span :class="['status-pill', store.status === 'Active' ? 'pill-active' : 'pill-inactive']">
+                    <span class="pill-dot"></span>
+                    {{ store.status }}
+                  </span>
+                </td>
+
+                <!-- Actions -->
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn" aria-label="Edit">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="icon-sm">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                      </svg>
+                    </button>
+                    <button class="action-btn" aria-label="More options">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="icon-sm">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination Footer -->
+        <div class="pagination-footer">
+          <span class="pagination-info">Showing 1–6 of 48 stores</span>
+          <div class="pagination-controls">
+            <button class="page-btn page-btn--disabled" disabled aria-label="Previous">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-xs">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+              </svg>
+            </button>
+            <button class="page-btn page-btn--active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <span class="page-ellipsis">…</span>
+            <button class="page-btn">10</button>
+            <button class="page-btn" aria-label="Next">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-xs">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
-    </section>
+    </main>
   </div>
 </template>
 
-<script>
-export default {
-  name: "stores",
-};
+<script setup>
+import { ref, computed } from 'vue'
+
+const searchQuery = ref('')
+const statusFilter = ref('')
+
+const stores = ref([
+  {
+    id: 1,
+    name: 'Vogue Boutique',
+    storeId: 'STR-0041',
+    logoColor: '#e9d5ff',
+    domain: 'vogueboutique.co',
+    discountCode: 'SALE20',
+    discountType: 'sale',
+    discountValue: '20%',
+    campaignName: 'Storewide Season Sale',
+    orders: 12402,
+    orderPct: 75,
+    status: 'Active',
+  },
+  {
+    id: 2,
+    name: 'Urban Loft',
+    storeId: 'STR-0038',
+    logoColor: '#fde68a',
+    domain: 'urbanloft.store',
+    discountCode: 'INFL15',
+    discountType: 'sale',
+    discountValue: '15%',
+    campaignName: 'Influencer Campaign',
+    orders: 3890,
+    orderPct: 40,
+    status: 'Inactive',
+  },
+  {
+    id: 3,
+    name: 'Celestia',
+    storeId: 'STR-0035',
+    logoColor: '#bfdbfe',
+    domain: 'celestia.fashion',
+    discountCode: 'FLASH',
+    discountType: 'sale',
+    discountValue: '30%',
+    campaignName: 'Flash Weekend Drop',
+    orders: 7201,
+    orderPct: 60,
+    status: 'Active',
+  },
+  {
+    id: 4,
+    name: 'Marble & Oak',
+    storeId: 'STR-0031',
+    logoColor: '#d1fae5',
+    domain: 'marbleoak.com',
+    discountCode: 'INFL15',
+    discountType: 'sale',
+    discountValue: '15%',
+    campaignName: 'Influencer Campaign',
+    orders: 4105,
+    orderPct: 35,
+    status: 'Inactive',
+  },
+  {
+    id: 5,
+    name: 'Ethereal Silk',
+    storeId: 'STR-0027',
+    logoColor: '#fce7f3',
+    domain: 'etherealsilk.co',
+    discountCode: '-',
+    discountType: 'none',
+    discountValue: '0',
+    campaignName: 'No Active Codes',
+    orders: 850,
+    orderPct: 15,
+    status: 'Active',
+  },
+  {
+    id: 6,
+    name: 'Noir Studio',
+    storeId: 'STR-0019',
+    logoColor: '#e5e7eb',
+    domain: 'noirstudio.io',
+    discountCode: '-',
+    discountType: 'none',
+    discountValue: '0',
+    campaignName: 'No Active Codes',
+    orders: 620,
+    orderPct: 10,
+    status: 'Active',
+  },
+])
+
+const filteredStores = computed(() =>
+  stores.value.filter(s => {
+    const matchesSearch = s.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+    const matchesStatus = !statusFilter.value || s.status.toLowerCase() === statusFilter.value
+    return matchesSearch && matchesStatus
+  })
+)
 </script>
 
 <style scoped>
-.stores-view {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 24px;
-  width: 100%;
-  box-sizing: border-box;
+/* ─── Tokens ─────────────────────────────────────────── */
+:root {
+  --bg: #FAF8FF;
+  --surface: #FFFFFF;
+  --border: rgba(195, 197, 215, 0.3);
+  --border-solid: #C3C5D7;
+  --blue: #1550D3;
+  --blue-light: #F3F3FE;
+  --text-primary: #191B23;
+  --text-secondary: #434654;
+  --text-muted: #737686;
+  --text-placeholder: #6B7280;
+  --green-bg: rgba(108, 248, 187, 0.2);
+  --green-border: rgba(0, 108, 73, 0.2);
+  --green-text: #006C49;
+  --inactive-bg: #E7E7F2;
+  --inactive-dot: #737686;
+  --inactive-text: #434654;
+  --radius-card: 12px;
+  --radius-btn: 8px;
+  --font-geist: 'Geist', 'Inter', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', 'JetBrains Mono', monospace;
 }
 
-/* ─── Page Header Specs ─── */
+/* ─── Page Shell ─────────────────────────────────────── */
+.stores-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--bg);
+  font-family: var(--font-geist);
+  color: var(--text-primary);
+}
+
+/* ─── Top Bar ────────────────────────────────────────── */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 80px 0 32px;
+  height: 64px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-solid);
+  gap: 24px;
+  flex-shrink: 0;
+}
+
+.topbar-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #EDEEEF;
+  border: 1px solid var(--border-solid);
+  border-radius: 16px;
+  padding: 8px 16px;
+  width: 412px;
+  max-width: 100%;
+}
+
+.topbar-search-icon {
+  width: 14px;
+  height: 14px;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.topbar-input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: var(--font-geist);
+  font-size: 14px;
+  color: var(--text-primary);
+  width: 100%;
+}
+
+.topbar-input::placeholder { color: var(--text-placeholder); }
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.btn-add-store {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 20px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 9999px;
+  font-family: var(--font-geist);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.24px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-add-store:hover { background: #1240b5; }
+
+.topbar-icon-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-left: 16px;
+  border-left: 1px solid var(--border-solid);
+}
+
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.icon-btn:hover { background: var(--blue-light); }
+
+/* ─── Content ────────────────────────────────────────── */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 32px;
+  overflow-y: auto;
+}
+
+/* ─── Page Header ────────────────────────────────────── */
 .page-header {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
-  width: 100%;
-  height: auto;
-  box-sizing: border-box;
-}
-
-.page-title-group {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
 }
 
 .page-title {
-  margin: 0;
-  font-family: 'Geist', sans-serif;
-  font-weight: 700;
   font-size: 32px;
+  font-weight: 700;
   line-height: 40px;
   letter-spacing: -0.64px;
-  color: #191B23;
+  color: var(--text-primary);
+  margin: 0 0 4px;
 }
 
 .page-subtitle {
-  margin: 0;
-  font-family: 'Geist', sans-serif;
+  font-size: 14px;
   font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-  color: #434654;
+  color: var(--text-secondary);
+  margin: 0;
 }
 
-.view-toggle-bg {
+/* ─── Toolbar ────────────────────────────────────────── */
+.toolbar {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  padding: 4px;
-  gap: 8px;
-  background: #EDEDF8;
-  border-radius: 8px;
+  justify-content: space-between;
+  gap: 16px;
 }
 
-.toggle-btn {
-  background: transparent;
-  border: none;
-  cursor: pointer;
+.toolbar-left {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  padding: 8px 16px;
-  height: 32px;
-  border-radius: 6px;
-}
-
-.toggle-btn.active-state {
-  background: #FFFFFF;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-.btn-text {
-  font-family: 'Geist', sans-serif;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 16px;
-  letter-spacing: 0.24px;
-  color: #434654;
-}
-
-.toggle-btn.active-state .btn-text {
-  color: #1550D3;
-}
-
-/* ─── Filter Bar Actions Specs ─── */
-.filter-frame {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 23px;
-  width: 100%;
-  height: 44px;
-  box-sizing: border-box;
-}
-
-.search-input-wrapper {
-  display: flex;
-  flex-direction: column;
+  gap: 12px;
   flex: 1;
-  min-width: 0;
 }
 
-.input-inner {
+.search-wrap {
   position: relative;
-  width: 100%;
-  display: flex;
-  align-items: center;
-}
-
-.filter-field {
-  box-sizing: border-box;
-  width: 100%;
-  height: 42px;
-  padding: 11px 16px 11px 40px;
-  background: #FAF8FF;
-  border: 1px solid #C3C5D7;
-  border-radius: 8px;
-  font-family: 'Geist', sans-serif;
-  font-size: 14px;
-  line-height: 18px;
-  color: #191B23;
-  outline: none;
-}
-
-.filter-field::placeholder {
-  color: #6B7280;
+  flex: 1;
+  max-width: 480px;
 }
 
 .search-icon {
   position: absolute;
   left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
   width: 15px;
   height: 15px;
+  color: #737686;
   pointer-events: none;
 }
 
-.dropdown-wrapper {
+.search-input {
+  width: 100%;
   box-sizing: border-box;
-  width: 192px;
-  height: 42px;
-  background: #FAF8FF;
-  border: 1px solid #C3C5D7;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  padding: 10px 16px;
-  cursor: pointer;
-}
-
-.dropdown-text {
-  font-family: 'Geist', sans-serif;
-  font-weight: 400;
+  padding: 11px 16px 11px 38px;
+  background: var(--bg);
+  border: 1px solid var(--border-solid);
+  border-radius: var(--radius-btn);
+  font-family: var(--font-geist);
   font-size: 14px;
-  line-height: 20px;
-  color: #191B23;
-  flex: 1;
+  color: var(--text-primary);
+  outline: none;
 }
 
-.vector-arrow {
-  width: 0;
-  height: 0;
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-top: 5px solid #6B7280;
+.search-input::placeholder { color: var(--text-placeholder); }
+.search-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(21,80,211,0.1); }
+
+.select-wrap {
+  position: relative;
+  flex-shrink: 0;
 }
 
-.action-buttons-group {
+.status-select {
+  appearance: none;
+  padding: 10px 36px 10px 16px;
+  background: var(--bg);
+  border: 1px solid var(--border-solid);
+  border-radius: var(--radius-btn);
+  font-family: var(--font-geist);
+  font-size: 14px;
+  color: var(--text-primary);
+  cursor: pointer;
+  outline: none;
+  min-width: 160px;
+}
+
+.status-select:focus { border-color: var(--blue); }
+
+.select-chevron {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  color: #6B7280;
+  pointer-events: none;
+}
+
+.toolbar-right {
   display: flex;
-  flex-direction: row;
   align-items: center;
   gap: 8px;
 }
 
-.layout-grid-btn {
+.btn-icon-only {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 44px;
   height: 44px;
   background: #E7E7F2;
-  border-radius: 8px;
   border: none;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.primary-add-btn {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 16px;
-  height: 36px;
-  background: #F3F3FE;
-  border: 1px solid #1550D3;
-  border-radius: 8px;
+  border-radius: var(--radius-btn);
+  color: var(--text-secondary);
   cursor: pointer;
 }
 
-.add-btn-text {
-  font-family: 'Geist', sans-serif;
-  font-weight: 500;
+.btn-icon-only:hover { background: #ddddf0; }
+
+.btn-text-link {
+  background: none;
+  border: none;
+  font-family: var(--font-geist);
   font-size: 12px;
-  line-height: 16px;
+  font-weight: 500;
+  color: var(--blue);
   letter-spacing: 0.24px;
-  color: #1550D3;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 0 4px;
 }
 
-/* ─── Table Data Ledger Layout Specs ─── */
-.table-container-section {
-  box-sizing: border-box;
-  width: 100%;
-  background: #FFFFFF;
-  border: 1px solid rgba(195, 197, 215, 0.3);
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
-  border-radius: 12px;
+.btn-text-link:hover { text-decoration: underline; }
+
+/* ─── Table Card ─────────────────────────────────────── */
+.table-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: 0px 1px 2px rgba(0,0,0,0.05);
   overflow: hidden;
 }
 
-.scrollable-table-window {
-  width: 100%;
-  overflow-x: auto;
-}
+.table-scroll { overflow-x: auto; }
 
-.stores-data-table {
+.store-table {
   width: 100%;
   border-collapse: collapse;
-  text-align: left;
 }
 
-thead {
-  background: #F3F3FE;
-  border-bottom: 1px solid #C3C5D7;
+.store-table thead tr {
+  background: var(--blue-light);
+  border-bottom: 1px solid var(--border-solid);
 }
 
-.header-cell {
-  padding: 24px;
-  font-family: 'Geist', sans-serif;
-  font-weight: 700;
+.store-table th {
+  padding: 16px 24px;
+  font-family: var(--font-geist);
   font-size: 12px;
-  line-height: 16px;
+  font-weight: 700;
   letter-spacing: 0.6px;
   text-transform: uppercase;
-  color: #434654;
+  color: var(--text-secondary);
+  text-align: left;
+  white-space: nowrap;
 }
 
-/* Base Pixel Bounds extracted from structural metadata cell properties */
-.spec-w-162 { width: 25%; }
-.spec-w-139 { width: 20%; }
-.spec-w-151 { width: 20%; }
-.spec-w-144 { width: 15%; }
-.spec-w-132 { width: 12%; }
-.spec-w-96  { width: 8%; }
-
-.store-data-row {
-  border-bottom: 1px solid rgba(195, 197, 215, 0.3);
-  transition: background 0.15s ease;
+.store-table tbody tr {
+  border-top: 1px solid var(--border);
+  transition: background 0.1s;
 }
 
-.store-data-row:hover {
-  background: #FAF8FF;
-}
+.store-table tbody tr:first-child { border-top: none; }
+.store-table tbody tr:hover { background: #fafafe; }
 
-.data-cell {
-  padding: 16px 24px;
+.store-table td {
+  padding: 20px 24px;
+  font-size: 14px;
   vertical-align: middle;
 }
 
-.brand-cell-group {
+/* ─── Store Name Cell ────────────────────────────────── */
+.store-name-cell {
   display: flex;
-  flex-direction: row;
   align-items: center;
   gap: 12px;
 }
 
-.brand-avatar-border {
-  box-sizing: border-box;
-  width: 32px;
-  height: 32px;
-  background: #FAF8FF;
-  border: 1px solid rgba(195, 197, 215, 0.5);
-  border-radius: 8px;
+.store-logo-box {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(195,197,215,0.5);
+  border-radius: 8px;
+  background: var(--bg);
+  flex-shrink: 0;
   overflow: hidden;
 }
 
-.avatar-fallback-img {
+.store-logo-placeholder {
   width: 100%;
   height: 100%;
-  background: #3c6bed;
-}
-
-.brand-meta-stack {
-  display: flex;
-  flex-direction: column;
-}
-
-.main-title-text {
-  font-family: 'Geist', sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 20px;
-  color: #191B23;
-}
-
-.sub-caption-text {
-  font-family: 'Geist', sans-serif;
-  font-weight: 500;
-  font-size: 11px;
-  line-height: 14px;
-  letter-spacing: 0.24px;
-  color: #434654;
-}
-
-/* Domain Links */
-.domain-link-wrapper {
   display: flex;
   align-items: center;
-  gap: 4px;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text-primary);
 }
 
-.inline-domain-link {
-  font-family: 'Geist', sans-serif;
-  font-weight: 400;
+.store-name {
+  font-weight: 700;
   font-size: 14px;
-  line-height: 20px;
-  color: #1550D3;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.store-id {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-secondary);
+  letter-spacing: 0.24px;
+  margin-top: 2px;
+}
+
+/* ─── Domain Link ────────────────────────────────────── */
+.store-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--blue);
+  font-size: 14px;
   text-decoration: none;
 }
 
-.inline-domain-link:hover {
-  text-decoration: underline;
-}
+.store-link:hover { text-decoration: underline; }
 
-.external-icon {
-  font-size: 10px;
-  color: #1550D3;
-}
+/* ─── Campaign Cell ──────────────────────────────────── */
+.campaign-cell { display: flex; flex-direction: column; gap: 4px; }
 
-/* Active Promotions Cell Structure Specs */
-.promo-stack-container {
+.campaign-top {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.badge-row {
-  display: flex;
-  flex-direction: row;
   align-items: center;
   gap: 8px;
 }
 
-.promo-pill-bg {
-  box-sizing: border-box;
-  display: flex;
+.discount-badge {
+  font-family: var(--font-mono);
+  font-size: 12px;
   padding: 2px 8px;
-  background: rgba(108, 248, 187, 0.2);
-  border: 1px solid rgba(0, 108, 73, 0.2);
   border-radius: 4px;
 }
 
-.pill-code-text {
-  font-family: 'Geist Mono', monospace;
-  font-weight: 400;
-  font-size: 11px;
-  line-height: 14px;
+.badge-green {
+  background: var(--green-bg);
+  border: 1px solid var(--green-border);
   color: #00714D;
 }
 
-.promo-count-weight {
-  font-family: 'Geist', sans-serif;
-  font-weight: 700;
+.badge-gray {
+  background: var(--inactive-bg);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.campaign-discount-val {
   font-size: 12px;
-  color: #191B23;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.24px;
 }
 
-.promo-marketing-text {
-  font-family: 'Geist', sans-serif;
-  font-weight: 400;
+.campaign-name {
   font-size: 11px;
-  line-height: 14px;
-  color: #434654;
+  color: var(--text-secondary);
+  line-height: 1.4;
 }
 
-.numerical-metric-text,
-.region-fallback-text {
-  font-family: 'Geist', sans-serif;
+/* ─── Orders Cell ────────────────────────────────────── */
+.orders-cell { display: flex; flex-direction: column; gap: 6px; }
+
+.orders-count {
+  font-weight: 700;
   font-size: 14px;
-  line-height: 20px;
-  color: #434654;
+  color: var(--text-primary);
 }
 
-.row-action-trigger {
-  background: none;
+.orders-bar-track {
+  width: 96px;
+  height: 4px;
+  background: #EDEDF8;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.orders-bar-fill {
+  height: 100%;
+  background: var(--blue);
+  border-radius: 9999px;
+  transition: width 0.4s ease;
+}
+
+/* ─── Status Pill ────────────────────────────────────── */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.24px;
+  white-space: nowrap;
+}
+
+.pill-active {
+  background: var(--green-bg);
+  border: 1px solid var(--green-border);
+  color: var(--green-text);
+}
+
+.pill-active .pill-dot { background: var(--green-text); }
+
+.pill-inactive {
+  background: var(--inactive-bg);
+  border: 1px solid var(--border);
+  color: var(--inactive-text);
+}
+
+.pill-inactive .pill-dot { background: var(--inactive-dot); }
+
+.pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ─── Actions Cell ───────────────────────────────────── */
+.actions-cell {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: transparent;
   border: none;
-  color: #1550D3;
-  font-family: 'Geist', sans-serif;
-  font-weight: 600;
-  font-size: 13px;
+  border-radius: 6px;
+  color: var(--text-muted);
   cursor: pointer;
 }
 
-.row-action-trigger:hover {
-  text-decoration: underline;
+.action-btn:hover {
+  background: var(--blue-light);
+  color: var(--blue);
 }
+
+/* ─── Pagination ─────────────────────────────────────── */
+.pagination-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background: var(--blue-light);
+  border-top: 1px solid var(--border-solid);
+}
+
+.pagination-info {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.24px;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.page-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-btn);
+  font-family: var(--font-geist);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  letter-spacing: 0.24px;
+}
+
+.page-btn:hover:not(.page-btn--active):not(.page-btn--disabled) {
+  background: var(--border);
+}
+
+.page-btn--active {
+  background: var(--blue);
+  color: #fff;
+  cursor: default;
+}
+
+.page-btn--disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.page-ellipsis {
+  font-size: 16px;
+  color: var(--text-muted);
+  padding: 0 4px;
+  line-height: 1;
+}
+
+/* ─── Icon helpers ───────────────────────────────────── */
+.icon-xs { width: 10px; height: 10px; }
+.icon-sm { width: 16px; height: 16px; }
+.icon-md { width: 18px; height: 18px; }
 </style>
