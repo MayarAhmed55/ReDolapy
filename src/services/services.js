@@ -120,3 +120,22 @@ export const markAsRead = (notificationID) => {
     }
   );
 };
+
+export const getStores=()=>{
+  return axios.get(
+    `${API}/stores`,{
+      headers:{
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+    }
+  )
+}
+export const getProducts=()=>{
+  return axios.get(
+    `${API}/products`,{
+      headers:{
+        Authorization:`Bearer ${localStorage.getItem("token")}`
+      }
+    }
+  )
+}

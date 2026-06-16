@@ -51,6 +51,11 @@ export default [
         path:"users",
         component:()=>import("../admin/views/users.vue"),
         meta: { requiresAuth: true }
+      },
+      {
+        path:"addStore",
+        component:()=>import("../admin/views/addStore.vue"),
+        meta: { requiresAuth: true }
       }
     ]
   },

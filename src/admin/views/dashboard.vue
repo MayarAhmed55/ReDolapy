@@ -1,11 +1,13 @@
 <template>
   <div class="dashboard">
-
     <!-- Page Header -->
     <section class="page-header">
       <div class="page-title-group">
         <h2 class="page-title">Welcome Back!</h2>
-        <p class="page-subtitle">Here is a summary representation across global system activity matrix data.</p>
+        <p class="page-subtitle">
+          Here is a summary representation across global system activity matrix
+          data.
+        </p>
       </div>
       <button type="button" class="filter-btn">
         <img src="../../assets/Icon (17).svg" alt="" class="filter-icon" />
@@ -15,7 +17,6 @@
 
     <!-- Stats Cards Row -->
     <section class="stats-row">
-
       <div class="stat-card">
         <div class="stat-card-top">
           <div class="stat-icon-wrap blue">
@@ -24,7 +25,7 @@
           <span class="stat-badge positive">+12.4%</span>
         </div>
         <p class="stat-label">Total Stores</p>
-        <span class="stat-value">128</span>
+        <span class="stat-value">{{storesCount}}</span>
       </div>
 
       <div class="stat-card">
@@ -35,7 +36,7 @@
           <span class="stat-badge positive">+8.2%</span>
         </div>
         <p class="stat-label">Total Products</p>
-        <span class="stat-value">42,904</span>
+        <span class="stat-value">{{productsCount}}</span>
       </div>
 
       <div class="stat-card">
@@ -71,12 +72,10 @@
         <p class="stat-label">Monthly Revenue</p>
         <span class="stat-value">$0</span>
       </div>
-
     </section>
 
     <!-- Activity / Progress Bars Row -->
     <section class="activity-row">
-
       <!-- Card 1: Platform Usage -->
       <div class="activity-card">
         <div class="activity-inner">
@@ -85,7 +84,7 @@
           </div>
           <div class="progress-bar-wrap">
             <div class="progress-track">
-              <div class="progress-fill" style="width: 79.98%;"></div>
+              <div class="progress-fill" style="width: 79.98%"></div>
             </div>
           </div>
           <span class="activity-value">79.98%</span>
@@ -97,25 +96,27 @@
         <div class="activity-inner">
           <div class="activity-header-row">
             <span class="activity-metric-label">Avg Session</span>
-            <img src="../../assets/Icon (22).svg" alt="" class="activity-icon" />
+            <img
+              src="../../assets/Icon (22).svg"
+              alt=""
+              class="activity-icon"
+            />
           </div>
           <span class="activity-value">N/A</span>
         </div>
       </div>
-
     </section>
 
     <!-- Bottom Row: Quick Actions + Top Categories -->
     <section class="bottom-row">
-
       <!-- Quick Actions -->
       <div class="quick-actions-card">
         <h3 class="panel-heading white">Quick Actions</h3>
         <div class="actions-grid">
-          <button type="button" class="action-btn">
+          <router-link to="/admin/addStore" class="action-btn">
             <img src="../../assets/Icon (21).svg" alt="" class="action-icon" />
             <span>Add Store</span>
-          </button>
+          </router-link>
           <button type="button" class="action-btn">
             <img src="../../assets/Icon (23).svg" alt="" class="action-icon" />
             <span>Add Product</span>
@@ -144,29 +145,58 @@
           <!-- Legend -->
           <ul class="category-legend">
             <li class="legend-item">
-              <span class="legend-dot" style="background: #1550D3;"></span>
+              <span class="legend-dot" style="background: #1550d3"></span>
               <span class="legend-text">Luxury Footwear</span>
             </li>
             <li class="legend-item">
-              <span class="legend-dot" style="background: #006C49;"></span>
+              <span class="legend-dot" style="background: #006c49"></span>
               <span class="legend-text">Streetwear</span>
             </li>
             <li class="legend-item">
-              <span class="legend-dot" style="background: #E2E1ED;"></span>
+              <span class="legend-dot" style="background: #e2e1ed"></span>
               <span class="legend-text">Ready-to-wear</span>
             </li>
           </ul>
         </div>
       </div>
-
     </section>
-
   </div>
 </template>
 
 <script>
+import { getStores, getProducts } from "../../services/services";
 export default {
   name: "Dashboard",
+  data() {
+    return {
+      storesCount: 0,
+      productsCount:0,
+    };
+  },
+
+  methods: {
+    async fetchStoresCount() {
+      try {
+        const res = await getStores();
+        this.storesCount = res.data.length;
+      } catch (err) {
+        console.error("Failed to fetch stores:", err);
+      }
+    },
+    async fetchProductsCount() {
+      try {
+        const res = await getProducts();
+        this.productsCount = res.data.length;
+      } catch (err) {
+        console.error("Failed to fetch stores:", err);
+      }
+    }
+  },
+
+  mounted() {
+    this.fetchStoresCount();
+    this.fetchProductsCount();
+  },
 };
 </script>
 
@@ -174,8 +204,8 @@ export default {
 /* ─── Base ─────────────────────────────────────────────── */
 .dashboard {
   width: 100%;
-  font-family: 'Geist', sans-serif;
-  color: #191B23;
+  font-family: "Geist", sans-serif;
+  color: #191b23;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -200,7 +230,7 @@ export default {
   font-weight: 600;
   line-height: 40px;
   letter-spacing: -0.64px;
-  color: #191B23;
+  color: #191b23;
   margin: 0;
 }
 
@@ -219,20 +249,22 @@ export default {
   gap: 8px;
   padding: 8px 16px;
   height: 34px;
-  background: #FAF8FF;
-  border: 1px solid #C3C5D7;
+  background: #faf8ff;
+  border: 1px solid #c3c5d7;
   border-radius: 8px;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
   cursor: pointer;
-  font-family: 'Geist', sans-serif;
+  font-family: "Geist", sans-serif;
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.24px;
-  color: #191B23;
+  color: #191b23;
   transition: background 0.2s;
 }
 
-.filter-btn:hover { background: #f0eeff; }
+.filter-btn:hover {
+  background: #f0eeff;
+}
 
 .filter-icon {
   width: 10.5px;
@@ -255,8 +287,8 @@ export default {
   min-width: 180px;
   height: 160px;
   padding: 24px;
-  background: #FAF8FF;
-  border: 1px solid #C3C5D7;
+  background: #faf8ff;
+  border: 1px solid #c3c5d7;
   border-radius: 12px;
   box-sizing: border-box;
 }
@@ -281,12 +313,24 @@ export default {
   flex-shrink: 0;
 }
 
-.stat-icon-wrap img { width: 20px; height: 20px; display: block; }
+.stat-icon-wrap img {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
 
-.stat-icon-wrap.blue  { background: rgba(21, 80, 211, 0.1); }
-.stat-icon-wrap.green { background: rgba(0, 108, 73, 0.1); }
-.stat-icon-wrap.amber { background: rgba(130, 81, 0, 0.1); }
-.stat-icon-wrap.red   { background: rgba(186, 26, 26, 0.1); }
+.stat-icon-wrap.blue {
+  background: rgba(21, 80, 211, 0.1);
+}
+.stat-icon-wrap.green {
+  background: rgba(0, 108, 73, 0.1);
+}
+.stat-icon-wrap.amber {
+  background: rgba(130, 81, 0, 0.1);
+}
+.stat-icon-wrap.red {
+  background: rgba(186, 26, 26, 0.1);
+}
 
 .stat-badge {
   font-size: 12px;
@@ -295,8 +339,12 @@ export default {
   letter-spacing: 0.24px;
 }
 
-.stat-badge.positive { color: #006C49; }
-.stat-badge.neutral  { color: #434654; }
+.stat-badge.positive {
+  color: #006c49;
+}
+.stat-badge.neutral {
+  color: #434654;
+}
 
 .stat-label {
   font-size: 12px;
@@ -312,7 +360,7 @@ export default {
   font-weight: 600;
   line-height: 40px;
   letter-spacing: -0.64px;
-  color: #191B23;
+  color: #191b23;
 }
 
 /* ─── Activity / Progress Row ───────────────────────────── */
@@ -326,8 +374,8 @@ export default {
   flex: 1;
   height: 78px;
   padding: 16px 24px;
-  background: #FAF8FF;
-  border: 1px solid #C3C5D7;
+  background: #faf8ff;
+  border: 1px solid #c3c5d7;
   border-radius: 12px;
   box-sizing: border-box;
   display: flex;
@@ -375,7 +423,7 @@ export default {
 
 .progress-fill {
   height: 100%;
-  background: #1550D3;
+  background: #1550d3;
   border-radius: 9999px;
 }
 
@@ -384,7 +432,7 @@ export default {
   font-weight: 500;
   line-height: 28px;
   letter-spacing: -0.2px;
-  color: #191B23;
+  color: #191b23;
 }
 
 /* ─── Bottom Row ────────────────────────────────────────── */
@@ -403,15 +451,19 @@ export default {
   margin: 0 0 16px 0;
 }
 
-.panel-heading.white { color: #FFFFFF; }
-.panel-heading.dark  { color: #191B23; }
+.panel-heading.white {
+  color: #ffffff;
+}
+.panel-heading.dark {
+  color: #191b23;
+}
 
 /* ─── Quick Actions ─────────────────────────────────────── */
 .quick-actions-card {
   flex: 1;
   min-height: 310px;
   padding: 24px;
-  background: #3C6BED;
+  background: #3c6bed;
   border-radius: 16px;
   box-sizing: border-box;
   display: flex;
@@ -436,16 +488,18 @@ export default {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  font-family: 'Geist', sans-serif;
+  font-family: "Geist", sans-serif;
   font-size: 12px;
   font-weight: 500;
   line-height: 16px;
   letter-spacing: 0.24px;
-  color: #FFFFFF;
+  color: #ffffff;
   transition: background 0.2s;
 }
 
-.action-btn:hover { background: rgba(255, 255, 255, 0.18); }
+.action-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
 
 .action-icon {
   width: 22px;
@@ -458,8 +512,8 @@ export default {
   flex: 1;
   min-height: 310px;
   padding: 24px;
-  background: #FFFFFF;
-  border: 2px solid #D5D9DE;
+  background: #ffffff;
+  border: 2px solid #d5d9de;
   border-radius: 16px;
   box-sizing: border-box;
   display: flex;
@@ -483,7 +537,7 @@ export default {
   width: 124px;
   height: 124px;
   border-radius: 50%;
-  border: 16px solid #1550D3;
+  border: 16px solid #1550d3;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -495,7 +549,7 @@ export default {
   font-weight: 700;
   line-height: 16px;
   letter-spacing: 0.24px;
-  color: #191B23;
+  color: #191b23;
 }
 
 /* Legend */
@@ -527,6 +581,6 @@ export default {
   font-weight: 500;
   line-height: 16px;
   letter-spacing: 0.24px;
-  color: #191B23;
+  color: #191b23;
 }
 </style>

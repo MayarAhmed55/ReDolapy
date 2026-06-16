@@ -6,18 +6,22 @@
       <NavBar />
 
       <main class="page-content">
-        <router-view />
+        <router-view v-slot="{ Component }">
+          <keep-alive>
+            <component :is="Component" />
+          </keep-alive>
+        </router-view>
       </main>
     </div>
   </div>
 </template>
 
 <script>
-import SideBar from './components/sideBar.vue';
-import NavBar from './components/navBar.vue';
+import SideBar from "./components/sideBar.vue";
+import NavBar from "./components/navBar.vue";
 
 export default {
-  name: 'AdminLayout',
+  name: "AdminLayout",
   components: {
     SideBar,
     NavBar,

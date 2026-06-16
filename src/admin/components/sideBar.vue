@@ -3,7 +3,11 @@
     <div class="brand-margin">
       <div class="brand-container">
         <div class="brand-logo-wrapper">
-          <img src="../../assets/45380b17-7ecb-4043-8722-90acbe27d99a 1.png" class="brand-logo" alt="Logo">
+          <img
+            src="../../assets/45380b17-7ecb-4043-8722-90acbe27d99a 1.png"
+            class="brand-logo"
+            alt="Logo"
+          />
         </div>
         <div class="brand-subtitle-container">
           <span class="brand-subtitle-text">Global Admin</span>
@@ -12,7 +16,11 @@
     </div>
 
     <nav class="nav-links-scroll-wrapper">
-      <router-link to="/admin/dashboard" class="nav-link" active-class="item-active">
+      <router-link
+        to="/admin/dashboard"
+        class="nav-link"
+        active-class="item-active"
+      >
         <div class="icon-frame-wrapper spec-active-dim">
           <img src="../../assets/icon (14).svg" class="active-color" />
         </div>
@@ -21,7 +29,11 @@
         </div>
       </router-link>
 
-      <router-link to="/admin/stores" class="nav-link" active-class="item-active">
+      <router-link
+        to="/admin/stores"
+        class="nav-link"
+        active-class="item-active"
+      >
         <div class="icon-frame-wrapper">
           <img src="../../assets/Icon (1).svg" />
         </div>
@@ -30,7 +42,11 @@
         </div>
       </router-link>
 
-      <router-link to="/admin/products" class="nav-link" active-class="item-active">
+      <router-link
+        to="/admin/products"
+        class="nav-link"
+        active-class="item-active"
+      >
         <div class="icon-frame-wrapper">
           <img src="../../assets/Icon (2).svg" />
         </div>
@@ -39,7 +55,11 @@
         </div>
       </router-link>
 
-      <router-link to="/admin/promotions" class="nav-link" active-class="item-active">
+      <router-link
+        to="/admin/promotions"
+        class="nav-link"
+        active-class="item-active"
+      >
         <div class="icon-frame-wrapper">
           <img src="../../assets/Icon (3).svg" class="icon-asset" />
         </div>
@@ -48,7 +68,11 @@
         </div>
       </router-link>
 
-      <router-link to="/admin/notifications" class="nav-link" active-class="item-active">
+      <router-link
+        to="/admin/notifications"
+        class="nav-link"
+        active-class="item-active"
+      >
         <div class="icon-frame-wrapper">
           <img src="../../assets/Icon (4).svg" />
         </div>
@@ -57,7 +81,11 @@
         </div>
       </router-link>
 
-      <router-link to="/admin/emailCenter" class="nav-link" active-class="item-active">
+      <router-link
+        to="/admin/emailCenter"
+        class="nav-link"
+        active-class="item-active"
+      >
         <div class="icon-frame-wrapper">
           <img src="../../assets/Icon (5).svg" />
         </div>
@@ -66,7 +94,11 @@
         </div>
       </router-link>
 
-      <router-link to="/admin/users" class="nav-link" active-class="item-active">
+      <router-link
+        to="/admin/users"
+        class="nav-link"
+        active-class="item-active"
+      >
         <div class="icon-frame-wrapper">
           <img src="../../assets/Icon (6).svg" />
         </div>
@@ -84,7 +116,11 @@
         </div>
       </router-link>
 
-      <router-link to="/admin/setttings" class="nav-link" active-class="item-active">
+      <router-link
+        to="/admin/setttings"
+        class="nav-link"
+        active-class="item-active"
+      >
         <div class="icon-frame-wrapper">
           <img src="../../assets/Icon (8).svg" />
         </div>
@@ -96,10 +132,10 @@
 
     <div class="profile-outer-footer">
       <div class="profile-pill-bg">
-        <div class="profile-avatar-frame"></div>
+        <img :src="img" class="profile-avatar-frame" />
         <div class="profile-metadata-stack">
           <div class="profile-name-row">
-            <span class="display-name">Dolapy Admin</span>
+            <span class="display-name">{{ first_name + " " + last_name }}</span>
           </div>
           <div class="profile-role-row">
             <span class="role-badge">Super Admin</span>
@@ -113,6 +149,15 @@
 <script>
 export default {
   name: "SideNavBar",
+  data() {
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+    return {
+      first_name: user.first_name,
+      last_name: user.last_name,
+      img:user.userImage
+    };
+  },
 };
 </script>
 
@@ -129,8 +174,8 @@ export default {
   height: 100vh;
   left: 0px;
   top: 0px;
-  background: #FAF8FF;
-  border-right: 1px solid #C3C5D7;
+  background: #faf8ff;
+  border-right: 1px solid #c3c5d7;
   z-index: 100;
 }
 
@@ -174,7 +219,7 @@ export default {
 
 .brand-subtitle-text {
   width: 100%;
-  font-family: 'Geist', sans-serif;
+  font-family: "Geist", sans-serif;
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
@@ -211,12 +256,12 @@ export default {
 
 /* Active Class handles dynamic highlight perfectly */
 .nav-link.item-active {
-  background: #F3F3FE;
-  border-left: 4px solid #1550D3;
+  background: #f3f3fe;
+  border-left: 4px solid #1550d3;
 }
 
 .nav-link.item-active .link-label {
-  color: #1550D3;
+  color: #1550d3;
   font-weight: 600;
 }
 
@@ -237,7 +282,7 @@ export default {
 }
 
 .link-label {
-  font-family: 'Geist', sans-serif;
+  font-family: "Geist", sans-serif;
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
@@ -261,15 +306,15 @@ export default {
   align-items: center;
   padding: 12px;
   gap: 12px;
-  background: #EDEDF8;
+  background: #ededf8;
   border-radius: 12px;
   width: 100%;
   box-sizing: border-box;
 }
 
 .profile-avatar-frame {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   flex-shrink: 0;
   background: #3c6bed; /* Fallback accent color */
   border: 2px solid rgba(21, 80, 211, 0.2);
@@ -285,17 +330,18 @@ export default {
   min-width: 0;
 }
 
-.profile-name-row, .profile-role-row {
+.profile-name-row,
+.profile-role-row {
   width: 100%;
 }
 
 .display-name {
-  font-family: 'Geist', sans-serif;
+  font-family: "Geist", sans-serif;
   font-weight: 700;
   font-size: 12px;
   line-height: 16px;
   letter-spacing: 0.24px;
-  color: #191B23;
+  color: #191b23;
   display: block;
   white-space: nowrap;
   overflow: hidden;
@@ -303,7 +349,7 @@ export default {
 }
 
 .role-badge {
-  font-family: 'Geist', sans-serif;
+  font-family: "Geist", sans-serif;
   font-weight: 400;
   font-size: 10px;
   line-height: 15px;
