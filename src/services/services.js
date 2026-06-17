@@ -120,6 +120,19 @@ export const markAsRead = (notificationID) => {
     }
   );
 };
+export const deletAllNotifications=()=>{
+  return axios.delete(
+    `${API}/notifications`,
+    {
+      headers:{
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+    }
+  )
+}
+// export const deleteNotificationbyid=()=>{
+
+// }
 
 export const getStores=()=>{
   return axios.get(
@@ -139,3 +152,14 @@ export const getProducts=()=>{
     }
   )
 }
+export const addStore = (data) => {
+  return axios.post(
+    `${API}/stores`,
+    data,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+    }
+  );
+};

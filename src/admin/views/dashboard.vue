@@ -117,10 +117,10 @@
             <img src="../../assets/Icon (21).svg" alt="" class="action-icon" />
             <span>Add Store</span>
           </router-link>
-          <button type="button" class="action-btn">
+          <router-link to="/admin/addProduct" type="button" class="action-btn">
             <img src="../../assets/Icon (23).svg" alt="" class="action-icon" />
             <span>Add Product</span>
-          </button>
+          </router-link>
           <button type="button" class="action-btn">
             <img src="../../assets/Icon (24).svg" alt="" class="action-icon" />
             <span>API Key</span>

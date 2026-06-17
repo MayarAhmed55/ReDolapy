@@ -44,16 +44,16 @@
               <span class="th-text">Product</span>
             </div>
             <div class="cell cell-store-location">
-              <span class="th-text">Store Location</span>
+              <span class="th-text">Store & CATEGORY</span>
             </div>
             <div class="cell cell-season">
               <span class="th-text">Season</span>
             </div>
             <div class="cell cell-sku">
-              <span class="th-text">SKU</span>
+              <span class="th-text">TRY-ON</span>
             </div>
             <div class="cell cell-stock">
-              <span class="th-text-center">Stock</span>
+              <span class="th-text-center">Status</span>
             </div>
             <div class="cell cell-price">
               <span class="th-text">Price</span>
@@ -62,236 +62,92 @@
         </div>
 
         <div class="table-body-container">
-          <!-- Row 1 -->
-          <div class="table-data-row">
-            <div class="data-cell cell-checkbox">
-              <input type="checkbox" class="ui-checkbox" />
-            </div>
-            <div class="data-cell cell-product-info row-layout-align">
-              <div class="product-img-bg">
-                <div class="asset-img-placeholder"></div>
-              </div>
-              <div class="meta-stack">
-                <span class="meta-title-text">Velvet Oxford Brogue</span>
-                <span class="meta-mono-text">#PROD-00412</span>
-              </div>
-            </div>
-            <div class="data-cell cell-store-location stack-layout-align">
-              <div class="info-stack-wrapper">
-                <span class="info-primary-text">Milan Flagship</span>
-              </div>
-              <div class="info-stack-wrapper">
-                <span class="info-secondary-text">Footwear</span>
-              </div>
-            </div>
-            <div class="data-cell cell-season gap-layout-align">
-              <span class="season-badge season-active">SS 2025</span>
-            </div>
-            <div class="data-cell cell-sku sku-align">
-              <span class="sku-text">#SKU-00412</span>
-            </div>
-            <div class="data-cell cell-stock stock-align">
-              <div class="tryons-pill"><div class="tryons-dot"></div></div>
-            </div>
-            <div class="data-cell cell-price price-align">
-              <div class="price-stack">
-                <span class="price-amount">$540.00</span>
-                <span class="price-currency">USD</span>
-              </div>
+          <div v-if="loading" class="table-data-row">
+            <div
+              class="data-cell"
+              style="padding: 24px; width: 100%; justify-content: center"
+            >
+              <span class="info-secondary-text">Loading products…</span>
             </div>
           </div>
 
-          <!-- Row 2 -->
-          <div class="table-data-row">
-            <div class="data-cell cell-checkbox">
-              <input type="checkbox" class="ui-checkbox" />
-            </div>
-            <div class="data-cell cell-product-info row-layout-align">
-              <div class="product-img-bg">
-                <div class="asset-img-placeholder"></div>
-              </div>
-              <div class="meta-stack">
-                <span class="meta-title-text">Arc Shell Parka</span>
-                <span class="meta-mono-text">#PROD-00839</span>
-              </div>
-            </div>
-            <div class="data-cell cell-store-location stack-layout-align">
-              <div class="info-stack-wrapper">
-                <span class="info-primary-text">Paris Boutique</span>
-              </div>
-              <div class="info-stack-wrapper">
-                <span class="info-secondary-text">Outerwear</span>
-              </div>
-            </div>
-            <div class="data-cell cell-season gap-layout-align">
-              <span class="season-badge season-active">SS 2025</span>
-            </div>
-            <div class="data-cell cell-sku sku-align">
-              <span class="sku-text">#SKU-00839</span>
-            </div>
-            <div class="data-cell cell-stock stock-align">
-              <div class="tryons-empty"></div>
-            </div>
-            <div class="data-cell cell-price price-align">
-              <div class="price-stack">
-                <span class="price-amount">$1,250.00</span>
-                <span class="price-currency">USD</span>
-              </div>
+          <div
+            v-else-if="paginatedProducts.length === 0"
+            class="table-data-row"
+          >
+            <div
+              class="data-cell"
+              style="padding: 24px; width: 100%; justify-content: center"
+            >
+              <span class="info-secondary-text">No products found.</span>
             </div>
           </div>
 
-          <!-- Row 3 -->
-          <div class="table-data-row">
+          <div
+            v-else
+            v-for="product in paginatedProducts"
+            :key="product._id"
+            class="table-data-row"
+          >
             <div class="data-cell cell-checkbox">
               <input type="checkbox" class="ui-checkbox" />
             </div>
             <div class="data-cell cell-product-info row-layout-align">
               <div class="product-img-bg">
-                <div class="asset-img-placeholder"></div>
+                <img
+                  v-if="product.images && product.images[0]"
+                  :src="product.images[0]"
+                  :alt="product.name"
+                  class="asset-img-placeholder"
+                  style="object-fit: cover"
+                />
+                <div v-else class="asset-img-placeholder"></div>
               </div>
               <div class="meta-stack">
-                <span class="meta-title-text">Chain-Link Belt Bag</span>
-                <span class="meta-mono-text">#PROD-01105</span>
+                <span class="meta-title-text">{{ product.name }}</span>
+                <span class="meta-mono-text">{{ productCode(product) }}</span>
               </div>
             </div>
             <div class="data-cell cell-store-location stack-layout-align">
               <div class="info-stack-wrapper">
-                <span class="info-primary-text">Global E-Shop</span>
+                <span class="info-primary-text">{{
+                  product.store_id?.name || "—"
+                }}</span>
               </div>
               <div class="info-stack-wrapper">
-                <span class="info-secondary-text">Accessories</span>
+                <span class="info-secondary-text">{{ product.category }}</span>
               </div>
             </div>
             <div class="data-cell cell-season gap-layout-align">
-              <span class="season-badge season-active">SS 2025</span>
+              <span class="season-badge season-active">
+                {{
+                  product.season_tags?.length
+                    ? product.season_tags.join(", ")
+                    : "All Season"
+                }}
+              </span>
             </div>
             <div class="data-cell cell-sku sku-align">
-              <span class="sku-text">#SKU-01105</span>
-            </div>
-            <div class="data-cell cell-stock stock-align">
-              <div class="tryons-pill"><div class="tryons-dot"></div></div>
-            </div>
-            <div class="data-cell cell-price price-align">
-              <div class="price-stack">
-                <span class="price-amount">$890.00</span>
-                <span class="price-currency">USD</span>
-              </div>
-            </div>
-          </div>
+              <img
+                v-if="product.try_on_enabled"
+                src="../../assets/Overlay.svg"
+                alt="true"
+              />
 
-          <!-- Row 4 -->
-          <div class="table-data-row">
-            <div class="data-cell cell-checkbox">
-              <input type="checkbox" class="ui-checkbox" />
-            </div>
-            <div class="data-cell cell-product-info row-layout-align">
-              <div class="product-img-bg">
-                <div class="asset-img-placeholder"></div>
-              </div>
-              <div class="meta-stack">
-                <span class="meta-title-text">Duchess Gown</span>
-                <span class="meta-mono-text">#PROD-00271</span>
-              </div>
-            </div>
-            <div class="data-cell cell-store-location stack-layout-align">
-              <div class="info-stack-wrapper">
-                <span class="info-primary-text">London Flagship</span>
-              </div>
-              <div class="info-stack-wrapper">
-                <span class="info-secondary-text">Evening Wear</span>
-              </div>
-            </div>
-            <div class="data-cell cell-season gap-layout-align">
-              <span class="season-badge season-active">SS 2025</span>
-            </div>
-            <div class="data-cell cell-sku sku-align">
-              <span class="sku-text">#SKU-00271</span>
+              <img v-else src="../../assets/Icon (26).svg" alt="false" />
             </div>
             <div class="data-cell cell-stock stock-align">
-              <div class="tryons-pill"><div class="tryons-dot"></div></div>
+              <div v-if="product.try_on_enabled" class="tryons-pill">
+                <div class="tryons-dot"></div>
+              </div>
+              <div v-else class="tryons-empty"></div>
             </div>
             <div class="data-cell cell-price price-align">
               <div class="price-stack">
-                <span class="price-amount">$1,450.00</span>
-                <span class="price-currency">USD</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Row 5 -->
-          <div class="table-data-row">
-            <div class="data-cell cell-checkbox">
-              <input type="checkbox" class="ui-checkbox" />
-            </div>
-            <div class="data-cell cell-product-info row-layout-align">
-              <div class="product-img-bg">
-                <div class="asset-img-placeholder"></div>
-              </div>
-              <div class="meta-stack">
-                <span class="meta-title-text">Drift Linen Blazer</span>
-                <span class="meta-mono-text">#PROD-00588</span>
-              </div>
-            </div>
-            <div class="data-cell cell-store-location stack-layout-align">
-              <div class="info-stack-wrapper">
-                <span class="info-primary-text">London Flagship</span>
-              </div>
-              <div class="info-stack-wrapper">
-                <span class="info-secondary-text">Evening Wear</span>
-              </div>
-            </div>
-            <div class="data-cell cell-season gap-layout-align">
-              <span class="season-badge season-active">SS 2025</span>
-            </div>
-            <div class="data-cell cell-sku sku-align">
-              <span class="sku-text">#SKU-00588</span>
-            </div>
-            <div class="data-cell cell-stock stock-align">
-              <div class="tryons-pill"><div class="tryons-dot"></div></div>
-            </div>
-            <div class="data-cell cell-price price-align">
-              <div class="price-stack">
-                <span class="price-amount">$1,450.00</span>
-                <span class="price-currency">USD</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Row 6 -->
-          <div class="table-data-row">
-            <div class="data-cell cell-checkbox">
-              <input type="checkbox" class="ui-checkbox" />
-            </div>
-            <div class="data-cell cell-product-info row-layout-align">
-              <div class="product-img-bg">
-                <div class="asset-img-placeholder"></div>
-              </div>
-              <div class="meta-stack">
-                <span class="meta-title-text">Opal Slip Dress</span>
-                <span class="meta-mono-text">#PROD-00934</span>
-              </div>
-            </div>
-            <div class="data-cell cell-store-location stack-layout-align">
-              <div class="info-stack-wrapper">
-                <span class="info-primary-text">London Flagship</span>
-              </div>
-              <div class="info-stack-wrapper">
-                <span class="info-secondary-text">Evening Wear</span>
-              </div>
-            </div>
-            <div class="data-cell cell-season gap-layout-align">
-              <span class="season-badge season-active">SS 2025</span>
-            </div>
-            <div class="data-cell cell-sku sku-align">
-              <span class="sku-text">#SKU-00934</span>
-            </div>
-            <div class="data-cell cell-stock stock-align">
-              <div class="tryons-pill"><div class="tryons-dot"></div></div>
-            </div>
-            <div class="data-cell cell-price price-align">
-              <div class="price-stack">
-                <span class="price-amount">$1,450.00</span>
-                <span class="price-currency">USD</span>
+                <span class="price-amount">{{
+                  formatPrice(product.price)
+                }}</span>
+                <span class="price-currency">{{ product.currency }}</span>
               </div>
             </div>
           </div>
@@ -302,21 +158,123 @@
 
       <!-- Pagination -->
       <div class="pagination-footer">
-        <span class="pagination-info">Showing 1–6 of 128 products</span>
+        <span class="pagination-info">
+          Showing {{ showingStart }}–{{ showingEnd }} of
+          {{ products.length }} products
+        </span>
         <div class="pagination-controls">
-          <button class="page-btn page-arrow">&#8249;</button>
-          <button class="page-btn page-active">1</button>
-          <button class="page-btn">2</button>
-          <button class="page-btn">3</button>
-          <button class="page-btn">4</button>
-          <span class="page-sep">…</span>
-          <button class="page-btn">12</button>
-          <button class="page-btn page-arrow">&#8250;</button>
+          <button
+            class="page-btn page-arrow"
+            :disabled="currentPage === 1"
+            @click="goToPage(currentPage - 1)"
+          >
+            &#8249;
+          </button>
+
+          <template v-for="(page, idx) in visiblePages" :key="idx">
+            <span v-if="page === '...'" class="page-sep">…</span>
+            <button
+              v-else
+              class="page-btn"
+              :class="{ 'page-active': page === currentPage }"
+              @click="goToPage(page)"
+            >
+              {{ page }}
+            </button>
+          </template>
+
+          <button
+            class="page-btn page-arrow"
+            :disabled="currentPage === totalPages"
+            @click="goToPage(currentPage + 1)"
+          >
+            &#8250;
+          </button>
         </div>
       </div>
     </main>
   </div>
 </template>
+
+<script setup>
+import { ref, computed, onMounted } from "vue";
+import { getProducts } from "../../services/services"; // adjust this import path to match your project structure
+
+const products = ref([]);
+const loading = ref(false);
+
+const currentPage = ref(1);
+const itemsPerPage = 6;
+
+const totalPages = computed(() =>
+  Math.max(1, Math.ceil(products.value.length / itemsPerPage)),
+);
+
+const paginatedProducts = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage;
+  return products.value.slice(start, start + itemsPerPage);
+});
+
+const showingStart = computed(() =>
+  products.value.length === 0 ? 0 : (currentPage.value - 1) * itemsPerPage + 1,
+);
+
+const showingEnd = computed(() =>
+  Math.min(currentPage.value * itemsPerPage, products.value.length),
+);
+
+// Builds a compact page list like [1, "...", 4, 5, 6, "...", 12]
+const visiblePages = computed(() => {
+  const total = totalPages.value;
+  const current = currentPage.value;
+  const delta = 1;
+  const pages = [];
+
+  for (
+    let i = Math.max(2, current - delta);
+    i <= Math.min(total - 1, current + delta);
+    i++
+  ) {
+    pages.push(i);
+  }
+
+  if (current - delta > 2) pages.unshift("...");
+  if (current + delta < total - 1) pages.push("...");
+
+  pages.unshift(1);
+  if (total > 1) pages.push(total);
+
+  return pages;
+});
+
+function goToPage(page) {
+  if (page === "..." || page < 1 || page > totalPages.value) return;
+  currentPage.value = page;
+}
+
+function productCode(product) {
+  return `#${product._id.slice(-6).toUpperCase()}`;
+}
+
+function formatPrice(price) {
+  if (typeof price !== "number") return "";
+  return `$${price.toFixed(2)}`;
+}
+
+async function fetchProducts() {
+  loading.value = true;
+  try {
+    const res = await getProducts();
+    products.value = res.data;
+  } catch (err) {
+    console.error("Failed to fetch products:", err);
+  } finally {
+    loading.value = false;
+  }
+}
+
+onMounted(fetchProducts);
+</script>
 
 <style scoped>
 /* Root View Base Structure */
@@ -635,8 +593,6 @@
   width: 18px;
   height: 12px;
 }
-
-
 
 .btn-text-util {
   display: flex;
@@ -1072,6 +1028,13 @@
 }
 .page-btn:hover {
   background: #f0f0f8;
+}
+.page-btn:disabled {
+  color: #c3c5d7;
+  cursor: not-allowed;
+}
+.page-btn:disabled:hover {
+  background: transparent;
 }
 .page-active {
   background: #1550d3;

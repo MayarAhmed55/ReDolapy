@@ -54,6 +54,13 @@
         <div class="dropdown-header">
           <span class="dropdown-title">Notifications</span>
           <button
+            v-if="notifications.length > 0"
+            class="delete-notification"
+            @click="deleteNotification"
+          >
+            Delete
+          </button>
+          <button
             v-if="unreadCount > 0"
             type="button"
             class="mark-all-btn"
@@ -142,9 +149,25 @@
                   :disabled="notif.markingRead"
                   @click.stop="markRead(notif.id)"
                 >
-                  <svg v-if="notif.markingRead" class="btn-spin" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="12" r="10" stroke="#C4C4CF" stroke-width="3"/>
-                    <path d="M12 2a10 10 0 0 1 10 10" stroke="#40B9FF" stroke-width="3" stroke-linecap="round"/>
+                  <svg
+                    v-if="notif.markingRead"
+                    class="btn-spin"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="#C4C4CF"
+                      stroke-width="3"
+                    />
+                    <path
+                      d="M12 2a10 10 0 0 1 10 10"
+                      stroke="#40B9FF"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                    />
                   </svg>
                   <span v-else>Mark as read</span>
                 </button>
@@ -164,6 +187,7 @@ import {
   getNotifications,
   markAsReadAll,
   markAsRead,
+  deletAllNotifications
 } from "../services/services";
 
 const { locale } = useI18n();
@@ -279,6 +303,23 @@ async function markAllRead() {
   await markAsReadAll();
   serverUnreadCount.value = 0;
 }
+const deleteNotification = async () => {
+  if (notifications.value.length === 0) return;
+
+  // Optimistic clear — list and Delete button disappear immediately
+  const previous = notifications.value;
+  notifications.value = [];
+  serverUnreadCount.value = 0;
+
+  try {
+    await deletAllNotifications();
+  } catch (err) {
+    console.error("[NotificationDropdown] deletAllNotifications failed", err);
+    // Roll back if the delete didn't actually go through
+    notifications.value = previous;
+    serverUnreadCount.value = previous.filter((n) => !n.read).length;
+  }
+};
 
 // Close on outside click
 function handleOutsideClick(e) {
@@ -397,6 +438,19 @@ onBeforeUnmount(() =>
   transition: opacity 0.15s;
 }
 .mark-all-btn:hover {
+  opacity: 0.75;
+}
+.delete-notification{
+    background: none;
+  border: none;
+  font-size: 12px;
+  font-weight: 500;
+  color: #B00020;
+  cursor: pointer;
+  padding: 0;
+  transition: opacity 0.15s;
+}
+.delete-notification:hover {
   opacity: 0.75;
 }
 

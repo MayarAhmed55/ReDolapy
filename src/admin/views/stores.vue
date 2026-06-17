@@ -6,7 +6,9 @@
       <div class="page-header">
         <div>
           <h1 class="page-title">Stores</h1>
-          <p class="page-subtitle">Manage and monitor all connected storefronts across your platform.</p>
+          <p class="page-subtitle">
+            Manage and monitor all connected storefronts across your platform.
+          </p>
         </div>
       </div>
 
@@ -14,33 +16,53 @@
       <div class="toolbar">
         <div class="toolbar-left">
           <!-- Search -->
-          <div class="search-wrap">
-            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <circle cx="11" cy="11" r="7" /><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35" />
-            </svg>
-            <input type="text" v-model="searchQuery" placeholder="Filter by name..." class="search-input" />
+          <div
+            class="flex flex-col items-start p-0 isolate flex-1 h-[42px] relative"
+          >
+            <input
+              type="text"
+              placeholder="Filter by name..."
+              class="box-border flex flex-row justify-start items-start pt-[11px] pb-[11px] pr-[16px] pl-[40px] w-full h-[42px] bg-[#FAF8FF] border border-[#C3C5D7] rounded-[8px] self-stretch font-['Geist sans'] font-normal text-[14px] leading-[18px] text-[#6B7280] placeholder-[#6B7280] focus:outline-none"
+            />
+
+            <div
+              class="absolute left-[12px] top-[34%] bottom-[26.19%] w-[15px] flex flex-col items-start p-0 pointer-events-none"
+            >
+              <img
+                src="../../assets/icon (27).svg"
+                class="w-[15px] h-[13.33px]"
+              />
+            </div>
           </div>
 
           <!-- Status filter -->
-          <div class="select-wrap">
+          <div class="select-wrap bg-[#FAF8FF]">
             <select v-model="statusFilter" class="status-select">
               <option value="">All Statuses</option>
               <option value="active">Active</option>
               <option value="inactive">Inactive</option>
             </select>
-            <svg class="select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            <svg
+              class="select-chevron"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+              />
             </svg>
           </div>
         </div>
 
         <div class="toolbar-right">
-          <button class="btn-icon-only" aria-label="Filter">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="icon-sm">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
-            </svg>
+          <button class="btn-icon-only bg-[#FAF8FF]" aria-label="Filter">
+            <img src="../../assets/Icon (15).svg" />
           </button>
-          <button class="btn-text-link">+ Add New Store</button>
+          <button class="btn-text-link">clear filters</button>
         </div>
       </div>
 
@@ -48,23 +70,45 @@
       <div class="table-card">
         <div class="table-scroll">
           <table class="store-table">
-            <thead>
+            <thead class="border-b-1 border-gray-300 py-[2.5rem] bg-[#FAF8FF]">
               <tr>
-                <th>Store Name</th>
-                <th>Domain</th>
-                <th>Active Campaign</th>
-                <th>Total Orders</th>
+                <th>Store & Logo</th>
+                <th>Website</th>
+                <th>DISCOUNT code & percent</th>
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="store in filteredStores" :key="store.id">
+              <tr v-if="loading">
+                <td colspan="5" class="empty-state-cell">Loading stores…</td>
+              </tr>
+
+              <tr v-else-if="paginatedStores.length === 0">
+                <td colspan="5" class="empty-state-cell">No stores found.</td>
+              </tr>
+
+              <tr
+                class="border-b-1 border-gray-300 py-[2.5rem]"
+                v-else
+                v-for="store in paginatedStores"
+                :key="store.id"
+              >
                 <!-- Store Name -->
                 <td>
                   <div class="store-name-cell">
                     <div class="store-logo-box">
-                      <div class="store-logo-placeholder" :style="{ background: store.logoColor }">
+                      <img
+                        v-if="store.logoUrl"
+                        :src="store.logoUrl"
+                        :alt="store.name"
+                        class="store-logo-img"
+                      />
+                      <div
+                        v-else
+                        class="store-logo-placeholder"
+                        :style="{ background: store.logoColor }"
+                      >
                         {{ store.name.charAt(0) }}
                       </div>
                     </div>
@@ -77,10 +121,24 @@
 
                 <!-- Domain -->
                 <td>
-                  <a :href="'https://' + store.domain" class="store-link" target="_blank">
+                  <a
+                    :href="store.websiteUrl"
+                    class="store-link"
+                    target="_blank"
+                  >
                     {{ store.domain }}
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-xs">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      class="icon-xs"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+                      />
                     </svg>
                   </a>
                 </td>
@@ -89,30 +147,40 @@
                 <td>
                   <div class="campaign-cell">
                     <div class="campaign-top">
-                      <span :class="['discount-badge', store.discountType === 'sale' ? 'badge-green' : 'badge-gray']">
+                      <span
+                        :class="[
+                          'discount-badge',
+                          store.discountType === 'sale'
+                            ? 'badge-green'
+                            : 'badge-gray',
+                        ]"
+                      >
                         {{ store.discountCode }}
                       </span>
-                      <span class="campaign-discount-val">{{ store.discountValue }}</span>
+                      <span class="campaign-discount-val">{{
+                        store.discountValue
+                      }}</span>
                     </div>
                     <div class="campaign-name">{{ store.campaignName }}</div>
                   </div>
                 </td>
 
-                <!-- Total Orders -->
-                <td>
-                  <div class="orders-cell">
-                    <span class="orders-count">{{ store.orders.toLocaleString() }}</span>
-                    <div class="orders-bar-track">
-                      <div class="orders-bar-fill" :style="{ width: store.orderPct + '%' }"></div>
-                    </div>
-                  </div>
-                </td>
-
                 <!-- Status -->
                 <td>
-                  <span :class="['status-pill', store.status === 'Active' ? 'pill-active' : 'pill-inactive']">
-                    <span class="pill-dot"></span>
-                    {{ store.status }}
+                  <span
+                    :class="[
+                      'status-pill',
+                      store.is_active ? 'pill-inactive' : 'pill-active',
+                    ]"
+                  >
+                    <span
+                      :class="[
+                        'pill-dot',
+                        store.is_active ? 'dot-inactive' : 'dot-active',
+                      ]"
+                    ></span>
+
+                    {{ store.is_active ? "InActive" : "active" }}
                   </span>
                 </td>
 
@@ -120,14 +188,38 @@
                 <td>
                   <div class="actions-cell">
                     <button class="action-btn" aria-label="Edit">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="icon-sm">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        class="icon-sm"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"
+                        />
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                        />
                       </svg>
                     </button>
                     <button class="action-btn" aria-label="More options">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="icon-sm">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        class="icon-sm"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                        />
                       </svg>
                     </button>
                   </div>
@@ -139,21 +231,64 @@
 
         <!-- Pagination Footer -->
         <div class="pagination-footer">
-          <span class="pagination-info">Showing 1–6 of 48 stores</span>
+          <span class="pagination-info">
+            Showing {{ showingStart }}–{{ showingEnd }} of
+            {{ filteredStores.length }} stores
+          </span>
           <div class="pagination-controls">
-            <button class="page-btn page-btn--disabled" disabled aria-label="Previous">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-xs">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            <button
+              class="page-btn"
+              :class="{ 'page-btn--disabled': currentPage === 1 }"
+              :disabled="currentPage === 1"
+              aria-label="Previous"
+              @click="goToPage(currentPage - 1)"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                class="icon-xs"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15.75 19.5L8.25 12l7.5-7.5"
+                />
               </svg>
             </button>
-            <button class="page-btn page-btn--active">1</button>
-            <button class="page-btn">2</button>
-            <button class="page-btn">3</button>
-            <span class="page-ellipsis">…</span>
-            <button class="page-btn">10</button>
-            <button class="page-btn" aria-label="Next">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-xs">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+
+            <template v-for="(page, idx) in visiblePages" :key="idx">
+              <span v-if="page === '...'" class="page-ellipsis">…</span>
+              <button
+                v-else
+                class="page-btn"
+                :class="{ 'page-btn--active': page === currentPage }"
+                @click="goToPage(page)"
+              >
+                {{ page }}
+              </button>
+            </template>
+
+            <button
+              class="page-btn"
+              :class="{ 'page-btn--disabled': currentPage === totalPages }"
+              :disabled="currentPage === totalPages"
+              aria-label="Next"
+              @click="goToPage(currentPage + 1)"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                class="icon-xs"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
               </svg>
             </button>
           </div>
@@ -164,130 +299,147 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, watch } from "vue";
+import { getStores } from "../../services/services"; // adjust this import path to match your project structure
 
-const searchQuery = ref('')
-const statusFilter = ref('')
+const searchQuery = ref("");
+const statusFilter = ref("");
+const loading = ref(false);
 
-const stores = ref([
-  {
-    id: 1,
-    name: 'Vogue Boutique',
-    storeId: 'STR-0041',
-    logoColor: '#e9d5ff',
-    domain: 'vogueboutique.co',
-    discountCode: 'SALE20',
-    discountType: 'sale',
-    discountValue: '20%',
-    campaignName: 'Storewide Season Sale',
-    orders: 12402,
-    orderPct: 75,
-    status: 'Active',
-  },
-  {
-    id: 2,
-    name: 'Urban Loft',
-    storeId: 'STR-0038',
-    logoColor: '#fde68a',
-    domain: 'urbanloft.store',
-    discountCode: 'INFL15',
-    discountType: 'sale',
-    discountValue: '15%',
-    campaignName: 'Influencer Campaign',
-    orders: 3890,
-    orderPct: 40,
-    status: 'Inactive',
-  },
-  {
-    id: 3,
-    name: 'Celestia',
-    storeId: 'STR-0035',
-    logoColor: '#bfdbfe',
-    domain: 'celestia.fashion',
-    discountCode: 'FLASH',
-    discountType: 'sale',
-    discountValue: '30%',
-    campaignName: 'Flash Weekend Drop',
-    orders: 7201,
-    orderPct: 60,
-    status: 'Active',
-  },
-  {
-    id: 4,
-    name: 'Marble & Oak',
-    storeId: 'STR-0031',
-    logoColor: '#d1fae5',
-    domain: 'marbleoak.com',
-    discountCode: 'INFL15',
-    discountType: 'sale',
-    discountValue: '15%',
-    campaignName: 'Influencer Campaign',
-    orders: 4105,
-    orderPct: 35,
-    status: 'Inactive',
-  },
-  {
-    id: 5,
-    name: 'Ethereal Silk',
-    storeId: 'STR-0027',
-    logoColor: '#fce7f3',
-    domain: 'etherealsilk.co',
-    discountCode: '-',
-    discountType: 'none',
-    discountValue: '0',
-    campaignName: 'No Active Codes',
-    orders: 850,
-    orderPct: 15,
-    status: 'Active',
-  },
-  {
-    id: 6,
-    name: 'Noir Studio',
-    storeId: 'STR-0019',
-    logoColor: '#e5e7eb',
-    domain: 'noirstudio.io',
-    discountCode: '-',
-    discountType: 'none',
-    discountValue: '0',
-    campaignName: 'No Active Codes',
-    orders: 620,
-    orderPct: 10,
-    status: 'Active',
-  },
-])
+const stores = ref([]);
+
+const currentPage = ref(1);
+const itemsPerPage = 6;
+
+function extractDomain(url) {
+  try {
+    return new URL(url).hostname;
+  } catch {
+    return url || "";
+  }
+}
+
+function storeCode(id) {
+  return `STR-${id.slice(-6).toUpperCase()}`;
+}
+
+async function fetchStores() {
+  loading.value = true;
+  try {
+    const res = await getStores();
+    stores.value = res.data.map((s) => ({
+      id: s._id,
+      storeId: storeCode(s._id),
+      name: s.name,
+      logoUrl: s.logo_url,
+      logoColor: "#e5e7eb", // fallback swatch if a store has no logo_url
+      domain: extractDomain(s.website_url),
+      websiteUrl: s.website_url,
+      discountCode: s.discount_code || "-",
+      discountType: s.discount_percent ? "sale" : "none",
+      discountValue: s.discount_percent ? `${s.discount_percent}%` : "0%",
+      campaignName: s.discount_code
+        ? "Active Discount Code"
+        : "No Active Codes",
+      status: s.is_active ? "Active" : "Inactive",
+    }));
+  } catch (err) {
+    console.error("Failed to fetch stores:", err);
+  } finally {
+    loading.value = false;
+  }
+}
+
+onMounted(fetchStores);
 
 const filteredStores = computed(() =>
-  stores.value.filter(s => {
-    const matchesSearch = s.name.toLowerCase().includes(searchQuery.value.toLowerCase())
-    const matchesStatus = !statusFilter.value || s.status.toLowerCase() === statusFilter.value
-    return matchesSearch && matchesStatus
-  })
-)
+  stores.value.filter((s) => {
+    const matchesSearch = s.name
+      .toLowerCase()
+      .includes(searchQuery.value.toLowerCase());
+    const matchesStatus =
+      !statusFilter.value || s.status.toLowerCase() === statusFilter.value;
+    return matchesSearch && matchesStatus;
+  }),
+);
+
+// Reset to page 1 whenever the filtered set changes shape
+watch([searchQuery, statusFilter], () => {
+  currentPage.value = 1;
+});
+
+const totalPages = computed(() =>
+  Math.max(1, Math.ceil(filteredStores.value.length / itemsPerPage)),
+);
+
+const paginatedStores = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage;
+  return filteredStores.value.slice(start, start + itemsPerPage);
+});
+
+const showingStart = computed(() =>
+  filteredStores.value.length === 0
+    ? 0
+    : (currentPage.value - 1) * itemsPerPage + 1,
+);
+
+const showingEnd = computed(() =>
+  Math.min(currentPage.value * itemsPerPage, filteredStores.value.length),
+);
+
+// Builds a compact page list like [1, "...", 4, 5, 6, "...", 12]
+const visiblePages = computed(() => {
+  const total = totalPages.value;
+  const current = currentPage.value;
+  const delta = 1;
+  const pages = [];
+
+  for (
+    let i = Math.max(2, current - delta);
+    i <= Math.min(total - 1, current + delta);
+    i++
+  ) {
+    pages.push(i);
+  }
+
+  if (current - delta > 2) pages.unshift("...");
+  if (current + delta < total - 1) pages.push("...");
+
+  pages.unshift(1);
+  if (total > 1) pages.push(total);
+
+  return pages;
+});
+
+function goToPage(page) {
+  if (page === "..." || page < 1 || page > totalPages.value) return;
+  currentPage.value = page;
+}
 </script>
 
 <style scoped>
 /* ─── Tokens ─────────────────────────────────────────── */
 :root {
-  --bg: #FAF8FF;
-  --surface: #FFFFFF;
+  --bg: #faf8ff;
+  --surface: #ffffff;
   --border: rgba(195, 197, 215, 0.3);
-  --border-solid: #C3C5D7;
-  --blue: #1550D3;
-  --blue-light: #F3F3FE;
-  --text-primary: #191B23;
+  --border-solid: #c3c5d7;
+  --blue: #1550d3;
+  --blue-light: #f3f3fe;
+  --text-primary: #191b23;
   --text-secondary: #434654;
   --text-muted: #737686;
-  --text-placeholder: #6B7280;
+  --text-placeholder: #6b7280;
   --green-bg: rgba(108, 248, 187, 0.2);
   --green-border: rgba(0, 108, 73, 0.2);
-  --green-text: #006C49;
-  --inactive-bg: #E7E7F2;
+  --green-text: #006c49;
+  --inactive-bg: #e7e7f2;
   --inactive-dot: #737686;
   --inactive-text: #434654;
   --radius-card: 12px;
   --radius-btn: 8px;
-  --font-geist: 'Geist', 'Inter', system-ui, sans-serif;
-  --font-mono: 'Geist Mono', 'JetBrains Mono', monospace;
+  --font-geist: "Geist", "Inter", system-ui, sans-serif;
+  --font-mono: "Geist Mono", "JetBrains Mono", monospace;
 }
 
 /* ─── Page Shell ─────────────────────────────────────── */
@@ -298,56 +450,6 @@ const filteredStores = computed(() =>
   background: var(--bg);
   font-family: var(--font-geist);
   color: var(--text-primary);
-}
-
-/* ─── Top Bar ────────────────────────────────────────── */
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 80px 0 32px;
-  height: 64px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border-solid);
-  gap: 24px;
-  flex-shrink: 0;
-}
-
-.topbar-search {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: #EDEEEF;
-  border: 1px solid var(--border-solid);
-  border-radius: 16px;
-  padding: 8px 16px;
-  width: 412px;
-  max-width: 100%;
-}
-
-.topbar-search-icon {
-  width: 14px;
-  height: 14px;
-  color: var(--text-secondary);
-  flex-shrink: 0;
-}
-
-.topbar-input {
-  border: none;
-  background: transparent;
-  outline: none;
-  font-family: var(--font-geist);
-  font-size: 14px;
-  color: var(--text-primary);
-  width: 100%;
-}
-
-.topbar-input::placeholder { color: var(--text-placeholder); }
-
-.topbar-actions {
-  display: flex;
-  align-items: center;
-  gap: 16px;
 }
 
 .btn-add-store {
@@ -367,14 +469,8 @@ const filteredStores = computed(() =>
   white-space: nowrap;
 }
 
-.btn-add-store:hover { background: #1240b5; }
-
-.topbar-icon-group {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding-left: 16px;
-  border-left: 1px solid var(--border-solid);
+.btn-add-store:hover {
+  background: #1240b5;
 }
 
 .icon-btn {
@@ -390,7 +486,9 @@ const filteredStores = computed(() =>
   cursor: pointer;
 }
 
-.icon-btn:hover { background: var(--blue-light); }
+.icon-btn:hover {
+  background: var(--blue-light);
+}
 
 /* ─── Content ────────────────────────────────────────── */
 .content {
@@ -469,12 +567,20 @@ const filteredStores = computed(() =>
   outline: none;
 }
 
-.search-input::placeholder { color: var(--text-placeholder); }
-.search-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(21,80,211,0.1); }
+.search-input::placeholder {
+  color: var(--text-placeholder);
+}
+.search-input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(21, 80, 211, 0.1);
+}
 
 .select-wrap {
   position: relative;
   flex-shrink: 0;
+
+  border: 1px solid #c3c5d7;
+  border-radius: 5px;
 }
 
 .status-select {
@@ -491,7 +597,9 @@ const filteredStores = computed(() =>
   min-width: 160px;
 }
 
-.status-select:focus { border-color: var(--blue); }
+.status-select:focus {
+  border-color: var(--blue);
+}
 
 .select-chevron {
   position: absolute;
@@ -500,7 +608,7 @@ const filteredStores = computed(() =>
   transform: translateY(-50%);
   width: 14px;
   height: 14px;
-  color: #6B7280;
+  color: #6b7280;
   pointer-events: none;
 }
 
@@ -516,40 +624,47 @@ const filteredStores = computed(() =>
   justify-content: center;
   width: 44px;
   height: 44px;
-  background: #E7E7F2;
-  border: none;
-  border-radius: var(--radius-btn);
-  color: var(--text-secondary);
+
+  border: 1px solid #c3c5d7;
+  border-radius: 5px;
+
   cursor: pointer;
 }
 
-.btn-icon-only:hover { background: #ddddf0; }
-
+.btn-icon-only:hover {
+  background: #ddddf0;
+}
 .btn-text-link {
   background: none;
+  color: blue;
   border: none;
   font-family: var(--font-geist);
   font-size: 12px;
   font-weight: 500;
-  color: var(--blue);
   letter-spacing: 0.24px;
   cursor: pointer;
   white-space: nowrap;
   padding: 0 4px;
 }
 
-.btn-text-link:hover { text-decoration: underline; }
+.btn-text-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  text-decoration: underline;
+}
 
 /* ─── Table Card ─────────────────────────────────────── */
 .table-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-card);
-  box-shadow: 0px 1px 2px rgba(0,0,0,0.05);
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
   overflow: hidden;
 }
 
-.table-scroll { overflow-x: auto; }
+.table-scroll {
+  overflow-x: auto;
+}
 
 .store-table {
   width: 100%;
@@ -578,8 +693,12 @@ const filteredStores = computed(() =>
   transition: background 0.1s;
 }
 
-.store-table tbody tr:first-child { border-top: none; }
-.store-table tbody tr:hover { background: #fafafe; }
+.store-table tbody tr:first-child {
+  border-top: none;
+}
+.store-table tbody tr:hover {
+  background: #fafafe;
+}
 
 .store-table td {
   padding: 20px 24px;
@@ -600,7 +719,7 @@ const filteredStores = computed(() =>
   justify-content: center;
   width: 40px;
   height: 40px;
-  border: 1px solid rgba(195,197,215,0.5);
+  border: 1px solid rgba(195, 197, 215, 0.5);
   border-radius: 8px;
   background: var(--bg);
   flex-shrink: 0;
@@ -616,6 +735,21 @@ const filteredStores = computed(() =>
   font-weight: 700;
   font-size: 14px;
   color: var(--text-primary);
+}
+
+.store-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.empty-state-cell {
+  padding: 32px 24px;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 14px;
 }
 
 .store-name {
@@ -643,10 +777,16 @@ const filteredStores = computed(() =>
   text-decoration: none;
 }
 
-.store-link:hover { text-decoration: underline; }
+.store-link:hover {
+  text-decoration: underline;
+}
 
 /* ─── Campaign Cell ──────────────────────────────────── */
-.campaign-cell { display: flex; flex-direction: column; gap: 4px; }
+.campaign-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
 
 .campaign-top {
   display: flex;
@@ -664,7 +804,7 @@ const filteredStores = computed(() =>
 .badge-green {
   background: var(--green-bg);
   border: 1px solid var(--green-border);
-  color: #00714D;
+  color: #00714d;
 }
 
 .badge-gray {
@@ -685,65 +825,42 @@ const filteredStores = computed(() =>
   color: var(--text-secondary);
   line-height: 1.4;
 }
-
-/* ─── Orders Cell ────────────────────────────────────── */
-.orders-cell { display: flex; flex-direction: column; gap: 6px; }
-
-.orders-count {
-  font-weight: 700;
-  font-size: 14px;
-  color: var(--text-primary);
-}
-
-.orders-bar-track {
-  width: 96px;
-  height: 4px;
-  background: #EDEDF8;
-  border-radius: 9999px;
-  overflow: hidden;
-}
-
-.orders-bar-fill {
-  height: 100%;
-  background: var(--blue);
-  border-radius: 9999px;
-  transition: width 0.4s ease;
-}
-
-/* ─── Status Pill ────────────────────────────────────── */
 .status-pill {
-  display: inline-flex;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
   align-items: center;
-  gap: 6px;
   padding: 4px 12px;
+  gap: 6px;
+  height: 26px;
   border-radius: 9999px;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.24px;
-  white-space: nowrap;
+  width: fit-content;
 }
-
-.pill-active {
-  background: var(--green-bg);
-  border: 1px solid var(--green-border);
-  color: var(--green-text);
-}
-
-.pill-active .pill-dot { background: var(--green-text); }
-
-.pill-inactive {
-  background: var(--inactive-bg);
-  border: 1px solid var(--border);
-  color: var(--inactive-text);
-}
-
-.pill-inactive .pill-dot { background: var(--inactive-dot); }
 
 .pill-dot {
   width: 6px;
   height: 6px;
-  border-radius: 50%;
-  flex-shrink: 0;
+  border-radius: 9999px;
+}
+
+.pill-active {
+  background: rgba(108, 248, 187, 0.2);
+  border: 1px solid rgba(0, 108, 73, 0.2);
+  color: #006c49;
+}
+
+.dot-active {
+  background: #006c49;
+}
+
+.pill-inactive {
+  background: #e7e7f2;
+  border: 1px solid rgba(195, 197, 215, 0.3);
+  color: #434654;
+}
+
+.dot-inactive {
+  background: #737686;
 }
 
 /* ─── Actions Cell ───────────────────────────────────── */
@@ -777,7 +894,7 @@ const filteredStores = computed(() =>
   align-items: center;
   justify-content: space-between;
   padding: 16px 24px;
-  background: var(--blue-light);
+  background-color: #faf8ff;
   border-top: 1px solid var(--border-solid);
 }
 
@@ -834,7 +951,16 @@ const filteredStores = computed(() =>
 }
 
 /* ─── Icon helpers ───────────────────────────────────── */
-.icon-xs { width: 10px; height: 10px; }
-.icon-sm { width: 16px; height: 16px; }
-.icon-md { width: 18px; height: 18px; }
+.icon-xs {
+  width: 10px;
+  height: 10px;
+}
+.icon-sm {
+  width: 16px;
+  height: 16px;
+}
+.icon-md {
+  width: 18px;
+  height: 18px;
+}
 </style>
