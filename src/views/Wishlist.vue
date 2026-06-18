@@ -40,10 +40,22 @@
         <StoreProducts
           v-else
           :products="filteredProducts"
+          show-see-match
+          :wardrobe-match-product-ids="wardrobeMatchProductIdsList"
           @try-on="onTryOn"
+          @see-match="onSeeMatch"
           @wishlist-error="onWishlistError"
         />
       </template>
+
+      <ProductMatchModal
+        :open="matchModalOpen"
+        :matches="productMatches"
+        :loading="matchLoading"
+        :error="matchError"
+        @close="closeMatchModal"
+        @view-details="onViewWardrobeDetails"
+      />
     </main>
   </div>
 </template>
@@ -53,9 +65,13 @@ import FilterSidebar from '../components/StoresRedolapy/filterSidebar.vue'
 import StoreSearchbar from '../components/StoresRedolapy/searchbar.vue'
 import StoreProducts from '../components/StoresRedolapy/StoreProducts.vue'
 import WishlistEmpty from '../components/StoresRedolapy/WishlistEmpty.vue'
+import ProductMatchModal from '../components/StoresRedolapy/ProductMatchModal.vue'
 import { fetchProducts, fetchStores } from '../api/store.js'
 import { mapApiError } from '../utils/mapApiError.js'
 import { useFavorites } from '../composables/useFavorites.js'
+import { useProductMatch } from '../composables/useProductMatch.js'
+import { useWardrobeStore } from '../stores/wardrobe.js'
+import { API_ERROR_CODES } from '../utils/apiError.js'
 import {
   buildFilterOptions,
   createDefaultFilters,
@@ -70,10 +86,13 @@ export default {
     StoreSearchbar,
     StoreProducts,
     WishlistEmpty,
+    ProductMatchModal,
   },
   setup() {
     const { favorites, loadFavorites, normalizeFavoriteId } = useFavorites()
-    return { favorites, loadFavorites, normalizeFavoriteId }
+    const wardrobeStore = useWardrobeStore()
+    const productMatch = useProductMatch()
+    return { favorites, loadFavorites, normalizeFavoriteId, wardrobeStore, ...productMatch }
   },
   data: () => ({
     searchQuery: '',
@@ -112,6 +131,8 @@ export default {
 
     await this.loadFavorites(true)
     await this.loadWishlistData()
+    await this.loadWardrobe()
+    this.scanWardrobeMatches()
   },
   beforeUnmount() {
     document.body.style.overflow = ''
@@ -133,6 +154,9 @@ export default {
         min: this.filterOptions.minPrice,
         max: this.filterOptions.maxPrice,
       })
+    },
+    wardrobeMatchProductIdsList() {
+      return [...this.wardrobeMatchProductIds]
     },
   },
   methods: {
@@ -166,6 +190,42 @@ export default {
         path: '/TryOn',
         query: { productId: product.id },
       })
+    },
+    async loadWardrobe() {
+      try {
+        await this.wardrobeStore.fetchAll()
+      } catch (err) {
+        if (err.message !== API_ERROR_CODES.LOGIN_REQUIRED) {
+          console.warn('Failed to preload wardrobe for match details', err)
+        }
+      }
+    },
+    async onSeeMatch(product) {
+      await this.openSeeMatch(product, this.$t.bind(this))
+    },
+    closeMatchModal() {
+      this.resetProductMatchModal()
+    },
+    scanWardrobeMatches() {
+      if (!localStorage.getItem('token') || !this.wardrobeStore.items?.length) return
+      const productIds = this.wishlistProducts.map((product) => product.id)
+      this.scanProductsForWardrobeMatches(productIds)
+    },
+    async onViewWardrobeDetails(itemId) {
+      if (!itemId) return
+
+      const item = this.wardrobeStore.getItemById(itemId)
+      if (!item) {
+        try {
+          await this.wardrobeStore.fetchAll()
+        } catch {
+          // Navigation still works if item exists server-side
+        }
+      }
+
+      this.closeMatchModal()
+      await this.$nextTick()
+      await this.$router.push(`/wardrobe/${itemId}`)
     },
     onWishlistError(err) {
       this.loadError = mapApiError(err, this.$t.bind(this))

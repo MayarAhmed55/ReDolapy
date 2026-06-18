@@ -40,8 +40,20 @@
       <StoreProducts
         v-else
         :products="filteredProducts"
+        show-see-match
+        :wardrobe-match-product-ids="wardrobeMatchProductIdsList"
         @try-on="onTryOn"
+        @see-match="onSeeMatch"
         @wishlist-error="onWishlistError"
+      />
+
+      <ProductMatchModal
+        :open="matchModalOpen"
+        :matches="productMatches"
+        :loading="matchLoading"
+        :error="matchError"
+        @close="closeMatchModal"
+        @view-details="onViewWardrobeDetails"
       />
     </main>
   </div>
@@ -51,6 +63,7 @@
 import FilterSidebar from '../components/StoresRedolapy/filterSidebar.vue'
 import StoreSearchbar from '../components/StoresRedolapy/searchbar.vue'
 import StoreProducts from '../components/StoresRedolapy/StoreProducts.vue'
+import ProductMatchModal from '../components/StoresRedolapy/ProductMatchModal.vue'
 import { fetchProducts, fetchStores } from '../api/store.js'
 import { mapApiError } from '../utils/mapApiError.js'
 import {
@@ -60,6 +73,9 @@ import {
   normalizeProduct,
 } from '../utils/storeHelpers.js'
 import { useFavorites } from '../composables/useFavorites.js'
+import { useProductMatch } from '../composables/useProductMatch.js'
+import { useWardrobeStore } from '../stores/wardrobe.js'
+import { API_ERROR_CODES } from '../utils/apiError.js'
 
 export default {
   name: 'Brands',
@@ -67,10 +83,13 @@ export default {
     FilterSidebar,
     StoreSearchbar,
     StoreProducts,
+    ProductMatchModal,
   },
   setup() {
     const { loadFavorites } = useFavorites()
-    return { loadFavorites }
+    const wardrobeStore = useWardrobeStore()
+    const productMatch = useProductMatch()
+    return { loadFavorites, wardrobeStore, ...productMatch }
   },
   data: () => ({
     searchQuery: '',
@@ -78,6 +97,7 @@ export default {
     loading: true,
     loadError: '',
     products: [],
+    activeMatchProductId: '',
     filterOptions: {
       brands: [],
       colors: [],
@@ -103,7 +123,12 @@ export default {
   },
   async mounted() {
     window.scrollTo({ top: 0, left: 0 })
-    await Promise.all([this.loadStoreData(), this.loadFavorites()])
+    await Promise.all([
+      this.loadStoreData(),
+      this.loadFavorites(),
+      this.loadWardrobe(),
+    ])
+    this.scanWardrobeMatches()
   },
   beforeUnmount() {
     document.body.style.overflow = ''
@@ -114,6 +139,9 @@ export default {
         min: this.filterOptions.minPrice,
         max: this.filterOptions.maxPrice,
       })
+    },
+    wardrobeMatchProductIdsList() {
+      return [...this.wardrobeMatchProductIds]
     },
   },
   methods: {
@@ -147,6 +175,44 @@ export default {
         path: '/TryOn',
         query: { productId: product.id },
       })
+    },
+    async loadWardrobe() {
+      try {
+        await this.wardrobeStore.fetchAll()
+      } catch (err) {
+        if (err.message !== API_ERROR_CODES.LOGIN_REQUIRED) {
+          console.warn('Failed to preload wardrobe for match details', err)
+        }
+      }
+    },
+    async onSeeMatch(product) {
+      this.activeMatchProductId = product?.id || ''
+      await this.openSeeMatch(product, this.$t.bind(this))
+    },
+    closeMatchModal() {
+      this.activeMatchProductId = ''
+      this.resetProductMatchModal()
+    },
+    scanWardrobeMatches() {
+      if (!localStorage.getItem('token') || !this.wardrobeStore.items?.length) return
+      const productIds = this.filteredProducts.map((product) => product.id)
+      this.scanProductsForWardrobeMatches(productIds)
+    },
+    async onViewWardrobeDetails(itemId) {
+      if (!itemId) return
+
+      const item = this.wardrobeStore.getItemById(itemId)
+      if (!item) {
+        try {
+          await this.wardrobeStore.fetchAll()
+        } catch {
+          // Navigation still works if item exists server-side
+        }
+      }
+
+      this.closeMatchModal()
+      await this.$nextTick()
+      await this.$router.push(`/wardrobe/${itemId}`)
     },
     onWishlistError(err) {
       if (err.code === 'LOGIN_REQUIRED' || err.message === 'LOGIN_REQUIRED') {

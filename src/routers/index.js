@@ -12,6 +12,9 @@ import Pricing from "../views/pricing.vue";
 import AboutTryon from "../views/AboutTryon.vue";
 import Profile from "../views/Profile.vue";
 import Wardrobe from '../views/Wardrobe.vue'
+import WardrobeDetails from '../views/WardrobeDetails.vue'
+import Recommendation from '../views/Recommendation.vue'
+import Matching from '../views/Matching.vue'
 import Wishlist from '../views/Wishlist.vue'
 import Avatar from '../views/Avatar.vue'
 import {isAuthModalOpen, triggerLoginModal} from '../authState.js';
@@ -30,7 +33,21 @@ const routes = [
   { path: "/TryOn", component: TryOn, meta: { requiresAuth: true } },
   { path: "/pricing", component: Pricing, meta: { requiresAuth: true } },
   { path: "/userWardrobe", component: UserWardrobe },
-  {path: '/wardrobe', component: Wardrobe},
+  {
+    path: '/wardrobe/:id',
+    component: WardrobeDetails,
+    props: true,
+    meta: { requiresAuth: true },
+  },
+  { path: '/wardrobe', component: Wardrobe, meta: { requiresAuth: true } },
+  {
+    path: '/productDetails/:analysisId',
+    redirect: (to) => (to.query.itemId ? `/wardrobe/${to.query.itemId}` : '/wardrobe'),
+  },
+  { path: '/Recommendation', component: Recommendation, meta: { requiresAuth: true } },
+  { path: '/recommendation', redirect: '/Recommendation' },
+  { path: '/Matching', component: Matching, meta: { requiresAuth: true } },
+  { path: '/matching', redirect: '/Matching' },
   { path: '/wordrobe', redirect: '/wardrobe' },
   { path: '/Wishlist', component: Wishlist },
   { path: '/wishlist', redirect: '/Wishlist' },

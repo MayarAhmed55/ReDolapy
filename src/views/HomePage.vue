@@ -153,7 +153,7 @@
         </button>
       </div>
 
-      <div id="PricingCards" class="flex flex-column flex-wrap lg:flex-row lg:flex-nowrap  gap-8 justify-center items-stretch my-[3rem] max-w-[1000px] m-auto">
+      <div id="PricingCards" class="flex flex-column flex-wrap lg:flex-row lg:flex-nowrap  gap-8 justify-center items-center my-[3rem] max-w-[1000px] m-auto">
 
         <div id="FreePricing" class="card  bg-white dark:bg-[#0d0d0d] flex flex-col  justify-center  items-center gap-8 w-[50%] lg:w-[48%] min-w-[320px] max-w-[380px] !px-6">
           <p class="PricingTitle text-4xl font-bold PrimaryTxt">

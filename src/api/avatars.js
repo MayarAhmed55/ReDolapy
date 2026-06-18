@@ -50,7 +50,7 @@ async function recoverAvatarWithDashscope(payload, failedData) {
     throw new Error(API_ERROR_CODES.KIE_CREDITS_EXHAUSTED)
   }
 
-  const imageUrl = await generateAvatarWithDashscope(buildAvatarPrompt(payload.avatar))
+  const imageUrl = await generateAvatarWithDashscope(buildAvatarPrompt(payload))
   return updateAvatarImageUrl(avatarId, imageUrl)
 }
 
