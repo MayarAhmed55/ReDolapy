@@ -1,7 +1,7 @@
 <template>
     <div>
         <section id="Header" class="  flex items-center justify-between px-[1rem]">
-            <div id="slogan" class="w-[40%] my-[5rem]">
+            <div id="slogan" class="w-[35%] my-[5rem]">
                 <p class="text-5xl font-bold  PrimaryTxt">{{ $t('contact.titlePart1') }} </p>
                 <p class="text-5xl gradientColor font-bold ">{{ $t('contact.titlePart2') }}</p>
                 <p class="w-[90%] mb-[1rem] grayTxt">{{ $t('contact.description') }}</p>
@@ -43,25 +43,25 @@
             <div id="MessageForm" class="w-[60%]">
 
 
-                <form action="">
+                <form @submit.prevent="submitForm">
                     <label class="font-semibold PrimaryTxt" for="">{{ $t('contact.form.nameLabel') }}</label>
-                    <input id="cardNumber"
-                        class="border-2 border-gray-200 rounded-lg w-full p-[0.8rem] mt-[0.2rem] mb-[1rem]  placeholder:text-gray-400 dark:placeholder:text-zinc-600"
-                        type="text" :placeholder="$t('contact.form.namePlaceholder')" />
+                    <input id="nameInput" v-model="formInput.name"
+                        class="border-2 border-gray-200 rounded-lg w-full p-[0.8rem] mt-[0.2rem] mb-[1rem] placeholder:text-gray-400 dark:placeholder:text-zinc-600"
+                        type="text" :placeholder="$t('contact.form.namePlaceholder')" required/>
                     <label class="font-semibold PrimaryTxt" for="">{{ $t('contact.form.emailLabel') }}</label>
-                    <input id="Date"
-                        class="border-2 border-gray-200 rounded-lg p-[0.8rem] w-[100%] mt-[0.2rem] mb-[1rem]  placeholder:text-gray-400 dark:placeholder:text-zinc-600"
-                        type="text" :placeholder="$t('contact.form.emailPlaceholder')" />
+                    <input id="emailInput" v-model="formInput.email"
+                    class="border-2 border-gray-200 rounded-lg p-[0.8rem] w-[100%] mt-[0.2rem] mb-[1rem] bg-transparent text-zinc-800 dark:text-white placeholder:text-gray-400 dark:placeholder:text-zinc-600 autofill:bg-transparent dark:autofill:text-white autofill:bg-transparent" 
+                        type="email" :placeholder="$t('contact.form.emailPlaceholder')" required/>
 
                     <label class="font-semibold PrimaryTxt " for="">{{ $t('contact.form.messageLabel') }}</label>
 
-                    <textarea name="" id="" rows="8"
-                        class="border-2 border-gray-200 rounded-lg p-[0.8rem] w-[100%] mt-[0.2rem] mb-[2rem] placeholder:text-gray-400 dark:placeholder:text-zinc-600"
-                        :placeholder="$t('contact.form.messagePlaceholder')"></textarea>
+                    <textarea name="" id="" rows="8" v-model="formInput.message"
+                        class="border-2 border-gray-200 rounded-lg p-[0.8rem] w-[100%] mt-[0.2rem] mb-[2rem] text-zinc-800 dark:text-white placeholder:text-gray-400 dark:placeholder:text-zinc-600 autofill:bg-transparent dark:autofill:text-white autofill:bg-transparent"
+                        :placeholder="$t('contact.form.messagePlaceholder') " required></textarea>
 
 
-                    <button id="ProPricingBtn" class=" PricingCardsButton font-semibold text-lg w-[100%] border-none">
-                        {{ $t('contact.form.sendButton') }}
+                    <button id="ProPricingBtn" class=" PricingCardsButton font-semibold text-lg w-[100%] border-none " type="submit" :disabled="isSubmitting" :style="{ opacity: isSubmitting ? '0.4' : '1' }"> 
+                          {{ isSubmitting ? 'Sending...' : $t('contact.form.sendButton') }}
                     </button>
                 </form>
             </div>
@@ -75,6 +75,7 @@
 
 <script>
 import { Mail, Phone, Send } from '@lucide/vue';
+import axios from 'axios';
 
 export default {
     name: 'ContactUs',
@@ -83,11 +84,50 @@ export default {
         Phone,
         Send
     },
+    data(){
+        return {
+        formInput:{
+            name:'',
+            email:'',
+            message:''
+        },
+        isSubmitting:false
+    };
+},
+    methods:{
+        async submitForm() {
+            if (!this.formInput.name || !this.formInput.email || !this.formInput.message) {
+                alert("Please fill in all fields.");
+                return;
+            }
+            this.isSubmitting = true;
+            try{
+                const response = await axios.post('http://localhost:5000/api/contact', this.formInput);
+
+                if(response.status===201 || response.status===200){
+                    alert('Message sent successfully to us!');
+
+                    this.formInput.name='';
+                    this.formInput.email='';
+                    this.formInput.message='';
+                }
+
+            }catch (error){
+                console.error("API Error:", error);
+                alert('Failed to send message. Please check your connection.');
+            }finally{
+                this.isSubmitting = false;
+            }
+
+
+    }
 }
+}
+
 </script>
 
 <style scoped>
-@import '../assets/Style.css';
+/* @import '../assets/Style.css'; */
 
 
 .gradientColor {
@@ -137,5 +177,10 @@ export default {
     background-color: var(--Primary-Brand-color);
     color: white;
     cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+#ProPricingBtn:disabled {
+    opacity: 0.4 !important; 
+    cursor: not-allowed;    
 }
 </style>
