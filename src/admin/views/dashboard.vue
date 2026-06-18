@@ -25,7 +25,7 @@
           <span class="stat-badge positive">+12.4%</span>
         </div>
         <p class="stat-label">Total Stores</p>
-        <span class="stat-value">{{storesCount}}</span>
+        <span class="stat-value">{{ storesCount }}</span>
       </div>
 
       <div class="stat-card">
@@ -36,7 +36,7 @@
           <span class="stat-badge positive">+8.2%</span>
         </div>
         <p class="stat-label">Total Products</p>
-        <span class="stat-value">{{productsCount}}</span>
+        <span class="stat-value">{{ productsCount }}</span>
       </div>
 
       <div class="stat-card">
@@ -80,14 +80,19 @@
       <div class="activity-card">
         <div class="activity-inner">
           <div class="activity-header-row">
-            <span class="activity-metric-label">Platform Usage</span>
+            <span class="activity-metric-label">Active products</span>
           </div>
+
           <div class="progress-bar-wrap">
             <div class="progress-track">
-              <div class="progress-fill" style="width: 79.98%"></div>
+              <div
+                class="progress-fill"
+                :style="{ width: activeProducts/100 + '%' }"
+              ></div>
             </div>
           </div>
-          <span class="activity-value">79.98%</span>
+
+          <span class="activity-value">{{ activeProducts }}</span>
         </div>
       </div>
 
@@ -95,14 +100,14 @@
       <div class="activity-card">
         <div class="activity-inner">
           <div class="activity-header-row">
-            <span class="activity-metric-label">Avg Session</span>
+            <span class="activity-metric-label">Total Users</span>
             <img
               src="../../assets/Icon (22).svg"
               alt=""
               class="activity-icon"
             />
           </div>
-          <span class="activity-value">N/A</span>
+          <span class="activity-value">{{ userCount }}</span>
         </div>
       </div>
     </section>
@@ -164,13 +169,15 @@
 </template>
 
 <script>
-import { getStores, getProducts } from "../../services/services";
+import { getStores, getProducts, getAllUsers } from "../../services/services";
 export default {
   name: "Dashboard",
   data() {
     return {
       storesCount: 0,
-      productsCount:0,
+      productsCount: 0,
+      userCount: 0,
+      activeProducts: 0,
     };
   },
 
@@ -190,12 +197,34 @@ export default {
       } catch (err) {
         console.error("Failed to fetch stores:", err);
       }
-    }
+    },
+    async fetchUsers() {
+      try {
+        const res = await getAllUsers();
+        this.userCount = res.data.length;
+      } catch (err) {
+        console.log("failed to fetch users", err);
+      }
+    },
+    async fetchActiveProducts() {
+      try {
+        const { data } = await getProducts();
+
+        this.activeProducts = data.filter(
+          (product) => product.is_active === true,
+        ).length;
+      } catch (err) {
+        console.log("failed to get the active products", err);
+        this.activeProducts = 0;
+      }
+    },
   },
 
   mounted() {
     this.fetchStoresCount();
     this.fetchProductsCount();
+    this.fetchUsers();
+    this.fetchActiveProducts();
   },
 };
 </script>

@@ -106,7 +106,7 @@ export const markAsReadAll = () => {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-    }
+    },
   );
 };
 export const markAsRead = (notificationID) => {
@@ -117,49 +117,55 @@ export const markAsRead = (notificationID) => {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-    }
+    },
   );
 };
-export const deletAllNotifications=()=>{
-  return axios.delete(
-    `${API}/notifications`,
-    {
-      headers:{
-        Authorization: `Bearer ${localStorage.getItem("token")}`
-      }
-    }
-  )
-}
+export const deletAllNotifications = () => {
+  return axios.delete(`${API}/notifications`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
 // export const deleteNotificationbyid=()=>{
 
 // }
 
-export const getStores=()=>{
-  return axios.get(
-    `${API}/stores`,{
-      headers:{
-        Authorization: `Bearer ${localStorage.getItem("token")}`
-      }
-    }
-  )
-}
-export const getProducts=()=>{
-  return axios.get(
-    `${API}/products`,{
-      headers:{
-        Authorization:`Bearer ${localStorage.getItem("token")}`
-      }
-    }
-  )
-}
-export const addStore = (data) => {
-  return axios.post(
-    `${API}/stores`,
-    data,
-    {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
-      }
-    }
-  );
+export const getStores = () => {
+  return axios.get(`${API}/stores`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
 };
+export const getProducts = () => {
+  return axios.get(`${API}/products`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+export const addStore = (data) => {
+  return axios.post(`${API}/stores`, data, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+/////////////////***********stile not used */
+export const addProduct = (data) => {
+  return axios.post(`${API}/products`, data, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+/////////////////***********stile not used */
+
+export const getAllUsers=()=>{
+  return axios.get(`${API}/users`,{
+    headers:{
+      Authorization:`Bearer ${localStorage.getItem("token")}`
+    }
+  })
+}

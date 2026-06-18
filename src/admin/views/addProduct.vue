@@ -3,7 +3,6 @@
     <!-- Content Area -->
     <div class="content-scroll">
       <div class="content-inner">
-
         <!-- Progress Stepper -->
         <nav class="stepper" aria-label="Add product progress">
           <div class="stepper-line"></div>
@@ -17,7 +16,7 @@
               :class="{
                 'is-active': i === currentStep,
                 'is-complete': i < currentStep,
-                'is-upcoming': i > currentStep
+                'is-upcoming': i > currentStep,
               }"
             >
               <CheckIcon v-if="i < currentStep" class="w-4 h-4" />
@@ -26,15 +25,22 @@
             <span
               class="stepper-label"
               :class="{ 'is-active': i === currentStep }"
-            >{{ step.label }}</span>
+              >{{ step.label }}</span
+            >
           </div>
         </nav>
 
         <form class="form-sections" @submit.prevent="handleSubmit">
-
           <!-- Section 1: Basic Info -->
           <section class="form-section">
-            <SectionHeading>Basic Info</SectionHeading>
+            <div class="flex items-center">
+              <div
+                class="w-[6px] h-[24px] bg-blue-700 rounded-full shrink-0"
+              ></div>
+              <SectionHeading class="font-bold">
+                Basic Information
+              </SectionHeading>
+            </div>
 
             <div class="field">
               <label class="field-label" for="product-name">Product Name</label>
@@ -63,7 +69,9 @@
               <div class="select-wrap">
                 <select id="store" v-model="form.store" class="field-select">
                   <option disabled value="">Select a store</option>
-                  <option v-for="store in stores" :key="store" :value="store">{{ store }}</option>
+                  <option v-for="store in stores" :key="store" :value="store">
+                    {{ store }}
+                  </option>
                 </select>
                 <ChevronDownIcon class="select-chevron" />
               </div>
@@ -72,11 +80,22 @@
 
           <!-- Section 2: Media -->
           <section class="form-section">
-            <SectionHeading>Media</SectionHeading>
+            <div class="flex items-center">
+              <div
+                class="w-[6px] h-[24px] bg-blue-700 rounded-full shrink-0"
+              ></div>
+              <SectionHeading class="font-bold"> Product Media </SectionHeading>
+            </div>
 
             <div class="media-grid">
               <label class="media-dropzone">
-                <input type="file" accept="image/*" multiple class="sr-only" @change="onFilesSelected" />
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  class="sr-only"
+                  @change="onFilesSelected"
+                />
                 <UploadIcon class="w-[18px] h-[18px] text-[#1550D3]" />
                 <span class="media-dropzone-text">Upload</span>
               </label>
@@ -109,26 +128,48 @@
 
           <!-- Section 3: Classification -->
           <section class="form-section">
-            <SectionHeading>Classification</SectionHeading>
-
+            <div class="flex items-center">
+              <div
+                class="w-[6px] h-[24px] bg-blue-700 rounded-full shrink-0"
+              ></div>
+              <SectionHeading class="font-bold">
+                Classification
+              </SectionHeading>
+            </div>
             <div class="two-col">
               <div class="field">
-                <label class="field-label" for="category">Primary Category</label>
+                <label class="field-label" for="category"
+                  >Primary Category</label
+                >
                 <div class="select-wrap">
-                  <select id="category" v-model="form.category" class="field-select">
+                  <select
+                    id="category"
+                    v-model="form.category"
+                    class="field-select"
+                  >
                     <option disabled value="">Select category</option>
-                    <option v-for="c in categories" :key="c" :value="c">{{ c }}</option>
+                    <option v-for="c in categories" :key="c" :value="c">
+                      {{ c }}
+                    </option>
                   </select>
                   <ChevronDownIcon class="select-chevron" />
                 </div>
               </div>
 
               <div class="field">
-                <label class="field-label" for="subcategory">Sub-Category</label>
+                <label class="field-label" for="subcategory"
+                  >Sub-Category</label
+                >
                 <div class="select-wrap">
-                  <select id="subcategory" v-model="form.subcategory" class="field-select">
+                  <select
+                    id="subcategory"
+                    v-model="form.subcategory"
+                    class="field-select"
+                  >
                     <option disabled value="">Select sub-category</option>
-                    <option v-for="s in subcategories" :key="s" :value="s">{{ s }}</option>
+                    <option v-for="s in subcategories" :key="s" :value="s">
+                      {{ s }}
+                    </option>
                   </select>
                   <ChevronDownIcon class="select-chevron" />
                 </div>
@@ -138,9 +179,18 @@
             <div class="field">
               <label class="field-label" for="tags">Tags</label>
               <div class="tags-input">
-                <span v-for="(tag, idx) in form.tags" :key="tag" class="tag-chip">
+                <span
+                  v-for="(tag, idx) in form.tags"
+                  :key="tag"
+                  class="tag-chip"
+                >
                   {{ tag }}
-                  <button type="button" class="tag-remove" @click="removeTag(idx)" aria-label="Remove tag">
+                  <button
+                    type="button"
+                    class="tag-remove"
+                    @click="removeTag(idx)"
+                    aria-label="Remove tag"
+                  >
                     <XIcon class="w-[8px] h-[8px]" />
                   </button>
                 </span>
@@ -159,7 +209,14 @@
 
           <!-- Section 4: Pricing -->
           <section class="form-section">
-            <SectionHeading>Pricing</SectionHeading>
+            <div class="flex items-center">
+              <div
+                class="w-[6px] h-[24px] bg-blue-700 rounded-full shrink-0"
+              ></div>
+              <SectionHeading class="font-bold">
+                Pricing & Commerce</SectionHeading
+              >
+            </div>
 
             <div class="two-col">
               <div class="field">
@@ -179,7 +236,9 @@
               </div>
 
               <div class="field">
-                <label class="field-label" for="purchase-url">Purchase URL</label>
+                <label class="field-label" for="purchase-url"
+                  >Purchase URL</label
+                >
                 <input
                   id="purchase-url"
                   v-model="form.purchaseUrl"
@@ -193,7 +252,14 @@
 
           <!-- Section 5: Settings -->
           <section class="form-section">
-            <SectionHeading>Settings</SectionHeading>
+            <div class="flex items-center">
+              <div
+                class="w-[6px] h-[24px] bg-blue-700 rounded-full shrink-0"
+              ></div>
+              <SectionHeading class="font-bold">
+                Advanced Settings
+              </SectionHeading>
+            </div>
 
             <div class="settings-card">
               <div class="settings-card-left">
@@ -202,7 +268,9 @@
                 </div>
                 <div>
                   <h4 class="settings-title">Visible in store</h4>
-                  <p class="settings-desc">Customers can see and purchase this product immediately</p>
+                  <p class="settings-desc">
+                    Customers can see and purchase this product immediately
+                  </p>
                 </div>
               </div>
               <button
@@ -217,7 +285,6 @@
               </button>
             </div>
           </section>
-
         </form>
       </div>
     </div>
@@ -247,132 +314,151 @@
 </template>
 
 <script setup>
-import { ref, computed, h } from 'vue'
+import { ref, computed, h } from "vue";
 
 /* ---------- Lightweight inline icon components (no external deps) ---------- */
 const iconBase = (paths) => (props) =>
   h(
-    'svg',
+    "svg",
     {
-      viewBox: '0 0 24 24',
-      fill: 'none',
-      stroke: 'currentColor',
-      'stroke-width': '2',
-      'stroke-linecap': 'round',
-      'stroke-linejoin': 'round',
-      class: props.class
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      "stroke-width": "2",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      class: props.class,
     },
-    paths.map((d) => h('path', { d }))
-  )
+    paths.map((d) => h("path", { d })),
+  );
 
-const CheckIcon = iconBase(['M20 6L9 17l-5-5'])
-const ChevronDownIcon = iconBase(['M6 9l6 6 6-6'])
-const UploadIcon = iconBase(['M12 16V4M7 9l5-5 5 5', 'M5 20h14'])
-const ImageIcon = iconBase(['M3 3h18v18H3z', 'M8.5 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3z', 'M21 15l-5-5L5 21'])
-const XIcon = iconBase(['M18 6L6 18', 'M6 6l12 12'])
-const EyeIcon = iconBase(['M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z', 'M12 15a3 3 0 100-6 3 3 0 000 6z'])
-const ArrowRightIcon = iconBase(['M5 12h14', 'M12 5l7 7-7 7'])
+const CheckIcon = iconBase(["M20 6L9 17l-5-5"]);
+const ChevronDownIcon = iconBase(["M6 9l6 6 6-6"]);
+const UploadIcon = iconBase(["M12 16V4M7 9l5-5 5 5", "M5 20h14"]);
+const ImageIcon = iconBase([
+  "M3 3h18v18H3z",
+  "M8.5 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3z",
+  "M21 15l-5-5L5 21",
+]);
+const XIcon = iconBase(["M18 6L6 18", "M6 6l12 12"]);
+const EyeIcon = iconBase([
+  "M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z",
+  "M12 15a3 3 0 100-6 3 3 0 000 6z",
+]);
+const ArrowRightIcon = iconBase(["M5 12h14", "M12 5l7 7-7 7"]);
 
 /* ---------- Stepper config ---------- */
 const steps = [
-  { label: 'Basic Info' },
-  { label: 'Media' },
-  { label: 'Classify' },
-  { label: 'Pricing' },
-  { label: 'Settings' }
-]
-const currentStep = ref(0)
+  { label: "Basic Info" },
+  { label: "Media" },
+  { label: "Classify" },
+  { label: "Pricing" },
+  { label: "Settings" },
+];
+const currentStep = ref(0);
 
 /* ---------- Form state ---------- */
-const stores = ['Flagship Boutique - Paris', 'SoHo Concept Store', 'Online Only']
-const categories = ['Dresses & Gowns', 'Outerwear', 'Footwear', 'Accessories']
-const subcategories = ['Evening Wear', 'Daywear', 'Bridal', 'Resort']
+const stores = [
+  "Flagship Boutique - Paris",
+  "SoHo Concept Store",
+  "Online Only",
+];
+const categories = ["Dresses & Gowns", "Outerwear", "Footwear", "Accessories"];
+const subcategories = ["Evening Wear", "Daywear", "Bridal", "Resort"];
 
 const form = ref({
-  name: '',
-  description: '',
-  store: 'Flagship Boutique - Paris',
-  category: 'Dresses & Gowns',
-  subcategory: 'Evening Wear',
-  tags: ['New Arrival', 'Limited Run', 'Silk'],
-  price: '',
-  purchaseUrl: '',
-  visible: true
-})
+  name: "",
+  description: "",
+  store: "Flagship Boutique - Paris",
+  category: "Dresses & Gowns",
+  subcategory: "Evening Wear",
+  tags: ["New Arrival", "Limited Run", "Silk"],
+  price: "",
+  purchaseUrl: "",
+  visible: true,
+});
 
-const tagInput = ref('')
+const tagInput = ref("");
 function addTag() {
-  const val = tagInput.value.trim()
+  const val = tagInput.value.trim();
   if (val && !form.value.tags.includes(val)) {
-    form.value.tags.push(val)
+    form.value.tags.push(val);
   }
-  tagInput.value = ''
+  tagInput.value = "";
 }
 function removeTag(idx) {
-  form.value.tags.splice(idx, 1)
+  form.value.tags.splice(idx, 1);
 }
 function onTagBackspace() {
-  if (tagInput.value === '' && form.value.tags.length) {
-    form.value.tags.pop()
+  if (tagInput.value === "" && form.value.tags.length) {
+    form.value.tags.pop();
   }
 }
 
 /* ---------- Media ---------- */
-const images = ref([])
-const maxSlots = 3
-const emptySlots = computed(() => Math.max(0, maxSlots - images.value.length))
+const images = ref([]);
+const maxSlots = 3;
+const emptySlots = computed(() => Math.max(0, maxSlots - images.value.length));
 
 function onFilesSelected(e) {
-  const files = Array.from(e.target.files || [])
+  const files = Array.from(e.target.files || []);
   files.forEach((file) => {
-    const reader = new FileReader()
-    reader.onload = () => images.value.push(reader.result)
-    reader.readAsDataURL(file)
-  })
-  e.target.value = ''
+    const reader = new FileReader();
+    reader.onload = () => images.value.push(reader.result);
+    reader.readAsDataURL(file);
+  });
+  e.target.value = "";
 }
 function removeImage(idx) {
-  images.value.splice(idx, 1)
+  images.value.splice(idx, 1);
 }
 
 /* ---------- Submit ---------- */
-const emit = defineEmits(['submit', 'cancel'])
+const emit = defineEmits(["submit", "cancel"]);
 function handleSubmit() {
-  emit('submit', { ...form.value })
+  emit("submit", { ...form.value });
 }
 
 /* ---------- Small reusable heading component ---------- */
 const SectionHeading = {
-  props: ['title'],
+  props: ["title"],
   setup(_, { slots }) {
     return () =>
-      h('div', { class: 'section-heading' }, [
-        h('span', { class: 'section-heading-bar' }),
-        h('h3', { class: 'section-heading-text' }, slots.default ? slots.default() : '')
-      ])
-  }
-}
+      h("div", { class: "section-heading" }, [
+        h("span", { class: "section-heading-bar" }),
+        h(
+          "h3",
+          { class: "section-heading-text" },
+          slots.default ? slots.default() : "",
+        ),
+      ]);
+  },
+};
 </script>
 
 <style scoped>
 /* ===== Design tokens ===== */
 .add-product-page {
-  --bg: #FAF8FF;
-  --border: #C3C5D7;
-  --primary: #1550D3;
-  --primary-soft: #F3F3FE;
-  --primary-soft-2: #EDEDF8;
-  --primary-light: #DCE1FF;
-  --text-strong: #191B23;
+  --bg: #faf8ff;
+  --border: #c3c5d7;
+  --primary: #1550d3;
+  --primary-soft: #f3f3fe;
+  --primary-soft-2: #ededf8;
+  --primary-light: #dce1ff;
+  --text-strong: #191b23;
   --text-body: #434654;
-  --text-muted: #6B7280;
+  --text-muted: #6b7280;
   --text-faint: #737686;
 
   position: relative;
   width: 100%;
   height: 100%;
   background: var(--bg);
-  font-family: 'Geist', system-ui, -apple-system, sans-serif;
+  font-family:
+    "Geist",
+    system-ui,
+    -apple-system,
+    sans-serif;
   color: var(--text-strong);
   display: flex;
   flex-direction: column;
@@ -437,11 +523,11 @@ const SectionHeading = {
   color: #fff;
 }
 .stepper-circle.is-complete {
-  background: #3C6BED;
-  color: #FFFBFF;
+  background: #3c6bed;
+  color: #fffbff;
 }
 .stepper-circle.is-upcoming {
-  background: #E2E1ED;
+  background: #e2e1ed;
   color: var(--text-body);
 }
 .stepper-label {
@@ -506,14 +592,16 @@ const SectionHeading = {
 .field-select {
   width: 100%;
   box-sizing: border-box;
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid var(--border);
   border-radius: 8px;
   font-family: inherit;
   font-size: 16px;
   color: var(--text-strong);
   padding: 13px 16px 14px;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 .field-input::placeholder,
 .field-textarea::placeholder {
@@ -617,7 +705,7 @@ const SectionHeading = {
   width: 24px;
   height: 24px;
   border-radius: 9999px;
-  background: #BA1A1A;
+  background: #ba1a1a;
   color: #fff;
   display: flex;
   align-items: center;
@@ -647,7 +735,7 @@ const SectionHeading = {
   gap: 8px;
   min-height: 50px;
   padding: 10px 12px;
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid var(--border);
   border-radius: 8px;
 }
@@ -657,8 +745,8 @@ const SectionHeading = {
   gap: 6px;
   padding: 4px 12px;
   border-radius: 9999px;
-  background: #6CF8BB;
-  color: #00714D;
+  background: #6cf8bb;
+  color: #00714d;
   font-size: 12px;
   font-weight: 700;
   line-height: 16px;
@@ -669,7 +757,7 @@ const SectionHeading = {
   justify-content: center;
   background: transparent;
   border: none;
-  color: #00714D;
+  color: #00714d;
   cursor: pointer;
   padding: 0;
 }
@@ -705,7 +793,7 @@ const SectionHeading = {
   width: 100%;
   box-sizing: border-box;
   padding: 13px 16px 14px 33px;
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid var(--border);
   border-radius: 8px;
   font-family: inherit;
@@ -830,7 +918,7 @@ const SectionHeading = {
   color: var(--text-strong);
 }
 .avatar-primary {
-  background: #3C6BED;
+  background: #3c6bed;
   z-index: 1;
 }
 .avatar-secondary {
