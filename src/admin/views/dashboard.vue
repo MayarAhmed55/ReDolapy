@@ -9,10 +9,6 @@
           data.
         </p>
       </div>
-      <button type="button" class="filter-btn">
-        <img src="../../assets/Icon (17).svg" alt="" class="filter-icon" />
-        <span>Filter View</span>
-      </button>
     </section>
 
     <!-- Stats Cards Row -->
@@ -22,7 +18,6 @@
           <div class="stat-icon-wrap blue">
             <img src="../../assets/Icon (16).svg" alt="" />
           </div>
-          <span class="stat-badge positive">+12.4%</span>
         </div>
         <p class="stat-label">Total Stores</p>
         <span class="stat-value">{{ storesCount }}</span>
@@ -33,7 +28,6 @@
           <div class="stat-icon-wrap green">
             <img src="../../assets/Icon (18).svg" alt="" />
           </div>
-          <span class="stat-badge positive">+8.2%</span>
         </div>
         <p class="stat-label">Total Products</p>
         <span class="stat-value">{{ productsCount }}</span>
@@ -44,10 +38,10 @@
           <div class="stat-icon-wrap amber">
             <img src="../../assets/Icon (19).svg" alt="" />
           </div>
-          <span class="stat-badge neutral">Steady</span>
+          <span class="stat-badge neutral">Enabled</span>
         </div>
-        <p class="stat-label">Try-On Times</p>
-        <span class="stat-value">85</span>
+        <p class="stat-label">Try-On</p>
+        <span class="stat-value">{{tryOnEnabled}}</span>
       </div>
 
       <div class="stat-card">
@@ -87,7 +81,7 @@
             <div class="progress-track">
               <div
                 class="progress-fill"
-                :style="{ width: activeProducts/100 + '%' }"
+                :style="{ width: activeProducts/productsCount + '%' }"
               ></div>
             </div>
           </div>
@@ -178,6 +172,7 @@ export default {
       productsCount: 0,
       userCount: 0,
       activeProducts: 0,
+      tryOnEnabled:0,
     };
   },
 
@@ -211,13 +206,23 @@ export default {
         const { data } = await getProducts();
 
         this.activeProducts = data.filter(
-          (product) => product.is_active === true,
+          (product) => product.is_active === true
         ).length;
       } catch (err) {
         console.log("failed to get the active products", err);
         this.activeProducts = 0;
       }
     },
+    async fetchTryOnEnabled(){
+      try{
+      const {data}=await getProducts();
+      this.tryOnEnabled=data.filter(
+        (pordcut)=>pordcut.try_on_enabled===true
+      ).length
+      }catch (err){
+        console.log("failed to fetch enabled try-on items")
+      }
+    }
   },
 
   mounted() {
@@ -225,6 +230,7 @@ export default {
     this.fetchProductsCount();
     this.fetchUsers();
     this.fetchActiveProducts();
+    this.fetchTryOnEnabled()
   },
 };
 </script>
@@ -271,25 +277,7 @@ export default {
   margin: 0;
 }
 
-.filter-btn {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  height: 34px;
-  background: #faf8ff;
-  border: 1px solid #c3c5d7;
-  border-radius: 8px;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
-  cursor: pointer;
-  font-family: "Geist", sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.24px;
-  color: #191b23;
-  transition: background 0.2s;
-}
+
 
 .filter-btn:hover {
   background: #f0eeff;
