@@ -20,7 +20,7 @@
         >
 <button
   type="button"
-  class="absolute top-3 right-3 z-10 w-9 h-9 rounded-3xl bg-(--card-surface)/80 backdrop-blur-sm border border-gray-200 dark:border-zinc-700 flex items-center justify-center text-[var(--Disabled-Text-color)] hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-[var(--Primary-Brand-color)] transition-all group-hover:scale-110 lg:right-auto lg:left-4 lg:border-none lg:bg-transparent lg:hover:bg-(--card-surface)/70"
+  class="absolute top-3 left-3 z-10 w-9 h-9 rounded-3xl bg-(--card-surface)/80 backdrop-blur-sm border border-gray-200 dark:border-zinc-700 flex items-center justify-center text-[var(--Disabled-Text-color)] hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-[var(--Primary-Brand-color)] transition-all group-hover:scale-110 lg:border-none lg:bg-transparent lg:hover:bg-(--card-surface)/70"
   :class="{ 
     'text-[var(--Primary-Brand-color)] bg-transparent border-transparent !shadow-none': isProductFavorited(product.id) 
   }"
@@ -37,6 +37,13 @@
     />
   </svg>
 </button>
+
+          <span
+            v-if="showWardrobeMatchBadge(product.id)"
+            class="absolute top-3 right-3 z-10 px-2.5 py-1 text-[10px] sm:text-[11px] font-semibold text-white bg-[var(--Secondary-Brand-color)] rounded-full leading-none shadow-sm pointer-events-none"
+          >
+            {{ $t('store.product.match_wardrobe') }}
+          </span>
 
           <img
             :src="product.image"
@@ -62,7 +69,8 @@
             {{ product.name }}
           </h3>
 
-          <div class="mb-4 h-5 flex items-center">
+          <!-- Brand + Price -->
+          <div class="flex items-center justify-between gap-2 mb-4 min-h-5">
             <img
               v-if="product.storeLogo"
               :src="product.storeLogo"
@@ -73,18 +81,28 @@
             <span v-else-if="product.storeName" class="text-[13px] text-gray-500 dark:text-zinc-400 line-clamp-1">
               {{ product.storeName }}
             </span>
-          </div>
+            <span v-else aria-hidden="true" />
 
-          <!-- Price + Try-on -->
-          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <span class="text-[15px] font-bold text-gray-900 dark:text-zinc-100">
+            <span class="text-[15px] font-bold text-gray-900 dark:text-zinc-100 shrink-0">
               {{ formatPrice(product.price) }} {{ product.currency }}
             </span>
+          </div>
+
+          <!-- See Match + Try-on -->
+          <div class="flex gap-2">
+            <button
+              v-if="showSeeMatch"
+              type="button"
+              class="flex-1 min-w-0 px-3 py-3 bg-[var(--Secondary-Brand-color)] hover:brightness-95 text-white text-sm font-semibold rounded-2xl flex items-center justify-center transition-all active:scale-95"
+              @click="$emit('see-match', product)"
+            >
+              <span>{{ $t('store.product.see_match') }}</span>
+            </button>
 
             <button
               v-if="product.tryOnEnabled"
               type="button"
-              class="flex-1 sm:flex-none px-5 py-3 bg-[var(--Primary-Brand-color)] hover:bg-[var(--Primary-Brand-hover)] text-white text-sm font-semibold rounded-2xl flex items-center justify-center gap-2 transition-all active:scale-95"
+              class="flex-1 min-w-0 px-3 py-3 bg-[var(--Primary-Brand-color)] hover:bg-[var(--Primary-Brand-hover)] text-white text-sm font-semibold rounded-2xl flex items-center justify-center gap-2 transition-all active:scale-95"
               @click="$emit('try-on', product)"
             >
               <img :src="starsIcon" alt="" class="w-4 h-4" />
@@ -95,7 +113,7 @@
               v-else
               type="button"
               disabled
-              class="flex-1 sm:flex-none px-5 py-3 bg-slate-200 text-slate-400 text-sm font-semibold rounded-2xl flex items-center justify-center gap-2 cursor-not-allowed"
+              class="flex-1 min-w-0 px-3 py-3 bg-slate-200 text-slate-400 text-sm font-semibold rounded-2xl flex items-center justify-center gap-2 cursor-not-allowed"
             >
               <img :src="starsIcon" alt="" class="w-4 h-4 opacity-70" />
               <span>{{ $t('store.product.try_on') }}</span>
@@ -125,10 +143,12 @@ const PRODUCTS_PER_PAGE = 6
 export default {
   name: 'StoreProducts',
   components: { ProductBottomNavigator },
-  emits: ['try-on', 'wishlist-error'],
+  emits: ['try-on', 'see-match', 'wishlist-error'],
   props: {
     products: { type: Array, default: () => [] },
     emptyMessage: { type: String, default: '' },
+    showSeeMatch: { type: Boolean, default: false },
+    wardrobeMatchProductIds: { type: Array, default: () => [] },
   },
   setup() {
     const { isFavorited, toggleFavorite } = useFavorites()
@@ -176,6 +196,10 @@ export default {
     onPageChange(page) {
       this.currentPage = page
       window.scrollTo({ top: 0, behavior: 'smooth' })
+    },
+    showWardrobeMatchBadge(productId) {
+      if (!this.showSeeMatch || !productId) return false
+      return this.wardrobeMatchProductIds.includes(String(productId))
     },
   },
 }

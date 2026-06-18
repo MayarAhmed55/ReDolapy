@@ -188,8 +188,8 @@ export default {
 
       try {
         const { top, bottom } = pickTopAndBottomGarments(this.garments)
-        const person = resolvePersonForTryOn(this.model)
-        const [topImage, bottomImage] = await Promise.all([
+        const [person, topImage, bottomImage] = await Promise.all([
+          resolvePersonForTryOn(this.model),
           resolveImageFile(top, 'top.jpg'),
           resolveImageFile(bottom, 'bottom.jpg'),
         ])

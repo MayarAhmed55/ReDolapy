@@ -52,7 +52,7 @@ export function buildAvatarPayload(form) {
     throw new Error(`Missing avatar attributes: ${missing.join(', ')}`)
   }
 
-  return { avatar }
+  return avatar
 }
 
 export function buildAvatarPrompt(attrs) {
