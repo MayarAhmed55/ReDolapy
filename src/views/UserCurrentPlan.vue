@@ -1,29 +1,28 @@
 <template>
-    <p class="gradientColor font-bold text-4xl  m-auto text-center ">{{ $t('pricing.currentPlan.title') }}</p>
+    <p class="gradientColor font-bold text-4xl  m-auto text-center ">Your Current Plan</p>
 
     <div v-if="isProUser" id="ProPricing">
         <div class="pro-card-inner">
             <div class="border-b-1 border-gray-300 pb-[0.5rem]">
-                <p class="PrimaryTxt font-semibold text-lg">{{ $t('pricing.pro.name') }}</p>
-                <p class="text-sm grayTxt">{{ $t('pricing.currentPlan.statusLabel') }}</p>
+                <p class="PrimaryTxt font-semibold text-lg">Pro Plan</p>
+                <p class="text-sm grayTxt">your current Plan</p>
             </div>
 
             <div class="border-b-1 border-gray-300 py-[2.5rem] flex justify-between">
                 <div class="card w-[48%] bg-white dark:bg-[#0d0d0d]">
-                    <p class="font-semibold  PrimaryTxt">{{ $t('pricing.currentPlan.billingLabel') }}</p>
-                    <p class="text-sm PrimaryTxt">{{ subscriptionInterval === 'year' ? '$12.99/month' : '$16.19/month'
-                    }}</p>
+                    <p class="font-semibold  PrimaryTxt">Billing</p>
+                    <p class="text-sm PrimaryTxt">{{ subscriptionInterval === 'year' ? '$16.19/month' : '$19.99/month'
+                        }}</p>
                 </div>
                 <div class="card  w-[48%] bg-white dark:bg-[#0d0d0d]">
-                    <p class="font-semibold PrimaryTxt">{{ $t('pricing.currentPlan.renewsLabel') }}</p>
+                    <p class="font-semibold PrimaryTxt">Renews</p>
                     <p class="text-sm  PrimaryTxt">{{ renewalDate }}</p>
                 </div>
             </div>
 
 
             <div class="border-b-1 border-gray-300 py-[2.5rem] ">
-                <p class="PrimaryTxt font-semibold text-lg pb-[0.5rem]">{{ $t('pricing.currentPlan.benefitsTitle') }}
-                </p>
+                <p class="PrimaryTxt font-semibold text-lg pb-[0.5rem]">Your Benefits</p>
                 <p class="text-sm grayTxt flex gap-3">
                     <Check></Check>{{ $t('pricing.pro.features.0') }}
                 </p>
@@ -40,7 +39,7 @@
 
             <button @click.prevent="showCancelModal = true" id="ProPricingBtn" type="button"
                 class="PricingCardsButton font-semibold text-lg w-full rounded-xl transition-transform hover:scale-[1.01] text-white block">
-                {{ $t('pricing.currentPlan.cancelBtn') }}</button>
+                Cancel Subscription</button>
 
         </div>
 
@@ -51,26 +50,26 @@
                 class="bg-white dark:bg-[#121212] rounded-2xl max-w-[500px] w-full p-8 shadow-2xl border border-gray-100 dark:border-gray-800 text-center space-y-6">
 
                 <h3 class="text-2xl font-bold text-gray-900 dark:text-white">
-                    {{ $t('pricing.currentPlan.modal.title') }} </h3>
+                    Cancel your Subscription?
+                </h3>
+
                 <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed px-2">
-                    {{ $t('pricing.currentPlan.modal.descriptionPre') }}
-
-                    <span class="font-semibold PrimaryTxt dark:text-gray-200mx-1">
-                        {{ renewalDate }}
-                    </span>
-
-                    {{ $t('pricing.currentPlan.modal.descriptionPost') }}
+                    You’ll keep access to pro plan features until <span
+                        class="font-semibold text-gray-800 dark:text-gray-200">Aug 25, 2026</span>. After that, your
+                    account will return to the Essential plan.
                 </p>
 
                 <div class="flex gap-4 items-center justify-center pt-2">
 
                     <button @click="showCancelModal = false" type="button"
                         class="flex-1 py-3 px-6 border-2 border-[#8ED321] text-[#8ED321] font-semibold rounded-xl hover:bg-gray-50 dark:hover:bg-zinc-900 transition-colors">
-                        {{ $t('pricing.currentPlan.modal.keepBtn') }} </button>
+                        keep subscription
+                    </button>
 
                     <button @click="handleCancelSubscription()" type="button"
                         class="flex-1 py-3 px-6 bg-[#FF8A3D] text-white font-semibold rounded-xl hover:scale-[1.01] transition-transform shadow-md hover:bg-[#e2762f]">
-                        {{ $t('pricing.currentPlan.modal.confirmBtn') }} </button>
+                        confirm cancellation
+                    </button>
 
                 </div>
             </div>
@@ -149,41 +148,16 @@ export default {
         async fetchUserSubscriptionDetails() {
             this.isPageLoading = true;
             try {
-                let userToken = localStorage.getItem('token');
-
-                // 🚨 1. UNPACK BUG SAFETY PROTECTION FILTER:
-                // If it's a Vue reactive object reference, unwrap its value container manually
-                if (userToken && typeof userToken === 'object' && userToken.value) {
-                    userToken = userToken.value;
-                }
-
-                // 🚨 2. DATA TYPE VALIDATION PIPELINE:
-                // Absolute check to ensure the token exists, is an actual string, and contains standard JWT dot dividers
-                if (!userToken || typeof userToken !== 'string' || !userToken.includes('.')) {
-                    console.warn("⚠️ Aborting fetch: Storage 'token' key is empty, invalid, or an object reference instead of a valid JWT.");
-                    this.isProUser = false;
-                    return; // Clean exit to prevent back-end server parsing crashes
-                }
-
-                // 3. SECURE DECODING SEQUENCE
-                const base64Url = userToken.split('.')[1];
-                if (!base64Url) {
-                    throw new Error("Parsed token string is missing its base64 payload segment.");
-                }
-
-                const tokenPayload = JSON.parse(window.atob(base64Url.replace(/-/g, '+').replace(/_/g, '/')));
-                const rawUserId = tokenPayload.id || tokenPayload._id || '';
-                const cleanUserId = String(rawUserId).trim();
-
-                if (!cleanUserId) {
-                    console.warn("⚠️ Aborting fetch: Token verified but no clear User ID signature found inside payload attributes.");
+                const userToken = localStorage.getItem('token');
+                if (!userToken) {
                     this.isProUser = false;
                     return;
                 }
 
-                console.log("🚀 Dispatching verified payload tracking to backend ID:", cleanUserId);
+                const base64Url = userToken.split('.')[1];
+                const tokenPayload = JSON.parse(window.atob(base64Url.replace(/-/g, '+').replace(/_/g, '/')));
+                const cleanUserId = (tokenPayload.id || tokenPayload._id || '').trim();
 
-                // 4. NETWORKING HANDSHAKE TRANSMISSION
                 const response = await axios.post('http://localhost:5000/api/payments/sync-subscription', {
                     userId: cleanUserId
                 }, {
@@ -193,30 +167,13 @@ export default {
                 if (response.data && response.data.subscriptionStatus === 'active') {
                     this.isProUser = true;
                     this.subscriptionInterval = response.data.subscriptionInterval || 'month';
-
-                    // this.renewalDate = response.data.renewalDate || 'Aug 25, 2026';
-
-                    if (response.data.subscriptionEndDate) {
-                        const rawDate = new Date(response.data.subscriptionEndDate);
-                        this.renewalDate = rawDate.toLocaleDateString('en-US', {
-                            month: 'short',
-                            day: 'numeric',
-                            year: 'numeric'
-                        }); // ✨ Generates "Aug 25, 2026" dynamically!
-                    } else {
-                        this.renewalDate = '—';
-                    }
-                    console.log("🎯 Live Data Swapped Successfully:", {
-                        interval: this.subscriptionInterval,
-                        formattedDate: this.renewalDate
-                    });
+                    this.renewalDate = response.data.renewalDate || 'Aug 25, 2026';
                 } else {
                     this.isProUser = false;
                 }
             } catch (error) {
-                console.error("Failed to cleanly map or communicate subscription status metadata:", error);
+                console.error("Failed to map subscription status metadata:", error);
                 this.isProUser = false;
-                alert("Frontend State Synced: Invalid login configuration detected. Please clear cookies and re-login.");
             } finally {
                 this.isPageLoading = false;
             }
@@ -226,13 +183,13 @@ export default {
             if (this.isProcessing) return;
             this.isProcessing = true;
             setTimeout(() => {
-                alert("Subscription canceled successfully. (MOCK TEST)");
-                this.isProcessing = false;
-                this.showCancelModal = false;
-
-                // This should instantly toggle your page view from the Pro card back to the Free Plan card!
-                this.isProUser = false;
-            }, 1500); //
+    alert("Subscription canceled successfully. (MOCK TEST)");
+    this.isProcessing = false;
+    this.showCancelModal = false;
+    
+    // This should instantly toggle your page view from the Pro card back to the Free Plan card!
+    this.isProUser = false; 
+  }, 1500); //
 
             try {
                 const userToken = localStorage.getItem('token');
@@ -270,8 +227,8 @@ export default {
     padding: 0.5rem;
 }
 
-#FreePricing {
-    width: 30%;
+#FreePricing{
+   width: 30%;
     border-radius: 0.5em;
     padding: 3rem 1rem;
 }

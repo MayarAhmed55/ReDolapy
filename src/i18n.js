@@ -7,7 +7,7 @@ const messages = {
       tryOn: "Try-On",
       recycle: "Recycle",
       pricing: "Pricing",
-      about: "About",
+      about: "About us",
       login: "Login",
       signup: "Sign up",
       contact_us: "Contact Us",
@@ -16,7 +16,8 @@ const messages = {
     },
     errors: {
       generic: "Something went wrong. Please try again.",
-      api_not_found: "API endpoint not found. Start the TryOn backend on port 5000.",
+      api_not_found:
+        "API endpoint not found. Start the TryOn backend on port 5000.",
       invalid_response: "Unexpected server response ({status}).",
     },
     header: {
@@ -73,11 +74,11 @@ const messages = {
       titlePart2: "Sustainable!",
       description:
         "ReDolapy is committed to circular fashion. Our platform doesn't just help you style your clothes—it helps you manage their entire lifecycle. Join our movement to reduce textile waste through smart recycling, reselling, and donation programs.",
-      recycleRenew: "Recycle & Renew",
+      recycleRenew: "UpCycle & Renew",
       recycleDescription:
         "Easily request a recycling kit for items that have reached the end of their life.",
       learnRecycling: "Learn about Recycling",
-      learnTryOn: "Learn about Try On",
+      learnTryOn: "Try it On before converting it",
       coreFeaturesTitle: "What We <span class='gradientColor'>make?</span>",
       coreFeaturesSubtitle: "Let’s Know ReDolapy Core Value",
     },
@@ -85,12 +86,13 @@ const messages = {
       yourMirror: "Your Mirror",
       reimagined: "Re Imagined.",
       description:
-        "The Redolapy Virtual Try-On uses hyper-realistic rendering to show you exactly how clothes will look and drape on your body.",
+        "The Redolapy Virtual Try-On uses hyper-realistic rendering to show you exactly how clothes will look after UpCycling and Try it on your body.",
       button: "Try On",
     },
     tryOn: {
       header_title: "Redolapy Virtual Try-on",
-      header_subtitle: "Upload your pieces · Pick a style · See it come to life",
+      header_subtitle:
+        "Upload your pieces · Pick a style · See it come to life",
       steps: {
         image: "Upload Your image",
         image_subtitle: "Upload a photo or pick an avatar",
@@ -143,10 +145,14 @@ const messages = {
         generic: "Something went wrong. Please try again.",
         save_failed: "Failed to add to wardrobe.",
         upload_first: "Please upload your model and garments first.",
-        need_two_garments: "Upload a top and a bottom garment to try on a full outfit.",
-        missing_kie_key: "KIE API key is missing. Add VITE_KIE_API_KEY to your .env file.",
-        missing_hf_token: "Hugging Face token is missing. Add VITE_HF_TOKEN to your .env file.",
-        kie_upload_quota: "KIE upload limit reached (30 files per 30 days on free plan). Wait for the limit to reset, upgrade your KIE plan, or use a different API key.",
+        need_two_garments:
+          "Upload a top and a bottom garment to try on a full outfit.",
+        missing_kie_key:
+          "KIE API key is missing. Add VITE_KIE_API_KEY to your .env file.",
+        missing_hf_token:
+          "Hugging Face token is missing. Add VITE_HF_TOKEN to your .env file.",
+        kie_upload_quota:
+          "KIE upload limit reached (30 files per 30 days on free plan). Wait for the limit to reset, upgrade your KIE plan, or use a different API key.",
       },
       warnings: {
         format_error: "Unsupported file format. Use {formats}.",
@@ -212,14 +218,18 @@ const messages = {
       errors: {
         generate_failed: "Could not generate avatar. Please try again.",
         download_failed: "Could not download avatar. Please try again.",
-        kie_credits: "Avatar generation credits are exhausted and no fallback is configured. Add VITE_DASHSCOPE_API_KEY and VITE_DASHSCOPE_ENDPOINT to your .env file, then restart the dev server.",
-        quota_used: "You have already used your free avatar generation. Upgrade your plan to create more.",
-        missing_dashscope_endpoint: "DashScope endpoint is missing. Add VITE_DASHSCOPE_ENDPOINT to your .env file (same value as DASHSCOPE_ENDPOINT in the backend).",
+        kie_credits:
+          "Avatar generation credits are exhausted and no fallback is configured. Add VITE_DASHSCOPE_API_KEY and VITE_DASHSCOPE_ENDPOINT to your .env file, then restart the dev server.",
+        quota_used:
+          "You have already used your free avatar generation. Upgrade your plan to create more.",
+        missing_dashscope_endpoint:
+          "DashScope endpoint is missing. Add VITE_DASHSCOPE_ENDPOINT to your .env file (same value as DASHSCOPE_ENDPOINT in the backend).",
       },
     },
     store: {
       title: "Stores",
-      promo_prefix: "you can get Discount on all your Favorite Brands Now, when you",
+      promo_prefix:
+        "you can get Discount on all your Favorite Brands Now, when you",
       promo_mobile_start: "Get a",
       promo_discount: "discount",
       promo_mobile_mid: "on all your favorite brands when you",
@@ -271,7 +281,8 @@ const messages = {
     },
     wishlist: {
       title: "Wishlist",
-      subtitle_prefix: "Save the pieces you love and come back to them anytime when you",
+      subtitle_prefix:
+        "Save the pieces you love and come back to them anytime when you",
       subtitle_highlight: "heart a product!",
       loading: "Loading your wishlist…",
       empty: "No items match your filters.",
@@ -282,7 +293,7 @@ const messages = {
       viewAll: "View All",
       title: "Brand Partners",
       subtitle: "Discover your favorite items and exclusive discounts through",
-      appName: "Redolapy",
+      appName: "Redolapy Application!",
       hm: {
         title: "H&M",
         description:
@@ -294,37 +305,6 @@ const messages = {
           "Explore ZARA collections and enjoy exclusive deals when you shop through the app.",
       },
     },
-
-    // pricing: {
-    //   completeSubscription: "Complete Subscription",
-    //   paymentMethod: "Payment Method",
-    //   cardNumber: "Card Number",
-    //   dateFormat: "MM / YY",
-    //   cvv: "CVV",
-    //   savePayment: "Save payment information for subsequent renewals",
-    //   monthly: "Monthly Subscription",
-    //   monthlyPrice: "$29.00",
-    //   earlyBirdDiscount: "Early Bird Discount",
-    //   discountAmount: "-$10.00",
-    //   estimatedTax: "Estimated Tax",
-    //   taxAmount: "$0.00",
-    //   dueToday: "Due Today",
-    //   dueTodayValue: "$19.00",
-    //   terms:
-    //     "By finalizing your purchase, you authorize ReDolapy to initiate recurring automatic processing cycles. Cancel anytime inside workspace configurations.",
-    //   pro: {
-    //     name: "Pro Atelier",
-    //     price: "$19",
-    //     priceUnit: "/ month",
-    //     button: "Finalize & Activate Plan",
-    //     features: [
-    //       "Infinite High-Fidelity 2D Avatar Fittings",
-    //       "Intelligent Wardrobe Color Match Matrix",
-    //       "Advanced High-Resolution Vector Canvas Exports",
-    //       "Priority Graphics Rendering Pipeline Lanes",
-    //     ],
-    //   },
-    // },
 
     pricing: {
       title: "Subscription plans",
@@ -340,6 +320,7 @@ const messages = {
       savePayment: "Save payment information for subsequent renewals",
       monthly: "Monthly Subscription",
       monthlyPrice: "$29.00",
+
       earlyBirdDiscount: "Early Bird Discount",
       discountAmount: "-$10.00",
       estimatedTax: "Estimated Tax",
@@ -348,6 +329,8 @@ const messages = {
       dueTodayValue: "$19.00",
       terms:
         "By finalizing your purchase, you authorize ReDolapy to initiate recurring automatic processing cycles. Cancel anytime inside workspace configurations.",
+      footerConsent:
+        "By subscribing, you agree to ReDolapy's Terms of Service and Privacy Policy.",
 
       // 💡 Added Missing Free Plan Block
       free: {
@@ -356,24 +339,45 @@ const messages = {
         priceUnit: "/ month",
         button: "Get Started Free",
         features: [
-          "Manage up to 20 clothing items",
-          "Standard 2D Avatar fittings",
-          "Basic upcycling design ideas",
+          "Your Personal Wardrobe",
+          "Customized Recommendations",
+          "Customized Matchings",
+          "Limited Try On",
+          "Limited upcycling designs",
+          "One Avatar Generation",
         ],
       },
 
       pro: {
         name: "Pro plan",
+        popular: "Popular",
         price: "$19",
         priceUnit: "/ month",
         button: "Finalize & Activate Plan",
         features: [
-          "Infinite High-Fidelity 2D Avatar Fittings",
-          "Intelligent Wardrobe Color Match Matrix",
-          "Advanced High-Resolution Vector Canvas Exports",
+          "All what in Free Plan",
+          "unlimited Try on",
+          "unlimited UpCyling",
           "Priority Graphics Rendering Pipeline Lanes",
+          "More than one generation High-Fidelity 2D Avatar Generation",
         ],
       },
+
+      currentPlan: {
+      title: "Your Current Plan",
+      statusLabel: "your current plan",
+      billingLabel: "Billing",
+      renewsLabel: "Renews",
+      benefitsTitle: "Your Benefits",
+      cancelBtn: "Cancel Subscription",
+      "modal": {
+  "title": "Cancel your Subscription?",
+  "descriptionPre": "You’ll keep access to pro plan features until",
+  "descriptionPost": ". After that, your account will return to the Essential plan.",
+  "keepBtn": "keep subscription",
+  "confirmBtn": "confirm cancellation"
+}
+    },
     },
 
     faq: {
@@ -396,7 +400,6 @@ const messages = {
         },
       ],
     },
- 
 
     recycle: {
       header_title: "Redolapy Up-cycling Design Generator",
@@ -498,16 +501,19 @@ const messages = {
         saving: "Downloading…",
       },
 
-  errors: {
-    upload_first: 'Please upload garments and discover design ideas first.',
-    save_failed: 'Failed to download image.',
-    login_required: 'Please log in to analyze garments and generate designs.',
-    missing_github_key: 'GitHub API key is missing. Add VITE_GITHUB_TOKEN to your .env file.',
-    missing_dashscope_key: 'DashScope API key is missing. Add VITE_DASHSCOPE_API_KEY to your .env file.',
-  },
-},
+      errors: {
+        upload_first: "Please upload garments and discover design ideas first.",
+        save_failed: "Failed to download image.",
+        login_required:
+          "Please log in to analyze garments and generate designs.",
+        missing_github_key:
+          "GitHub API key is missing. Add VITE_GITHUB_TOKEN to your .env file.",
+        missing_dashscope_key:
+          "DashScope API key is missing. Add VITE_DASHSCOPE_API_KEY to your .env file.",
+      },
+    },
 
-        aboutRecycle: {
+    aboutRecycle: {
       header_primary: "Why Upcycling Matters",
       header_gradient: "Sustainable Fashion",
       header_description:
@@ -604,7 +610,7 @@ const messages = {
       analyzing: "Creating your design ideas…",
       discover: "Discover Design Ideas",
     },
-   
+
     payment: {
       completeSubscription: "Complete Subscription",
       paymentMethod: "Payment Method",
@@ -613,7 +619,7 @@ const messages = {
       cvv: "CVV",
       savePayment: "Save payment details for future use",
     },
-     auth: {
+    auth: {
       tabs: {
         signUp: "Sign Up",
         login: "Login",
@@ -716,19 +722,18 @@ const messages = {
         resetTitle: "Secure Account",
         resetSubtitle:
           "Almost completed! Finalize your credentials to log back into your session.",
-        },
-        strength: {
-          none: "",
-          weak: "Weak ❌",
-          fair: "Fair ⚠️",
-          good: "Good 👍",
-          strong: "Strong 💪",
-        }
+      },
+      strength: {
+        none: "",
+        weak: "Weak ❌",
+        fair: "Fair ⚠️",
+        good: "Good 👍",
+        strong: "Strong 💪",
+      },
     },
     footer: {
       brandName: "ReDolapy",
-      tagline:
-        "Re-think your wardrobe. Re-define your style.",
+      tagline: "Re-think your wardrobe. Re-define your style.",
       platform: "Platform",
       styleGuide: "Style Guide",
       tryOn: "Try On",
@@ -794,22 +799,21 @@ const messages = {
       },
     },
 
-    
-  "contact": {
-    titlePart1: "Contact",
-    titlePart2: "ReDolapy Team",
-    description: "Have a question, partnership idea, or just want to say hi? Drop us a message and we'll get back to you as soon as possible.",
-    form: {
-    nameLabel: "Name",
-      namePlaceholder: "name",
-      emailLabel: "Email",
-      emailPlaceholder: "user{'@'}gmail.com",
-      messageLabel: "Message",
-      messagePlaceholder: "write your message here",
-      sendButton: "Send"
-    }
-  
-},
+    contact: {
+      titlePart1: "Contact",
+      titlePart2: "ReDolapy Team",
+      description:
+        "Have a question, partnership idea, or just want to say hi? Drop us a message and we'll get back to you as soon as possible.",
+      form: {
+        nameLabel: "Name",
+        namePlaceholder: "name",
+        emailLabel: "Email",
+        emailPlaceholder: "user{'@'}gmail.com",
+        messageLabel: "Message",
+        messagePlaceholder: "write your message here",
+        sendButton: "Send",
+      },
+    },
     fp: {
       forgotTitle: "Forgot Password?",
       forgotSubtitle:
@@ -870,7 +874,7 @@ const messages = {
       store: "المتجر",
       store: "المتجر",
       pricing: "الأسعار",
-      about: "حول",
+      about: "عنا",
       login: "دخول",
       signup: "إنشاء حساب",
       contact_us: "تواصل معنا",
@@ -879,7 +883,8 @@ const messages = {
     },
     errors: {
       generic: "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
-      api_not_found: "لم يتم العثور على واجهة البرمجة. شغّل الخادم الخلفي على المنفذ 5000.",
+      api_not_found:
+        "لم يتم العثور على واجهة البرمجة. شغّل الخادم الخلفي على المنفذ 5000.",
       invalid_response: "استجابة غير متوقعة من الخادم ({status}).",
     },
     header: {
@@ -1026,7 +1031,8 @@ const messages = {
       },
       garments: {
         title: "ارفع قطع الملابس",
-        support_text: "صيغ الملفات المدعومة: JPG، PNG، WEBP (الحد الأقصى ١٠ ميجابايت لكل صورة)",
+        support_text:
+          "صيغ الملفات المدعومة: JPG، PNG، WEBP (الحد الأقصى ١٠ ميجابايت لكل صورة)",
         drag_prompt: "اضغط هنا أو اسحب الصور إلى هذا المربع",
         current_selection: "الاختيار الحالي",
         no_items: "لم يتم اختيار أي قطع بعد",
@@ -1051,9 +1057,12 @@ const messages = {
         save_failed: "فشلت الإضافة إلى الخزانة.",
         upload_first: "يرجى رفع النموذج والملابس أولاً.",
         need_two_garments: "ارفع قطعة علوية وسفلية لتجربة إطلالة كاملة.",
-        missing_kie_key: "مفتاح KIE API مفقود. أضف VITE_KIE_API_KEY إلى ملف .env.",
-        missing_hf_token: "رمز Hugging Face مفقود. أضف VITE_HF_TOKEN إلى ملف .env.",
-        kie_upload_quota: "تم الوصول إلى حد رفع KIE (30 ملفاً خلال 30 يوماً في الخطة المجانية). انتظر إعادة التعيين أو قم بترقية خطتك.",
+        missing_kie_key:
+          "مفتاح KIE API مفقود. أضف VITE_KIE_API_KEY إلى ملف .env.",
+        missing_hf_token:
+          "رمز Hugging Face مفقود. أضف VITE_HF_TOKEN إلى ملف .env.",
+        kie_upload_quota:
+          "تم الوصول إلى حد رفع KIE (30 ملفاً خلال 30 يوماً في الخطة المجانية). انتظر إعادة التعيين أو قم بترقية خطتك.",
       },
       warnings: {
         format_error: "صيغة الملف غير مدعومة. يرجى استخدام {formats}.",
@@ -1119,14 +1128,18 @@ const messages = {
       errors: {
         generate_failed: "تعذر إنشاء الأفاتار. يرجى المحاولة مرة أخرى.",
         download_failed: "تعذر تنزيل الأفاتار. يرجى المحاولة مرة أخرى.",
-        kie_credits: "نفدت رصيد إنشاء الأفاتار ولا يوجد بديل مُعد. أضف VITE_DASHSCOPE_API_KEY و VITE_DASHSCOPE_ENDPOINT إلى ملف .env ثم أعد تشغيل الخادم.",
-        quota_used: "لقد استخدمت محاولة إنشاء الأفاتار المجانية. قم بترقية خطتك لإنشاء المزيد.",
-        missing_dashscope_endpoint: "عنوان DashScope مفقود. أضف VITE_DASHSCOPE_ENDPOINT إلى ملف .env.",
+        kie_credits:
+          "نفدت رصيد إنشاء الأفاتار ولا يوجد بديل مُعد. أضف VITE_DASHSCOPE_API_KEY و VITE_DASHSCOPE_ENDPOINT إلى ملف .env ثم أعد تشغيل الخادم.",
+        quota_used:
+          "لقد استخدمت محاولة إنشاء الأفاتار المجانية. قم بترقية خطتك لإنشاء المزيد.",
+        missing_dashscope_endpoint:
+          "عنوان DashScope مفقود. أضف VITE_DASHSCOPE_ENDPOINT إلى ملف .env.",
       },
     },
     store: {
       title: "المتاجر",
-      promo_prefix: "يمكنك الحصول على خصم على جميع علاماتك التجارية المفضلة الآن، عندما",
+      promo_prefix:
+        "يمكنك الحصول على خصم على جميع علاماتك التجارية المفضلة الآن، عندما",
       promo_mobile_start: "احصل على",
       promo_discount: "خصم",
       promo_mobile_mid: "على جميع علاماتك التجارية المفضلة عندما",
@@ -1201,142 +1214,74 @@ const messages = {
           "استكشف مجموعات زارا واستمتع بعروض حصرية عند التسوق عبر التطبيق.",
       },
     },
-    // pricing: {
-    //   title: 'أسعار ريدولابي',
-    //   subtitle: 'اختر الخطة التي تناسب رحلتك في الموضة.',
-    //   free: {
-    //     name: 'خطة مجانية',
-    //     price: '$0',
-    //     priceUnit: '/شهري',
-    //     features: [
-    //       'مزامنة خزانة ملابسك بالذكاء الاصطناعي',
-    //       'كتب الإطلالات اليومية (3 إطلالات)',
-    //       'تجربة الافتراضيةة أساسية'
-    //     ],
-    //     button: 'ابدأ الآن'
-    //   },
-    //   pro: {
-    //     name: 'خطة احترافية',
-    //     price: '$20',
-    //     priceUnit: '/شهري',
-    //     features: [
-    //       'كل ما في الخطة الأساسية',
-    //       'تجربة الافتراضيةة واقعية فائقة',
-    //       'كتب إطلالات غير محدودة',
-    //       'خدمة تدريب الأسلوب الشخصي'
-    //     ],
-    //     button: 'ابدأ التجربة المجانية'
-    //   },
-    //   monthly: 'الاشتراك الشهري',
-    //   monthlyPrice: '$19.99',
-    //   earlyBirdDiscount: 'خصم المبكرين',
-    //   discountAmount: '-$5.00',
-    //   estimatedTax: 'الضريبة المتوقعة',
-    //   taxAmount: '$1.20',
-    //   subscribe: 'الاشتراك في الخطة الاحترافية',
-    //   terms: 'بالاشتراك، أنت توافق على شروط الخدمة وسياسة الخصوصية لريدولابي.'
-    // },
-
-    // pricing: {
-    //   title: "أسعار بسيطة وشفافة",
-    //   subtitle: "اختر الخطة المثالية لاحتياجات خزانتك الرقمية",
-    //   completeSubscription: "إتمام الاشتراك",
-    //   paymentMethod: "طريقة الدفع",
-    //   cardNumber: "رقم البطاقة",
-    //   dateFormat: "شهر / سنة",
-    //   cvv: "الرمز السري (CVV)",
-    //   savePayment: "حفظ معلومات الدفع لتسهيل التجديد التلقائي لاحقاً",
-    //   monthly: "الاشتراك الشهري",
-    //   monthlyPrice: "$٢٩٫٠٠",
-    //   earlyBirdDiscount: "خصم الانضمام المبكر",
-    //   discountAmount: "-$١٠٫٠٠",
-    //   estimatedTax: "الضريبة التقديرية",
-    //   taxAmount: "$٠٫٠٠",
-    //   dueToday: "المستحق اليوم",
-    //   dueTodayValue: "$١٩٫٠٠",
-    //   terms:
-    //     "بإتمامك لعملية الشراء، فإنك تفوض ري دولابي لبدء دورات خصم تلقائية متكررة. يمكنك إلغاء الاشتراك في أي وقت من إعدادات مساحة عملك.",
-
-    //   // 💡 Added Missing Free Plan Block
-    //   free: {
-    //     name: "الخزانة المجانية",
-    //     price: "$٠",
-    //     priceUnit: "/ شهرياً",
-    //     button: "ابدأ مجاناً الآن",
-    //     features: [
-    //       "إدارة ما يصل إلى ٢٠ قطعة ملابس",
-    //       "تجارب قياس أساسية لـ 2D Avatar",
-    //       "أفكار أساسية لإعادة تدوير الملابس",
-    //     ],
-    //   },
-
-    //   pro: {
-    //     name: "المحترف (Pro)",
-    //     price: "$١٩",
-    //     priceUnit: "/ شهرياً",
-    //     button: "تأكيد وتفعيل الخطة الآن",
-    //     features: [
-    //       "تجارب قياس ثنائية الأبعاد غير محدودة وبدقة عالية",
-    //       "مصفوفة الذكاء الاصطناعي الذكية لتنسيق ألوان الخزانة",
-    //       "تصدير لوحات العمل بصيغ فيكتور عالية الجودة",
-    //       "أولوية المعالجة السريعة في خوادم رندرة التصاميم",
-    //     ],
-    //   },
-    // },
-
-    //   "pricing": {
-    //     "title": "Pick your fav plan",
-    //     "free": {
-    //       "name": "Essential",
-    //       "price": "0",
-    //       "priceUnit": "/mo"
-    //     },
-    //     "pro": {
-    //       "name": "Pro plan",
-    //       "price": "19.99",
-    //       "priceUnit": "/mo",
-    //       "yearlyPrice": "16.19",
-    //       "yearlyPriceUnit": "/mo (billed annually)",
-    //       "features": [
-    //         "Cancel anytime, no commitment",
-    //         "Trial reminders via email",
-    //         "Unlimited message & outfit uploads",
-    //         "Advanced high-fidelity image creation"
-    //       ],
-    //       "button": "Subscribe to pro"
-    //     }
-
-    // },
 
     pricing: {
-      title: "اختر خطتك المفضلة للبدء",
-      subtitle: "اختر الخطة التي تناسب احتياجاتك وتطلعاتك في عالم الموضة",
-      monthlyToggle: "شهرياً",
-      yearlyToggle: "سنوياً",
-      completeSubscription: "إتمام الاشتراك",
+     "title": "اختر خطتك المفضلة للبدء",
+    "subtitle": "اختر الخطة التي تناسب احتياجاتك وتطلعاتك في عالم الموضة",
+    "monthlyToggle": "شهرياً",
+    "yearlyToggle": "سنوياً",
+    "completeSubscription": "إتمام الاشتراك",
+    "paymentMethod": "طريقة الدفع",
+    "cardNumber": "رقم البطاقة",
+    "dateFormat": "شهر / سنة",
+    "cvv": "الرمز السري (CVV)",
+    "savePayment": "حفظ معلومات الدفع لعمليات التجديد اللاحقة",
+    "monthly": "الاشتراك الشهري",
+    "monthlyPrice": "$29.00",
+    "earlyBirdDiscount": "خصم التسجيل المبكر",
+    "discountAmount": "-$10.00",
+    "estimatedTax": "الضريبة التقديرية",
+    "taxAmount": "$0.00",
+    "dueToday": "المبلغ المستحق اليوم",
+    "dueTodayValue": "$19.00",
+    "terms": "بإتمام عملية الشراء، فإنك تفوض ReDolapy لبدء دورات معالجة تلقائية متكررة. يمكنك الإلغاء في أي وقت من إعدادات مساحة العمل.",
+    "footerConsent": "بالاشتراك، فإنك توافق على شروط الخدمة وسياسة الخصوصية الخاصة بـ ReDolapy.",
+
+    currentPlan: {
+      title: "خطتك الحالية",
+      statusLabel: "خطتك الحالية المفعّلة",
+      billingLabel: "الفواتير والأسعار",
+      renewsLabel: "تاريخ التجديد",
+      benefitsTitle: "المميزات المتاحة لك",
+      cancelBtn: "إلغاء الاشتراك",
+     "modal": {
+  "title": "هل تريد إلغاء اشتراكك بالفعل؟",
+  "descriptionPre": "ستحتفظ بصلاحية الوصول إلى مميزات الخطة الاحترافية حتى تاريخ",
+  "descriptionPost": ". بعد ذلك، سيعود حسابك تلقائياً إلى الخطة الأساسية.",
+  "keepBtn": "الاحتفاظ بالاشتراك",
+  "confirmBtn": "تأكيد إلغاء الاشتراك"
+}
+    },
+
       free: {
         name: "الأساسية",
-        price: "0",
+        price: "$0",
         priceUnit: "/شهرياً",
         features: [
-          "مزامنة خزانة الملابس بالذكاء الاصطناعي",
-          "كتيب إطلالات يومي (3 إطلالات)",
-          "تجربة افتراضية أساسية للملابس",
+          "خزانة ملابسك الشخصية",
+          "توصيات مخصصة",
+          "تنسيقات مخصصة",
+          "تجربة افتراضية محدودة",
+          "تصاميم إعادة تدوير محدودة",
+          "توليد صورة رمزية (Avatar) واحدة",
         ],
         button: "خطة الحالية",
       },
       pro: {
         name: "الخطة الاحترافية",
-        price: "19.99",
+        popular: "شائع",
+        price: "16.19",
         priceUnit: "/شهرياً",
-        yearlyPrice: "16.19",
+        yearlyPrice: "12.19",
         yearlyPriceUnit: "/شهرياً (تُدفع سنوياً)",
         features: [
-          "إلغاء في أي وقت، بدون التزامات",
-          "تنبيهات تذكيرية للفترة التجريبية عبر البريد الإلكتروني",
-          "تحميل غير محدود للرسائل وتنسيقات الملابس",
-          "توليد صور متقدمة وعالية الدقة بالذكاء الاصطناعي",
+          "كل ما تضمنه الخطة المجانية",
+          "تجربة افتراضية غير محدودة",
+          "إعادة تدوير غير محدودة للملابس",
+          "أولوية قصوى في معالجة ورندرة الجرافيكس",
+          "توليد غير محدود لصور رمزية ثنائية الأبعاد (2D) عالية الدقة",
         ],
+
         button: "اشترك في الخطة الاحترافية",
         breakdown: {
           monthlySub: "اشتراك شهري",
@@ -1366,7 +1311,7 @@ const messages = {
         {
           title: "كيف يمكنني تجربة الملابس إذا لم أرغب في تحميل صورتي؟",
           answer:
-          "تقدم ReDolapy خدمة تجربة الملابس افتراضياً باستخدام صورة رمزية مطابقة لك تماماً، وذلك بمجرد ضبط إعداداتها لتكون مطابقة لك."
+            "تقدم ReDolapy خدمة تجربة الملابس افتراضياً باستخدام صورة رمزية مطابقة لك تماماً، وذلك بمجرد ضبط إعداداتها لتكون مطابقة لك.",
         },
       ],
     },
@@ -1451,14 +1396,16 @@ const messages = {
         saving: "جاري التحميل...",
       },
 
-  errors: {
-    upload_first: 'يرجى رفع قطع الملابس واكتشاف أفكار التصميم أولاً.',
-    save_failed: 'فشل تحميل الصورة.',
-    login_required: 'يرجى تسجيل الدخول لتحليل الملابس وتوليد التصاميم.',
-    missing_github_key: 'مفتاح GitHub API مفقود. أضف VITE_GITHUB_TOKEN إلى ملف .env.',
-    missing_dashscope_key: 'مفتاح DashScope API مفقود. أضف VITE_DASHSCOPE_API_KEY إلى ملف .env.',
-  },
-},
+      errors: {
+        upload_first: "يرجى رفع قطع الملابس واكتشاف أفكار التصميم أولاً.",
+        save_failed: "فشل تحميل الصورة.",
+        login_required: "يرجى تسجيل الدخول لتحليل الملابس وتوليد التصاميم.",
+        missing_github_key:
+          "مفتاح GitHub API مفقود. أضف VITE_GITHUB_TOKEN إلى ملف .env.",
+        missing_dashscope_key:
+          "مفتاح DashScope API مفقود. أضف VITE_DASHSCOPE_API_KEY إلى ملف .env.",
+      },
+    },
     aboutRecycle: {
       header_primary: "لماذا إعادة التدوير مهمة؟",
       header_gradient: "الموضة المستدامة",
@@ -1550,7 +1497,7 @@ const messages = {
       step3_description:
         "دع معالجنا الذكي يحلل مدخلاتك ليركب لك عرضاً واقعياً للتصميم بشكل فوري وعالي الدقة.",
     },
- auth: {
+    auth: {
       tabs: {
         signUp: "إنشاء حساب",
         login: "تسجيل الدخول",
@@ -1640,7 +1587,7 @@ const messages = {
       analyzing: "جاري إنشاء أفكار التصميم...",
       discover: "اكتشف أفكار التصميم",
     },
-  
+
     payment: {
       completeSubscription: "إكمال الاشتراك",
       paymentMethod: "طريقة الدفع",
@@ -1651,8 +1598,7 @@ const messages = {
     },
     footer: {
       brandName: "ري دولابي",
-      tagline:
-        "أعد التفكير في خزانة ملابسك. أعد تعريف أسلوبك.",
+      tagline: "أعد التفكير في خزانة ملابسك. أعد تعريف أسلوبك.",
       platform: "المنصة",
       styleGuide: "دليل الأسلوب",
       tryOn: "التجربة الافتراضية",
@@ -1716,20 +1662,21 @@ const messages = {
         },
       },
     },
-  "contact": {
-    "titlePart1": "تواصل مع",
-    "titlePart2": "فريق ReDolapy",
-    "description": "لديك سؤال، فكرة شراكة، أو تريد فقط إلقاء التحية؟ اترك لنا رسالة وسنرد عليك في أقرب وقت ممكن.",
-    "form": {
-      "nameLabel": "الاسم",
-      "namePlaceholder": "الاسم بالكامل",
-      "emailLabel": "البريد الإلكتروني",
-      "emailPlaceholder": "user@gmail.com",
-      "messageLabel": "الرسالة",
-      "messagePlaceholder": "اكتب رسالتك هنا...",
-      "sendButton": "إرسال"
-    }
-},
+    contact: {
+      titlePart1: "تواصل مع",
+      titlePart2: "فريق ReDolapy",
+      description:
+        "لديك سؤال، فكرة شراكة، أو تريد فقط إلقاء التحية؟ اترك لنا رسالة وسنرد عليك في أقرب وقت ممكن.",
+      form: {
+        nameLabel: "الاسم",
+        namePlaceholder: "الاسم بالكامل",
+        emailLabel: "البريد الإلكتروني",
+        emailPlaceholder: "user@gmail.com",
+        messageLabel: "الرسالة",
+        messagePlaceholder: "اكتب رسالتك هنا...",
+        sendButton: "إرسال",
+      },
+    },
     fp: {
       forgotTitle: "هل نسيت كلمة المرور؟",
       forgotSubtitle:

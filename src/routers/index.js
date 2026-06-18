@@ -16,6 +16,7 @@ import Wishlist from '../views/Wishlist.vue'
 import Avatar from '../views/Avatar.vue'
 import {isAuthModalOpen, triggerLoginModal} from '../authState.js';
 import ContactUs from "../views/ContactUs.vue";
+import UserCurrentPlan from "../views/UserCurrentPlan.vue";
 
 const routes = [
   { path: "/", component: HomePage },
@@ -36,6 +37,7 @@ const routes = [
   { path: '/Avatar', component: Avatar },
   { path: "/Profile/:id", component: () => import("../views/Profile.vue"), meta: { requiresAuth: true } },
     { path: "/ContactUs", component: ContactUs },
+    { path: "/UserCurrentPlan", component: UserCurrentPlan },
 
   {
     path: "/Profile",

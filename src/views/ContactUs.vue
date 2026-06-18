@@ -1,19 +1,18 @@
 <template>
     <div>
-        <section id="Header" class="  flex items-center justify-between px-[1rem]">
-            <div id="slogan" class="w-[35%] my-[5rem]">
-                <p class="text-5xl font-bold  PrimaryTxt">{{ $t('contact.titlePart1') }} </p>
-                <p class="text-5xl gradientColor font-bold ">{{ $t('contact.titlePart2') }}</p>
-                <p class="w-[90%] mb-[1rem] grayTxt">{{ $t('contact.description') }}</p>
+        <section id="Header" class="  flex flex-col lg:flex-row items-center lg:items-start justify-between gap-12 px-4 sm:px-8 md:px-[3rem] lg:px-[5rem] max-w-[1400px] mx-auto">
 
-                <div class="PrimaryTxt">
+            <div id="slogan" class="sm:w-p[90%] md:w-[80%] md:m-auto lg:w-[35%] flex flex-col items-center lg:items-start text-center lg:text-start my-[5rem]">
+                <p class="text-3xl sm:text-4xl md:text-5xl font-bold  PrimaryTxt">{{ $t('contact.titlePart1') }} </p>
+                <p class="text-3xl sm:text-4xl md:text-5xl gradientColor font-bold ">{{ $t('contact.titlePart2') }}</p>
+                <p class="w-full mb-[1rem] grayTxt text-sm sm:text-base leading-relaxed">{{ $t('contact.description') }}</p>
 
-
-                    <a class="no-underline block ">
-                        <button class="font-semibold gradient-btn-border mb-[1rem]">
-                            <div class="gradient-btn-content  flex gap-4">
-                                <Mail></Mail>
-                                <p>redolapy.admin@gmail.com
+                <div class="PrimaryTxt md:text-center   sm:w-fit flex flex-col gap-1">
+                    <a class="no-underline block w-full">
+                        <button class="font-semibold gradient-btn-border mb-[1rem]  w-full text-start">
+                            <div class="gradient-btn-content  flex gap-4 items-center">
+                                <Mail class="flex-shrink-0"></Mail>
+                                <p class=" text-sm sm:text-base">redolapy.admin@gmail.com
                                 </p>
                             </div>
                         </button>
@@ -37,10 +36,7 @@
                 </div>
             </div>
 
-
-
-
-            <div id="MessageForm" class="w-[60%]">
+            <div id="MessageForm" class="sm:w-[80%] lg:w-[60%]">
 
 
                 <form @submit.prevent="submitForm">
@@ -142,20 +138,12 @@ export default {
 }
 
 .gradient-btn-border {
-    width: 60%;
     border-radius: 0.5em;
     background: linear-gradient(90deg, #40B9FF 0%, #74D6B6 50%, #A6E22E 100%);
     padding: 0.1rem;
     cursor: pointer;
 }
 
-.gradient-btn-border {
-    width: 60%;
-    border-radius: 0.5em;
-    background: linear-gradient(90deg, #40B9FF 0%, #74D6B6 50%, #A6E22E 100%);
-    padding: 0.1rem;
-    cursor: pointer;
-}
 
 .gradient-btn-content {
     background-color: var(--primary-bgc);

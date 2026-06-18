@@ -1,16 +1,16 @@
 <template>
-    <div class="no-underline block w-[40%]">
+    <div class="no-underline block w-full md:max-w-[460px] lg:max-w-[400px]">
         <button class="font-semibold gradient-btn-border w-[100%]">
-            <div class="gradient-btn-content flex gap-5 items-center">
-                <img class="rounded-[50%] w-[5rem] h-[5rem]" src="../assets/person 1.png" alt="">
+            <div class="gradient-btn-content flex flex-col sm:flex-row gap-5 items-center p-4 sm:p-6">
+                <img class="rounded-[50%] w-[5rem] h-[5rem] flex-shrink-0 object-cover" src="../assets/person 1.png" alt="">
 
-                <div class="memberInfo text-start text-start flex flex-col gap-3 flex-grow ">
+                <div class="memberInfo text-start sm:text-start flex flex-col gap-3 flex-grow w-full ">
                     <div>
-                    <p class="PrimaryTxt">{{name}}</p>
-                    <p class="font-medium grayTxt">{{title}}</p>
+                    <p class="PrimaryTxt text-lg md:text-xl ">{{name}}</p>
+                    <p class="font-medium grayTxt text-sm md:text-base ">{{title}}</p>
                     </div>
-                    <div class="gradient-btn-border w-fit text-white flex px-[0.5rem]">
-                         <a :href="link" class=" font-medium items-center gap-2 " target="_blank">Linkedin Profile </a>
+                    <div class="gradient-btn-border w-fit text-white flex px-[0.5rem] mx-auto sm:mx-0 ">
+                         <a :href="link" class="font-medium flex items-center gap-2 " target="_blank">Linkedin Profile </a>
                         <ChevronRight/>
                     </div>
                 </div>

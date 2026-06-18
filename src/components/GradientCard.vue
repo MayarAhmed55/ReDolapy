@@ -7,7 +7,7 @@
           <div class="pro-card-inner flex flex-col justify-between items-center gap-6">
               
               <div class=" bg-[#FF8E40] self-start text-white  text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full z-10">
-                Popular
+                {{ $t('pricing.pro.popular') }}
               </div>
         <div class="text-center PrimaryTxt dark:text-white">
           <p class="PricingTitle text-4xl font-bold mb-2 ">{{ cardTitle }}</p>
@@ -33,17 +33,38 @@
             <span class="text-[#8ED321] flex-shrink-0"><CircleCheckBig /></span>
             <span>{{ fourthPoint }}</span>
           </p>
+           <p class="flex items-center gap-2 font-medium text-base mb-2">
+            <span class="text-[#8ED321] flex-shrink-0"><CircleCheckBig /></span>
+            <span>{{ fifthPoint }}</span>
+          </p>
         </div>
 
         <div class="w-full">
           <slot name="AdditionalFeatures"></slot>
         </div>
-
+<!-- 
         <button id="ProPricingBtn" class="PricingCardsButton font-semibold text-lg w-full py-3 rounded-xl transition-transform hover:scale-[1.01]">
           <router-link to="/pricing" class="no-underline block text-white w-full h-full">
             {{ buttonContent }}
           </router-link>
-        </button>
+        </button> -->
+
+        <!-- <button 
+  @click.prevent="$emit('click')"
+  id="ProPricingBtn" type="button"
+  class="PricingCardsButton font-semibold text-lg w-full py-3 rounded-xl transition-transform hover:scale-[1.01] text-white block"
+>
+  {{ buttonContent }}
+</button> -->
+
+<button 
+  @click.prevent="$emit('click', isYearly ? 'year' : 'month')"
+  id="ProPricingBtn" 
+  type="button"
+  class="PricingCardsButton font-semibold text-lg w-full py-3 rounded-xl transition-transform hover:scale-[1.01] text-white block"
+>
+  {{ buttonContent }}
+</button>
 
         <div class="w-full flex justify-center">
           <slot name="AdditionalInfo"></slot>
@@ -69,6 +90,7 @@ export default {
             secondPoint:String,
             thirdPoint:String,
             fourthPoint:String,
+            fifthPoint:String,
 
             buttonContent:String,
             permonth:String

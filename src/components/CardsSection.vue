@@ -1,13 +1,13 @@
 <template>
     <div>
    <section id="Features">
-            <p id="FeaturesTitle" class="gradientColor text-5xl font-bold w-[50%] m-auto ">{{sectionTitle}}</p>
-            <p class=" text-center w-[30%] m-auto mb-[1rem] font-medium grayTxt">{{sectionDescription}}</p>
+            <p id="FeaturesTitle" class="gradientColor text-3xl sm:text-4xl md:text-5xl font-bold w-full max-w-2xl mx-auto mb-4 text-center ">{{sectionTitle}}</p>
+            <p class="w-full max-w-md mx-auto font-medium leading-relaxed grayTxt text-center">{{sectionDescription}}</p>
 
 
 
-            <div class="cardsContainer flex gap-8 justify-center my-[3rem]">
-                <div class="card !bg-white dark:!bg-[#0d0d0d] ">
+            <div class="cardsContainer flex flex-col lg:flex-row  gap-8 justify-center items-center my-[3rem] lg:items-stretch px-4">
+                <div class="card bg-white dark:bg-[#0d0d0d] w-[85%] sm:w-[70%] max-w-[380px] lg:w-[32%] shadow-lg">
                     <div class="Sparkle Icon PrimaryTxt ">
                             <slot name="Icon1"></slot>
                     </div>
@@ -15,7 +15,7 @@
                     <p class="serviceDescription Secondary-grayTxt">{{Card1Description}}</p>
                 </div>
 
-                <div class="card  bg-white dark:bg-[#0d0d0d]">
+                <div class="card  bg-white dark:bg-[#0d0d0d] w-[85%] max-w-[380px] lg:w-[32%] shadow-lg">
                     <div class="TryOn Icon  ">
                             <slot name="Icon2"></slot>
                     </div>
@@ -23,7 +23,7 @@
                     <p class="serviceDescription Secondary-grayTxt">{{Card2Description}}</p>
                 </div>
 
-                <div class="card  bg-white dark:bg-[#0d0d0d] Secondary-grayTxt">
+                <div class="card  bg-white dark:bg-[#0d0d0d]  w-[85%] max-w-[380px] lg:w-[32%] shadow-lg">
                     <div class="Recycle Icon ">
                             <slot name="Icon3"></slot>
                     </div>
@@ -62,17 +62,16 @@
     }
 </script>
 
-<style >
+<style scoped >
 /* @import '../assets/Style.css'; */
 /* @reference "tailwindcss"; */
 
 .card {
-    width: 32%;
-    /* background-color: white; */
-/* @apply bg-white dark:bg-[#0d0d0d] transition-colors duration-300;    border-radius: 1em; */
+    /* width: 32%; */
+    border-radius: 1rem;
     padding: 2rem;
     padding-bottom: 4rem;
-    box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.1), -0.1rem -0.1rem 0.1rem rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.1), -0.1rem -0.1rem 0.1rem rgba(0, 0, 0, 0.1); */
 }
 .Icon {
     width: 5rem;
