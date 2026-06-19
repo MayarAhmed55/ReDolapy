@@ -23,8 +23,9 @@
     </CardsSection>
 
     <section id="StepsSection" class="flex flex-col lg:flex-row justify-between items-center gap-8 px-4 lg:px-0 my-12">
-      <div class="StepsImg rounded-xl w-full lg:w-auto flex justify-center">
-        <img src="../assets/image 9.png" class="w-[40rem] h-[30rem] rounded-xl" :alt="$t('features.sectionTitle')" />
+      <div class="StepsImg  w-full w-auto flex justify-center px-4">
+        <img src="../assets/image 9.png" class="w-full max-w-[40rem] h-auto max-h-[30rem] object-cover rounded-xl"
+          :alt="$t('features.sectionTitle')" />
       </div>
 
       <div id="Steps" class="w-full lg:w-[48%] space-y-4 ">
@@ -74,12 +75,140 @@
     </section>
 
 
-    <section :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'" class="px-4 lg:px-0">
-      <div class="relative flex flex-col items-center lg:items-start text-center lg:text-start">
+    <!-- <section :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'" class="px-4 lg:px-0">
+
+      <div class="relative flex flex-col items-center lg:items-start text-center lg:text-start md:d-block">
+
         <router-link to="/Brands">
+
           <span class="absolute top-3  flex gap-2 text-[#8ED321]" :class="$i18n.locale === 'ar' ? 'left-1' : 'right-1'">
+
             {{ $t('brands.viewAll') }}
+
             <ChevronRight class="text-lg" :class="{ 'rotate-180': $i18n.locale === 'ar' }" />
+
+          </span>
+          </router-link>
+
+ <p id="FeaturesTitle" class="text-4xl md:text-5xl font-bold  PrimaryTxt flex">
+          {{ $t('brands.title') }}
+        </p>
+
+        <p class="mb-[1rem] font-medium grayTxt m-2">
+          {{ $t('brands.subtitle') }}
+          <span class="gradientColor">{{ $t('brands.appName') }}</span>
+        </p>
+      </div>
+      <div class="cardsContainer flex flex-col lg:flex-row gap-6 justify-center my-[3rem] ">
+
+        <div
+          class="card bg-white dark:bg-[#0d0d0d] min-h-[25rem] h-auto shadow-lg md:w-[60%]  sm:w-[90%] self-center lg:w-[32%]">
+          <div class="flex justify-center items-center m-auto mb-[2rem]">
+            <img src="../assets/H&M.jpg" class="h-[10rem] w-[10rem] object-contain" alt="H&M">
+          </div>
+          <p class="serviceTitle PrimaryTxt">{{ $t('brands.hm.title') }}</p>
+          <p class="serviceDescription Secondary-grayTxt">
+            {{ $t('brands.hm.description') }}
+          </p>
+        </div>
+
+        <div
+          class="card bg-white dark:bg-[#0d0d0d] min-h-[25rem] h-auto shadow-lg md:w-[60%]  sm:w-[90%] self-center lg:w-[32%]">
+          <div class="flex justify-center items-center m-auto mb-[2rem]">
+            <img src="../assets/H&M.jpg" class="h-[10rem] w-[10rem] object-contain" alt="H&M">
+          </div>
+          <p class="serviceTitle PrimaryTxt">{{ $t('brands.hm.title') }}</p>
+          <p class="serviceDescription Secondary-grayTxt">
+            {{ $t('brands.hm.description') }}
+          </p>
+        </div>
+
+        <div
+          class="card bg-white dark:bg-[#0d0d0d] min-h-[25rem] h-auto shadow-lg md:w-[60%]  sm:w-[90%]  self-center  lg:w-[32%]">
+          <div class="flex justify-center items-center m-auto mb-[2rem]">
+            <img src="../assets/H&M.jpg" class="h-[10rem] w-[10rem] object-contain" alt="H&M">
+            <ArrowRight :class="{ 'rotate-180': $i18n.locale === 'ar' }" />
+            <img :src="imgSrc6" alt="">
+          </div>
+          <p class="serviceTitle PrimaryTxt">{{ $t('brands.hm.title') }}</p>
+          <p class="serviceDescription Secondary-grayTxt">
+            {{ $t('brands.hm.description') }}
+          </p>
+        </div>
+        </div>
+    </section> -->
+    
+    <section :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'" class="px-4 lg:px-0">
+
+  <div class="flex flex-col lg:flex-row lg:justify-between lg:items-end gap-4 w-full  border-zinc-100 dark:border-zinc-800 pb-4 mb-6">
+    
+    <div class="flex flex-col items-center lg:items-start text-center lg:text-start">
+      <h2 id="FeaturesTitle" class="text-3xl md:text-4xl lg:text-5xl font-bold PrimaryTxt mb-2">
+        {{ $t('brands.title') }}
+      </h2>
+      <p class="font-medium grayTxt text-sm md:text-base">
+        {{ $t('brands.subtitle') }}
+        <span class="gradientColor">{{ $t('brands.appName') }}</span>
+      </p>
+    </div>
+
+    <div class="flex justify-center lg:justify-end shrink-0 mt-2 lg:mt-0">
+      <router-link to="/Brands" class="no-underline hover:underline">
+        <span class="flex items-center gap-2 text-[#8ED321] font-semibold text-sm sm:text-base">
+          {{ $t('brands.viewAll') }}
+          <ChevronRight class="text-lg transition-transform duration-200" :class="{ 'rotate-180': $i18n.locale === 'ar' }" />
+        </span>
+      </router-link>
+    </div>
+
+  </div>
+
+  <div class="cardsContainer flex flex-col lg:flex-row gap-6 justify-center my-[3rem]">
+
+    <div class="card bg-white dark:bg-[#0d0d0d] min-h-[25rem] h-auto shadow-lg p-6 rounded-3xl border border-zinc-100 dark:border-zinc-800 w-full sm:w-[90%] md:w-[60%] lg:w-[32%] self-center">
+      <div class="flex justify-center items-center mx-auto mb-6">
+        <img src="../assets/H&M.jpg" class="h-40 w-40 object-contain" alt="H&M">
+      </div>
+      <p class="serviceTitle text-xl font-bold PrimaryTxt mb-2 text-center">{{ $t('brands.hm.title') }}</p>
+      <p class="serviceDescription text-sm Secondary-grayTxt text-center leading-relaxed">
+        {{ $t('brands.hm.description') }}
+      </p>
+    </div>
+
+    <div class="card bg-white dark:bg-[#0d0d0d] min-h-[25rem] h-auto shadow-lg p-6 rounded-3xl border border-zinc-100 dark:border-zinc-800 w-full sm:w-[90%] md:w-[60%] lg:w-[32%] self-center">
+      <div class="flex justify-center items-center mx-auto mb-6">
+        <img src="../assets/H&M.jpg" class="h-40 w-40 object-contain" alt="H&M">
+      </div>
+      <p class="serviceTitle text-xl font-bold PrimaryTxt mb-2 text-center">{{ $t('brands.hm.title') }}</p>
+      <p class="serviceDescription text-sm Secondary-grayTxt text-center leading-relaxed">
+        {{ $t('brands.hm.description') }}
+      </p>
+    </div>
+
+    <div class="card bg-white dark:bg-[#0d0d0d] min-h-[25rem] h-auto shadow-lg p-6 rounded-3xl border border-zinc-100 dark:border-zinc-800 w-full sm:w-[90%] md:w-[60%] lg:w-[32%] self-center">
+      <div class="flex justify-center items-center mx-auto mb-6">
+        <img src="../assets/H&M.jpg" class="h-40 w-40 object-contain" alt="H&M">
+      </div>
+      <p class="serviceTitle text-xl font-bold PrimaryTxt mb-2 text-center">{{ $t('brands.hm.title') }}</p>
+      <p class="serviceDescription text-sm Secondary-grayTxt text-center leading-relaxed">
+        {{ $t('brands.hm.description') }}
+      </p>
+    </div>
+
+  </div>
+</section>
+    
+    
+    
+    
+    <!-- <section :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'" class="px-4 lg:px-0">
+      <div class="relative flex flex-col items-center lg:items-start text-center lg:text-start">
+        <router-link to="/Brands" class="shrink-0 no-underline hover:underline">
+          <span class="flex items-center gap-1 text-sm sm:text-base font-semibold text-[#8ED321]"
+            :class="$i18n.locale === 'ar' ? 'left-1' : 'right-1'">
+            {{ $t('brands.viewAll') }}
+            <ChevronRight class="w-4 h-4 transition-transform duration-200"
+              :class="{ 'rotate-180': $i18n.locale === 'ar' }" />
           </span>
         </router-link>
 
@@ -95,7 +224,8 @@
 
       <div class="cardsContainer flex flex-col lg:flex-row gap-6 justify-center my-[3rem] ">
 
-        <div class="card bg-white dark:bg-[#0d0d0d] min-h-[25rem] h-auto shadow-lg w-[60%] self-center lg:w-[32%]">
+        <div
+          class="card bg-white dark:bg-[#0d0d0d] min-h-[25rem] h-auto shadow-lg md:w-[60%]  sm:w-[90%] self-center lg:w-[32%]">
           <div class="flex justify-center items-center m-auto mb-[2rem]">
             <img src="../assets/H&M.jpg" class="h-[10rem] w-[10rem] object-contain" alt="H&M">
           </div>
@@ -105,7 +235,8 @@
           </p>
         </div>
 
-        <div class="card bg-white dark:bg-[#0d0d0d] min-h-[25rem] h-auto shadow-lg w-[60%] self-center lg:w-[32%]">
+        <div
+          class="card bg-white dark:bg-[#0d0d0d] min-h-[25rem] h-auto shadow-lg md:w-[60%]  sm:w-[90%] self-center lg:w-[32%]">
           <div class="flex justify-center items-center m-auto mb-[2rem]">
             <img src="../assets/H&M.jpg" class="h-[10rem] w-[10rem] object-contain" alt="H&M">
           </div>
@@ -115,7 +246,8 @@
           </p>
         </div>
 
-        <div class="card bg-white dark:bg-[#0d0d0d] min-h-[25rem] h-auto shadow-lg w-[60%] self-center  lg:w-[32%]">
+        <div
+          class="card bg-white dark:bg-[#0d0d0d] min-h-[25rem] h-auto shadow-lg md:w-[60%]  sm:w-[90%]  self-center  lg:w-[32%]">
           <div class="flex justify-center items-center m-auto mb-[2rem]">
             <img src="../assets/H&M.jpg" class="h-[10rem] w-[10rem] object-contain" alt="H&M">
             <ArrowRight :class="{ 'rotate-180': $i18n.locale === 'ar' }" />
@@ -127,7 +259,10 @@
           </p>
         </div>
       </div>
-    </section>
+    </section> -->
+
+
+
 
 
 
@@ -153,9 +288,11 @@
         </button>
       </div>
 
-      <div id="PricingCards" class="flex flex-column flex-wrap lg:flex-row lg:flex-nowrap  gap-8 justify-center items-center my-[3rem] max-w-[1000px] m-auto">
+      <div id="PricingCards"
+        class="flex flex-column flex-wrap lg:flex-row lg:flex-nowrap  gap-8 justify-center items-center my-[3rem] max-w-[1000px] m-auto">
 
-        <div id="FreePricing" class="card  bg-white dark:bg-[#0d0d0d] flex flex-col  justify-center  items-center gap-8 w-[50%] lg:w-[48%] min-w-[320px] max-w-[380px] !px-6">
+        <div id="FreePricing"
+          class="card  bg-white dark:bg-[#0d0d0d] flex flex-col  justify-center  items-center gap-8 w-[50%] lg:w-[48%] min-w-[320px] max-w-[380px] !px-6">
           <p class="PricingTitle text-4xl font-bold PrimaryTxt">
             {{ $t("pricing.free.name") }}
           </p>

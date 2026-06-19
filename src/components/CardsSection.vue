@@ -7,7 +7,7 @@
 
 
             <div class="cardsContainer flex flex-col lg:flex-row  gap-8 justify-center items-center my-[3rem] lg:items-stretch px-4">
-                <div class="card bg-white dark:bg-[#0d0d0d] w-[85%] sm:w-[70%] max-w-[380px] lg:w-[32%] shadow-lg">
+                <div class="card bg-white dark:bg-[#0d0d0d] md:w-[85%] sm:w-[90%] max-w-[380px] lg:w-[32%] shadow-lg">
                     <div class="Sparkle Icon PrimaryTxt ">
                             <slot name="Icon1"></slot>
                     </div>
@@ -15,7 +15,7 @@
                     <p class="serviceDescription Secondary-grayTxt">{{Card1Description}}</p>
                 </div>
 
-                <div class="card  bg-white dark:bg-[#0d0d0d] w-[85%] max-w-[380px] lg:w-[32%] shadow-lg">
+                <div class="card  bg-white dark:bg-[#0d0d0d] md:w-[85%] sm:w-[90%] max-w-[380px] lg:w-[32%]shadow-lg">
                     <div class="TryOn Icon  ">
                             <slot name="Icon2"></slot>
                     </div>
@@ -23,7 +23,7 @@
                     <p class="serviceDescription Secondary-grayTxt">{{Card2Description}}</p>
                 </div>
 
-                <div class="card  bg-white dark:bg-[#0d0d0d]  w-[85%] max-w-[380px] lg:w-[32%] shadow-lg">
+                <div class="card  bg-white dark:bg-[#0d0d0d] md:w-[85%] sm:w-[90%] max-w-[380px] lg:w-[32%] shadow-lg">
                     <div class="Recycle Icon ">
                             <slot name="Icon3"></slot>
                     </div>
