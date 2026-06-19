@@ -169,3 +169,17 @@ export const getAllUsers=()=>{
     }
   })
 }
+export const getAdminReplies = () => {
+  return axios.get(
+    `${API}/emails/admin-replies`,
+    {
+      params: {
+        page: 1,
+        limit: 200
+      },
+      headers:{
+        Authorization:`Bearer ${localStorage.getItem("token")}`
+      }
+    }
+  );
+};

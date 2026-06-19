@@ -81,7 +81,7 @@
             <div class="progress-track">
               <div
                 class="progress-fill"
-                :style="{ width: activeProducts/productsCount + '%' }"
+                :style="{ width: activeProducts/productsCount*100 + '%' }"
               ></div>
             </div>
           </div>

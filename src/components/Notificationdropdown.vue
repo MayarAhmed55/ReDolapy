@@ -181,13 +181,14 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount, onUnmounted } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 import { useI18n } from "vue-i18n";
 import {
   getNotifications,
   markAsReadAll,
   markAsRead,
-  deletAllNotifications
+  deletAllNotifications,
+  getAdminReplies,
 } from "../services/services";
 
 const { locale } = useI18n();
@@ -201,6 +202,42 @@ const isLoading = ref(false);
 const fetchError = ref(null);
 const serverUnreadCount = ref(0);
 
+// Admin-reply emails have no backend "read"/"delete" state yet, so once the
+// user marks one read or deletes it locally, we remember its id here and
+// filter it out of every future fetch — otherwise the next poll re-adds it.
+const DISMISSED_EMAILS_KEY = "dismissedAdminEmailIds";
+const dismissedEmailIds = ref(loadDismissedEmailIds());
+
+function loadDismissedEmailIds() {
+  try {
+    const raw = localStorage.getItem(DISMISSED_EMAILS_KEY);
+    return raw ? new Set(JSON.parse(raw)) : new Set();
+  } catch {
+    return new Set();
+  }
+}
+
+function persistDismissedEmailIds() {
+  try {
+    localStorage.setItem(
+      DISMISSED_EMAILS_KEY,
+      JSON.stringify([...dismissedEmailIds.value]),
+    );
+  } catch {
+    // ignore storage errors (e.g. private browsing quota)
+  }
+}
+
+function dismissEmail(id) {
+  dismissedEmailIds.value.add(id);
+  persistDismissedEmailIds();
+}
+
+function dismissEmails(ids) {
+  ids.forEach((id) => dismissedEmailIds.value.add(id));
+  persistDismissedEmailIds();
+}
+
 // ── Computed ───────────────────────────────────────────────────────────────
 // Use server unreadCount for the badge; fall back to local count
 const unreadCount = computed(() =>
@@ -211,8 +248,8 @@ const unreadCount = computed(() =>
 let notificationInterval;
 
 onMounted(() => {
-  // Initial fetch
   fetchNotifications();
+  document.addEventListener("mousedown", handleOutsideClick);
 
   notificationInterval = setInterval(() => {
     if (!isOpen.value) {
@@ -221,8 +258,9 @@ onMounted(() => {
   }, 3000);
 });
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
   clearInterval(notificationInterval);
+  document.removeEventListener("mousedown", handleOutsideClick);
 });
 // ── Helpers ────────────────────────────────────────────────────────────────
 function formatTime(dateStr) {
@@ -245,7 +283,21 @@ function normalise(item) {
     title: item.title,
     type: item.type,
     time: formatTime(item.createdAt),
+    rawTime: item.createdAt,
     read: item.read ?? false,
+    markingRead: false,
+  };
+}
+
+function normaliseEmail(item) {
+  return {
+    id: item._id,
+    title: item.subject,
+    message: item.message,
+    type: "admin_email",
+    time: formatTime(item.created_at),
+    rawTime: item.created_at,
+    read: item.isRead ?? false,
     markingRead: false,
   };
 }
@@ -258,14 +310,28 @@ async function fetchNotifications() {
   fetchError.value = null;
 
   try {
-    const res = await getNotifications();
+    const notificationRes = await getNotifications();
+    const adminRepliesRes = await getAdminReplies();
 
-    const { notifications: raw, unreadCount: serverCount } = res.data;
+    const { notifications: raw, unreadCount: serverCount } =
+      notificationRes.data;
 
-    notifications.value = (raw ?? []).map(normalise);
+    const normalNotifs = (raw ?? []).map(normalise);
+
+    const emailNotifs = (adminRepliesRes.data?.emails ?? [])
+      .map(normaliseEmail)
+      .filter((n) => !dismissedEmailIds.value.has(n.id));
+
+    // Merge both sources, newest first
+    notifications.value = [...normalNotifs, ...emailNotifs].sort(
+      (a, b) => new Date(b.rawTime || 0) - new Date(a.rawTime || 0),
+    );
+
+    const unreadEmails = emailNotifs.filter((n) => !n.read).length;
 
     serverUnreadCount.value =
-      serverCount ?? notifications.value.filter((n) => !n.read).length;
+      (serverCount ?? normalNotifs.filter((n) => !n.read).length) +
+      unreadEmails;
   } catch (err) {
     fetchError.value = "Failed to load notifications.";
     console.error("[NotificationDropdown]", err);
@@ -273,7 +339,6 @@ async function fetchNotifications() {
     isLoading.value = false;
   }
 }
-
 // ── Methods ────────────────────────────────────────────────────────────────
 function toggleDropdown() {
   isOpen.value = !isOpen.value;
@@ -288,26 +353,56 @@ async function markRead(id) {
   notif.markingRead = true;
 
   try {
-    await markAsRead(id);
-    notif.read = true;
+    if (notif.type === "admin_email") {
+      // No backend endpoint yet — remember it locally so it stays hidden
+      dismissEmail(id);
+    } else {
+      await markAsRead(id);
+    }
     if (serverUnreadCount.value > 0) serverUnreadCount.value--;
+    // Remove it from the list now that it's read
+    notifications.value = notifications.value.filter((n) => n.id !== id);
   } catch (err) {
     console.error("[NotificationDropdown] markAsRead failed", err);
-  } finally {
     notif.markingRead = false;
   }
 }
 
 async function markAllRead() {
-  notifications.value.forEach((n) => (n.read = true));
-  await markAsReadAll();
+  const previous = notifications.value;
+
+  // Backend only marks regular notifications as read — remember the admin
+  // emails locally so they don't reappear on the next poll.
+  const emailIds = previous
+    .filter((n) => n.type === "admin_email")
+    .map((n) => n.id);
+  dismissEmails(emailIds);
+
+  // Optimistic clear — list and badge disappear immediately
+  notifications.value = [];
   serverUnreadCount.value = 0;
+
+  try {
+    await markAsReadAll();
+  } catch (err) {
+    console.error("[NotificationDropdown] markAsReadAll failed", err);
+    // Roll back if the request didn't actually go through
+    notifications.value = previous;
+    serverUnreadCount.value = previous.filter((n) => !n.read).length;
+  }
 }
 const deleteNotification = async () => {
   if (notifications.value.length === 0) return;
 
-  // Optimistic clear — list and Delete button disappear immediately
+  // Backend delete only removes regular notifications — remember the admin
+  // emails locally so they don't reappear on the next poll.
   const previous = notifications.value;
+  const emailIds = previous
+    .filter((n) => n.type === "admin_email")
+    .map((n) => n.id);
+  dismissEmails(emailIds);
+
+  // Optimistic clear — list and Delete button disappear immediately
   notifications.value = [];
   serverUnreadCount.value = 0;
 
@@ -327,14 +422,6 @@ function handleOutsideClick(e) {
     isOpen.value = false;
   }
 }
-
-onMounted(() => {
-  fetchNotifications();
-  document.addEventListener("mousedown", handleOutsideClick);
-});
-onBeforeUnmount(() =>
-  document.removeEventListener("mousedown", handleOutsideClick),
-);
 </script>
 
 <style scoped>
@@ -440,12 +527,12 @@ onBeforeUnmount(() =>
 .mark-all-btn:hover {
   opacity: 0.75;
 }
-.delete-notification{
-    background: none;
+.delete-notification {
+  background: none;
   border: none;
   font-size: 12px;
   font-weight: 500;
-  color: #B00020;
+  color: #b00020;
   cursor: pointer;
   padding: 0;
   transition: opacity 0.15s;
