@@ -109,7 +109,7 @@
                       <path stroke-linecap="round" stroke-linejoin="round"
                         d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
                     </svg>
-                    <span class="item-title PrimaryTxt">Notifications</span>
+                    <span class="item-title PrimaryTxt">{{ $t("nav.notifications") }}</span>
                   </div>
                   <button @click="toggleNotifications" class="toggle-switch"
                     :class="{ 'toggle-active': notificationsEnabled }">
@@ -124,9 +124,9 @@
                       <path stroke-linecap="round" stroke-linejoin="round"
                         d="M12 3v1.5m0 15V21m9-9h-1.5m-13.5 0H3m16.364-6.364l-1.06 1.06m-11.314 11.314l-1.06 1.06m11.314 0l-1.06-1.06m-11.314-11.314l-1.06-1.06M12 7.25a4.75 4.75 0 1 0 0 9.5 4.75 4.75 0 0 0 0-9.5z" />
                     </svg>
-                    <span class="item-title PrimaryTxt">Theme</span>
+                    <span class="item-title PrimaryTxt">{{ $t("nav.theme") }}</span>
                   </div>
-                  <button @click="toggleTheme" class="toggle-switch" :class="{ 'toggle-active': isDarkMode }">
+                  <button @click="toggleThemeNavBtn" class="toggle-switch" :class="{ 'toggle-active': isDark }">
                     <span class="toggle-circle"></span>
                   </button>
                 </div>
@@ -140,7 +140,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round"
                           d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138A44.26 44.26 0 0115.5 12m-2 1.157a26.792 26.792 0 01-1.884 4.354" />
                       </svg>
-                      <span class="item-title PrimaryTxt">Language</span>
+                      <span class="item-title PrimaryTxt">{{ $t("nav.language") }}</span>
                     </div>
 
                     <div class="flex items-center gap-1">
@@ -186,10 +186,10 @@
                       <path stroke-linecap="round" stroke-linejoin="round"
                         d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-6 15h9" />
                     </svg>
-                    <span class="item-title PrimaryTxt font-normal">Mobile App</span>
+                    <span class="item-title PrimaryTxt font-normal">{{ $t("nav.mobileApp") }}</span>
                   </div>
                   <span class="text-sm font-normal" :class="hasMobileApp ? 'text-green-500' : 'text-gray-400'">
-                    {{ hasMobileApp ? "Installed" : "Not Installed" }}
+                    {{ hasMobileApp ? $t("nav.appStatus.installed") : $t("nav.appStatus.notInstalled") }}
                   </span>
                 </div>
 
@@ -201,7 +201,7 @@
                       <path stroke-linecap="round" stroke-linejoin="round"
                         d="M20.25 14.15v4.25c0 .621-.504 1.125-1.125 1.125H4.875A1.125 1.125 0 013.75 18.4V14.15m16.5 0c0-1.243-1.007-2.25-2.25-2.25H6c-1.243 0-2.25 1.007-2.25 2.25m16.5 0V6.3c0-.621-.504-1.125-1.125-1.125H4.875A1.125 1.125 0 003.75 6.3v7.85m16.5 0V5.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25v8.65" />
                     </svg>
-                    <span class="item-title PrimaryTxt font-normal">My Wardrobe</span>
+                    <span class="item-title PrimaryTxt font-normal">{{ $t("nav.myWardrobe") }}</span>
                   </div>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                     stroke="currentColor" class="w-4 h-4 ">
@@ -218,7 +218,7 @@
                       <path d="M18 6 7 17l-5-5" />
                       <path d="m22 10-7.5 7.5L13 16" />
                     </svg>
-                    <span class="item-title PrimaryTxt font-normal">My Matchings</span>
+                    <span class="item-title PrimaryTxt font-normal">{{ $t("nav.myMatchings") }}</span>
                   </div>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                     stroke="currentColor" class="w-4 h-4 ">
@@ -238,7 +238,7 @@
                       <path
                         d="M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z" />
                     </svg>
-                    <span class="item-title PrimaryTxt font-normal">Current Plan</span>
+                    <span class="item-title PrimaryTxt font-normal">{{ $t("nav.currentPlan") }}</span>
                   </div>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                     stroke="currentColor" class="w-4 h-4 ">
@@ -262,8 +262,8 @@
                       </svg>
                     </div>
                     <div class="card-details">
-                      <span class="card-title">Wishlist</span>
-                      <span class="card-desc">View your saved items</span>
+                      <span class="card-title">{{ $t("nav.wishlist") }}</span>
+                      <span class="card-desc">{{ $t("nav.wishlistDesc") }}</span>
                     </div>
                   </router-link>
                 </div>
@@ -271,7 +271,7 @@
                 <div class="edit-profile-warber w-full">
                   <router-link :to="`/Profile/${userId}`"
                     class="edit-profile-btn bg-white dark:bg-[#0d0d0d] cursor-pointer" @click="closeUserDropdown">
-                    <span>Edit Profile</span>
+                    <span>{{ $t("nav.editProfile") }}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                       stroke="currentColor" class="w-4 h-4 flex">
                       <path stroke-linecap="round" stroke-linejoin="round"
@@ -285,7 +285,7 @@
                     handleLogout();
                   userDropdownOpen = false;
                   " class="logout-action-btn" role="menuitem">
-                    <span class="logout-text">Log out</span>
+                    <span class="logout-text">{{ $t("nav.logout") }}</span>
                     <span class="logout-icon-box">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                         stroke="currentColor" class="w-4 h-4">
@@ -321,7 +321,7 @@
             type="button"
             class="inline-flex items-center justify-center rounded-md p-2 text-(--Primary-Text-color) hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
             :aria-expanded="mobileOpen"
-            aria-label="Open menu"
+            :aria-label="$t('nav.openMenu')"
             @click="openMobileMenu"
           >
             <svg
@@ -377,7 +377,7 @@
               :class="$i18n.locale === 'ar' ? 'left-0' : 'right-0'"
               role="dialog"
               aria-modal="true"
-              aria-label="Navigation menu"
+              :aria-label="$t('nav.navigationMenu')"
             >
               <div
                 class="flex items-center justify-between px-5 pt-5 pb-4 border-b border-gray-100 dark:border-zinc-800"
@@ -392,7 +392,7 @@
                 <button
                   type="button"
                   class="p-1.5 text-(--Primary-Text-color) hover:bg-gray-50 dark:hover:bg-zinc-800 rounded-md transition-colors"
-                  aria-label="Close menu"
+                  :aria-label="$t('nav.closeMenu')"
                   @click="closeMobileMenu"
                 >
                   <svg
@@ -552,7 +552,7 @@
                           </svg>
                           <span
                             class="text-sm font-medium text-(--Primary-Text-color)"
-                            >Notifications</span
+                            >{{ $t("nav.notifications") }}</span
                           >
                         </div>
                         <button
@@ -585,13 +585,13 @@
                           </svg>
                           <span
                             class="text-sm font-medium text-(--Primary-Text-color)"
-                            >Theme</span
+                            >{{ $t("nav.theme") }}</span
                           >
                         </div>
                         <button
-                          @click="toggleTheme"
+                          @click="toggleThemeNavBtn"
                           class="toggle-switch"
-                          :class="{ 'toggle-active': isDarkMode }"
+                          :class="{ 'toggle-active': isDark }"
                         >
                           <span class="toggle-circle"></span>
                         </button>
@@ -620,7 +620,7 @@
                             </svg>
                             <span
                               class="text-sm font-medium text-(--Primary-Text-color)"
-                              >Language</span
+                              >{{ $t("nav.language") }}</span
                             >
                           </div>
                           <div class="flex items-center gap-1">
@@ -721,7 +721,7 @@
                           </svg>
                           <span
                             class="text-sm font-medium text-(--Primary-Text-color) PrimaryTxt"
-                            >Mobile App</span
+                            >{{ $t("nav.mobileApp") }}</span
                           >
                         </div>
                         <span
@@ -760,7 +760,7 @@
                           </svg>
                           <span
                             class="text-sm font-medium text-(--Primary-Text-color)"
-                            >My Wardrobe</span
+                            >{{ $t("nav.myWardrobe") }}</span
                           >
                         </div>
                         <svg
@@ -801,9 +801,9 @@
                             </svg>
                           </div>
                           <div class="card-details">
-                            <span class="card-title">Payment Methods</span>
+                            <span class="card-title">{{ $t("nav.paymentMethods") }}</span>
                             <span class="card-desc"
-                              >Manage your payment options</span
+                              >{{ $t("nav.paymentMethodsDesc") }}</span
                             >
                           </div>
                         </div>
@@ -829,8 +829,8 @@
                             </svg>
                           </div>
                           <div class="card-details">
-                            <span class="card-title">Wishlist</span>
-                            <span class="card-desc">View your saved items</span>
+                            <span class="card-title">{{ $t("nav.wishlist") }}</span>
+                            <span class="card-desc">{{ $t("nav.wishlistDesc") }}</span>
                           </div>
                         </router-link>
                       </div>
@@ -842,7 +842,7 @@
                           class="edit-profile-btn cursor-pointer"
                           @click="closeMobileMenu"
                         >
-                          <span>Edit Profile</span>
+                          <span>{{ $t("nav.editProfile") }}</span>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -871,7 +871,7 @@
                           "
                           class="flex items-center gap-2 px-3 py-2 text-sm cursor-pointer"
                         >
-                          <span class="logout-text">Log out</span>
+                          <span class="logout-text">{{ $t("nav.logout") }}</span>
                           <span class="logout-icon-box">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -894,8 +894,10 @@
                   </Transition>
                 </div>
               </div>
+
             </aside>
           </Transition>
+
         </div>
       </Transition>
 
@@ -1011,15 +1013,43 @@ export default {
     document.body.style.overflow = "";
   },
   methods: {
-    toggleThemeNavBtn() {
-      this.isDark = !this.isDark;
+    async toggleThemeNavBtn() {
+      const newVal = !this.isDark;
+      this.isDark = newVal;
+      this.isDarkMode = newVal;
 
-      if (this.isDark) {
+      if (newVal) {
         document.documentElement.classList.add("dark");
         localStorage.setItem("theme", "dark");
       } else {
         document.documentElement.classList.remove("dark");
         localStorage.setItem("theme", "light");
+      }
+
+      // Persist to backend if the user is logged in
+      if (!this.isLoggedIn) return;
+      try {
+        await darkMode(newVal);
+        const { data } = await getUserById(this.userId);
+        const u = data.user;
+        const userData = {
+          first_name: u.profile.first_name,
+          last_name: u.profile.last_name,
+          email: u.email,
+          id: u._id,
+          userImage: u.userImage,
+          language: u.settings.language,
+          avatars: u.avatars,
+          darkMode: u.darkMode,
+          has_mobile_app: u.settings.has_mobile_app,
+          gender: u.profile.gender,
+          date_of_birth: u.profile.date_of_birth,
+          notifications: u.settings.notifications_enabled,
+          role: u.role,
+        };
+        localStorage.setItem("user", JSON.stringify(userData));
+      } catch (e) {
+        console.error("Failed to update dark mode setting:", e);
       }
     },
     setLanguage(lang) {
@@ -1054,36 +1084,6 @@ export default {
       } catch (e) {
         this.notificationsEnabled = !newVal;
         console.error("Failed to update notifications setting:", e);
-      }
-    },
-    async toggleTheme() {
-      const newVal = !this.isDarkMode;
-      this.isDarkMode = newVal;
-      try {
-        await darkMode(newVal);
-        const { data } = await getUserById(this.userId);
-        const u = data.user;
-        const userData = {
-          first_name: u.profile.first_name,
-          last_name: u.profile.last_name,
-          email: u.email,
-          id: u._id,
-          userImage: u.userImage,
-          language: u.settings.language,
-          avatars: u.avatars,
-          darkMode: u.darkMode,
-          has_mobile_app: u.settings.has_mobile_app,
-          gender: u.profile.gender,
-          date_of_birth: u.profile.date_of_birth,
-          notifications: u.settings.notifications_enabled,
-          role: u.role,
-        };
-        localStorage.setItem("user", JSON.stringify(userData));
-        this.isDarkMode = userData.darkMode ?? newVal;
-    
-      } catch (e) {
-        this.isDarkMode = !newVal;
-        console.error("Failed to update dark mode setting:", e);
       }
     },
     closeUserDropdown() {
@@ -1211,9 +1211,11 @@ export default {
       (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)
     ) {
       this.isDark = true;
+      this.isDarkMode = true;
       document.documentElement.classList.add("dark");
     } else {
       this.isDark = false;
+      this.isDarkMode = false;
       document.documentElement.classList.remove("dark");
     }
   },

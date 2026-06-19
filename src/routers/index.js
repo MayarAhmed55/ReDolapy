@@ -21,7 +21,6 @@ import {isAuthModalOpen, triggerLoginModal} from '../authState.js';
 import ContactUs from "../views/ContactUs.vue";
 import UserCurrentPlan from "../views/UserCurrentPlan.vue";
 import adminRoutes from "./adminRoutes.js";
-
 const routes = [
   { path: "/", component: HomePage },
   { path: "/login", component: LogIn },
@@ -53,7 +52,7 @@ const routes = [
   { path: '/Wishlist', component: Wishlist },
   { path: '/wishlist', redirect: '/Wishlist' },
   { path: '/Avatar', component: Avatar },
-  { path: "/Profile/:id", component: () => import("../views/Profile.vue"), meta: { requiresAuth: true } },
+  { path: "/Profile/:id", component: Profile, meta: { requiresAuth: true } },
     { path: "/ContactUs", component: ContactUs },
     { path: "/UserCurrentPlan", component: UserCurrentPlan },
 
