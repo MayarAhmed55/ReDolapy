@@ -106,7 +106,7 @@
             </div>
 
         </section> -->
-<section id="VTryOn" class="my-[3rem] md:my-[5rem] grid grid-cols-1 lg:flex lg:flex-row items-center justify-between gap-10 px-4 sm:px-8 md:px-[3rem] lg:px-[5rem] max-w-[1400px] mx-auto">
+<section id="VTryOn" class="relative my-[3rem] md:my-[5rem] grid grid-cols-1 lg:flex lg:flex-row items-center justify-between gap-10 px-4 sm:px-8 md:px-[3rem] lg:px-[5rem] max-w-[1400px] mx-auto">
             
     <div id="TryOnTxt" class="TxtGradient w-full lg:w-[45%] flex flex-col items-center lg:items-start text-center lg:text-start order-1">
         <p class="text-4xl font-bold PrimaryTxt">
