@@ -11,7 +11,15 @@ import UserWardrobe from "../views/userWardrobe.vue";
 import Pricing from "../views/pricing.vue";
 import AboutTryon from "../views/AboutTryon.vue";
 import Profile from "../views/Profile.vue";
-import { isAuthModalOpen, triggerLoginModal } from "../authState.js";
+import Wardrobe from '../views/Wardrobe.vue'
+import WardrobeDetails from '../views/WardrobeDetails.vue'
+import Recommendation from '../views/Recommendation.vue'
+import Matching from '../views/Matching.vue'
+import Wishlist from '../views/Wishlist.vue'
+import Avatar from '../views/Avatar.vue'
+import {isAuthModalOpen, triggerLoginModal} from '../authState.js';
+import ContactUs from "../views/ContactUs.vue";
+import UserCurrentPlan from "../views/UserCurrentPlan.vue";
 import adminRoutes from "./adminRoutes.js";
 
 const routes = [
@@ -27,10 +35,28 @@ const routes = [
   { path: "/pricing", component: Pricing, meta: { requiresAuth: true } },
   { path: "/userWardrobe", component: UserWardrobe },
   {
-    path: "/Profile/:id",
-    component: () => import("../views/Profile.vue"),
+    path: '/wardrobe/:id',
+    component: WardrobeDetails,
+    props: true,
     meta: { requiresAuth: true },
   },
+  { path: '/wardrobe', component: Wardrobe, meta: { requiresAuth: true } },
+  {
+    path: '/productDetails/:analysisId',
+    redirect: (to) => (to.query.itemId ? `/wardrobe/${to.query.itemId}` : '/wardrobe'),
+  },
+  { path: '/Recommendation', component: Recommendation, meta: { requiresAuth: true } },
+  { path: '/recommendation', redirect: '/Recommendation' },
+  { path: '/Matching', component: Matching, meta: { requiresAuth: true } },
+  { path: '/matching', redirect: '/Matching' },
+  { path: '/wordrobe', redirect: '/wardrobe' },
+  { path: '/Wishlist', component: Wishlist },
+  { path: '/wishlist', redirect: '/Wishlist' },
+  { path: '/Avatar', component: Avatar },
+  { path: "/Profile/:id", component: () => import("../views/Profile.vue"), meta: { requiresAuth: true } },
+    { path: "/ContactUs", component: ContactUs },
+    { path: "/UserCurrentPlan", component: UserCurrentPlan },
+
   {
     path: "/Profile",
     redirect: () => {
@@ -49,6 +75,15 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes: [...routes, ...adminRoutes],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    }
+    if (to.hash) {
+      return { el: to.hash, behavior: 'smooth' }
+    }
+    return { top: 0 }
+  },
 });
 const getUserRole = () => {
   const user = JSON.parse(localStorage.getItem("user") || "{}");

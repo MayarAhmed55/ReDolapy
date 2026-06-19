@@ -3,8 +3,8 @@
         <p class="w-[fit-content] m-auto mb-[1rem] font-bold text-4xl  PrimaryTxt">{{sectionTitle}}</p>
         <p class="w-[fit-content] m-auto font-medium grayTxt mb-[4rem]">{{sectionDescription}}</p>
 
-        <div class="flex justify-between">
-            <div class="IconDiv w-[25%] text-center">
+        <div class="flex flex-col md:flex-row lg:flex-row gap-10 md:flex-wrap justify-center lg:justify-between items-center px-4">
+            <div class="IconDivw-full md:w-[45%] lg:w-[25%] text-center p-4">
                 <div class="icon1 w-[fit-content] m-auto">
                     <div class="step absolute -top-2 -left-1 w-[2rem] h-[2rem] rounded-full bg-[#006492] text-white text-base/8">{{ step1 }}</div>
                     <div class="absolute top-1/3 left-1/3"><slot name="Icon1"></slot></div>
@@ -16,7 +16,7 @@
                     </div>
 
             </div>
-            <div class="IconDiv w-[25%] text-center">
+            <div class="IconDiv  md:w-[50%] m-auto lg:w-[25%] text-center">
                 <div class="icon2 w-[fit-content] m-auto">
                 <div class="step absolute -top-2 -left-1 w-[2rem] h-[2rem] rounded-full bg-[#9A4600] text-white text-base/8">{{ step2 }}
                 </div>
@@ -28,7 +28,7 @@
 
                 </div>
             </div>
-            <div class="IconDiv w-[25%] text-center">
+            <div class="IconDiv  md:w-[50%] m-auto lg:w-[25%] text-center">
                 <div class="icon3 w-[fit-content] m-auto">
                 <div class="step absolute -top-2 -left-1 w-[2rem] h-[2rem] rounded-full bg-[#426900] text-white text-base/8">{{ step3 }}
                 </div>

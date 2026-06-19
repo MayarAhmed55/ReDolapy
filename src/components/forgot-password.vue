@@ -964,7 +964,7 @@ export default {
   border-radius: 40px;
   z-index: 10;
   overflow: hidden;
-  background-image: url("../../public/ChatGPT Image Jun 7, 2026, 10_22_25 PM.jpg");
+  background-image: url("../assets/Login.jpg");
   background-size: cover;
   background-position: center;
   transition: left 0.55s cubic-bezier(0.77, 0, 0.175, 1);

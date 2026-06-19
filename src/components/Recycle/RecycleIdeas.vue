@@ -45,28 +45,6 @@
           </svg>
         </div>
       </div>
-
-      <div class="recycle-options__field recycle-options__field--end">
-        <label class="recycle-options__label" for="recycle-size">{{ $t('recycle.ideas.aspect_ratio') }}</label>
-        <div class="recycle-options__select-wrap">
-          <select
-            id="recycle-size"
-            v-model="selectedSize"
-            class="recycle-options__select"
-          >
-            <option
-              v-for="(label, value) in sizes"
-              :key="value"
-              :value="value"
-            >
-              {{ label }}
-            </option>
-          </select>
-          <svg class="recycle-options__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <polyline points="6 9 12 15 18 9"/>
-          </svg>
-        </div>
-      </div>
     </div>
 
     <div v-if="selectedId" class="flex justify-center mt-5 sm:mt-6">
@@ -74,7 +52,7 @@
         type="button"
         class="recycle-action-btn recycle-action-btn--compact mt-6"
         :disabled="loading"
-        @click="$emit('generate', { model: selectedModel, size: selectedSize })"
+        @click="$emit('generate', { model: selectedModel })"
       >
         <img :src="starsIcon" alt="" aria-hidden="true" />
         {{ loading ? loadingLabel : submitLabel }}
@@ -87,27 +65,10 @@
 import ideaIcon from '../../assets/IdeaIcon.svg'
 import starsIcon from '../../assets/StarsIcon.svg'
 import StyleIdeaCard from './StyleIdeaCard.vue'
-import { fetchModels } from '../../api/recycle.js'
 
 const MODEL_DISPLAY_NAMES = {
   'qwen-image-2.0-pro': 'Design Maestro',
   'qwen-image-2.0': 'Style Starter',
-}
-
-const FALLBACK_MODELS = MODEL_DISPLAY_NAMES
-
-function withDisplayNames(models = {}) {
-  return Object.fromEntries(
-    Object.entries(models).map(([id, label]) => [id, MODEL_DISPLAY_NAMES[id] || label]),
-  )
-}
-
-const FALLBACK_SIZES = {
-  '1024*1024': '1024×1024 (1:1)',
-  '1536*1024': '1536×1024 (3:2)',
-  '1024*1536': '1024×1536 (2:3)',
-  '1280*720': '1280×720 (16:9)',
-  '720*1280': '720×1280 (9:16)',
 }
 
 export default {
@@ -125,10 +86,8 @@ export default {
   data: () => ({
     ideaIcon,
     starsIcon,
-    models: FALLBACK_MODELS,
-    sizes: FALLBACK_SIZES,
+    models: MODEL_DISPLAY_NAMES,
     selectedModel: 'qwen-image-2.0-pro',
-    selectedSize: '1536*1024',
     expandedId: null,
   }),
   watch: {
@@ -140,17 +99,6 @@ export default {
     toggleExpand(id) {
       this.expandedId = this.expandedId === id ? null : id
     },
-  },
-  async mounted() {
-    try {
-      const data = await fetchModels()
-      if (data.models) this.models = withDisplayNames(data.models)
-      if (data.sizes) this.sizes = data.sizes
-      if (data.defaultModel) this.selectedModel = data.defaultModel
-      if (data.defaultSize) this.selectedSize = data.defaultSize
-    } catch {
-      // Keep fallback options when the API server is not running yet.
-    }
   },
 }
 </script>
@@ -171,7 +119,7 @@ export default {
   min-width: 0;
 }
 
-.recycle-options__field--end {
+.recycle-options__field--start {
   align-items: flex-start;
 }
 
@@ -218,33 +166,10 @@ export default {
 }
 
 @media (min-width: 640px) {
-  .recycle-options {
-    flex-direction: row;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 1.5rem;
-  }
-
   .recycle-options__field {
     width: auto;
     min-width: min(100%, 13rem);
     max-width: 17.5rem;
-  }
-
-  .recycle-options__field--end {
-    align-items: flex-end;
-    margin-inline-start: auto;
-  }
-
-  .recycle-options__field--end .recycle-options__label {
-    text-align: end;
-  }
-}
-
-@media (min-width: 768px) {
-  .recycle-options__field {
-    min-width: min(100%, 14.5rem);
-    max-width: 19rem;
   }
 }
 </style>

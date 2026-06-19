@@ -1,8 +1,10 @@
 @import "tailwindcss";
+@variant dark (html:where(.dark, [data-theme="dark"]) &);
 
 :root {
     --primary-bgc:#F2F1F4;
     --Primary-Brand-color: #40B9FF;
+    --Primary-Brand-hover: #2F8ED1;
     --Secondary-Brand-color: #8ED321;
     --Secondary-Orange-Brand-color: #FF8A3D;
 
@@ -14,6 +16,33 @@
     --Disabled-Text-color: #A0A6B2;
     --Bold:700;
     --Semi-Bold: 500;
+
+    --card-surface: #ffffff;
+    --card-border: #e8eaee;
+    --input-border: #D8DCE3;
+    --store-card-bg: #ffffff;
+    --store-border: #e8eaee;
+    --store-muted: #a0a6b2;
+    --store-filter-text: #4b5563;
+    --surface-muted: #f8fbff;
+    --surface-active: #eef6fc;
+}
+
+html.dark {
+  --primary-bgc: #161616;
+  --Primary-Text-color: #F5F5F5;
+  --gray-txt: #A0A0A0;
+  --Secondary-Text-color:#A0A0A0;
+
+  --card-surface: #0d0d0d;
+  --card-border: #333333;
+  --input-border: #404040;
+  --store-card-bg: #0d0d0d;
+  --store-border: #333333;
+  --store-muted: #A0A0A0;
+  --store-filter-text: #c8c8c8;
+  --surface-muted: #1e1e1e;
+  --surface-active: #1a2a33;
 }
 
 body {
@@ -79,7 +108,7 @@ p{
 .step-border-inactive {
     --border-radius: 24px;
     border-radius: var(--border-radius);
-    border: 1px solid #D8DCE3;
+    border: 1px solid var(--input-border);
     box-sizing: border-box;
     overflow: hidden;
 }
@@ -136,7 +165,7 @@ p{
 }
 
 .animated-dashed-gradient-border--card .animated-dashed-gradient-border__inner {
-    background: #fff;
+    background: var(--card-surface);
 }
 
 .recycle-action-btn {
@@ -184,37 +213,42 @@ p{
 
 
 
-
 Section{
     Padding-bottom:2rem;
-    Padding-top:2rem;
+    Padding-top:3rem;
 }
 
 .PrimaryTxt{
     color: var(--Primary-Text-color);
+    transition: color  ease;
 }
 .Secondary-grayTxt{
     color: var(--Secondary-Text-color);
+    transition: color  ease;
 }
 .grayTxt{
     color: var(--Disabled-Text-color);
+    /* transition: color ease; */
 }
 .greenTxt{
- color:var(--Secondary-Brand-color)
+ color:var(--Secondary-Brand-color);
+ transition: color  ease;
 }
 
 .OrangeTxt{
- color:var(--Secondary-Orange-Brand-color)
+ color:var(--Secondary-Orange-Brand-color);
+ transition: color  ease;
 }
 .blueTxt{
- color:var(--Primary-Brand-color)
+ color:var(--Primary-Brand-color);
+ transition: color  ease;
 }
 button:hover{
     cursor: pointer;
     scale:1.08;
 }
 button{
-    transition: all 0.3s ease-in-out;
+    transition: all  ease-in-out;
 }
 .gradientColor {
     background: var(--Gradient-bgc);
