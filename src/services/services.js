@@ -91,3 +91,95 @@ export const darkMode = (darkMode) => {
     },
   );
 };
+export const getNotifications = () => {
+  return axios.get(`${API}/notifications`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+export const markAsReadAll = () => {
+  return axios.patch(
+    `${API}/notifications/read-all`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    },
+  );
+};
+export const markAsRead = (notificationID) => {
+  return axios.patch(
+    `${API}/notifications/${notificationID}/read`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    },
+  );
+};
+export const deletAllNotifications = () => {
+  return axios.delete(`${API}/notifications`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+// export const deleteNotificationbyid=()=>{
+
+// }
+
+export const getStores = () => {
+  return axios.get(`${API}/stores`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+export const getProducts = () => {
+  return axios.get(`${API}/products`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+export const addStore = (data) => {
+  return axios.post(`${API}/stores`, data, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+/////////////////***********stile not used */
+export const addProduct = (data) => {
+  return axios.post(`${API}/products`, data, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+/////////////////***********stile not used */
+
+export const getAllUsers=()=>{
+  return axios.get(`${API}/users`,{
+    headers:{
+      Authorization:`Bearer ${localStorage.getItem("token")}`
+    }
+  })
+}
+export const getAdminReplies = () => {
+  return axios.get(
+    `${API}/emails/admin-replies`,
+    {
+      params: {
+        page: 1,
+        limit: 200
+      },
+      headers:{
+        Authorization:`Bearer ${localStorage.getItem("token")}`
+      }
+    }
+  );
+};

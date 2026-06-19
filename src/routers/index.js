@@ -20,7 +20,7 @@ import Avatar from '../views/Avatar.vue'
 import {isAuthModalOpen, triggerLoginModal} from '../authState.js';
 import ContactUs from "../views/ContactUs.vue";
 import UserCurrentPlan from "../views/UserCurrentPlan.vue";
-
+import adminRoutes from "./adminRoutes.js";
 const routes = [
   { path: "/", component: HomePage },
   { path: "/login", component: LogIn },
@@ -52,7 +52,7 @@ const routes = [
   { path: '/Wishlist', component: Wishlist },
   { path: '/wishlist', redirect: '/Wishlist' },
   { path: '/Avatar', component: Avatar },
-  { path: "/Profile/:id", component: () => import("../views/Profile.vue"), meta: { requiresAuth: true } },
+  { path: "/Profile/:id", component: Profile, meta: { requiresAuth: true } },
     { path: "/ContactUs", component: ContactUs },
     { path: "/UserCurrentPlan", component: UserCurrentPlan },
 
@@ -67,13 +67,13 @@ const routes = [
   {
     path: "/auth/callback",
     component: () => import("../views/GoogleCallback.vue"),
-     meta: { layout: "blank" }
-  }
+    meta: { layout: "blank" },
+  },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
-  routes,
+  routes: [...routes, ...adminRoutes],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition
@@ -84,15 +84,37 @@ const router = createRouter({
     return { top: 0 }
   },
 });
+const getUserRole = () => {
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  return user.role ?? null;
+};
+
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("token");
+  const role = getUserRole();
 
-  if (to.meta.requiresAuth && !token) {
+  // Walk the full matched chain so child routes inherit parent meta
+  const requiresAdmin = to.matched.some((r) => r.meta?.requiresAdmin);
+  const requiresAuth = to.matched.some((r) => r.meta?.requiresAuth);
+
+  // 1. Any /admin route — must be logged in AND have admin role
+  if (requiresAdmin && (!token || role !== "admin")) {
     triggerLoginModal();
-    next(false);
-  } else {
-    next();
+    return next(false);
   }
+
+  // 2. Any other protected route — must be logged in
+  if (requiresAuth && !token) {
+    triggerLoginModal();
+    return next(false);
+  }
+
+  // 3. Logged-in admin hitting "/" — redirect to dashboard
+  if (to.path === "/" && token && role === "admin") {
+    return next("/admin");
+  }
+
+  next();
 });
 
 export default router;

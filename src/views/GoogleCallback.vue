@@ -40,7 +40,8 @@ export default {
             has_mobile_app:  userRes.data.user.settings.has_mobile_app,
             gender:          userRes.data.user.profile.gender,
             date_of_birth:   userRes.data.user.profile.date_of_birth,
-            notifications:   userRes.data.user.settings.notifications_enabled
+            notifications:   userRes.data.user.settings.notifications_enabled,
+            role:            userRes.data.user.role   
           };
 
           if (window.opener) {
