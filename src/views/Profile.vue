@@ -7,7 +7,7 @@
           <!-- Avatar circle -->
           <div class="relative w-32 h-32">
             <div
-              class="w-full h-full rounded-full bg-[url('Checker.png')] bg-cover shadow-[0_0_0_4px_rgba(64,185,255,0.2)] overflow-hidden"
+              class="w-full h-full rounded-full bg-slate-100 shadow-[0_0_0_4px_rgba(64,185,255,0.2)] overflow-hidden"
             >
               <img
                 v-if="userImage"
@@ -98,7 +98,7 @@
           <div class="flex flex-col items-center w-full mt-2">
             <div class="relative w-32 h-32 mb-4">
               <div
-                class="w-full h-full rounded-full bg-[url('Checker.png')] bg-cover shadow-[0_0_0_4px_rgba(64,185,255,0.2)] overflow-hidden"
+                class="w-full h-full rounded-full bg-slate-100 shadow-[0_0_0_4px_rgba(64,185,255,0.2)] overflow-hidden"
               >
                 <img
                   src="../assets/avatar-placeholder.png"
