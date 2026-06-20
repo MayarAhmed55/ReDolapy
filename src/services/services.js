@@ -183,3 +183,13 @@ export const getAdminReplies = () => {
     }
   );
 };
+
+export const getAPIKeys=()=>{
+  return axios.get(
+    `${API}/api-keys`,{
+      headers:{
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+    }
+  )
+}

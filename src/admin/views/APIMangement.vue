@@ -34,13 +34,14 @@
 
     <!-- Key Cards -->
     <div class="ak-list">
+      <div v-if="loading" class="ak-empty">Loading keys…</div>
+      <div v-else-if="apiKeys.length === 0" class="ak-empty">No API keys found.</div>
       <div v-for="key in apiKeys" :key="key.id" class="ak-card">
         <!-- Card top row -->
         <div class="ak-card-top">
           <div class="ak-card-left">
             <div class="ak-icon-wrap" :class="key.iconClass">
-              <component
-                :is="'svg'"
+              <img src="../../assets/Icon (34).svg"
                 :v-html="key.iconSvg"
                 width="18"
                 height="18"
@@ -188,64 +189,36 @@
 </template>
 
 <script>
+import { getAPIKeys } from "../../services/services";
+
+const ICON_CLASSES = ["icon-purple", "icon-amber", "icon-blue", "icon-green"];
+
+function maskKey(key) {
+  if (!key) return "••••••••••••";
+  const visible = key.slice(0, 8);
+  return visible + "••••••••";
+}
+
+function mapKey(raw, i) {
+  return {
+    id:        raw.id ?? raw._id ?? i,
+    name:      raw.name ?? raw.keyName ?? "Unnamed Key",
+    fullKey:   raw.maskedKey ?? raw.apiKey ?? raw.value ?? "",
+    masked: raw.maskedKey ?? maskKey(raw.maskedKey ?? ""),
+    status:    (raw.status ?? "active").toLowerCase(),
+    iconClass: ICON_CLASSES[i % ICON_CLASSES.length],
+    copied:    false,
+    revealed:  false,
+  };
+}
+
 export default {
   name: "ApiKeyManagement",
 
   data() {
     return {
-      showAddModal: false,
-      apiKeys: [
-        {
-          id: "k1",
-          name: "Recycle Analysis Model",
-          iconClass: "icon-purple",
-          masked: "r8_xTpQ2••••••••",
-          fullKey: "r8_xTpQ2AbCdEfGhIjKlMn",
-          status: "active",
-          copied: false,
-          revealed: false,
-        },
-        {
-          id: "k2",
-          name: "Recycle image generation",
-          iconClass: "icon-amber",
-          masked: "AIzaSyBx••••••",
-          fullKey: "AIzaSyBxQwErTyUiOpAs",
-          status: "active",
-          copied: false,
-          revealed: false,
-        },
-        {
-          id: "k3",
-          name: "Try on image generation",
-          iconClass: "icon-amber",
-          masked: "AIzaSyBx••••••",
-          fullKey: "AIzaSyBxZxCvBnMqWsEd",
-          status: "active",
-          copied: false,
-          revealed: false,
-        },
-        {
-          id: "k4",
-          name: "Try on Analysis Model",
-          iconClass: "icon-amber",
-          masked: "AIzaSyBx••••••",
-          fullKey: "AIzaSyBxRfTgYhUjIkOl",
-          status: "active",
-          copied: false,
-          revealed: false,
-        },
-        {
-          id: "k5",
-          name: "Avatar generation Model",
-          iconClass: "icon-amber",
-          masked: "AIzaSyBx••••••",
-          fullKey: "AIzaSyBxPzLmKnJhGfDs",
-          status: "active",
-          copied: false,
-          revealed: false,
-        },
-      ],
+      apiKeys: [],
+      loading: false,
     };
   },
 
@@ -256,12 +229,23 @@ export default {
   },
 
   methods: {
+    async fetchAPIKeys() {
+      this.loading = true;
+      try {
+        const res = await getAPIKeys();
+        const raw = Array.isArray(res.data) ? res.data : (res.data?.data ?? res.data?.keys ?? []);
+        this.apiKeys = raw.map(mapKey);
+      } catch (err) {
+        console.error("Failed to fetch API keys", err);
+      } finally {
+        this.loading = false;
+      }
+    },
+
     copyKey(key) {
       navigator.clipboard.writeText(key.fullKey).catch(() => {});
       key.copied = true;
-      setTimeout(() => {
-        key.copied = false;
-      }, 1500);
+      setTimeout(() => { key.copied = false; }, 1500);
     },
 
     toggleReveal(key) {
@@ -275,6 +259,10 @@ export default {
     editKey(key) {
       console.log("Edit key:", key.id);
     },
+  },
+
+  mounted() {
+    this.fetchAPIKeys();
   },
 };
 </script>
@@ -473,5 +461,22 @@ export default {
 }
 .ak-key-btn.copied {
   color: #5a8a10;
+}
+.icon-blue {
+  background: rgba(21, 80, 211, 0.1);
+  color: #1550d3;
+}
+.icon-green {
+  background: rgba(0, 108, 73, 0.1);
+  color: #006c49;
+}
+.ak-empty {
+  text-align: center;
+  padding: 40px;
+  color: #99a1af;
+  font-size: 13px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0px 1px 3px rgba(0,0,0,0.1);
 }
 </style>
