@@ -144,7 +144,11 @@
                   <span
                     class="text-[14px] font-normal leading-5 text-[#434654] text-center"
                   >
-                    {{ isCompressingLogo ? "Compressing..." : "Drag and drop or browse asset file" }}
+                    {{
+                      isCompressingLogo
+                        ? "Compressing..."
+                        : "Drag and drop or browse asset file"
+                    }}
                   </span>
                 </template>
               </div>
@@ -160,67 +164,85 @@
             </div>
           </section>
 
-          <section class="w-full bg-white border border-[#C3C5D7]/30 rounded-2xl shadow-[0px_1px_2px_rgba(0,0,0,0.05)] p-8 flex flex-col gap-6">
-  <div class="flex items-center gap-3">
-    <img src="../../assets/Icon (32).svg" class="w-5 h-5" />
-    <h3 class="text-[20px] leading-7 font-medium tracking-[-0.2px] text-[#191B23]">
-      Commerce
-    </h3>
-  </div>
+          <section
+            class="w-full bg-white border border-[#C3C5D7]/30 rounded-2xl shadow-[0px_1px_2px_rgba(0,0,0,0.05)] p-8 flex flex-col gap-6"
+          >
+            <div class="flex items-center gap-3">
+              <img src="../../assets/Icon (32).svg" class="w-5 h-5" />
+              <h3
+                class="text-[20px] leading-7 font-medium tracking-[-0.2px] text-[#191B23]"
+              >
+                Commerce
+              </h3>
+            </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    <div class="flex flex-col gap-2">
-      <label class="text-[12px] font-medium tracking-[0.24px] text-[#434654] h-[18px] flex items-center">
-        DISCOUNT CODE
-      </label>
-      <input
-        type="text"
-        v-model="discountCode"
-        :disabled="!discountsEnabled"
-        placeholder="WELCOME10"
-        :class="!discountsEnabled ? 'opacity-50 cursor-not-allowed' : ''"
-        class="h-[50px] px-4 bg-[#FAF8FF] border border-[#C3C5D7] rounded-xl text-[16px] text-[#6B7280] outline-none"
-      />
-    </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div class="flex flex-col gap-2">
+                <label
+                  class="text-[12px] font-medium tracking-[0.24px] text-[#434654] h-[18px] flex items-center"
+                >
+                  DISCOUNT CODE
+                </label>
+                <input
+                  type="text"
+                  v-model="discountCode"
+                  :disabled="!discountsEnabled"
+                  placeholder="WELCOME10"
+                  :class="
+                    !discountsEnabled ? 'opacity-50 cursor-not-allowed' : ''
+                  "
+                  class="h-[50px] px-4 bg-[#FAF8FF] border border-[#C3C5D7] rounded-xl text-[16px] text-[#6B7280] outline-none"
+                />
+              </div>
 
-    <div class="flex flex-col gap-2">
-      <label class="text-[12px] font-medium tracking-[0.24px] text-[#434654] h-[18px] flex items-center">
-        PERCENTAGE (%)
-      </label>
-      <input
-        type="number"
-        v-model.number="discountPercent"
-        :disabled="!discountsEnabled"
-        placeholder="15"
-        :class="!discountsEnabled ? 'opacity-50 cursor-not-allowed' : ''"
-        class="h-[50px] px-4 bg-[#FAF8FF] border border-[#C3C5D7] rounded-xl text-[16px] text-[#6B7280] outline-none"
-      />
-    </div>
+              <div class="flex flex-col gap-2">
+                <label
+                  class="text-[12px] font-medium tracking-[0.24px] text-[#434654] h-[18px] flex items-center"
+                >
+                  PERCENTAGE (%)
+                </label>
+                <input
+                  type="number"
+                  v-model.number="discountPercent"
+                  :disabled="!discountsEnabled"
+                  placeholder="15"
+                  :class="
+                    !discountsEnabled ? 'opacity-50 cursor-not-allowed' : ''
+                  "
+                  class="h-[50px] px-4 bg-[#FAF8FF] border border-[#C3C5D7] rounded-xl text-[16px] text-[#6B7280] outline-none"
+                />
+              </div>
 
-    <div class="flex flex-col gap-2">
-      <div class="h-[18px]" aria-hidden="true"></div>
+              <div class="flex flex-col gap-2">
+                <div class="h-[18px]" aria-hidden="true"></div>
 
-      <div class="h-[50px] flex items-center">
-        <label class="flex items-center cursor-pointer">
-          <div class="relative">
-            <input type="checkbox" v-model="discountsEnabled" class="sr-only peer" />
-            <div
-              class="w-[44px] h-[24px] rounded-full transition-colors"
-              :class="discountsEnabled ? 'bg-[#1550D3]' : 'bg-[#C3C5D7]'"
-            ></div>
-            <div
-              class="absolute top-[2px] w-[20px] h-[20px] rounded-full bg-white border border-white transition-all"
-              :class="discountsEnabled ? 'left-[22px]' : 'left-[2px]'"
-            ></div>
-          </div>
-          <span class="ml-3 text-[14px] leading-5 text-[#191B23]">
-            Enable Discounts
-          </span>
-        </label>
-      </div>
-    </div>
-  </div>
-</section>
+                <div class="h-[50px] flex items-center">
+                  <label class="flex items-center cursor-pointer">
+                    <div class="relative">
+                      <input
+                        type="checkbox"
+                        v-model="discountsEnabled"
+                        class="sr-only peer"
+                      />
+                      <div
+                        class="w-[44px] h-[24px] rounded-full transition-colors"
+                        :class="
+                          discountsEnabled ? 'bg-[#1550D3]' : 'bg-[#C3C5D7]'
+                        "
+                      ></div>
+                      <div
+                        class="absolute top-[2px] w-[20px] h-[20px] rounded-full bg-white border border-white transition-all"
+                        :class="discountsEnabled ? 'left-[22px]' : 'left-[2px]'"
+                      ></div>
+                    </div>
+                    <span class="ml-3 text-[14px] leading-5 text-[#191B23]">
+                      Enable Discounts
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </section>
         </form>
       </main>
     </div>
@@ -298,7 +320,9 @@ async function handleSaveStore() {
       name: name.value.trim(),
       logo_url: logoUrl.value,
       description: description.value.trim(),
-      discount_percent: discountsEnabled.value ? Number(discountPercent.value) || 0 : 0,
+      discount_percent: discountsEnabled.value
+        ? Number(discountPercent.value) || 0
+        : 0,
       discount_code: discountsEnabled.value ? discountCode.value.trim() : "",
       is_active: true,
       website_url: websiteDomain.value
