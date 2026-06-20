@@ -148,7 +148,7 @@
       </div>
 
       <div class="bg-white dark:bg-[#0d0d0d] border border-[#E9EBEF] shadow-sm rounded-2xl p-8">
-        <h3 class="text-lg font-semibold PrimaryTxt mb-6">Personal Information</h3>
+        <h3 class="text-lg font-semibold PrimaryTxt mb-6">{{$t("profile.personalInformation")}}</h3>
         <form @submit.prevent="saveChanges" class="space-y-6">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div class="flex flex-col">

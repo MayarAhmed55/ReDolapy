@@ -41,7 +41,7 @@
           <span class="stat-badge neutral">Enabled</span>
         </div>
         <p class="stat-label">Try-On</p>
-        <span class="stat-value">{{tryOnEnabled}}</span>
+        <span class="stat-value">{{ tryOnEnabled }}</span>
       </div>
 
       <div class="stat-card">
@@ -52,7 +52,7 @@
           <span class="stat-badge neutral">Optimal</span>
         </div>
         <p class="stat-label">Recycle Times</p>
-        <span class="stat-value">85</span>
+        <span class="stat-value">{{ recycleCount }}</span>
       </div>
 
       <!-- Figma Metric 4: Monthly Revenue (red icon, $0) -->
@@ -81,7 +81,7 @@
             <div class="progress-track">
               <div
                 class="progress-fill"
-                :style="{ width: activeProducts/productsCount*100 + '%' }"
+                :style="{ width: (activeProducts / productsCount) * 100 + '%' }"
               ></div>
             </div>
           </div>
@@ -135,25 +135,22 @@
       <div class="categories-card">
         <h3 class="panel-heading dark">Top Categories</h3>
         <div class="categories-body">
-          <!-- Donut chart placeholder -->
+          <!-- Donut chart -->
           <div class="donut-wrap">
-            <div class="donut">
-              <span class="donut-label">36%</span>
+            <div class="donut-canvas-wrap">
+              <canvas ref="donutCanvas" width="124" height="124"></canvas>
+              <span class="donut-center-label">{{ topCategoryPct }}%</span>
             </div>
           </div>
           <!-- Legend -->
           <ul class="category-legend">
-            <li class="legend-item">
-              <span class="legend-dot" style="background: #1550d3"></span>
-              <span class="legend-text">Luxury Footwear</span>
-            </li>
-            <li class="legend-item">
-              <span class="legend-dot" style="background: #006c49"></span>
-              <span class="legend-text">Streetwear</span>
-            </li>
-            <li class="legend-item">
-              <span class="legend-dot" style="background: #e2e1ed"></span>
-              <span class="legend-text">Ready-to-wear</span>
+            <li
+              v-for="(item, i) in categoryLegend"
+              :key="item.label"
+              class="legend-item"
+            >
+              <span class="legend-dot" :style="{ background: CATEGORY_COLORS[i % CATEGORY_COLORS.length] }"></span>
+              <span class="legend-text">{{ item.label }}</span>
             </li>
           </ul>
         </div>
@@ -164,6 +161,10 @@
 
 <script>
 import { getStores, getProducts, getAllUsers } from "../../services/services";
+import Chart from "chart.js/auto";
+
+const CATEGORY_COLORS = ["#1550d3", "#006c49", "#e2e1ed", "#d85a30", "#7f77dd", "#1d9e75"];
+
 export default {
   name: "Dashboard",
   data() {
@@ -172,7 +173,12 @@ export default {
       productsCount: 0,
       userCount: 0,
       activeProducts: 0,
-      tryOnEnabled:0,
+      tryOnEnabled: 0,
+      recycleCount: 0,
+      categoryLegend: [],
+      topCategoryPct: 0,
+      CATEGORY_COLORS,
+      _donutChart: null,
     };
   },
 
@@ -206,23 +212,90 @@ export default {
         const { data } = await getProducts();
 
         this.activeProducts = data.filter(
-          (product) => product.is_active === true
+          (product) => product.is_active === true,
         ).length;
       } catch (err) {
         console.log("failed to get the active products", err);
         this.activeProducts = 0;
       }
     },
-    async fetchTryOnEnabled(){
-      try{
-      const {data}=await getProducts();
-      this.tryOnEnabled=data.filter(
-        (pordcut)=>pordcut.try_on_enabled===true
-      ).length
-      }catch (err){
-        console.log("failed to fetch enabled try-on items")
+    async fetchTryOnEnabled() {
+      try {
+        const { data } = await getProducts();
+        this.tryOnEnabled = data.filter(
+          (pordcut) => pordcut.try_on_enabled === true,
+        ).length;
+      } catch (err) {
+        console.log("failed to fetch enabled try-on items");
       }
-    }
+    },
+    async fetchRecycleTimes() {
+      try {
+        const { data } = await getAllUsers();
+
+        this.recycleCount = data.reduce(
+          (count, user) => count + user.latestTryOn.length,
+          0,
+        );
+      } catch (err) {
+        console.log("faild to get the try on count", err);
+      }
+    },
+    async fetchCategories() {
+      try {
+        const { data } = await getProducts();
+
+        const counts = {};
+        data.forEach((product) => {
+          const cat = product.category || "Unknown";
+          counts[cat] = (counts[cat] || 0) + 1;
+        });
+
+        const labels = Object.keys(counts);
+        const values = Object.values(counts);
+        const total = values.reduce((a, b) => a + b, 0);
+
+        this.categoryLegend = labels.map((label, i) => ({ label, value: values[i] }));
+
+        const topIndex = values.indexOf(Math.max(...values));
+        this.topCategoryPct = total > 0 ? Math.round((values[topIndex] / total) * 100) : 0;
+
+        this.$nextTick(() => {
+          this.renderDonut(labels, values);
+        });
+      } catch (err) {
+        console.log("failed to get the category data", err);
+      }
+    },
+    renderDonut(labels, values) {
+      const canvas = this.$refs.donutCanvas;
+      if (!canvas) return;
+
+      if (this._donutChart) {
+        this._donutChart.destroy();
+      }
+
+      this._donutChart = new Chart(canvas, {
+        type: "doughnut",
+        data: {
+          labels,
+          datasets: [
+            {
+              data: values,
+              backgroundColor: labels.map(
+                (_, i) => CATEGORY_COLORS[i % CATEGORY_COLORS.length]
+              ),
+              borderWidth: 0,
+            },
+          ],
+        },
+        options: {
+          cutout: "70%",
+          plugins: { legend: { display: false }, tooltip: { enabled: false } },
+          responsive: false,
+        },
+      });
+    },
   },
 
   mounted() {
@@ -230,7 +303,9 @@ export default {
     this.fetchProductsCount();
     this.fetchUsers();
     this.fetchActiveProducts();
-    this.fetchTryOnEnabled()
+    this.fetchTryOnEnabled();
+    this.fetchRecycleTimes();
+    this.fetchCategories();
   },
 };
 </script>
@@ -276,8 +351,6 @@ export default {
   color: #434654;
   margin: 0;
 }
-
-
 
 .filter-btn:hover {
   background: #f0eeff;
@@ -545,28 +618,33 @@ export default {
   flex: 1;
 }
 
-/* Donut — CSS-only ring; swap for a real chart library when ready */
+/* Donut */
 .donut-wrap {
   flex-shrink: 0;
 }
 
-.donut {
+.donut-canvas-wrap {
+  position: relative;
   width: 124px;
   height: 124px;
-  border-radius: 50%;
-  border: 16px solid #1550d3;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
 }
 
-.donut-label {
-  font-size: 12px;
+.donut-canvas-wrap canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.donut-center-label {
+  position: relative;
+  z-index: 1;
+  font-size: 14px;
   font-weight: 700;
-  line-height: 16px;
-  letter-spacing: 0.24px;
   color: #191b23;
+  pointer-events: none;
 }
 
 /* Legend */

@@ -1,16 +1,7 @@
 <template>
   <header class="dash-header">
-    <div class="search-container">
-      <img src="../../assets/Icon (9).svg" class="search-icon-img" alt="" />
-      <input
-        type="text"
-        class="search-input"
-        placeholder="Search global database..."
-        aria-label="Search global database"
-      />
-    </div>
-
     <div class="header-controls">
+      <component v-if="route.meta.navbarButton" :is="route.meta.navbarButton" />
       <button type="button" class="ctrl-btn" aria-label="Action 1">
         <img src="../../assets/Icon (10).svg" alt="" />
       </button>
@@ -23,7 +14,12 @@
 
       <div class="vertical-divider"></div>
 
-      <div class="mini-profile" role="button" tabindex="0" aria-label="Profile menu">
+      <div
+        class="mini-profile"
+        role="button"
+        tabindex="0"
+        aria-label="Profile menu"
+      >
         <div class="avatar-initials">DA</div>
         <img src="../../assets/Icon (13).svg" alt="" />
       </div>
@@ -31,16 +27,14 @@
   </header>
 </template>
 
-<script>
-export default {
-  name: "navBar",
-};
+<script setup>
+import { useRoute } from "vue-router";
+const route = useRoute();
 </script>
 
 <style scoped>
 .dash-header {
-  /* Flow inside .main-area — no absolute positioning or manual offset needed */
-  width:100%;
+  width: 100%;
   height: 110px;
   flex-shrink: 0;
 
@@ -50,23 +44,9 @@ export default {
   align-items: center;
   padding: 16px 24px;
   background: #ffffff;
-  font-family: 'Geist', sans-serif;
+  font-family: "Geist", sans-serif;
   box-sizing: border-box;
-  border-bottom: 1px solid #EDEEEF;
-}
-
-/* --- Search Bar --- */
-.search-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  width: 412px;
-  height: 54px;
-  background: #edeeef;
-  border: 1px solid #c3c5d7;
-  border-radius: 16px;
+  border-bottom: 1px solid #edeeef;
 }
 
 .search-icon-img {
@@ -79,7 +59,7 @@ export default {
   width: 100%;
   border: none;
   background: transparent;
-  font-family: 'Geist', sans-serif;
+  font-family: "Geist", sans-serif;
   font-size: 14px;
   line-height: 18px;
   color: #191b23;
@@ -93,13 +73,53 @@ export default {
   outline: none;
 }
 
+/* --- Pill-style page action buttons (left of header-actions) --- */
+.pill-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* --- Page Action Button (left of header-controls) --- */
+.header-actions {
+  display: flex;
+  align-items: center;
+}
+
+.add-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 16px;
+  background: #3c6bed;
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  font-family: "Geist", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.add-action-btn:hover {
+  background: #2f56c4;
+}
+
+.add-action-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
 /* --- Right Side Controls --- */
 .header-controls {
   display: flex;
-  flex-direction: row;
   align-items: center;
   gap: 16px;
   height: 36px;
+  margin-left: auto;
 }
 
 .ctrl-btn {
@@ -146,7 +166,7 @@ export default {
   height: 32px;
   background: #3c6bed;
   border-radius: 50%;
-  font-family: 'Geist', sans-serif;
+  font-family: "Geist", sans-serif;
   font-weight: 700;
   font-size: 12px;
   color: #ffffff;
