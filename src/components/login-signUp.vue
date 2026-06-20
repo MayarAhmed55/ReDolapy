@@ -353,12 +353,19 @@ export default {
     const { locale } = useI18n();
     const isRTL = computed(() => locale.value === "ar");
 
+    const API = import.meta.env.PROD ? "/api" : "http://localhost:5000/api";
+
     function handleGoogle() {
       const popup = window.open(
-        "${API}/auth/google",
+        `${API}/auth/google`,
         "Google Login",
         "width=500,height=600,left=400,top=100",
       );
+
+      if (!popup) {
+        error.value = "Popup blocked. Allow popups for this site and try again.";
+        return;
+      }
 
       window.addEventListener(
         "message",
