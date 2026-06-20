@@ -102,7 +102,7 @@ export default {
             }
             this.isSubmitting = true;
             try {
-                const response = await axios.post('http://localhost:5000/api/contact', this.formInput);
+                const response = await axios.post('${API}/contact', this.formInput);
 
                 if (response.status === 201 || response.status === 200) {
                     alert('Message sent successfully to us!');

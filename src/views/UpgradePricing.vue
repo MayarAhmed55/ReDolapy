@@ -218,7 +218,7 @@ export default {
         console.log("Sending clean, structured backend payload:", backendPayload);
 
         const response = await axios.post(
-          'http://localhost:5000/api/payments/create-checkout-session',
+          '${API}/payments/create-checkout-session',
           backendPayload,
           {
             headers: {

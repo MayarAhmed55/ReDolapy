@@ -355,7 +355,7 @@ export default {
 
     function handleGoogle() {
       const popup = window.open(
-        "http://localhost:5000/api/auth/google",
+        "${API}/auth/google",
         "Google Login",
         "width=500,height=600,left=400,top=100",
       );

@@ -192,7 +192,7 @@ export default {
 
                 console.log("🚀 Dispatching verified payload tracking to backend ID:", cleanUserId);
 
-                const response = await axios.post('http://localhost:5000/api/payments/sync-subscription', {
+                const response = await axios.post('${API}/payments/sync-subscription', {
                     userId: cleanUserId
                 }, {
                     headers: { Authorization: `Bearer ${userToken}` }
@@ -246,7 +246,7 @@ export default {
                 const tokenPayload = JSON.parse(window.atob(base64Url.replace(/-/g, '+').replace(/_/g, '/')));
                 const cleanUserId = (tokenPayload.id || tokenPayload._id || '').trim();
 
-                const response = await axios.post('http://localhost:5000/api/payments/cancel-subscription', {
+                const response = await axios.post('${API}/payments/cancel-subscription', {
                     userId: cleanUserId
                 }, {
                     headers: { Authorization: `Bearer ${userToken}` }
