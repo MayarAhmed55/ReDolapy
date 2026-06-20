@@ -137,69 +137,74 @@
         </div>
         </div>
     </section> -->
-    
+
     <section :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'" class="px-4 lg:px-0">
 
-  <div class="flex flex-col lg:flex-row lg:justify-between lg:items-end gap-4 w-full  border-zinc-100 dark:border-zinc-800 pb-4 mb-6">
-    
-    <div class="flex flex-col items-center lg:items-start text-center lg:text-start">
-      <h2 id="FeaturesTitle" class="text-3xl md:text-4xl lg:text-5xl font-bold PrimaryTxt mb-2">
-        {{ $t('brands.title') }}
-      </h2>
-      <p class="font-medium grayTxt text-sm md:text-base">
-        {{ $t('brands.subtitle') }}
-        <span class="gradientColor">{{ $t('brands.appName') }}</span>
-      </p>
-    </div>
+      <div
+        class="flex flex-col lg:flex-row lg:justify-between lg:items-end gap-4 w-full  border-zinc-100 dark:border-zinc-800 pb-4 mb-6">
 
-    <div class="flex justify-center lg:justify-end shrink-0 mt-2 lg:mt-0">
-      <router-link to="/Brands" class="no-underline hover:underline">
-        <span class="flex items-center gap-2 text-[#8ED321] font-semibold text-sm sm:text-base">
-          {{ $t('brands.viewAll') }}
-          <ChevronRight class="text-lg transition-transform duration-200" :class="{ 'rotate-180': $i18n.locale === 'ar' }" />
-        </span>
-      </router-link>
-    </div>
+        <div class="flex flex-col items-center lg:items-start text-center lg:text-start">
+          <h2 id="FeaturesTitle" class="text-3xl md:text-4xl lg:text-5xl font-bold PrimaryTxt mb-2">
+            {{ $t('brands.title') }}
+          </h2>
+          <p class="font-medium grayTxt text-sm md:text-base">
+            {{ $t('brands.subtitle') }}
+            <span class="gradientColor">{{ $t('brands.appName') }}</span>
+          </p>
+        </div>
 
-  </div>
+        <div class="flex justify-center lg:justify-end shrink-0 mt-2 lg:mt-0">
+          <router-link to="/Brands" class="no-underline hover:underline">
+            <span class="flex items-center gap-2 text-[#8ED321] font-semibold text-sm sm:text-base">
+              {{ $t('brands.viewAll') }}
+              <ChevronRight class="text-lg transition-transform duration-200"
+                :class="{ 'rotate-180': $i18n.locale === 'ar' }" />
+            </span>
+          </router-link>
+        </div>
 
-  <div class="cardsContainer flex flex-col lg:flex-row gap-6 justify-center my-[3rem]">
-
-    <div class="card bg-white dark:bg-[#0d0d0d] min-h-[25rem] h-auto shadow-lg p-6 rounded-3xl border border-zinc-100 dark:border-zinc-800 w-full sm:w-[90%] md:w-[60%] lg:w-[32%] self-center">
-      <div class="flex justify-center items-center mx-auto mb-6">
-        <img src="../assets/H&M.jpg" class="h-40 w-40 object-contain" alt="H&M">
       </div>
-      <p class="serviceTitle text-xl font-bold PrimaryTxt mb-2 text-center">{{ $t('brands.hm.title') }}</p>
-      <p class="serviceDescription text-sm Secondary-grayTxt text-center leading-relaxed">
-        {{ $t('brands.hm.description') }}
-      </p>
-    </div>
 
-    <div class="card bg-white dark:bg-[#0d0d0d] min-h-[25rem] h-auto shadow-lg p-6 rounded-3xl border border-zinc-100 dark:border-zinc-800 w-full sm:w-[90%] md:w-[60%] lg:w-[32%] self-center">
-      <div class="flex justify-center items-center mx-auto mb-6">
-        <img src="../assets/H&M.jpg" class="h-40 w-40 object-contain" alt="H&M">
+      <div class="cardsContainer flex flex-col lg:flex-row gap-6 justify-center my-[3rem]">
+
+        <div
+          class="card bg-white dark:bg-[#0d0d0d] min-h-[25rem] h-auto shadow-lg p-6 rounded-3xl border border-zinc-100 dark:border-zinc-800 w-full sm:w-[90%] md:w-[60%] lg:w-[32%] self-center">
+          <div class="flex justify-center items-center mx-auto mb-6">
+            <img src="../assets/H&M.jpg" class="h-40 w-40 object-contain" alt="H&M">
+          </div>
+          <p class="serviceTitle text-xl font-bold PrimaryTxt mb-2 text-center">{{ $t('brands.hm.title') }}</p>
+          <p class="serviceDescription text-sm Secondary-grayTxt text-center leading-relaxed">
+            {{ $t('brands.hm.description') }}
+          </p>
+        </div>
+
+        <div
+          class="card bg-white dark:bg-[#0d0d0d] min-h-[25rem] h-auto shadow-lg p-6 rounded-3xl border border-zinc-100 dark:border-zinc-800 w-full sm:w-[90%] md:w-[60%] lg:w-[32%] self-center">
+          <div class="flex justify-center items-center mx-auto mb-6">
+            <img src="../assets/H&M.jpg" class="h-40 w-40 object-contain" alt="H&M">
+          </div>
+          <p class="serviceTitle text-xl font-bold PrimaryTxt mb-2 text-center">{{ $t('brands.hm.title') }}</p>
+          <p class="serviceDescription text-sm Secondary-grayTxt text-center leading-relaxed">
+            {{ $t('brands.hm.description') }}
+          </p>
+        </div>
+
+        <div
+          class="card bg-white dark:bg-[#0d0d0d] min-h-[25rem] h-auto shadow-lg p-6 rounded-3xl border border-zinc-100 dark:border-zinc-800 w-full sm:w-[90%] md:w-[60%] lg:w-[32%] self-center">
+          <div class="flex justify-center items-center mx-auto mb-6">
+            <img src="../assets/H&M.jpg" class="h-40 w-40 object-contain" alt="H&M">
+          </div>
+          <p class="serviceTitle text-xl font-bold PrimaryTxt mb-2 text-center">{{ $t('brands.hm.title') }}</p>
+          <p class="serviceDescription text-sm Secondary-grayTxt text-center leading-relaxed">
+            {{ $t('brands.hm.description') }}
+          </p>
+        </div>
+
       </div>
-      <p class="serviceTitle text-xl font-bold PrimaryTxt mb-2 text-center">{{ $t('brands.hm.title') }}</p>
-      <p class="serviceDescription text-sm Secondary-grayTxt text-center leading-relaxed">
-        {{ $t('brands.hm.description') }}
-      </p>
-    </div>
+    </section>
 
-    <div class="card bg-white dark:bg-[#0d0d0d] min-h-[25rem] h-auto shadow-lg p-6 rounded-3xl border border-zinc-100 dark:border-zinc-800 w-full sm:w-[90%] md:w-[60%] lg:w-[32%] self-center">
-      <div class="flex justify-center items-center mx-auto mb-6">
-        <img src="../assets/H&M.jpg" class="h-40 w-40 object-contain" alt="H&M">
-      </div>
-      <p class="serviceTitle text-xl font-bold PrimaryTxt mb-2 text-center">{{ $t('brands.hm.title') }}</p>
-      <p class="serviceDescription text-sm Secondary-grayTxt text-center leading-relaxed">
-        {{ $t('brands.hm.description') }}
-      </p>
-    </div>
 
-  </div>
-</section>
-    
-    
-  
+
 
 
     <section id="PricingSection">
@@ -281,7 +286,7 @@
           :secondPoint="$t('pricing.pro.features.1')" :thirdPoint="$t('pricing.pro.features.2')"
           :fourthPoint="$t('pricing.pro.features.3')" :fifthPoint="$t('pricing.pro.features.4')"
           :buttonContent="isProcessing ? 'Connecting to Stripe...' : $t('pricing.pro.button')"
-          @click="handleSubscriptionSubmit" :disabled="isProcessing">
+          @click.self="handleSubscriptionSubmit" :disabled="isProcessing">
 
           <template #AdditionalFeatures>
             <div class="w-full text-sm space-y-2 border-t pt-4 border-gray-200 PrimaryTxt text-start">
@@ -410,6 +415,7 @@ export default {
         const userToken = localStorage.getItem('token');
         if (!userToken) {
           alert("Please log in to continue.");
+          this.isProcessing = false;
           return;
         }
 
@@ -428,8 +434,10 @@ export default {
 
           interval: this.isYearly ? 'year' : 'month',
 
-          success_url: 'http://localhost:5173/pricing?success=true',
-          cancel_url: 'http://localhost:5173/pricing?canceled=true'
+          // success_url: 'http://localhost:5173/pricing?success=true',
+          // cancel_url: 'http://localhost:5173/pricing?canceled=true'
+          success_url: window.location.origin + '/pricing?success=true',
+          cancel_url: window.location.origin + '/pricing?canceled=true'
 
         };
 
@@ -640,7 +648,4 @@ export default {
   font-weight: var(--Bold);
   margin-bottom: 0.5rem;
 }
-
-
-
 </style>
