@@ -29,7 +29,7 @@
               class="absolute left-[12px] top-[34%] bottom-[26.19%] w-[15px] flex flex-col items-start p-0 pointer-events-none"
             >
               <img
-                src="../../assets/icon (27).svg"
+                src="../../assets/Icon (27).svg"
                 class="w-[15px] h-[13.33px]"
               />
             </div>

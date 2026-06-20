@@ -22,7 +22,7 @@
         active-class="item-active"
       >
         <div class="icon-frame-wrapper spec-active-dim">
-          <img src="../../assets/icon (14).svg" class="active-color" />
+          <img src="../../assets/Icon (14).svg" class="active-color" />
         </div>
         <div class="label-frame-wrapper spec-active-txt-w">
           <span class="link-label">Dashboard</span>
