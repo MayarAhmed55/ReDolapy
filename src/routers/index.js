@@ -19,7 +19,7 @@ import Wishlist from '../views/Wishlist.vue'
 import Avatar from '../views/Avatar.vue'
 import {isAuthModalOpen, triggerLoginModal} from '../authState.js';
 import ContactUs from "../views/ContactUs.vue";
-import UserCurrentPlan from "../views/UserCurrentPlan.vue";
+import UpgradePricing from "../views/UpgradePricing.vue";
 import adminRoutes from "./adminRoutes.js";
 const routes = [
   { path: "/", component: HomePage },
@@ -54,7 +54,7 @@ const routes = [
   { path: '/Avatar', component: Avatar },
   { path: "/Profile/:id", component: Profile, meta: { requiresAuth: true } },
     { path: "/ContactUs", component: ContactUs },
-    { path: "/UserCurrentPlan", component: UserCurrentPlan },
+    { path: "/UpgradePricing", component: UpgradePricing ,name: "UpgradePricing" },
 
   {
     path: "/Profile",

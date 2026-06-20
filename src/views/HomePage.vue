@@ -199,71 +199,7 @@
 </section>
     
     
-    
-    
-    <!-- <section :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'" class="px-4 lg:px-0">
-      <div class="relative flex flex-col items-center lg:items-start text-center lg:text-start">
-        <router-link to="/Brands" class="shrink-0 no-underline hover:underline">
-          <span class="flex items-center gap-1 text-sm sm:text-base font-semibold text-[#8ED321]"
-            :class="$i18n.locale === 'ar' ? 'left-1' : 'right-1'">
-            {{ $t('brands.viewAll') }}
-            <ChevronRight class="w-4 h-4 transition-transform duration-200"
-              :class="{ 'rotate-180': $i18n.locale === 'ar' }" />
-          </span>
-        </router-link>
-
-        <p id="FeaturesTitle" class="text-4xl md:text-5xl font-bold  PrimaryTxt flex">
-          {{ $t('brands.title') }}
-        </p>
-
-        <p class="mb-[1rem] font-medium grayTxt m-2">
-          {{ $t('brands.subtitle') }}
-          <span class="gradientColor">{{ $t('brands.appName') }}</span>
-        </p>
-      </div>
-
-      <div class="cardsContainer flex flex-col lg:flex-row gap-6 justify-center my-[3rem] ">
-
-        <div
-          class="card bg-white dark:bg-[#0d0d0d] min-h-[25rem] h-auto shadow-lg md:w-[60%]  sm:w-[90%] self-center lg:w-[32%]">
-          <div class="flex justify-center items-center m-auto mb-[2rem]">
-            <img src="../assets/H&M.jpg" class="h-[10rem] w-[10rem] object-contain" alt="H&M">
-          </div>
-          <p class="serviceTitle PrimaryTxt">{{ $t('brands.hm.title') }}</p>
-          <p class="serviceDescription Secondary-grayTxt">
-            {{ $t('brands.hm.description') }}
-          </p>
-        </div>
-
-        <div
-          class="card bg-white dark:bg-[#0d0d0d] min-h-[25rem] h-auto shadow-lg md:w-[60%]  sm:w-[90%] self-center lg:w-[32%]">
-          <div class="flex justify-center items-center m-auto mb-[2rem]">
-            <img src="../assets/H&M.jpg" class="h-[10rem] w-[10rem] object-contain" alt="H&M">
-          </div>
-          <p class="serviceTitle PrimaryTxt">{{ $t('brands.hm.title') }}</p>
-          <p class="serviceDescription Secondary-grayTxt">
-            {{ $t('brands.hm.description') }}
-          </p>
-        </div>
-
-        <div
-          class="card bg-white dark:bg-[#0d0d0d] min-h-[25rem] h-auto shadow-lg md:w-[60%]  sm:w-[90%]  self-center  lg:w-[32%]">
-          <div class="flex justify-center items-center m-auto mb-[2rem]">
-            <img src="../assets/H&M.jpg" class="h-[10rem] w-[10rem] object-contain" alt="H&M">
-            <ArrowRight :class="{ 'rotate-180': $i18n.locale === 'ar' }" />
-            <img :src="imgSrc6" alt="">
-          </div>
-          <p class="serviceTitle PrimaryTxt">{{ $t('brands.hm.title') }}</p>
-          <p class="serviceDescription Secondary-grayTxt">
-            {{ $t('brands.hm.description') }}
-          </p>
-        </div>
-      </div>
-    </section> -->
-
-
-
-
+  
 
 
     <section id="PricingSection">
@@ -338,10 +274,6 @@
               {{ $t("pricing.free.features.5") }}
             </p>
           </div>
-
-          <!-- <router-link to="/TryOn" id="FreePricingBtn" class="PricingCardsButton font-semibold text-lg">
-          {{ $t("pricing.free.button") }}
-        </router-link> -->
         </div>
 
         <GradientCard :cardTitle="$t('pricing.pro.name')" :Price="isYearly ? '$12.19' : '$16.99'"
@@ -709,56 +641,6 @@ export default {
   margin-bottom: 0.5rem;
 }
 
-.gradient-btn-content {
-  background-color: var(--primary-bgc);
-  border-radius: 0.5rem;
-  padding: 1rem 2rem;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s ease;
-  background-color: var(--primary-bgc);
-  border-radius: 0.5rem;
-  padding: 1rem 2rem;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s ease;
-}
 
-.gradient-btn-border {
-  width: 100%;
-  border-radius: 0.5em;
-  margin-top: 3rem;
-  width: 100%;
-  border-radius: 0.5em;
-  margin-top: 3rem;
 
-  background: linear-gradient(90deg, #8ed321 0%, #40b9ff 50%, #ff8e40 100%);
-  padding: 0.2rem;
-  cursor: pointer;
-  background: linear-gradient(90deg, #8ed321 0%, #40b9ff 50%, #ff8e40 100%);
-  padding: 0.2rem;
-  cursor: pointer;
-}
-
-.PricingCardsButton {
-  border: 0.1em solid;
-  border-radius: 0.5em;
-  padding: 0.5em 1.8em;
-  justify-self: flex-end;
-  margin-top: 4rem;
-  border: 0.1em solid;
-  border-radius: 0.5em;
-  padding: 0.5em 1.8em;
-  justify-self: flex-end;
-  margin-top: 4rem;
-}
-
-#FreePricingBtn {
-  background-color: white;
-  border-color: var(--Secondary-Brand-color);
-  cursor: pointer;
-  background-color: white;
-  border-color: var(--Secondary-Brand-color);
-  cursor: pointer;
-}
 </style>

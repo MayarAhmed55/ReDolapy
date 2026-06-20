@@ -220,11 +220,11 @@ Section{
 
 .PrimaryTxt{
     color: var(--Primary-Text-color);
-    transition: color  ease;
+    /* transition: color  ease; */
 }
 .Secondary-grayTxt{
     color: var(--Secondary-Text-color);
-    transition: color  ease;
+    /* transition: color  ease; */
 }
 .grayTxt{
     color: var(--Disabled-Text-color);
@@ -232,23 +232,23 @@ Section{
 }
 .greenTxt{
  color:var(--Secondary-Brand-color);
- transition: color  ease;
+ /* transition: color  ease; */
 }
 
 .OrangeTxt{
  color:var(--Secondary-Orange-Brand-color);
- transition: color  ease;
+ /* transition: color  ease; */
 }
 .blueTxt{
  color:var(--Primary-Brand-color);
- transition: color  ease;
+ /* transition: color  ease; */
 }
 button:hover{
     cursor: pointer;
     scale:1.08;
 }
 button{
-    transition: all  ease-in-out;
+    transition: scale  ease-in-out;
 }
 .gradientColor {
     background: var(--Gradient-bgc);

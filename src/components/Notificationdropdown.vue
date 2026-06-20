@@ -1,15 +1,15 @@
 <template>
-  <div class="notification-wrapper" ref="wrapperRef">
+  <div class="notification-wrapper rounded-xl border border-gray-200 dark:border-zinc-700  bg-white dark:bg-zinc-900 text-gray-700 dark:text-zinc-300 transition-all duration-200 hover:scale-105" ref="wrapperRef">
     <!-- Bell Button -->
     <button
       type="button"
-      class="notification-trigger"
+      class="notification-trigger bg-[#fefefe] dark:bg-[gray] "
       :aria-label="`Notifications${unreadCount ? ` (${unreadCount} unread)` : ''}`"
       @click="toggleDropdown"
     >
       <!-- Bell Icon (mirrored per spec: scaleX(-1)) -->
       <svg
-        class="bell-icon"
+        class="bell-icon PrimaryTxt"
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -45,14 +45,14 @@
     <Transition name="dropdown">
       <div
         v-if="isOpen"
-        class="notification-dropdown"
+        class="notification-dropdown bg-[#fefefe] dark:bg-[#0d0d0d] "
         :class="isRTL ? 'open-left' : 'open-right'"
         role="menu"
         aria-label="Notifications"
       >
         <!-- Header -->
         <div class="dropdown-header">
-          <span class="dropdown-title">Notifications</span>
+          <span class="dropdown-title PrimaryTxt">Notifications</span>
           <button
             v-if="notifications.length > 0"
             class="delete-notification"
@@ -102,7 +102,7 @@
           </button>
         </div>
 
-        <ul v-else class="notification-list" role="list">
+        <ul v-else class="notification-list bg-white dark:bg-[#0d0d0d]" role="list">
           <li v-if="notifications.length === 0" class="empty-state">
             <svg class="empty-icon" viewBox="0 0 24 24" fill="none">
               <path
@@ -126,7 +126,7 @@
           <li
             v-for="notif in notifications"
             :key="notif.id"
-            class="notification-item"
+            class="notification-item bg-white dark:bg-[#0d0d0d]"
             :class="{ 'is-unread': !notif.read }"
             role="menuitem"
           >
@@ -138,7 +138,7 @@
             />
 
             <div class="notif-body">
-              <p class="notif-title" v-if="notif.title">{{ notif.title }}</p>
+              <p class="notif-title PrimaryTxt" v-if="notif.title">{{ notif.title }}</p>
               <p class="notif-message">{{ notif.message }}</p>
               <div class="notif-footer">
                 <span class="notif-time">{{ notif.time }}</span>
@@ -448,7 +448,7 @@ function handleOutsideClick(e) {
   transition: background 0.15s;
 }
 .notification-trigger:hover {
-  background: #f1f5f9;
+  /* background: #f1f5f9; */
 }
 
 .bell-icon {
@@ -481,7 +481,7 @@ function handleOutsideClick(e) {
   position: fixed;
   top: 60px;
   width: min(320px, calc(100vw - 16px));
-  background: #ffffff;
+  /* background: #fefefefe; */
   border: 1px solid #e9ebef;
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
@@ -512,7 +512,7 @@ function handleOutsideClick(e) {
 .dropdown-title {
   font-size: 15px;
   font-weight: 600;
-  color: #0a0a0a;
+  /* color: #0a0a0a; */
 }
 .mark-all-btn {
   background: none;
@@ -553,7 +553,7 @@ function handleOutsideClick(e) {
   width: 4px;
 }
 .notification-list::-webkit-scrollbar-thumb {
-  background: #e9ebef;
+  /* background: #e9ebef; */
   border-radius: 4px;
 }
 
@@ -587,13 +587,13 @@ function handleOutsideClick(e) {
   border-bottom: none;
 }
 .notification-item:hover {
-  background: #f9fafb;
+  /* background: #f9fafb; */
 }
 .notification-item.is-unread {
-  background: #f0faff;
+  /* background: #f0faff; */
 }
 .notification-item.is-unread:hover {
-  background: #e5f6ff;
+  /* background: #e5f6ff; */
 }
 
 .unread-dot {
@@ -619,7 +619,7 @@ function handleOutsideClick(e) {
 .notif-title {
   font-size: 13px;
   font-weight: 600;
-  color: #0a0a0a;
+  /* color: #0a0a0a; */
   margin: 0;
 }
 .notif-message {

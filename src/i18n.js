@@ -100,7 +100,7 @@ const messages = {
       recycleDescription:
         "Easily request a recycling kit for items that have reached the end of their life.",
       learnRecycling: "Learn about Recycling",
-      learnTryOn: "Try it On before converting it",
+      learnTryOn: "Learn more about Try On",
       coreFeaturesTitle: "What We <span class='gradientColor'>make?</span>",
       coreFeaturesSubtitle: "Let’s Know ReDolapy Core Value",
     },
@@ -108,7 +108,7 @@ const messages = {
       yourMirror: "Your Mirror",
       reimagined: "Re Imagined.",
       description:
-        "The Redolapy Virtual Try-On uses hyper-realistic rendering to show you exactly how clothes will look after UpCycling and Try it on your body.",
+        "The Redolapy Virtual Try-On uses hyper-realistic rendering to show you exactly how UpCycled clothes will look on you before converting it.",
       button: "Try On",
     },
     tryOn: {
@@ -934,15 +934,15 @@ const messages = {
         "Explore how simple wardrobe choices lead to meaningful environmental benefits.",
       saveWater: {
         title: "Save Water",
-        description: "Upcycling uses significantly less water",
+        description: "UpCycling uses significantly less water compared to producing entirely new textile garments.",
       },
       saveMoney: {
         title: "Save Money",
-        description: "Refresh your personal style and get",
+        description: "Refresh your personal style and get  more tangible value from the high quality clothes you already own.",
       },
       reduceWaste: {
         title: "Reduce Waste",
-        description: "Keep clothing out of landfills and",
+        description: "Keep clothing out of landfills and reduce the overall environmental footprint of the fashion industry.",
       },
       examples: {
         title: "See What AI Can Create",
@@ -1669,7 +1669,7 @@ const messages = {
       viewAll: "عرض الكل",
       title: "علاماتنا التجارية",
       subtitle: "اكتشف منتجاتك المفضلة وخصومات حصرية من خلال",
-      appName: "ريدولابي",
+      appName: "تطبيق ريدولابي",
       hm: {
         title: "إتش آند إم",
         description:
@@ -2079,15 +2079,15 @@ const messages = {
         "اكتشف كيف يمكن لخيارات خزانة الملابس البسيطة أن تؤدي إلى فوائد بيئية كبيرة.",
       saveWater: {
         title: "توفير المياه",
-        description: "تستخدم إعادة التدوير مياهاً أقل بكثير",
+        description: "تستخدم عملية إعادة التدوير كمية أقل بكثير من المياه مقارنة بإنتاج ملابس نسيجية جديدة تمامًا ",
       },
       saveMoney: {
         title: "توفير المال",
-        description: "جدد أسلوبك الشخصي واحصل على",
+        description: "جدد أسلوبك الشخصي واحصل على قيمة ملموسة أكبر من الملابس عالية الجودة التي تمتلكها بالفعل.",
       },
       reduceWaste: {
         title: "تقليل النفايات",
-        description: "أبقِ الملابس بعيداً عن مدافن النفايات و",
+        description: "  أبقِ الملابس بعيداً عن مدافن النفايات وقلل الأثر البيئي الإجمالي لصناعة الأزياء.",
       },
       examples: {
         title: "شاهد ما يمكن للذكاء الاصطناعي أن ينشئه",

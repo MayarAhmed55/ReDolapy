@@ -3,7 +3,7 @@
         <Section id="Footer">
             <div class="flex justify-between flex-wrap gap-8">
                 <div class="w-full md:w-[25%]">
-                    <p class="font-bold text-2xl dark:text-white">{{ $t('footer.brandName') }}</p>
+                    <p class="font-bold text-3xl gradientColor">{{ $t('footer.brandName') }}</p>
                     <p class="grayTxt mt-2">{{ $t('footer.tagline') }}</p>
                     <div class="flex gap-4 mt-4 blueTxt">
                         <Globe class="cursor-pointer hover:opacity-80 transition-opacity" />

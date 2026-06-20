@@ -36,6 +36,10 @@
                 <p class="text-sm grayTxt flex gap-3">
                     <Check></Check>{{ $t('pricing.pro.features.3') }}
                 </p>
+                <p class="text-sm grayTxt flex gap-3">
+                    <Check></Check>{{ $t('pricing.pro.features.4') }}
+                </p>
+                
             </div>
 
             <button @click.prevent="showCancelModal = true" id="ProPricingBtn" type="button"
@@ -79,7 +83,7 @@
     </div>
 
     <div v-else id="FreePricing"
-        class="card  m-auto  bg-white dark:bg-[#0d0d0d] flex flex-col justify-center items-center gap-8">
+        class="card w-[50%] lg:w-[48%] min-w-[320px] max-w-[380px] m-auto  bg-white dark:bg-[#0d0d0d] flex flex-col justify-center items-center gap-8">
         <p class="PricingTitle text-4xl font-bold PrimaryTxt">
             {{ $t("pricing.free.name") }}
         </p>
@@ -87,7 +91,7 @@
             <span class="text-4xl font-bold">{{ $t("pricing.free.price") }}</span>
             {{ $t("pricing.free.priceUnit") }}
         </p>
-        <div class="planFeatures">
+        <div class="planFeatures ">
             <p class="flex items-center gap-2 font-medium text-lg PrimaryTxt mb-1">
                 <span class="text-[#8ED321]">
                     <CircleCheckBig />
@@ -106,23 +110,38 @@
                 </span>
                 {{ $t("pricing.free.features.2") }}
             </p>
+             <p class="flex items-center gap-2 font-medium text-lg PrimaryTxt mb-1">
+                <span class="text-[#8ED321]">
+                    <CircleCheckBig />
+                </span>
+                {{ $t("pricing.free.features.3") }}
+            </p>
+             <p class="flex items-center gap-2 font-medium text-lg PrimaryTxt mb-1">
+                <span class="text-[#8ED321]">
+                    <CircleCheckBig />
+                </span>
+                {{ $t("pricing.free.features.4") }}
+            </p>
+             <p class="flex items-center gap-2 font-medium text-lg PrimaryTxt mb-1">
+                <span class="text-[#8ED321]">
+                    <CircleCheckBig />
+                </span>
+                {{ $t("pricing.free.features.5") }}
+            </p>
         </div>
 
-        <!-- <router-link to="/TryOn" id="FreePricingBtn" class="PricingCardsButton font-semibold text-lg">
-          {{ $t("pricing.free.button") }}
-        </router-link> -->
     </div>
 </template>
 
 <script>
 import axios from 'axios';
 
-import { Check } from '@lucide/vue';
+import { CircleCheckBig } from '@lucide/vue';
 
 export default {
-    name: 'UserCurrentPlan',
+    name: 'pricing',
     components: {
-        Check
+        CircleCheckBig
 
     },
     data() {
@@ -137,12 +156,6 @@ export default {
     },
     async mounted() {
         await this.fetchUserSubscriptionDetails();
-
-        // this.isPageLoading = false;
-        // this.isProUser = false; // Set to false if you want to test the Free Tier look!
-        // this.subscriptionInterval = 'month'; // Test changing this to 'year' to check pricing text
-        // this.renewalDate = 'Aug 25, 2026';
-
     },
 
     methods: {
@@ -151,21 +164,17 @@ export default {
             try {
                 let userToken = localStorage.getItem('token');
 
-                // 🚨 1. UNPACK BUG SAFETY PROTECTION FILTER:
-                // If it's a Vue reactive object reference, unwrap its value container manually
+              
                 if (userToken && typeof userToken === 'object' && userToken.value) {
                     userToken = userToken.value;
                 }
 
-                // 🚨 2. DATA TYPE VALIDATION PIPELINE:
-                // Absolute check to ensure the token exists, is an actual string, and contains standard JWT dot dividers
                 if (!userToken || typeof userToken !== 'string' || !userToken.includes('.')) {
                     console.warn("⚠️ Aborting fetch: Storage 'token' key is empty, invalid, or an object reference instead of a valid JWT.");
                     this.isProUser = false;
-                    return; // Clean exit to prevent back-end server parsing crashes
+                    return; 
                 }
 
-                // 3. SECURE DECODING SEQUENCE
                 const base64Url = userToken.split('.')[1];
                 if (!base64Url) {
                     throw new Error("Parsed token string is missing its base64 payload segment.");
@@ -183,7 +192,6 @@ export default {
 
                 console.log("🚀 Dispatching verified payload tracking to backend ID:", cleanUserId);
 
-                // 4. NETWORKING HANDSHAKE TRANSMISSION
                 const response = await axios.post('http://localhost:5000/api/payments/sync-subscription', {
                     userId: cleanUserId
                 }, {
@@ -194,7 +202,6 @@ export default {
                     this.isProUser = true;
                     this.subscriptionInterval = response.data.subscriptionInterval || 'month';
 
-                    // this.renewalDate = response.data.renewalDate || 'Aug 25, 2026';
 
                     if (response.data.subscriptionEndDate) {
                         const rawDate = new Date(response.data.subscriptionEndDate);
@@ -202,11 +209,11 @@ export default {
                             month: 'short',
                             day: 'numeric',
                             year: 'numeric'
-                        }); // ✨ Generates "Aug 25, 2026" dynamically!
+                        }); 
                     } else {
                         this.renewalDate = '—';
                     }
-                    console.log("🎯 Live Data Swapped Successfully:", {
+                    console.log(" Live Data Swapped Successfully:", {
                         interval: this.subscriptionInterval,
                         formattedDate: this.renewalDate
                     });
@@ -225,14 +232,13 @@ export default {
         async handleCancelSubscription() {
             if (this.isProcessing) return;
             this.isProcessing = true;
-            setTimeout(() => {
-                alert("Subscription canceled successfully. (MOCK TEST)");
-                this.isProcessing = false;
-                this.showCancelModal = false;
+            // setTimeout(() => {
+            //     // alert("Subscription canceled successfully. (MOCK TEST)");
+            //     this.isProcessing = false;
+            //     this.showCancelModal = false;
 
-                // This should instantly toggle your page view from the Pro card back to the Free Plan card!
-                this.isProUser = false;
-            }, 1500); //
+            //     this.isProUser = false;
+            // }, 1500); 
 
             try {
                 const userToken = localStorage.getItem('token');

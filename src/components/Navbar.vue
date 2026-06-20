@@ -111,7 +111,7 @@
                     </svg>
                     <span class="item-title PrimaryTxt">{{ $t("nav.notifications") }}</span>
                   </div>
-                  <button @click="toggleNotifications" class="toggle-switch"
+                  <button @click="toggleNotifications" class="toggle-switch  "
                     :class="{ 'toggle-active': notificationsEnabled }">
                     <span class="toggle-circle"></span>
                   </button>
@@ -226,6 +226,7 @@
                   </svg>
                 </router-link>
 
+                
    <router-link to="/pricing" class="dropdown-item-row PrimaryTxt cursor-pointer" role="menuitem"
                   @click="closeUserDropdown">
                   <div class="item-leading PrimaryTxt">
@@ -1161,11 +1162,12 @@ export default {
           mobileLabel: this.$t("nav.tryOn"),
         },
         { to: "/Recycle", label: this.$t("nav.recycle") },
-        {
-          to: "/#PricingSection",
-          label: this.$t("nav.pricing"),
-          hash: "#PricingSection",
-        },
+        // {
+        //   to: "/#PricingSection",
+        //   label: this.$t("nav.pricing"),
+        //   hash: "#PricingSection",
+        // },
+        { to: "/UpgradePricing", label: this.$t("nav.pricing") },
         { to: "/AboutPage", label: this.$t("nav.about") },
         { to: "/ContactUS", label: this.$t("nav.contact_us") },
       ];
@@ -1461,7 +1463,7 @@ export default {
   padding: 1px;
   width: 43px;
   height: 18px;
-  background: #030213;
+  /* background: #030213; */
   border-radius: 9999px;
   position: relative;
   transition: background-color 0.2s ease;

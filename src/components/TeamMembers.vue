@@ -4,7 +4,7 @@
             <div class="gradient-btn-content flex flex-col sm:flex-row gap-5 items-center p-4 sm:p-6">
                 <img class="rounded-[50%] w-[5rem] h-[5rem] flex-shrink-0 object-cover" src="../assets/person 1.png" alt="">
 
-                <div class="memberInfo text-start sm:text-start flex flex-col gap-3 flex-grow w-full ">
+                <div class="memberInfo text-center md:items-center flex flex-col gap-3 flex-grow w-full ">
                     <div>
                     <p class="PrimaryTxt text-lg md:text-xl ">{{name}}</p>
                     <p class="font-medium grayTxt text-sm md:text-base ">{{title}}</p>
