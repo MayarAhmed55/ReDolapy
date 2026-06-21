@@ -135,6 +135,7 @@
 
 <script>
 import axios from 'axios';
+import API_BASE from '../config/api.js';
 
 import { CircleCheckBig } from '@lucide/vue';
 
@@ -192,7 +193,7 @@ export default {
 
                 console.log("🚀 Dispatching verified payload tracking to backend ID:", cleanUserId);
 
-                const response = await axios.post('${API}/payments/sync-subscription', {
+                const response = await axios.post(`${API_BASE}/payments/sync-subscription`, {
                     userId: cleanUserId
                 }, {
                     headers: { Authorization: `Bearer ${userToken}` }
@@ -246,7 +247,7 @@ export default {
                 const tokenPayload = JSON.parse(window.atob(base64Url.replace(/-/g, '+').replace(/_/g, '/')));
                 const cleanUserId = (tokenPayload.id || tokenPayload._id || '').trim();
 
-                const response = await axios.post('${API}/payments/cancel-subscription', {
+                const response = await axios.post(`${API_BASE}/payments/cancel-subscription`, {
                     userId: cleanUserId
                 }, {
                     headers: { Authorization: `Bearer ${userToken}` }

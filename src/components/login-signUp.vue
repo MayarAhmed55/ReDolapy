@@ -251,6 +251,7 @@ import {
   getUserById,
   emailVerification,
 } from "../services/services";
+import API_BASE from "../config/api.js";
 
 const EyeIcon = defineComponent({
   props: { open: Boolean },
@@ -352,9 +353,7 @@ export default {
     const error = ref(null);
     const { locale } = useI18n();
     const isRTL = computed(() => locale.value === "ar");
-    const API =
-      import.meta.env.VITE_API_BASE ||
-      (import.meta.env.PROD ? "/api" : "http://localhost:5000/api");
+    const API = API_BASE;
 
     function handleGoogle() {
       const popup = window.open(

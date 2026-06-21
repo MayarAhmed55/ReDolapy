@@ -330,6 +330,7 @@ import {
   PersonStanding,
 } from "@lucide/vue";
 import axios from 'axios';
+import API_BASE from '../config/api.js';
 import Header from "../components/Header.vue";
 import HeaderImage from "../assets/HeaderImage.png";
 import HeaderImageDark from "../assets/HeaderImageDark.png"
@@ -444,7 +445,7 @@ export default {
         console.log("Sending clean, structured backend payload:", backendPayload);
 
         const response = await axios.post(
-          '${API}/payments/create-checkout-session',
+          `${API_BASE}/payments/create-checkout-session`,
           backendPayload,
           {
             headers: {

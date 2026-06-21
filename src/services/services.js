@@ -1,6 +1,7 @@
 import axios from "axios";
-// const API = "http://localhost:5000/api";
-const API = import.meta.env.PROD ? "/api" : "http://localhost:5000/api";
+import API_BASE from "../config/api.js";
+
+const API = API_BASE;
 
 export const login = (credi) => axios.post(`${API}/auth/login`, credi);
 export const signUp = (userData) => axios.post(`${API}/auth/signup`, userData);

@@ -117,6 +117,7 @@
 <script>
         import {CircleCheckBig} from "@lucide/vue";
         import axios from 'axios';
+        import API_BASE from '../config/api.js';
         // import GradientBorderBtn from "../components/GradientBorderBtn.vue";
         import CardsSection from "../components/CardsSection.vue";
         import GradientCard from "../components/GradientCard.vue";
@@ -210,15 +211,15 @@ export default {
 
           interval: this.isYearly ? 'year' : 'month',
 
-          success_url: 'http://localhost:5173/pricing?success=true',
-          cancel_url: 'http://localhost:5173/pricing?canceled=true'
+          success_url: window.location.origin + '/pricing?success=true',
+          cancel_url: window.location.origin + '/pricing?canceled=true'
 
         };
 
         console.log("Sending clean, structured backend payload:", backendPayload);
 
         const response = await axios.post(
-          '${API}/payments/create-checkout-session',
+          `${API_BASE}/payments/create-checkout-session`,
           backendPayload,
           {
             headers: {
