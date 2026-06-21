@@ -352,8 +352,9 @@ export default {
     const error = ref(null);
     const { locale } = useI18n();
     const isRTL = computed(() => locale.value === "ar");
-
-    const API = import.meta.env.PROD ? "/api" : "http://localhost:5000/api";
+    const API =
+      import.meta.env.VITE_API_BASE ||
+      (import.meta.env.PROD ? "/api" : "http://localhost:5000/api");
 
     function handleGoogle() {
       const popup = window.open(
