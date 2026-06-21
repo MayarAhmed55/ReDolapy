@@ -21,29 +21,47 @@
       <div class="notif-table">
         <!-- Header Row -->
         <div class="t-header">
-          <div class="th th-type">Type</div>
-          <div class="th th-message">Message</div>
-          <div class="th th-channel">Channel</div>
-          <div class="th th-sent">Sent</div>
+          <div class="th th-title">Title</div>
+          <div class="th th-message">Body</div>
+          <div class="th th-read">Read</div>
+          <div class="th th-sent">Created At</div>
           <div class="th th-action"></div>
         </div>
 
         <!-- Body -->
         <div class="t-body">
-          <div class="t-row">
-            <div class="td td-type">
-              <span class="type-label">Order Update</span>
+
+          <div v-if="loading" class="t-empty">Loading notifications…</div>
+          <div v-else-if="notifications.length === 0" class="t-empty">No notifications found.</div>
+
+          <div
+            v-for="notif in notifications"
+            :key="notif._id"
+            class="t-row"
+            :class="{ 'row-unread': !notif.read }"
+          >
+            <!-- Title -->
+            <div class="td td-title">
+              <span class="type-label">{{ notif.title }}</span>
             </div>
-            <div class="td td-message">
-              Your order #ORD-4821 has been shipped and is on its way to the
-              Milan Flagship store.
+
+            <!-- Body -->
+            <div class="td td-message">{{ notif.body }}</div>
+
+            <!-- Read status -->
+            <div class="td td-read">
+              <span class="read-badge" :class="notif.read ? 'badge-read' : 'badge-unread'">
+                {{ notif.read ? 'Read' : 'Unread' }}
+              </span>
             </div>
-            <div class="td td-channel">
-              <span class="channel-icon channel-email"></span>Email
-            </div>
+
+            <!-- Created At -->
             <div class="td td-sent">
-              <span>Jun 14</span><span>9:42 AM</span>
+              <span>{{ notif.dateLabel }}</span>
+              <span>{{ notif.timeLabel }}</span>
             </div>
+
+            <!-- Action -->
             <div class="td td-action">
               <button class="action-btn">
                 <span class="dots-icon"></span>
@@ -51,139 +69,15 @@
             </div>
           </div>
 
-          <div class="t-row">
-            <div class="td td-type">
-              <span class="type-label">Low Stock Alert</span>
-            </div>
-            <div class="td td-message">
-              Velvet Oxford Brogue (SKU-00412) is below the minimum stock
-              threshold at Milan Flagship.
-            </div>
-            <div class="td td-channel">
-              <span class="channel-icon channel-inapp"></span>In-App
-            </div>
-            <div class="td td-sent">
-              <span>Jun 14</span><span>8:15 AM</span>
-            </div>
-            <div class="td td-action">
-              <button class="action-btn">
-                <span class="dots-icon"></span>
-              </button>
-            </div>
-          </div>
-
-          <div class="t-row">
-            <div class="td td-type">
-              <span class="type-label">New User</span>
-            </div>
-            <div class="td td-message">
-              A new Global Admin account was created for hassan@redolapy.com.
-            </div>
-            <div class="td td-channel">
-              <span class="channel-icon channel-email"></span>Email
-            </div>
-            <div class="td td-sent">
-              <span>Jun 13</span><span>3:07 PM</span>
-            </div>
-            <div class="td td-action">
-              <button class="action-btn">
-                <span class="dots-icon"></span>
-              </button>
-            </div>
-          </div>
-
-          <div class="t-row">
-            <div class="td td-type">
-              <span class="type-label">Try-On Activity</span>
-            </div>
-            <div class="td td-message">
-              85 virtual try-ons completed in the last 24 hours across all
-              active stores.
-            </div>
-            <div class="td td-channel">
-              <span class="channel-icon channel-inapp"></span>In-App
-            </div>
-            <div class="td td-sent">
-              <span>Jun 13</span><span>12:00 PM</span>
-            </div>
-            <div class="td td-action">
-              <button class="action-btn">
-                <span class="dots-icon"></span>
-              </button>
-            </div>
-          </div>
-
-          <div class="t-row">
-            <div class="td td-type">
-              <span class="type-label">Store Review</span>
-            </div>
-            <div class="td td-message">
-              London Flagship has been flagged for compliance review. Action
-              required before Jun 20.
-            </div>
-            <div class="td td-channel">
-              <span class="channel-icon channel-inapp"></span>In-App
-            </div>
-            <div class="td td-sent">
-              <span>Jun 12</span><span>11:30 AM</span>
-            </div>
-            <div class="td td-action">
-              <button class="action-btn">
-                <span class="dots-icon"></span>
-              </button>
-            </div>
-          </div>
-
-          <div class="t-row">
-            <div class="td td-type">
-              <span class="type-label">Revenue Alert</span>
-            </div>
-            <div class="td td-message">
-              Monthly revenue for Paris Boutique dropped below the baseline
-              target for June 2025.
-            </div>
-            <div class="td td-channel">
-              <span class="channel-icon channel-email"></span>Email
-            </div>
-            <div class="td td-sent">
-              <span>Jun 12</span><span>9:00 AM</span>
-            </div>
-            <div class="td td-action">
-              <button class="action-btn">
-                <span class="dots-icon"></span>
-              </button>
-            </div>
-          </div>
-
-          <div class="t-row">
-            <div class="td td-type">
-              <span class="type-label">Season Launch</span>
-            </div>
-            <div class="td td-message">
-              SS 2025 collection is now live on all store channels. 42,904
-              products published.
-            </div>
-            <div class="td td-channel">
-              <span class="channel-icon channel-inapp"></span>In-App
-            </div>
-            <div class="td td-sent">
-              <span>Jun 11</span><span>8:00 AM</span>
-            </div>
-            <div class="td td-action">
-              <button class="action-btn">
-                <span class="dots-icon"></span>
-              </button>
-            </div>
-          </div>
         </div>
       </div>
 
       <!-- Footer / Pagination -->
       <div class="card-footer">
-        <span class="footer-info">Showing 1–7 of 128 notifications</span>
+        <span class="footer-info">Showing {{ notifications.length }} of {{ totalCount }} notifications</span>
         <div class="footer-nav">
-          <button class="nav-btn" disabled>&#8249;</button>
-          <button class="nav-btn">&#8250;</button>
+          <button class="nav-btn" :disabled="currentPage === 1" @click="prevPage">&#8249;</button>
+          <button class="nav-btn" :disabled="currentPage >= totalPages" @click="nextPage">&#8250;</button>
         </div>
       </div>
     </div>
@@ -191,8 +85,76 @@
 </template>
 
 <script>
+import { getAllNotifications } from '../../services/services';
+
+const PAGE_SIZE = 10;
+
+function formatDate(iso) {
+  if (!iso) return { dateLabel: '—', timeLabel: '' };
+  const d = new Date(iso);
+  return {
+    dateLabel: d.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' }),
+    timeLabel: d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+  };
+}
+
+function mapNotification(raw) {
+  const { dateLabel, timeLabel } = formatDate(raw.createdAt);
+  return {
+    _id:       raw._id,
+    title:     raw.title     ?? '—',
+    body:      raw.body      ?? '—',
+    read:      raw.read      ?? false,
+    dateLabel,
+    timeLabel,
+  };
+}
+
 export default {
-  name: "Notifications",
+  name: 'Notifications',
+
+  data() {
+    return {
+      allNotifications: [],
+      totalCount:       0,
+      currentPage:      1,
+      loading:          false,
+    };
+  },
+
+  computed: {
+    totalPages() {
+      return Math.max(1, Math.ceil(this.allNotifications.length / PAGE_SIZE));
+    },
+    notifications() {
+      const start = (this.currentPage - 1) * PAGE_SIZE;
+      return this.allNotifications.slice(start, start + PAGE_SIZE);
+    },
+  },
+
+  methods: {
+    async fetchNotifications() {
+      this.loading = true;
+      try {
+        const res  = await getAllNotifications();
+        const body = res.data;
+        const raw  = Array.isArray(body) ? body : (body.notifications ?? body.data ?? []);
+        this.allNotifications = raw.map(mapNotification);
+        this.totalCount       = this.allNotifications.length;
+      } catch (err) {
+        console.error('Failed to fetch notifications', err);
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    prevPage() { if (this.currentPage > 1)              this.currentPage--; },
+    nextPage() { if (this.currentPage < this.totalPages) this.currentPage++; },
+  },
+
+  mounted() {
+    this.fetchNotifications();
+  },
 };
 </script>
 
@@ -291,23 +253,23 @@ export default {
   box-sizing: border-box;
 }
 
-.th-type {
-  width: 160px;
+.th-title {
+  width: 180px;
   flex-shrink: 0;
 }
 .th-message {
   flex: 1;
 }
-.th-channel {
-  width: 120px;
+.th-read {
+  width: 100px;
   flex-shrink: 0;
 }
 .th-sent {
-  width: 110px;
+  width: 150px;
   flex-shrink: 0;
 }
 .th-action {
-  width: 88px;
+  width: 64px;
   flex-shrink: 0;
 }
 
@@ -315,6 +277,14 @@ export default {
 .t-body {
   display: flex;
   flex-direction: column;
+}
+
+.t-empty {
+  padding: 40px;
+  text-align: center;
+  font-size: 14px;
+  color: #99a1af;
+  background: #ffffff;
 }
 
 .t-row {
@@ -326,6 +296,11 @@ export default {
   background: #ffffff;
   transition: background 0.15s;
   box-sizing: border-box;
+}
+
+.t-row.row-unread {
+  background: #f5f6ff;
+  border-left: 3px solid #1550d3;
 }
 
 .t-row:last-child {
@@ -352,8 +327,8 @@ export default {
   box-sizing: border-box;
 }
 
-.td-type {
-  width: 160px;
+.td-title {
+  width: 180px;
   flex-shrink: 0;
 }
 
@@ -370,14 +345,30 @@ export default {
   color: #434654;
 }
 
-.td-channel {
-  width: 120px;
+.td-read {
+  width: 100px;
   flex-shrink: 0;
-  gap: 8px;
+}
+
+.read-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.badge-read {
+  background: #e6f4ef;
+  color: #006c49;
+}
+
+.badge-unread {
+  background: #e8edfc;
+  color: #1550d3;
 }
 
 .td-sent {
-  width: 110px;
+  width: 150px;
   flex-shrink: 0;
   flex-direction: column;
   align-items: flex-start;
@@ -385,34 +376,9 @@ export default {
 }
 
 .td-action {
-  width: 88px;
+  width: 64px;
   flex-shrink: 0;
   justify-content: flex-end;
-}
-
-/* ── Channel icons ── */
-.channel-icon {
-  width: 15px;
-  height: 15px;
-  background: #434654;
-  flex-shrink: 0;
-  display: inline-block;
-  mask-size: contain;
-  mask-repeat: no-repeat;
-  mask-position: center;
-  -webkit-mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-}
-
-.channel-email {
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Crect x='2' y='4' width='20' height='16' rx='2'/%3E%3Cpath d='m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7'/%3E%3C/svg%3E");
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Crect x='2' y='4' width='20' height='16' rx='2'/%3E%3Cpath d='m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7'/%3E%3C/svg%3E");
-}
-
-.channel-inapp {
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9'/%3E%3Cpath d='M13.73 21a2 2 0 0 1-3.46 0'/%3E%3C/svg%3E");
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9'/%3E%3Cpath d='M13.73 21a2 2 0 0 1-3.46 0'/%3E%3C/svg%3E");
 }
 
 /* ── Action button ── */

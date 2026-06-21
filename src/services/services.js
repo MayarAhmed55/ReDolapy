@@ -162,34 +162,48 @@ export const addProduct = (data) => {
 };
 /////////////////***********stile not used */
 
-export const getAllUsers=()=>{
-  return axios.get(`${API}/users`,{
-    headers:{
-      Authorization:`Bearer ${localStorage.getItem("token")}`
-    }
-  })
-}
+export const getAllUsers = () => {
+  return axios.get(`${API}/users`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
 export const getAdminReplies = () => {
-  return axios.get(
-    `${API}/emails/admin-replies`,
-    {
-      params: {
-        page: 1,
-        limit: 200
-      },
-      headers:{
-        Authorization:`Bearer ${localStorage.getItem("token")}`
-      }
-    }
-  );
+  return axios.get(`${API}/emails/admin-replies`, {
+    params: {
+      page: 1,
+      limit: 200,
+    },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
 };
 
-export const getAPIKeys=()=>{
-  return axios.get(
-    `${API}/api-keys`,{
-      headers:{
-        Authorization: `Bearer ${localStorage.getItem("token")}`
-      }
-    }
-  )
-}
+export const getAPIKeys = () => {
+  return axios.get(`${API}/api-keys`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+
+export const getAllEmails = (page = 1, limit = 50) => {
+  return axios.get(`${API}/emails/admin/all`, {
+    params: {
+      page,
+      limit,
+    },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+export const getAllNotifications = () => {
+  return axios.get(`${API}/notifications/all`, {
+    headers: {
+      Authorization : `Bearer ${localStorage.getItem("token")}`
+    },
+  });
+};
