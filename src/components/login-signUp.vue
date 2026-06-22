@@ -355,35 +355,65 @@ export default {
     const isRTL = computed(() => locale.value === "ar");
     const API = API_BASE;
 
-    function handleGoogle() {
-      const popup = window.open(
-        `${API}/auth/google`,
-        "Google Login",
-        "width=500,height=600,left=400,top=100",
-      );
+    // function handleGoogle() {
+    //   const popup = window.open(
+    //     `${API}/auth/google`,
+    //     "Google Login",
+    //     "width=500,height=600,left=400,top=100",
+    //   );
 
-      if (!popup) {
-        error.value = "Popup blocked. Allow popups for this site and try again.";
-        return;
-      }
+    //   if (!popup) {
+    //     error.value = "Popup blocked. Allow popups for this site and try again.";
+    //     return;
+    //   }
 
-      window.addEventListener(
-        "message",
-        (event) => {
-          if (event.origin !== window.origin) return;
-          if (event.data?.type === "GOOGLE_AUTH_SUCCESS") {
-            const { token, ...user } = event.data.payload;
-            localStorage.setItem("token", token);
-            localStorage.setItem("user", JSON.stringify(user));
-            if (popup && !popup.closed) popup.close();
-            emit("login-success");
-            emit("close");
-            location.reload();
-          }
-        },
-        { once: true },
-      );
+    //   window.addEventListener(
+    //     "message",
+    //     (event) => {
+    //       if (event.origin !== window.origin) return;
+    //       if (event.data?.type === "GOOGLE_AUTH_SUCCESS") {
+    //         const { token, ...user } = event.data.payload;
+    //         localStorage.setItem("token", token);
+    //         localStorage.setItem("user", JSON.stringify(user));
+    //         if (popup && !popup.closed) popup.close();
+    //         emit("login-success");
+    //         emit("close");
+    //         location.reload();
+    //       }
+    //     },
+    //     { once: true },
+    //   );
+    // }
+
+    // Inside LoginSignup.vue setup()
+
+function handleGoogle() {
+  const popup = window.open(
+    `${API}/auth/google`,
+    "Google Login",
+    "width=500,height=600,left=400,top=100"
+  );
+
+  if (!popup) {
+    error.value = "Popup blocked.";
+    return;
+  }
+
+  // Define the storage listener
+  const storageListener = (event) => {
+    // Only listen for our specific trigger key
+    if (event.key === "google_auth_trigger") {
+      window.removeEventListener("storage", storageListener);
+      
+      // Data is already saved in localStorage by the callback
+      // Simply reload the app to reflect the logged-in state
+      location.reload(); 
     }
+  };
+
+  // Listen for storage changes
+  window.addEventListener("storage", storageListener);
+}
 
     function switchTo(newMode) {
       if (newMode === props.mode) return;
