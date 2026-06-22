@@ -387,12 +387,22 @@ export default {
 
     // Inside LoginSignup.vue setup()
 
+    import API_BASE, { AUTH_BASE } from "../config/api.js"; // Import both
 function handleGoogle() {
+  const url = `${AUTH_BASE}/api/auth/google`;
+  console.log("Opening popup to:", url); // Verify this is the FULL URL
+
   const popup = window.open(
-    `${API}/auth/google`,
+    url,
     "Google Login",
     "width=500,height=600,left=400,top=100"
   );
+
+  // const popup = window.open(
+  //   `${API}/auth/google`,
+  //   "Google Login",
+  //   "width=500,height=600,left=400,top=100"
+  // );
 
   if (!popup) {
     error.value = "Popup blocked.";
