@@ -13,6 +13,8 @@ export default {
   name: "GoogleCallback",
   setup() {
     const router = useRouter();
+    const params = new URLSearchParams(window.location.search);
+    const clientUrl = params.get("client_url") || window.location.origin;
 
     function notifyOpener(userData, token) {
       localStorage.setItem("user", JSON.stringify(userData));
@@ -20,7 +22,7 @@ export default {
       if (window.opener && !window.opener.closed) {
         window.opener.postMessage(
           { type: "GOOGLE_AUTH_SUCCESS", payload: { ...userData, token } },
-          window.origin,
+          clientUrl,
         );
         window.close();
         return;
@@ -32,7 +34,6 @@ export default {
     }
 
     onMounted(async () => {
-      const params = new URLSearchParams(window.location.search);
       const authError = params.get("error");
 
       if (authError) {
@@ -40,7 +41,7 @@ export default {
         if (window.opener && !window.opener.closed) {
           window.opener.postMessage(
             { type: "GOOGLE_AUTH_ERROR", error: authError },
-            window.origin,
+            clientUrl,
           );
           window.close();
         } else {
