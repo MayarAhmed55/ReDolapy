@@ -14,98 +14,81 @@ export default {
   setup() {
     const router = useRouter();
 
+    function notifyOpener(userData, token) {
+      localStorage.setItem("user", JSON.stringify(userData));
+
+      if (window.opener && !window.opener.closed) {
+        window.opener.postMessage(
+          { type: "GOOGLE_AUTH_SUCCESS", payload: { ...userData, token } },
+          window.origin,
+        );
+        window.close();
+        return;
+      }
+
+      // Fallback when cross-origin OAuth severs window.opener (Cloud Run callback URL)
+      localStorage.setItem("google_auth_trigger", String(Date.now()));
+      window.close();
+    }
+
     onMounted(async () => {
       const params = new URLSearchParams(window.location.search);
+      const authError = params.get("error");
+
+      if (authError) {
+        console.error("Google login failed:", authError);
+        if (window.opener && !window.opener.closed) {
+          window.opener.postMessage(
+            { type: "GOOGLE_AUTH_ERROR", error: authError },
+            window.origin,
+          );
+          window.close();
+        } else {
+          router.replace("/");
+        }
+        return;
+      }
+
       const token = params.get("token");
+      const email = params.get("email");
       const _id = params.get("_id");
 
-      if (token && _id) {
+      if (token && email && _id) {
         localStorage.setItem("token", token);
+
         try {
           const userRes = await getUserById(_id);
-          const userData = {   first_name:      userRes.data.user.profile.first_name,
-            last_name:       userRes.data.user.profile.last_name,
-            email:           userRes.data.user.email,
-            id:              userRes.data.user._id,
-            userImage:       userRes.data.user.userImage,
-            language:        userRes.data.user.settings.language,
-            avatars:         userRes.data.user.avatars,
-            darkMode:        userRes.data.user.darkMode,
-            has_mobile_app:  userRes.data.user.settings.has_mobile_app,
-            gender:          userRes.data.user.profile.gender,
-            date_of_birth:   userRes.data.user.profile.date_of_birth,
-            notifications:   userRes.data.user.settings.notifications_enabled,
-            role:            userRes.data.user.role   };
 
-          // 1. Save data to storage
-          localStorage.setItem("user", JSON.stringify(userData));
+          const userData = {
+            first_name: userRes.data.user.profile.first_name,
+            last_name: userRes.data.user.profile.last_name,
+            email: userRes.data.user.email,
+            id: userRes.data.user._id,
+            userImage: userRes.data.user.userImage,
+            language: userRes.data.user.settings.language,
+            avatars: userRes.data.user.avatars,
+            darkMode: userRes.data.user.darkMode,
+            has_mobile_app: userRes.data.user.settings.has_mobile_app,
+            gender: userRes.data.user.profile.gender,
+            date_of_birth: userRes.data.user.profile.date_of_birth,
+            notifications: userRes.data.user.settings.notifications_enabled,
+            role: userRes.data.user.role,
+          };
 
-          // 2. Set a trigger timestamp to notify the parent window
-          localStorage.setItem("google_auth_trigger", Date.now().toString());
-
-          // 3. Close the popup
-          window.close();
+          notifyOpener(userData, token);
         } catch (err) {
-          console.error("Failed to fetch user:", err);
-          window.close();
+          console.error("Failed to fetch user profile after Google login:", err);
+          localStorage.removeItem("token");
+          if (window.opener && !window.opener.closed) {
+            window.close();
+          } else {
+            router.replace("/");
+          }
         }
-      } else {
-        // If something went wrong, just close the popup
-        window.close();
+      } else if (!window.opener) {
+        router.replace("/");
       }
     });
-
-    // onMounted(async () => {
-    //   const params = new URLSearchParams(window.location.search);
-
-    //   const token = params.get("token");
-    //   const email = params.get("email");
-    //   const _id   = params.get("_id");
-
-    //   if (token && email && _id) {
-    //     // Store token first so getUserById can attach it to the request
-    //     localStorage.setItem("token", token);
-
-    //     try {
-    //       const userRes = await getUserById(_id);
-
-    //       const userData = {
-    //         first_name:      userRes.data.user.profile.first_name,
-    //         last_name:       userRes.data.user.profile.last_name,
-    //         email:           userRes.data.user.email,
-    //         id:              userRes.data.user._id,
-    //         userImage:       userRes.data.user.userImage,
-    //         language:        userRes.data.user.settings.language,
-    //         avatars:         userRes.data.user.avatars,
-    //         darkMode:        userRes.data.user.darkMode,
-    //         has_mobile_app:  userRes.data.user.settings.has_mobile_app,
-    //         gender:          userRes.data.user.profile.gender,
-    //         date_of_birth:   userRes.data.user.profile.date_of_birth,
-    //         notifications:   userRes.data.user.settings.notifications_enabled,
-    //         role:            userRes.data.user.role   
-    //       };
-
-    //       if (window.opener) {
-    //         // Popup flow — send full data back to the opener and close
-    //         window.opener.postMessage(
-    //           { type: "GOOGLE_AUTH_SUCCESS", payload: { ...userData, token } },
-    //           window.origin
-    //         );
-    //         window.close();
-    //       } else {
-    //         // Redirect flow — save and navigate home
-    //         localStorage.setItem("user", JSON.stringify(userData));
-    //         router.replace("/").then(location.reload());
-    //       }
-    //     } catch (err) {
-    //       console.error("Failed to fetch user profile after Google login:", err);
-    //       localStorage.removeItem("token");
-    //       router.replace("/").then(location.reload());
-    //     }
-    //   } else if (!window.opener) {
-    //     router.replace("/").then(location.reload());
-    //   }
-    // });
   },
 
 };

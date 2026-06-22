@@ -251,7 +251,6 @@ import {
   getUserById,
   emailVerification,
 } from "../services/services";
-import API_BASE from "../config/api.js";
 
 const EyeIcon = defineComponent({
   props: { open: Boolean },
@@ -353,77 +352,61 @@ export default {
     const error = ref(null);
     const { locale } = useI18n();
     const isRTL = computed(() => locale.value === "ar");
-    const API = API_BASE;
 
-    // function handleGoogle() {
-    //   const popup = window.open(
-    //     `${API}/auth/google`,
-    //     "Google Login",
-    //     "width=500,height=600,left=400,top=100",
-    //   );
-
-    //   if (!popup) {
-    //     error.value = "Popup blocked. Allow popups for this site and try again.";
-    //     return;
-    //   }
-
-    //   window.addEventListener(
-    //     "message",
-    //     (event) => {
-    //       if (event.origin !== window.origin) return;
-    //       if (event.data?.type === "GOOGLE_AUTH_SUCCESS") {
-    //         const { token, ...user } = event.data.payload;
-    //         localStorage.setItem("token", token);
-    //         localStorage.setItem("user", JSON.stringify(user));
-    //         if (popup && !popup.closed) popup.close();
-    //         emit("login-success");
-    //         emit("close");
-    //         location.reload();
-    //       }
-    //     },
-    //     { once: true },
-    //   );
-    // }
-
-    // Inside LoginSignup.vue setup()
-
-    import API_BASE, { AUTH_BASE } from "../config/api.js"; // Import both
-function handleGoogle() {
-  const url = `${AUTH_BASE}/api/auth/google`;
-  console.log("Opening popup to:", url); // Verify this is the FULL URL
-
-  const popup = window.open(
-    url,
-    "Google Login",
-    "width=500,height=600,left=400,top=100"
-  );
-
-  // const popup = window.open(
-  //   `${API}/auth/google`,
-  //   "Google Login",
-  //   "width=500,height=600,left=400,top=100"
-  // );
-
-  if (!popup) {
-    error.value = "Popup blocked.";
-    return;
-  }
-
-  // Define the storage listener
-  const storageListener = (event) => {
-    // Only listen for our specific trigger key
-    if (event.key === "google_auth_trigger") {
-      window.removeEventListener("storage", storageListener);
-      
-      // Data is already saved in localStorage by the callback
-      // Simply reload the app to reflect the logged-in state
-      location.reload(); 
+    function finishGoogleLogin() {
+      if (popup && !popup.closed) popup.close();
+      emit("login-success");
+      emit("close");
+      location.reload();
     }
-  };
 
-  // Listen for storage changes
-  window.addEventListener("storage", storageListener);
-}
+    let popup = null;
+
+    function handleGoogle() {
+      // Same-origin URL so Vercel rewrites /api → Cloud Run and preserves window.opener
+      const googleAuthUrl = `${window.location.origin}/api/auth/google`;
+
+      popup = window.open(
+        googleAuthUrl,
+        "Google Login",
+        "width=500,height=600,left=400,top=100",
+      );
+
+      if (!popup) {
+        error.value = "Popup blocked. Allow popups for this site and try again.";
+        return;
+      }
+
+      const onMessage = (event) => {
+        if (event.origin !== window.origin) return;
+        if (event.data?.type === "GOOGLE_AUTH_SUCCESS") {
+          const { token, ...user } = event.data.payload;
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(user));
+          cleanup();
+          finishGoogleLogin();
+        } else if (event.data?.type === "GOOGLE_AUTH_ERROR") {
+          error.value = "Google sign-in failed. Please try again.";
+          cleanup();
+          if (popup && !popup.closed) popup.close();
+        }
+      };
+
+      const onStorage = (event) => {
+        if (event.key === "google_auth_trigger" && localStorage.getItem("token")) {
+          cleanup();
+          finishGoogleLogin();
+        }
+      };
+
+      function cleanup() {
+        window.removeEventListener("message", onMessage);
+        window.removeEventListener("storage", onStorage);
+      }
+
+      window.addEventListener("message", onMessage);
+      window.addEventListener("storage", onStorage);
+    }
 
     function switchTo(newMode) {
       if (newMode === props.mode) return;
