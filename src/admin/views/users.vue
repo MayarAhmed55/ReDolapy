@@ -162,7 +162,11 @@
             <!-- Actions -->
             <td>
               <div class="action-btns">
-                <button class="icon-btn" :aria-label="'Edit ' + user.name">
+                <!-- <button
+                  class="icon-btn"
+                  :aria-label="'Edit ' + user.name"
+                  @click="goToEditUser(user._id)"
+                >
                   <svg
                     width="14"
                     height="14"
@@ -179,24 +183,18 @@
                       d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
                     />
                   </svg>
-                </button>
+                </button> -->
                 <button
                   class="icon-btn"
                   :aria-label="'More options for ' + user.name"
+                  @click="handleDeleteUser(user._id)"
                 >
-                  <svg
+                  <img
+                    src="../../assets/Icon (36).svg"
                     width="14"
                     height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
                     aria-hidden="true"
-                  >
-                    <circle cx="12" cy="5" r="1" />
-                    <circle cx="12" cy="12" r="1" />
-                    <circle cx="12" cy="19" r="1" />
-                  </svg>
+                  />
                 </button>
               </div>
             </td>
@@ -262,7 +260,7 @@
 </template>
 
 <script>
-import { getAllUsers } from "../../services/services";
+import { getAllUsers, adminDeletesUser,getUserById } from "../../services/services";
 
 const AVATAR_COLORS = [
   "#1550d3",
@@ -294,6 +292,7 @@ function mapUser(u, i) {
   const roleStyle = ROLE_STYLES[role] ?? { bg: "#f3f4f6", color: "#434654" };
 
   return {
+    _id: u._id ?? u.id,
     name,
     initials,
     email: u.email ?? "—",
@@ -416,6 +415,28 @@ export default {
       } catch (err) {
         console.log("failed to get subscribed users", err);
       }
+    },
+    async handleDeleteUser(_id) {
+      try {
+        await adminDeletesUser(_id);
+
+        this.allUsers = this.allUsers.filter((user) => user._id !== _id);
+        this.userCount = this.allUsers.length;
+
+        // If deleting the last user on a page pushes currentPage out of range, step back
+        if (this.currentPage > this.totalPages && this.currentPage > 1) {
+          this.currentPage = this.totalPages;
+        }
+      } catch (error) {
+        console.error("Failed to delete user:", error);
+      }
+    },
+    goToEditUser(_id) {
+      if (!_id) {
+        console.error("goToEditUser called without a valid id", _id);
+        return;
+      }
+      this.$router.push({ name: "EditUserPage", params: { id: _id } });
     },
   },
 

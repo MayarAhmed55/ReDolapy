@@ -69,6 +69,12 @@ export default [
         component: () => import("../admin/views/addStore.vue"),
         meta: { requiresAuth: true },
       },
+      {
+        path: "editUser/:id?",
+        name:"EditUserPage",
+        component: () => import("../admin/views/editeUser.vue"),
+        meta: { requiresAuth: true },
+      },
     ],
   },
 ];

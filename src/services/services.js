@@ -249,3 +249,19 @@ export const updateProduct=(id,data)=>{
     }
   })
 } 
+export const adminDeletesUser=(id)=>{
+  return axios.delete(`${API}/users/${id}`,{
+    headers:{
+      Authorization: `Bearer ${localStorage.getItem("token")}`
+    }
+  })
+}
+//*********************** its does not work yet */
+// export const getUserAdmin=(id)=>{
+//   return axios.get(`${API}/users/${id}`,{
+//     headers:{
+//       Authorization:`Bearer ${localStorage.getItem("token")}`
+//     }
+//   })
+// }
+//*********************** its does not work yet */
