@@ -3,6 +3,12 @@
     <!-- Content Area -->
     <div class="content-scroll">
       <div class="content-inner">
+        <!-- Success banner -->
+        <div v-if="published" class="success-banner">
+          <span class="success-icon">✓</span>
+          <span>Product published successfully! The form has been cleared and is ready for a new entry.</span>
+        </div>
+
         <!-- Progress Stepper -->
         <nav class="stepper" aria-label="Add product progress">
           <div class="stepper-line"></div>
@@ -14,12 +20,12 @@
             <div
               class="stepper-circle"
               :class="{
-                'is-active': i === currentStep,
-                'is-complete': i < currentStep,
-                'is-upcoming': i > currentStep,
+                'is-active': i === currentStep && !stepCompleted[i],
+                'is-complete': stepCompleted[i],
+                'is-upcoming': i !== currentStep && !stepCompleted[i],
               }"
             >
-              <CheckIcon v-if="i < currentStep" class="w-4 h-4" />
+              <CheckIcon v-if="stepCompleted[i]" class="w-4 h-4" />
               <span v-else>{{ i + 1 }}</span>
             </div>
             <span
@@ -67,10 +73,10 @@
             <div class="field">
               <label class="field-label" for="store">Assigned Store</label>
               <div class="select-wrap">
-                <select id="store" v-model="form.store" class="field-select">
-                  <option disabled value="">Select a store</option>
-                  <option v-for="store in stores" :key="store" :value="store">
-                    {{ store }}
+                <select id="store" v-model="form.store_id" class="field-select" :disabled="storesLoading">
+                  <option disabled value="">{{ storesLoading ? 'Loading stores…' : 'Select a store' }}</option>
+                  <option v-for="store in stores" :key="store.id" :value="store.id">
+                    {{ store.name }}
                   </option>
                 </select>
                 <ChevronDownIcon class="select-chevron" />
@@ -87,25 +93,37 @@
               <SectionHeading class="font-bold"> Product Media </SectionHeading>
             </div>
 
-            <div class="media-grid">
-              <label class="media-dropzone">
+            <!-- URL input row -->
+            <div class="field">
+              <label class="field-label" for="image-url">Image URL</label>
+              <div class="url-input-row">
                 <input
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  class="sr-only"
-                  @change="onFilesSelected"
+                  id="image-url"
+                  v-model="imageUrlInput"
+                  type="url"
+                  class="field-input"
+                  placeholder="https://example.com/image.jpg"
+                  @keydown.enter.prevent="addImageUrl"
                 />
-                <UploadIcon class="w-[18px] h-[18px] text-[#1550D3]" />
-                <span class="media-dropzone-text">Upload</span>
-              </label>
+                <button
+                  type="button"
+                  class="btn-add-url"
+                  @click="addImageUrl"
+                >
+                  Add
+                </button>
+              </div>
+              <p v-if="imageUrlError" class="url-error">{{ imageUrlError }}</p>
+            </div>
 
+            <!-- Preview grid -->
+            <div class="media-grid" v-if="images.length > 0">
               <div
                 v-for="(image, idx) in images"
                 :key="idx"
                 class="media-thumb"
               >
-                <img :src="image" alt="" class="media-thumb-img" />
+                <img :src="image" alt="" class="media-thumb-img" @error="onImageError(idx)" />
                 <button
                   type="button"
                   class="media-thumb-remove"
@@ -115,15 +133,8 @@
                   <XIcon class="w-[7px] h-[7px]" />
                 </button>
               </div>
-
-              <div
-                v-for="n in emptySlots"
-                :key="'empty-' + n"
-                class="media-empty"
-              >
-                <ImageIcon class="w-[14px] h-[14px] text-[#737686]" />
-              </div>
             </div>
+            <p v-else class="media-empty-hint">No images added yet. Paste a URL above and click Add.</p>
           </section>
 
           <!-- Section 3: Classification -->
@@ -177,10 +188,10 @@
             </div>
 
             <div class="field">
-              <label class="field-label" for="tags">Tags</label>
+              <label class="field-label" for="color-tags">Color Tags</label>
               <div class="tags-input">
                 <span
-                  v-for="(tag, idx) in form.tags"
+                  v-for="(tag, idx) in form.color_tags"
                   :key="tag"
                   class="tag-chip"
                 >
@@ -188,21 +199,37 @@
                   <button
                     type="button"
                     class="tag-remove"
-                    @click="removeTag(idx)"
+                    @click="removeColorTag(idx)"
                     aria-label="Remove tag"
                   >
                     <XIcon class="w-[8px] h-[8px]" />
                   </button>
                 </span>
                 <input
-                  id="tags"
-                  v-model="tagInput"
+                  id="color-tags"
+                  v-model="colorTagInput"
                   type="text"
                   class="tag-input-field"
-                  placeholder="Add tag..."
-                  @keydown.enter.prevent="addTag"
-                  @keydown.backspace="onTagBackspace"
+                  placeholder="Add color (e.g. blue)..."
+                  @keydown.enter.prevent="addColorTag"
+                  @keydown.backspace="onColorTagBackspace"
                 />
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field-label">Season Tags</label>
+              <div class="season-tags">
+                <button
+                  v-for="s in SEASON_OPTIONS"
+                  :key="s"
+                  type="button"
+                  class="season-btn"
+                  :class="{ 'season-btn--active': form.season_tags.includes(s) }"
+                  @click="toggleSeason(s)"
+                >
+                  {{ s.charAt(0).toUpperCase() + s.slice(1) }}
+                </button>
               </div>
             </div>
           </section>
@@ -220,7 +247,7 @@
 
             <div class="two-col">
               <div class="field">
-                <label class="field-label" for="price">Price (USD)</label>
+                <label class="field-label" for="price">Price</label>
                 <div class="price-input-wrap">
                   <span class="price-prefix">$</span>
                   <input
@@ -236,17 +263,25 @@
               </div>
 
               <div class="field">
-                <label class="field-label" for="purchase-url"
-                  >Purchase URL</label
-                >
-                <input
-                  id="purchase-url"
-                  v-model="form.purchaseUrl"
-                  type="url"
-                  class="field-input"
-                  placeholder="https://yourstore.com/product"
-                />
+                <label class="field-label" for="currency">Currency</label>
+                <div class="select-wrap">
+                  <select id="currency" v-model="form.currency" class="field-select">
+                    <option v-for="c in CURRENCIES" :key="c" :value="c">{{ c }}</option>
+                  </select>
+                  <ChevronDownIcon class="select-chevron" />
+                </div>
               </div>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="purchase-url">Purchase URL</label>
+              <input
+                id="purchase-url"
+                v-model="form.purchaseUrl"
+                type="url"
+                class="field-input"
+                placeholder="https://yourstore.com/product"
+              />
             </div>
           </section>
 
@@ -276,10 +311,34 @@
               <button
                 type="button"
                 class="toggle"
-                :class="{ 'is-on': form.visible }"
+                :class="{ 'is-on': form.is_active }"
                 role="switch"
-                :aria-checked="form.visible"
-                @click="form.visible = !form.visible"
+                :aria-checked="form.is_active"
+                @click="form.is_active = !form.is_active"
+              >
+                <span class="toggle-knob"></span>
+              </button>
+            </div>
+
+            <div class="settings-card">
+              <div class="settings-card-left">
+                <div class="settings-icon">
+                  <EyeIcon class="w-[21px] h-[21px] text-[#1550D3]" />
+                </div>
+                <div>
+                  <h4 class="settings-title">Enable Virtual Try-On</h4>
+                  <p class="settings-desc">
+                    Allow customers to virtually try on this product
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                class="toggle"
+                :class="{ 'is-on': form.try_on_enabled }"
+                role="switch"
+                :aria-checked="form.try_on_enabled"
+                @click="form.try_on_enabled = !form.try_on_enabled"
               >
                 <span class="toggle-knob"></span>
               </button>
@@ -296,7 +355,8 @@
           <div class="avatar avatar-primary">JD</div>
           <div class="avatar avatar-secondary">+2</div>
         </div>
-        <span class="footer-status">Draft auto-saved 2 minutes ago</span>
+        <span v-if="submitError" class="footer-error">{{ submitError }}</span>
+        <span v-else class="footer-status">Fill in all fields then publish</span>
       </div>
 
       <div class="footer-right">
@@ -304,8 +364,8 @@
           Save as draft
         </button>
         <div class="footer-divider"></div>
-        <button type="button" class="btn-primary" @click="handleSubmit">
-          <span>Publish product</span>
+        <button type="button" class="btn-primary" :disabled="submitting" @click="handleSubmit">
+          <span>{{ submitting ? 'Publishing…' : 'Publish product' }}</span>
           <ArrowRightIcon class="w-[9px] h-[9px]" />
         </button>
       </div>
@@ -314,7 +374,11 @@
 </template>
 
 <script setup>
-import { ref, computed, h } from "vue";
+/* ---------- Imports ---------- */
+import { ref, computed, watch, h, onMounted } from "vue";
+import { getStores, addProduct } from "../../services/services";
+
+/* ---------- Lightweight inline icon components (no external deps) ---------- */
 
 /* ---------- Lightweight inline icon components (no external deps) ---------- */
 const iconBase = (paths) => (props) =>
@@ -349,75 +413,225 @@ const ArrowRightIcon = iconBase(["M5 12h14", "M12 5l7 7-7 7"]);
 
 /* ---------- Stepper config ---------- */
 const steps = [
-  { label: "Basic Info" },
-  { label: "Media" },
-  { label: "Classify" },
-  { label: "Pricing" },
-  { label: "Settings" },
+  { label: "Basic Information" },
+  { label: "Product Media" },
+  { label: "Classification" },
+  { label: "Pricing & Commerce" },
+  { label: "Advanced Settings" },
 ];
 const currentStep = ref(0);
 
-/* ---------- Form state ---------- */
-const stores = [
-  "Flagship Boutique - Paris",
-  "SoHo Concept Store",
-  "Online Only",
-];
-const categories = ["Dresses & Gowns", "Outerwear", "Footwear", "Accessories"];
-const subcategories = ["Evening Wear", "Daywear", "Bridal", "Resort"];
+/* ---------- Stepper: each step's completion is independent of the others.
+   Admin does not need to complete steps in sequence — any step that has
+   its required fields filled in is marked complete in the nav, regardless
+   of whether earlier/later steps are done. ---------- */
+const stepCompleted = computed(() => SECTION_FIELDS.map((isDone) => !!isDone()));
 
+/* "currentStep" is only used to highlight the next outstanding step as
+   "active" for guidance — it no longer gates whether a step can show as
+   complete. */
+function computeCurrentStep() {
+  for (let i = 0; i < SECTION_FIELDS.length; i++) {
+    if (!SECTION_FIELDS[i]()) return i;
+  }
+  return SECTION_FIELDS.length - 1;
+}
+
+/* ---------- Stores (fetched from API) ---------- */
+const stores = ref([]);
+const storesLoading = ref(false);
+
+async function fetchStores() {
+  storesLoading.value = true;
+  try {
+    const res = await getStores();
+    const raw = Array.isArray(res.data) ? res.data : (res.data?.stores ?? []);
+    stores.value = raw.map((s) => ({ id: s._id, name: s.name }));
+  } catch (err) {
+    console.error("Failed to fetch stores", err);
+  } finally {
+    storesLoading.value = false;
+  }
+}
+
+const categories = ["top", "bottom", "dress", "outerwear", "footwear", "accessory", "bag"];
+const subcategories = ["Evening Wear", "Daywear", "Bridal", "Resort", "Casual", "Sport"];
+
+const CURRENCIES = ["USD", "EUR", "GBP", "EGP"];
+
+/* ---------- Form state ---------- */
 const form = ref({
   name: "",
   description: "",
-  store: "Flagship Boutique - Paris",
-  category: "Dresses & Gowns",
-  subcategory: "Evening Wear",
-  tags: ["New Arrival", "Limited Run", "Silk"],
+  store_id: "",
+  category: "",
+  subcategory: "",
+  color_tags: [],
+  season_tags: [],
   price: "",
+  currency: "USD",
   purchaseUrl: "",
-  visible: true,
+  try_on_enabled: false,
+  is_active: true,
 });
+
+/* ---------- Color tags ---------- */
+const colorTagInput = ref("");
+function addColorTag() {
+  const val = colorTagInput.value.trim().toLowerCase();
+  if (val && !form.value.color_tags.includes(val)) {
+    form.value.color_tags.push(val);
+  }
+  colorTagInput.value = "";
+}
+function removeColorTag(idx) { form.value.color_tags.splice(idx, 1); }
+function onColorTagBackspace() {
+  if (colorTagInput.value === "" && form.value.color_tags.length) form.value.color_tags.pop();
+}
+
+/* ---------- Season tags ---------- */
+const SEASON_OPTIONS = ["spring", "summer", "autumn", "winter"];
+function toggleSeason(s) {
+  const idx = form.value.season_tags.indexOf(s);
+  if (idx === -1) form.value.season_tags.push(s);
+  else form.value.season_tags.splice(idx, 1);
+}
 
 const tagInput = ref("");
 function addTag() {
   const val = tagInput.value.trim();
-  if (val && !form.value.tags.includes(val)) {
-    form.value.tags.push(val);
+  if (val && !form.value.color_tags.includes(val)) {
+    form.value.color_tags.push(val);
   }
   tagInput.value = "";
 }
-function removeTag(idx) {
-  form.value.tags.splice(idx, 1);
-}
+function removeTag(idx) { form.value.color_tags.splice(idx, 1); }
 function onTagBackspace() {
-  if (tagInput.value === "" && form.value.tags.length) {
-    form.value.tags.pop();
-  }
+  if (tagInput.value === "" && form.value.color_tags.length) form.value.color_tags.pop();
 }
 
-/* ---------- Media ---------- */
+/* ---------- Media (URL-based) ---------- */
 const images = ref([]);
-const maxSlots = 3;
-const emptySlots = computed(() => Math.max(0, maxSlots - images.value.length));
+const imageUrlInput = ref("");
+const imageUrlError = ref("");
 
-function onFilesSelected(e) {
-  const files = Array.from(e.target.files || []);
-  files.forEach((file) => {
-    const reader = new FileReader();
-    reader.onload = () => images.value.push(reader.result);
-    reader.readAsDataURL(file);
-  });
-  e.target.value = "";
+function addImageUrl() {
+  const url = imageUrlInput.value.trim();
+  if (!url) return;
+  try { new URL(url); } catch {
+    imageUrlError.value = "Please enter a valid URL.";
+    return;
+  }
+  if (images.value.includes(url)) {
+    imageUrlError.value = "This URL has already been added.";
+    return;
+  }
+  images.value.push(url);
+  imageUrlInput.value = "";
+  imageUrlError.value = "";
 }
+
 function removeImage(idx) {
   images.value.splice(idx, 1);
 }
 
+function onImageError(idx) {
+  images.value.splice(idx, 1);
+}
+
+/* ---------- Stepper: which fields must be filled per step ---------- */
+const SECTION_FIELDS = [
+  // step 0 – Basic Information
+  () => form.value.name && form.value.description && form.value.store_id,
+  // step 1 – Product Media
+  () => images.value.length > 0,
+  // step 2 – Classification
+  () => form.value.category,
+  // step 3 – Pricing & Commerce
+  () => form.value.price && form.value.purchaseUrl,
+  // step 4 – Advanced Settings (always complete)
+  () => true,
+];
+
+watch(
+  () => [
+    form.value.name,
+    form.value.description,
+    form.value.store_id,
+    images.value.length,
+    form.value.category,
+    form.value.price,
+    form.value.purchaseUrl,
+  ],
+  () => {
+    currentStep.value = computeCurrentStep();
+  },
+  { deep: true },
+);
+
 /* ---------- Submit ---------- */
 const emit = defineEmits(["submit", "cancel"]);
-function handleSubmit() {
-  emit("submit", { ...form.value });
+const submitting = ref(false);
+const submitError = ref("");
+const published = ref(false);
+
+function resetForm() {
+  form.value = {
+    name: "",
+    description: "",
+    store_id: "",
+    category: "",
+    subcategory: "",
+    color_tags: [],
+    season_tags: [],
+    price: "",
+    currency: "USD",
+    purchaseUrl: "",
+    try_on_enabled: false,
+    is_active: true,
+  };
+  images.value = [];
+  imageUrlInput.value = "";
+  imageUrlError.value = "";
+  colorTagInput.value = "";
+  currentStep.value = 0;
 }
+
+async function handleSubmit() {
+  submitting.value = true;
+  submitError.value = "";
+  published.value = false;
+  try {
+    const payload = {
+      store_id:       form.value.store_id,
+      name:           form.value.name,
+      description:    form.value.description,
+      images:         images.value,
+      category:       form.value.category,
+      color_tags:     form.value.color_tags,
+      season_tags:    form.value.season_tags,
+      price:          parseFloat(form.value.price) || 0,
+      currency:       form.value.currency,
+      purchase_url:   form.value.purchaseUrl,
+      try_on_enabled: form.value.try_on_enabled,
+      is_active:      form.value.is_active,
+    };
+    const res = await addProduct(payload);
+    emit("submit", res.data);
+    resetForm();
+    published.value = true;
+    setTimeout(() => { published.value = false; }, 5000);
+  } catch (err) {
+    console.error("Failed to add product", err);
+    submitError.value = err?.response?.data?.message ?? "Something went wrong. Please try again.";
+  } finally {
+    submitting.value = false;
+  }
+}
+
+onMounted(() => {
+  fetchStores();
+});
 
 /* ---------- Small reusable heading component ---------- */
 const SectionHeading = {
@@ -655,42 +869,19 @@ const SectionHeading = {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
-  height: 240px;
+  min-height: 120px;
 }
 @media (max-width: 640px) {
   .media-grid {
     grid-template-columns: repeat(2, 1fr);
-    height: auto;
   }
-}
-.media-dropzone {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border: 2px dashed var(--primary);
-  border-radius: 12px;
-  background: rgba(60, 107, 237, 0.08);
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
-.media-dropzone:hover {
-  background: rgba(60, 107, 237, 0.14);
-}
-.media-dropzone-text {
-  font-size: 10px;
-  font-weight: 700;
-  line-height: 15px;
-  text-transform: uppercase;
-  color: var(--primary);
-  letter-spacing: 0.4px;
 }
 .media-thumb {
   position: relative;
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid var(--border);
+  aspect-ratio: 1;
 }
 .media-thumb-img {
   width: 100%;
@@ -718,13 +909,71 @@ const SectionHeading = {
 .media-thumb:hover .media-thumb-remove {
   opacity: 1;
 }
-.media-empty {
-  border: 1px solid var(--border);
+
+/* URL input row */
+.url-input-row {
+  display: flex;
+  gap: 8px;
+}
+.url-input-row .field-input {
+  flex: 1;
+}
+.btn-add-url {
+  flex-shrink: 0;
+  padding: 0 20px;
+  height: 50px;
+  border-radius: 8px;
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-add-url:hover { background: #103fa8; }
+
+.url-error {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #dc2626;
+}
+
+.media-empty-hint {
+  font-size: 13px;
+  color: var(--text-faint);
+  text-align: center;
+  padding: 24px;
+  border: 1px dashed var(--border);
   border-radius: 12px;
-  background: var(--primary-soft);
+  margin: 0;
+}
+
+/* ===== Success banner ===== */
+.success-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: #e6f4ef;
+  border: 1px solid #a3d9c2;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #006c49;
+}
+.success-icon {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #006c49;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
 }
 
 /* ===== Tags ===== */
@@ -1004,5 +1253,41 @@ const SectionHeading = {
 .btn-secondary:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
+}
+
+/* ===== Season tags ===== */
+.season-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.season-btn {
+  padding: 6px 18px;
+  border-radius: 9999px;
+  border: 1px solid var(--border);
+  background: #ffffff;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-body);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.season-btn--active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+}
+
+/* ===== Footer error ===== */
+.footer-error {
+  font-size: 13px;
+  font-weight: 500;
+  color: #dc2626;
+}
+
+/* ===== Disabled button ===== */
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 </style>

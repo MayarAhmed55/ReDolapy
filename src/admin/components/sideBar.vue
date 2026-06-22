@@ -55,7 +55,7 @@
         </div>
       </router-link>
 
-      <router-link
+      <!-- <router-link
         to="/admin/promotions"
         class="nav-link"
         active-class="item-active"
@@ -66,7 +66,7 @@
         <div class="label-frame-wrapper spec-orders-w">
           <span class="link-label">Promotions</span>
         </div>
-      </router-link>
+      </router-link> -->
 
       <router-link
         to="/admin/notifications"
