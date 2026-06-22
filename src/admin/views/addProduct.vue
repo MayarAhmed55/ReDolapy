@@ -6,7 +6,16 @@
         <!-- Success banner -->
         <div v-if="published" class="success-banner">
           <span class="success-icon">✓</span>
-          <span>Product published successfully! The form has been cleared and is ready for a new entry.</span>
+          <span v-if="isEditMode">Product updated successfully!</span>
+          <span v-else>Product published successfully! The form has been cleared and is ready for a new entry.</span>
+        </div>
+
+        <!-- Loading product (edit mode) -->
+        <div v-if="loadingProduct" class="success-banner" style="background: #ededf8; color: #434654;">
+          <span>Loading product details…</span>
+        </div>
+        <div v-if="loadProductError" class="footer-error" style="margin-bottom: 16px;">
+          {{ loadProductError }}
         </div>
 
         <!-- Progress Stepper -->
@@ -161,25 +170,6 @@
                     <option disabled value="">Select category</option>
                     <option v-for="c in categories" :key="c" :value="c">
                       {{ c }}
-                    </option>
-                  </select>
-                  <ChevronDownIcon class="select-chevron" />
-                </div>
-              </div>
-
-              <div class="field">
-                <label class="field-label" for="subcategory"
-                  >Sub-Category</label
-                >
-                <div class="select-wrap">
-                  <select
-                    id="subcategory"
-                    v-model="form.subcategory"
-                    class="field-select"
-                  >
-                    <option disabled value="">Select sub-category</option>
-                    <option v-for="s in subcategories" :key="s" :value="s">
-                      {{ s }}
                     </option>
                   </select>
                   <ChevronDownIcon class="select-chevron" />
@@ -351,21 +341,14 @@
     <!-- Sticky Footer Action Bar -->
     <footer class="footer-bar">
       <div class="footer-left">
-        <div class="avatar-stack">
-          <div class="avatar avatar-primary">JD</div>
-          <div class="avatar avatar-secondary">+2</div>
-        </div>
         <span v-if="submitError" class="footer-error">{{ submitError }}</span>
         <span v-else class="footer-status">Fill in all fields then publish</span>
       </div>
 
       <div class="footer-right">
-        <button type="button" class="btn-secondary" @click="$emit('cancel')">
-          Save as draft
-        </button>
         <div class="footer-divider"></div>
         <button type="button" class="btn-primary" :disabled="submitting" @click="handleSubmit">
-          <span>{{ submitting ? 'Publishing…' : 'Publish product' }}</span>
+          <span>{{ submitting ? (isEditMode ? 'Updating…' : 'Publishing…') : (isEditMode ? 'Update product' : 'Publish product') }}</span>
           <ArrowRightIcon class="w-[9px] h-[9px]" />
         </button>
       </div>
@@ -376,7 +359,18 @@
 <script setup>
 /* ---------- Imports ---------- */
 import { ref, computed, watch, h, onMounted } from "vue";
-import { getStores, addProduct } from "../../services/services";
+import { useRoute, useRouter } from "vue-router";
+import { getStores, addProduct, getProductByid, updateProduct } from "../../services/services";
+
+const route = useRoute();
+const router = useRouter();
+
+// route.params.id is undefined on /admin/addProduct (create mode)
+// and a string on /admin/addProduct/:id (edit mode)
+const productId = computed(() => route.params.id);
+const isEditMode = computed(() => !!productId.value);
+const loadingProduct = ref(false);
+const loadProductError = ref("");
 
 /* ---------- Lightweight inline icon components (no external deps) ---------- */
 
@@ -454,8 +448,7 @@ async function fetchStores() {
   }
 }
 
-const categories = ["top", "bottom", "dress", "outerwear", "footwear", "accessory", "bag"];
-const subcategories = ["Evening Wear", "Daywear", "Bridal", "Resort", "Casual", "Sport"];
+const categories = ["top", "bottom", "dress"];
 
 const CURRENCIES = ["USD", "EUR", "GBP", "EGP"];
 
@@ -597,6 +590,55 @@ function resetForm() {
   currentStep.value = 0;
 }
 
+async function loadProduct() {
+  loadingProduct.value = true;
+  loadProductError.value = "";
+  try {
+    const { data } = await getProductByid(productId.value);
+
+    form.value = {
+      name: data.name || "",
+      description: data.description || "",
+      store_id: data.store_id?._id || "",
+      category: data.category || "",
+      subcategory: "", // not returned by the API; left for the admin to set if needed
+      color_tags: data.color_tags || [],
+      season_tags: data.season_tags || [],
+      price: data.price ?? "",
+      currency: data.currency || "USD",
+      purchaseUrl: data.purchase_url || "",
+      try_on_enabled: !!data.try_on_enabled,
+      is_active: !!data.is_active,
+    };
+    images.value = data.images || [];
+    currentStep.value = computeCurrentStep();
+  } catch (err) {
+    console.error("Failed to load product", err);
+    loadProductError.value = "Failed to load product details.";
+  } finally {
+    loadingProduct.value = false;
+  }
+}
+
+// Vue re-uses this component instance when navigating between
+// /admin/addProduct and /admin/addProduct/:id (same route component),
+// so onMounted alone won't refire on navigation. Watching the id param
+// makes sure the form reloads (edit) or resets (add) every time it changes.
+watch(
+  productId,
+  (newId) => {
+    submitError.value = "";
+    published.value = false;
+
+    if (newId) {
+      loadProduct();
+    } else {
+      resetForm();
+    }
+  },
+  { immediate: true },
+);
+
 async function handleSubmit() {
   submitting.value = true;
   submitError.value = "";
@@ -616,13 +658,21 @@ async function handleSubmit() {
       try_on_enabled: form.value.try_on_enabled,
       is_active:      form.value.is_active,
     };
-    const res = await addProduct(payload);
-    emit("submit", res.data);
-    resetForm();
-    published.value = true;
-    setTimeout(() => { published.value = false; }, 5000);
+
+    if (isEditMode.value) {
+      const res = await updateProduct(productId.value, payload);
+      emit("submit", res.data);
+      published.value = true;
+      setTimeout(() => { published.value = false; }, 5000);
+    } else {
+      const res = await addProduct(payload);
+      emit("submit", res.data);
+      resetForm();
+      published.value = true;
+      setTimeout(() => { published.value = false; }, 5000);
+    }
   } catch (err) {
-    console.error("Failed to add product", err);
+    console.error(isEditMode.value ? "Failed to update product" : "Failed to add product", err);
     submitError.value = err?.response?.data?.message ?? "Something went wrong. Please try again.";
   } finally {
     submitting.value = false;

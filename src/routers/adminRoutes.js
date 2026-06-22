@@ -1,7 +1,7 @@
-import AddStoreButton from '../admin/components/addStorebtnr.vue'
-import AddnotificationButton from '../admin/components/addNotificatiobBTN.vue'
-import AddProductButton from '../admin/components/addProduct.vue'
-import AddApiKeyButton from '../admin/components/addAPIKeybtn.vue'
+import AddStoreButton from "../admin/components/addStorebtnr.vue";
+import AddnotificationButton from "../admin/components/addNotificatiobBTN.vue";
+import AddProductButton from "../admin/components/addProduct.vue";
+import AddApiKeyButton from "../admin/components/addAPIKeybtn.vue";
 export default [
   {
     path: "/admin",
@@ -58,13 +58,15 @@ export default [
         meta: { requiresAuth: true },
       },
       {
-        path: "addStore",
-        component: () => import("../admin/views/addStore.vue"),
+        path: "addProduct/:id?",
+        name: "AddProduct",
+        component: () => import("../admin/views/addProduct.vue"),
         meta: { requiresAuth: true },
       },
       {
-        path: "addProduct",
-        component: () => import("../admin/views/addProduct.vue"),
+        path: "addStore/:id?",
+        name: "AddStore",
+        component: () => import("../admin/views/addStore.vue"),
         meta: { requiresAuth: true },
       },
     ],

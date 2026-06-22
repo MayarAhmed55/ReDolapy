@@ -187,7 +187,11 @@
                 <!-- Actions -->
                 <td>
                   <div class="actions-cell">
-                    <button class="action-btn" aria-label="Edit">
+                    <button
+                      class="action-btn"
+                      aria-label="Edit"
+                      @click="goToEdit(store.id)"
+                    >
                       <svg
                         viewBox="0 0 24 24"
                         fill="none"
@@ -207,20 +211,16 @@
                         />
                       </svg>
                     </button>
-                    <button class="action-btn" aria-label="More options">
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.5"
+                    <button
+                      class="action-btn"
+                      aria-label="More options"
+                      @click="handleDelete(store.id)"
+                    >
+                      <img
+                        src="../../assets/Icon (36).svg"
                         class="icon-sm"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-                        />
-                      </svg>
+                        alt="More options"
+                      />
                     </button>
                   </div>
                 </td>
@@ -300,8 +300,10 @@
 
 <script setup>
 import { ref, computed, onMounted, watch } from "vue";
-import { getStores } from "../../services/services"; // adjust this import path to match your project structure
+import { getStores, deleteStore } from "../../services/services"; // adjust this import path to match your project structure
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const searchQuery = ref("");
 const statusFilter = ref("");
 const loading = ref(false);
@@ -318,7 +320,22 @@ function extractDomain(url) {
     return url || "";
   }
 }
-
+function goToEdit(id) {
+  if (!id) {
+    console.error("goToEdit called without a valid id", id);
+    return;
+  }
+  router.push(`/admin/addStore/${id}`);
+}
+const handleDelete = async (id) => {
+  try {
+    await deleteStore(id);
+    stores.value = stores.value.filter((store) => store.id !== id);
+  } catch (error) {
+    console.error("Failed to delete store:", error);
+    // e.g. show error toast
+  }
+};
 function storeCode(id) {
   return `STR-${id.slice(-6).toUpperCase()}`;
 }

@@ -9,7 +9,7 @@
             <h1
               class="text-[32px] font-semibold leading-10 tracking-[-0.64px] text-[#191B23]"
             >
-              Add Store
+              {{ isEditMode ? "Edit Store" : "Add Store" }}
             </h1>
             <p class="text-[14px] font-normal leading-5 text-[#434654]">
               Setup and configure a new localized or global deployment endpoint.
@@ -17,19 +17,31 @@
           </div>
           <button
             type="button"
-            :disabled="isSaving"
+            :disabled="isSaving || isLoading"
             @click="handleSaveStore"
             class="h-11 px-6 bg-[#1550D3] hover:bg-[#1550D3]/90 text-white text-base font-bold rounded-xl transition-all shadow-[0px_10px_15px_-3px_rgba(21,80,211,0.2),0px_4px_6px_-4px_rgba(21,80,211,0.2)] disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            {{ isSaving ? "Saving..." : "Save Store" }}
+            {{
+              isSaving
+                ? "Saving..."
+                : isEditMode
+                  ? "Update Store"
+                  : "Save Store"
+            }}
           </button>
         </div>
 
+        <p v-if="loadError" class="text-[13px] font-medium text-[#B00020]">
+          {{ loadError }}
+        </p>
         <p v-if="saveError" class="text-[13px] font-medium text-[#B00020]">
           {{ saveError }}
         </p>
         <p v-if="saveSuccess" class="text-[13px] font-medium text-[#15803D]">
-          Store created successfully.
+          {{ isEditMode ? "Store updated successfully." : "Store created successfully." }}
+        </p>
+        <p v-if="isLoading" class="text-[13px] font-medium text-[#434654]">
+          Loading store details...
         </p>
 
         <form @submit.prevent class="w-full flex flex-col gap-6">
@@ -250,9 +262,18 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import imageCompression from "browser-image-compression";
-import { addStore } from "../../services/services"; // adjust this import path to match your project structure
+import { addStore, getStoreByid,updateStore } from "../../services/services";
+
+const route = useRoute();
+const router = useRouter();
+
+// route.params.id will be undefined on /admin/addStore (create mode)
+// and a string like "6a3892..." on /admin/addStore/6a3892... (edit mode)
+const storeId = computed(() => route.params.id);
+const isEditMode = computed(() => !!storeId.value);
 
 const name = ref("");
 const description = ref("");
@@ -265,9 +286,67 @@ const discountCode = ref("");
 const discountPercent = ref(null);
 const discountsEnabled = ref(true);
 
+const isLoading = ref(false);
+const loadError = ref(null);
+
 const isSaving = ref(false);
 const saveError = ref(null);
 const saveSuccess = ref(false);
+
+function resetForm() {
+  name.value = "";
+  description.value = "";
+  websiteDomain.value = "";
+  logoUrl.value = "";
+  discountCode.value = "";
+  discountPercent.value = null;
+  discountsEnabled.value = true;
+  saveError.value = null;
+  saveSuccess.value = false;
+  loadError.value = null;
+}
+
+async function loadStore() {
+  isLoading.value = true;
+  loadError.value = null;
+  try {
+    const { data } = await getStoreByid(storeId.value);
+
+    name.value = data.name || "";
+    description.value = data.description || "";
+    logoUrl.value = data.logo_url || "";
+    websiteDomain.value = data.website_url
+      ? data.website_url.replace(/^https?:\/\//, "")
+      : "";
+    discountCode.value = data.discount_code || "";
+    discountPercent.value = data.discount_percent || null;
+    discountsEnabled.value = (data.discount_percent || 0) > 0;
+  } catch (err) {
+    console.error("Failed to load store:", err);
+    loadError.value = "Failed to load store details.";
+  } finally {
+    isLoading.value = false;
+  }
+}
+
+// Vue re-uses this component instance when navigating between
+// /admin/addStore and /admin/addStore/:id (same route component),
+// so onMounted only fires once. Watching the id param instead makes
+// sure the form reloads (edit) or resets (add) every time it changes.
+watch(
+  storeId,
+  (newId) => {
+    saveError.value = null;
+    saveSuccess.value = false;
+
+    if (newId) {
+      loadStore();
+    } else {
+      resetForm();
+    }
+  },
+  { immediate: true }
+);
 
 async function processLogoFile(file) {
   if (!file) return;
@@ -315,37 +394,57 @@ async function handleSaveStore() {
   saveError.value = null;
   saveSuccess.value = false;
 
+  const payload = {
+    name: name.value.trim(),
+    logo_url: logoUrl.value,
+    description: description.value.trim(),
+    discount_percent: discountsEnabled.value
+      ? Number(discountPercent.value) || 0
+      : 0,
+    discount_code: discountsEnabled.value ? discountCode.value.trim() : "",
+    is_active: true,
+    website_url: websiteDomain.value
+      ? `https://${websiteDomain.value.replace(/^https?:\/\//, "")}`
+      : "",
+  };
+
   try {
-    await addStore({
-      name: name.value.trim(),
-      logo_url: logoUrl.value,
-      description: description.value.trim(),
-      discount_percent: discountsEnabled.value
-        ? Number(discountPercent.value) || 0
-        : 0,
-      discount_code: discountsEnabled.value ? discountCode.value.trim() : "",
-      is_active: true,
-      website_url: websiteDomain.value
-        ? `https://${websiteDomain.value.replace(/^https?:\/\//, "")}`
-        : "",
-    });
+    if (isEditMode.value) {
+      await updateStore(storeId.value, payload);
+      console.warn(
+        "updateStore service is not wired up yet — payload ready to send:",
+        payload
+      );
+    } else {
+      await addStore(payload);
+    }
 
     saveSuccess.value = true;
+    
+    resetFormUpdate();
 
-    // Reset the form after a successful save
-    name.value = "";
-    description.value = "";
-    websiteDomain.value = "";
-    logoUrl.value = "";
-    discountCode.value = "";
-    discountPercent.value = null;
-    discountsEnabled.value = true;
+    if (!isEditMode.value) {
+      // Reset the form after a successful create — don't reset on edit
+      resetForm();
+      saveSuccess.value = true; // resetForm clears this, so restore it after
+    }
   } catch (err) {
-    console.error("Failed to create store:", err);
-    saveError.value = "Failed to create store. Please try again.";
+    console.error("Failed to save store:", err);
+    saveError.value = isEditMode.value
+      ? "Failed to update store. Please try again."
+      : "Failed to create store. Please try again.";
   } finally {
     isSaving.value = false;
   }
+}
+function resetFormUpdate() {
+  name.value = "";
+  logoUrl.value = "";
+  description.value = "";
+  discountPercent.value = "";
+  discountCode.value = "";
+  discountsEnabled.value = false;
+  websiteDomain.value = "";
 }
 </script>
 

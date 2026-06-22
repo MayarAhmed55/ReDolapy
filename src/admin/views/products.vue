@@ -37,9 +37,6 @@
       <div class="data-table-wrapper">
         <div class="table-header-strip">
           <div class="table-row-layout">
-            <div class="cell cell-checkbox">
-              <input type="checkbox" class="ui-checkbox" />
-            </div>
             <div class="cell cell-product-info">
               <span class="th-text">Product</span>
             </div>
@@ -57,6 +54,9 @@
             </div>
             <div class="cell cell-price">
               <span class="th-text">Price</span>
+            </div>
+            <div class="cell cell-actions">
+              <span class="th-text">Action</span>
             </div>
           </div>
         </div>
@@ -89,9 +89,6 @@
             :key="product._id"
             class="table-data-row"
           >
-            <div class="data-cell cell-checkbox">
-              <input type="checkbox" class="ui-checkbox" />
-            </div>
             <div class="data-cell cell-product-info row-layout-align">
               <div class="product-img-bg">
                 <img
@@ -150,6 +147,39 @@
                 <span class="price-currency">{{ product.currency }}</span>
               </div>
             </div>
+            <div class="data-cell cell-actions actions-align">
+              <button
+                class="action-btn"
+                aria-label="Edit"
+                @click="goToEdit(product._id)"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  class="icon-sm"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                  />
+                </svg>
+              </button>
+              <button
+                class="action-btn"
+                aria-label="Delete"
+                @click="handleDelete(product._id)"
+              >
+                <img src="../../assets/Icon (36).svg" alt="Delete" class="icon-sm" />
+              </button>
+            </div>
           </div>
         </div>
         <!-- /table-body-container -->
@@ -198,8 +228,10 @@
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { getProducts } from "../../services/services"; // adjust this import path to match your project structure
+import { useRouter } from "vue-router";
+import { getProducts, deletProduct } from "../../services/services"; // adjust this import path to match your project structure
 
+const router = useRouter();
 const products = ref([]);
 const loading = ref(false);
 
@@ -271,6 +303,37 @@ async function fetchProducts() {
   } finally {
     loading.value = false;
   }
+}
+
+async function handleDelete(id) {
+  if (!id) {
+    console.error("handleDelete called without a valid id", id);
+    return;
+  }
+  if (!confirm("Are you sure you want to delete this product?")) return;
+
+  try {
+    await deletProduct(id);
+    products.value = products.value.filter((p) => p._id !== id);
+
+    // If deleting the last item on a page pushes currentPage out of range, step back
+    if (
+      currentPage.value > totalPages.value &&
+      currentPage.value > 1
+    ) {
+      currentPage.value = totalPages.value;
+    }
+  } catch (err) {
+    console.error("Failed to delete product:", err);
+  }
+}
+
+function goToEdit(id) {
+  if (!id) {
+    console.error("goToEdit called without a valid id", id);
+    return;
+  }
+  router.push(`/admin/addProduct/${id}`);
 }
 
 onMounted(fetchProducts);
@@ -679,9 +742,6 @@ onMounted(fetchProducts);
   box-sizing: border-box;
 }
 
-.cell-checkbox {
-  width: 48px;
-}
 .cell-product-info {
   width: 255px;
 }
@@ -701,15 +761,10 @@ onMounted(fetchProducts);
 .cell-price {
   width: 151.45px;
 }
-
-.ui-checkbox {
-  box-sizing: border-box;
-  width: 16px;
-  height: 16px;
-  background: #ffffff;
-  border: 1px solid #c3c5d7;
-  border-radius: 4px;
-  margin: 0;
+.cell-actions {
+  width: 96px;
+  align-items: flex-end;
+  padding-right: 24px;
 }
 
 .th-text {
@@ -772,18 +827,11 @@ onMounted(fetchProducts);
   box-sizing: border-box;
 }
 
-.data-cell.cell-checkbox {
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 36px 16px 36.5px;
-  width: 48px;
-}
-
 .row-layout-align {
   flex-direction: row;
   align-items: center;
   padding: 0px 0px 0px 16px;
-  gap: 12px;
+  gap: 6px;
   width: 264.83px;
 }
 
@@ -982,6 +1030,55 @@ onMounted(fetchProducts);
   font-size: 10px;
   line-height: 13px;
   color: #737686;
+}
+
+/* Actions cell */
+.actions-align {
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 0 16px;
+  width: 96px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.action-btn:hover {
+  background: #e7e7f2;
+}
+
+.action-btn:focus-visible {
+  outline: 2px solid #1550d3;
+  outline-offset: 1px;
+}
+
+.icon-sm {
+  width: 18px;
+  height: 18px;
+  color: #434654;
+  transition: color 0.15s ease;
+}
+
+.action-btn:hover .icon-sm {
+  color: #1550d3;
+}
+
+/* Subtle row hover for the whole table */
+.table-data-row:hover {
+  background-color: #faf8ff;
 }
 
 /* Pagination footer */

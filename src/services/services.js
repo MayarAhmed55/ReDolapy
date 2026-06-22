@@ -127,9 +127,7 @@ export const deletAllNotifications = () => {
     },
   });
 };
-// export const deleteNotificationbyid=()=>{
 
-// }
 
 export const getStores = () => {
   return axios.get(`${API}/stores`, {
@@ -152,7 +150,6 @@ export const addStore = (data) => {
     },
   });
 };
-/////////////////***********stile not used */
 export const addProduct = (data) => {
   return axios.post(`${API}/products`, data, {
     headers: {
@@ -160,7 +157,6 @@ export const addProduct = (data) => {
     },
   });
 };
-/////////////////***********stile not used */
 
 export const getAllUsers = () => {
   return axios.get(`${API}/users`, {
@@ -207,3 +203,49 @@ export const getAllNotifications = () => {
     },
   });
 };
+
+export const deleteStore=(id)=>{
+  return axios.delete(`${API}/stores/${id}`,{
+    headers:{
+      Authorization:`Bearer ${localStorage.getItem("token")}`
+    }
+  })
+}
+
+export const getStoreByid=(id)=>{
+  return axios.get(`${API}/stores/${id}`,{
+    headers:{
+      Authorization: `Bearer ${localStorage.getItem("token")}`
+    }
+  })
+}
+
+export const updateStore=(id,data)=>{
+  return axios.put(`${API}/stores/${id}`,data,{
+    headers:{
+      Authorization: `Bearer ${localStorage.getItem("token")}`
+    }
+  })
+}
+
+export const getProductByid=(id)=>{
+  return axios.get(`${API}/products/${id}`,{
+    headers:{
+      Authorization: `Bearer ${localStorage.getItem("token")}`
+    }
+  })
+}
+export const deletProduct=(id)=>{
+  return axios.delete(`${API}/products/${id}`,{
+    headers:{
+      Authorization: `Bearer ${localStorage.getItem("token")}`
+    }
+  })
+}
+export const updateProduct=(id,data)=>{
+  return axios.put(`${API}/products/${id}`,data,{
+    headers:{
+      Authorization:`Bearer ${localStorage.getItem("token")}`
+    }
+  })
+} 
