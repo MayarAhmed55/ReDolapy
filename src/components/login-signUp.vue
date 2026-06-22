@@ -364,7 +364,7 @@ export default {
 
     function handleGoogle() {
       // Same-origin URL so Vercel rewrites /api → Cloud Run and preserves window.opener
-      const googleAuthUrl = `${window.location.origin}/api/auth/google`;
+      const googleAuthUrl = `${window.location.origin}/api/auth/google?client_url=${encodeURIComponent(window.location.origin)}`;
 
       popup = window.open(
         googleAuthUrl,
