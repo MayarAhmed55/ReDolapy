@@ -2,34 +2,114 @@
   <header class="dash-header">
     <div class="header-controls">
       <component v-if="route.meta.navbarButton" :is="route.meta.navbarButton" />
-      <button type="button" class="ctrl-btn" aria-label="Action 1">
+      <button
+        type="button"
+        class="ctrl-btn"
+        aria-label="Action 1"
+        @click="router.push('/admin/notifications')"
+      >
         <img src="../../assets/Icon (10).svg" alt="" />
       </button>
-      <button type="button" class="ctrl-btn" aria-label="Action 2">
+      <button
+        type="button"
+        class="ctrl-btn"
+        aria-label="Action 2"
+        @click="router.push('/admin/emailCenter')"
+      >
         <img src="../../assets/Icon (11).svg" alt="" />
       </button>
-      <button type="button" class="ctrl-btn" aria-label="Action 3">
+      <!-- <button type="button" class="ctrl-btn" aria-label="Action 3">
         <img src="../../assets/Icon (12).svg" alt="" />
-      </button>
+      </button> -->
 
       <div class="vertical-divider"></div>
 
-      <div
-        class="mini-profile"
-        role="button"
-        tabindex="0"
-        aria-label="Profile menu"
-      >
-        <div class="avatar-initials">DA</div>
-        <img src="../../assets/Icon (13).svg" alt="" />
+      <div class="profile-menu-wrapper" ref="profileMenuRef">
+        <div
+          class="mini-profile"
+          role="button"
+          tabindex="0"
+          aria-label="Profile menu"
+          aria-haspopup="true"
+          :aria-expanded="isProfileMenuOpen"
+          @click="toggleProfileMenu"
+          @keydown.enter.prevent="toggleProfileMenu"
+          @keydown.space.prevent="toggleProfileMenu"
+        >
+          <div class="avatar-initials">DA</div>
+          <img src="../../assets/Icon (13).svg" alt="" />
+        </div>
+
+        <transition name="dropdown-fade">
+          <div v-if="isProfileMenuOpen" class="profile-dropdown" role="menu">
+            <button
+              type="button"
+              class="profile-dropdown-item"
+              role="menuitem"
+              @click="logout"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+              </svg>
+              Logout
+            </button>
+          </div>
+        </transition>
       </div>
     </div>
   </header>
 </template>
 
 <script setup>
-import { useRoute } from "vue-router";
+import { ref, onMounted, onUnmounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
+
 const route = useRoute();
+const router = useRouter();
+
+const isProfileMenuOpen = ref(false);
+const profileMenuRef = ref(null);
+
+function toggleProfileMenu() {
+  isProfileMenuOpen.value = !isProfileMenuOpen.value;
+}
+
+function closeProfileMenu() {
+  isProfileMenuOpen.value = false;
+}
+
+function handleClickOutside(event) {
+  if (profileMenuRef.value && !profileMenuRef.value.contains(event.target)) {
+    closeProfileMenu();
+  }
+}
+
+function logout() {
+  localStorage.removeItem("_id");
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  closeProfileMenu();
+  router.push("/");
+}
+
+onMounted(() => {
+  document.addEventListener("click", handleClickOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener("click", handleClickOutside);
+});
 </script>
 
 <style scoped>
@@ -171,5 +251,55 @@ const route = useRoute();
   font-size: 12px;
   color: #ffffff;
   text-transform: uppercase;
+}
+
+.profile-menu-wrapper {
+  position: relative;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 160px;
+  background: #ffffff;
+  border: 1px solid #edeeef;
+  border-radius: 10px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.08);
+  padding: 6px;
+  z-index: 50;
+}
+
+.profile-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 12px;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  font-family: "Geist", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #ba1a1a;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s;
+}
+
+.profile-dropdown-item:hover {
+  background: rgba(186, 26, 26, 0.08);
+}
+
+.dropdown-fade-enter-active,
+.dropdown-fade-leave-active {
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.dropdown-fade-enter-from,
+.dropdown-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-4px);
 }
 </style>

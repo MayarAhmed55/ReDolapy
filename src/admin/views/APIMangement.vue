@@ -150,6 +150,7 @@
               :aria-label="
                 (key.revealed ? 'Hide' : 'Reveal') + ' key for ' + key.name
               "
+              :disabled="key.revealing"
               @click="toggleReveal(key)"
             >
               <svg
@@ -189,7 +190,7 @@
 </template>
 
 <script>
-import { getAPIKeys } from "../../services/services";
+import { getAPIKeys, getApiKeyByid, updateAPIKey,deleteApiKey } from "../../services/services";
 
 const ICON_CLASSES = ["icon-purple", "icon-amber", "icon-blue", "icon-green"];
 
@@ -201,14 +202,15 @@ function maskKey(key) {
 
 function mapKey(raw, i) {
   return {
-    id:        raw.id ?? raw._id ?? i,
+    id:        raw._id ?? raw.id ?? i,
     name:      raw.name ?? raw.keyName ?? "Unnamed Key",
-    fullKey:   raw.maskedKey ?? raw.apiKey ?? raw.value ?? "",
-    masked: raw.maskedKey ?? maskKey(raw.maskedKey ?? ""),
+    fullKey:   null,
+    masked:    raw.maskedKey ?? maskKey(raw.key ?? ""),
     status:    (raw.status ?? "active").toLowerCase(),
     iconClass: ICON_CLASSES[i % ICON_CLASSES.length],
     copied:    false,
     revealed:  false,
+    revealing: false,
   };
 }
 
@@ -242,22 +244,51 @@ export default {
       }
     },
 
-    copyKey(key) {
-      navigator.clipboard.writeText(key.fullKey).catch(() => {});
+    async copyKey(key) {
+      let textToCopy = key.fullKey;
+      if (!textToCopy) {
+        try {
+          const res = await getApiKeyByid(key.id);
+          textToCopy = res.data?.key ?? res.data?.apiKey ?? "";
+          key.fullKey = textToCopy;
+        } catch (err) {
+          console.error("Failed to fetch key for copy", err);
+          return;
+        }
+      }
+      navigator.clipboard.writeText(textToCopy).catch(() => {});
       key.copied = true;
       setTimeout(() => { key.copied = false; }, 1500);
     },
 
-    toggleReveal(key) {
+    async toggleReveal(key) {
+      if (!key.revealed && !key.fullKey) {
+        key.revealing = true;
+        try {
+          const res = await getApiKeyByid(key.id);
+          key.fullKey = res.data?.key ?? res.data?.apiKey ?? "";
+        } catch (err) {
+          console.error("Failed to fetch full key", err);
+          key.revealing = false;
+          return;
+        } finally {
+          key.revealing = false;
+        }
+      }
       key.revealed = !key.revealed;
     },
 
-    deleteKey(id) {
-      this.apiKeys = this.apiKeys.filter((k) => k.id !== id);
+    async deleteKey(id) {
+      try {
+        await deleteApiKey(id);
+        this.apiKeys = this.apiKeys.filter((k) => k.id !== id);
+      } catch (err) {
+        console.error("Failed to delete API key", err);
+      }
     },
 
     editKey(key) {
-      console.log("Edit key:", key.id);
+      this.$router.push({ name: "EditAPIKey", params: { id: key.id } });
     },
   },
 

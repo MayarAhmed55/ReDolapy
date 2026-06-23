@@ -120,14 +120,14 @@
             <img src="../../assets/Icon (23).svg" alt="" class="action-icon" />
             <span>Add Product</span>
           </router-link>
-          <button type="button" class="action-btn">
+          <router-link to="/admin/API" class="action-btn">
             <img src="../../assets/Icon (24).svg" alt="" class="action-icon" />
             <span>API Key</span>
-          </button>
-          <button type="button" class="action-btn">
+          </router-link>
+          <router-link to="/admin/sendNotifications" class="action-btn">
             <img src="../../assets/Icon (25).svg" alt="" class="action-icon" />
             <span>Notify Users</span>
-          </button>
+          </router-link>
         </div>
       </div>
 

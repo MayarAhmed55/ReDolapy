@@ -128,7 +128,6 @@ export const deletAllNotifications = () => {
   });
 };
 
-
 export const getStores = () => {
   return axios.get(`${API}/stores`, {
     headers: {
@@ -177,14 +176,6 @@ export const getAdminReplies = () => {
   });
 };
 
-export const getAPIKeys = () => {
-  return axios.get(`${API}/api-keys`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-};
-
 export const getAllEmails = (page = 1, limit = 50) => {
   return axios.get(`${API}/emails/admin/all`, {
     params: {
@@ -199,63 +190,63 @@ export const getAllEmails = (page = 1, limit = 50) => {
 export const getAllNotifications = () => {
   return axios.get(`${API}/notifications/all`, {
     headers: {
-      Authorization : `Bearer ${localStorage.getItem("token")}`
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
 };
 
-export const deleteStore=(id)=>{
-  return axios.delete(`${API}/stores/${id}`,{
-    headers:{
-      Authorization:`Bearer ${localStorage.getItem("token")}`
-    }
-  })
-}
+export const deleteStore = (id) => {
+  return axios.delete(`${API}/stores/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
 
-export const getStoreByid=(id)=>{
-  return axios.get(`${API}/stores/${id}`,{
-    headers:{
-      Authorization: `Bearer ${localStorage.getItem("token")}`
-    }
-  })
-}
+export const getStoreByid = (id) => {
+  return axios.get(`${API}/stores/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
 
-export const updateStore=(id,data)=>{
-  return axios.put(`${API}/stores/${id}`,data,{
-    headers:{
-      Authorization: `Bearer ${localStorage.getItem("token")}`
-    }
-  })
-}
+export const updateStore = (id, data) => {
+  return axios.put(`${API}/stores/${id}`, data, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
 
-export const getProductByid=(id)=>{
-  return axios.get(`${API}/products/${id}`,{
-    headers:{
-      Authorization: `Bearer ${localStorage.getItem("token")}`
-    }
-  })
-}
-export const deletProduct=(id)=>{
-  return axios.delete(`${API}/products/${id}`,{
-    headers:{
-      Authorization: `Bearer ${localStorage.getItem("token")}`
-    }
-  })
-}
-export const updateProduct=(id,data)=>{
-  return axios.put(`${API}/products/${id}`,data,{
-    headers:{
-      Authorization:`Bearer ${localStorage.getItem("token")}`
-    }
-  })
-} 
-export const adminDeletesUser=(id)=>{
-  return axios.delete(`${API}/users/${id}`,{
-    headers:{
-      Authorization: `Bearer ${localStorage.getItem("token")}`
-    }
-  })
-}
+export const getProductByid = (id) => {
+  return axios.get(`${API}/products/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+export const deletProduct = (id) => {
+  return axios.delete(`${API}/products/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+export const updateProduct = (id, data) => {
+  return axios.put(`${API}/products/${id}`, data, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+export const adminDeletesUser = (id) => {
+  return axios.delete(`${API}/users/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
 //*********************** its does not work yet */
 // export const getUserAdmin=(id)=>{
 //   return axios.get(`${API}/users/${id}`,{
@@ -265,3 +256,102 @@ export const adminDeletesUser=(id)=>{
 //   })
 // }
 //*********************** its does not work yet */
+
+export const getAPIKeys = () => {
+  return axios.get(`${API}/api-keys`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+
+export const getApiKeyByid = (id) => {
+  return axios.get(`${API}/api-keys/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+
+export const updateAPIKey = (id, data) => {
+  return axios.put(`${API}/api-keys/${id}`, data, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+export const deleteApiKey = (id) => {
+  return axios.delete(`${API}/api-keys/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+
+export const sendNotificationByEmail = (data) => {
+  return axios.post(`${API}/notifications/send-by-email`, data, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+
+export const notificationsForAllUsers = (data) => {
+  return axios.post(`${API}/notifications/broadcast`, data, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+
+export const sendEmailTouser = (data) => {
+  return axios.post(`${API}/emails/admin/send-to-user`, data, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+
+export const getEmailThread = (id) => {
+  return axios.get(`${API}/emails/admin/thread/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+
+export const replyToAnEmail = (id, data) => {
+  return axios.post(`${API}/emails/admin/reply/${id}`, data, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+
+export const changingState = (id, data) => {
+  return axios.patch(`${API}/emails/admin/mark-read/${id}`, data, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+
+export const getUnreadCount = () => {
+  return axios.get(`${API}/emails/admin/unread-count`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+
+export const filterEmails = (params) => {
+  return axios.get(
+    `${API}/emails/admin/filter`,
+    {
+      params,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
+  );
+};

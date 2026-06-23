@@ -71,10 +71,28 @@ export default [
       },
       {
         path: "editUser/:id?",
-        name:"EditUserPage",
+        name: "EditUserPage",
         component: () => import("../admin/views/editeUser.vue"),
         meta: { requiresAuth: true },
       },
+      {
+        path: "editeKey/:id?",
+        name: "EditAPIKey",
+        component: () => import("../admin/views/Editapikey.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "sendNotifications",
+        component: () => import("../admin/views/sendNotifications.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "emailCenter/reply/:id?",
+        name: "ReplyEmail",
+        component: () => import("../admin/views/replyEmail.vue"),
+        meta: { requiresAuth: true },
+      },
+    
     ],
   },
 ];

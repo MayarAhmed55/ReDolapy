@@ -1,5 +1,5 @@
 <template>
-  <button class="custom-btn" @click="$emit('click')">
+  <button class="custom-btn" @click="handleClick">
     <span class="icon-container">
       <slot name="icon">
         <img src="../../assets/Icon (33).svg" class="icon-container" />
@@ -13,7 +13,15 @@
 </template>
 
 <script setup>
-defineEmits(["click"]);
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+const emit = defineEmits(["click"]);
+
+function handleClick() {
+  emit("click");
+  router.push("/admin/addStore");
+}
 </script>
 
 <style scoped>

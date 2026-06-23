@@ -6,7 +6,7 @@
         <h1 class="page-title">Users</h1>
         <p class="page-sub">Manage accounts, roles, and feature quotas.</p>
       </div>
-      <div class="header-btns">
+      <!-- <div class="header-btns">
         <button class="btn-outline">
           <svg
             width="14"
@@ -38,7 +38,7 @@
           </svg>
           Invite
         </button>
-      </div>
+      </div> -->
     </div>
 
     <!-- Stat Cards -->
