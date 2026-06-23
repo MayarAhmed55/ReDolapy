@@ -5,7 +5,7 @@
       :gradientText="$t('aboutTryon.header_gradient')"
       :Description="$t('aboutTryon.header_description')"
       :btnCTA="$t('aboutTryon.header_cta')"
-      :imageSrc="TryOnImgAsset"
+      :imageSrc="headerImgAsset"
       routeTo="/TryOn"
     >
       <!-- 💡 Localized the description string here -->
@@ -68,6 +68,8 @@
 <script>
 import Header from "../components/Header.vue";
 import TryOn from "../assets/About Try on done.png";
+import TryOnDark from "../assets/darkTryon.jpg";
+
 import GradientBorderBtn from "../components/GradientBorderBtn.vue";
 import CardsSection from "../components/CardsSection.vue";
 import RoundedIconsSection from "../components/RoundedIconsSection.vue";
@@ -98,8 +100,38 @@ export default {
   data() {
     return {
       TryOnImgAsset: TryOn,
+      isDark: false,
+      observer: null, 
+
     };
   },
+  computed:{
+     headerImgAsset() {
+      return this.isDark ? TryOnDark : TryOn;
+    }
+  },
+  mounted() {
+    this.checkCurrentTheme();
+
+    this.observer = new MutationObserver(() => {
+      this.checkCurrentTheme();
+    });
+
+    this.observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+  },
+  beforeUnmount() {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+  },
+   methods: {
+    checkCurrentTheme() {
+      this.isDark = document.documentElement.classList.contains('dark');
+    },
+  }
 };
 </script>
 

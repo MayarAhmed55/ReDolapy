@@ -1,8 +1,11 @@
 import axios from "axios";
-const API = "http://localhost:5000/api";
+import API_BASE from "../config/api.js";
+
+const API = API_BASE;
 
 export const login = (credi) => axios.post(`${API}/auth/login`, credi);
 export const signUp = (userData) => axios.post(`${API}/auth/signup`, userData);
+
 export const updateProfile = (profileData, token) => {
   return axios.put(`${API}/users/profile`, profileData, {
     headers: {
@@ -25,7 +28,7 @@ export const emailVerification = (token) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }
+    },
   );
 };
 
@@ -35,27 +38,149 @@ export const mailingOTP = (email) => {
 
 export const verifyOTP = (data) => {
   return axios.post(`${API}/auth/verify-otp`, data);
-}
+};
 
 export const resetPassword = (data) => {
   return axios.put(`${API}/auth/reset-password`, data);
-}
+};
 export const deleteAccount = (email) => {
   return axios.delete(`${API}/users/account`, {
     data: { email },
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`
-    }
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
   });
 };
 
-export const userSettings = (settings) => {
-  return axios.post(
-    `${API}/users/settings`,
-    settings,
+export const addImage = (base64) => {
+  return axios.put(`${API}/users/user-image`, base64, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+
+export const deleteImage = () => {
+  return axios.delete(`${API}/users/user-image`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+export const notifications = (enabled) => {
+  return axios.put(
+    `${API}/users/settings/notifications`,
+    {
+      enabled,
+    },
     {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    },
+  );
+};
+export const darkMode = (darkMode) => {
+  return axios.put(
+    `${API}/users/settings/dark-mode`,
+    {
+      darkMode,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    },
+  );
+};
+export const getNotifications = () => {
+  return axios.get(`${API}/notifications`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+export const markAsReadAll = () => {
+  return axios.patch(
+    `${API}/notifications/read-all`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    },
+  );
+};
+export const markAsRead = (notificationID) => {
+  return axios.patch(
+    `${API}/notifications/${notificationID}/read`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    },
+  );
+};
+export const deletAllNotifications = () => {
+  return axios.delete(`${API}/notifications`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+// export const deleteNotificationbyid=()=>{
+
+// }
+
+export const getStores = () => {
+  return axios.get(`${API}/stores`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+export const getProducts = () => {
+  return axios.get(`${API}/products`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+export const addStore = (data) => {
+  return axios.post(`${API}/stores`, data, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+/////////////////***********stile not used */
+export const addProduct = (data) => {
+  return axios.post(`${API}/products`, data, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+/////////////////***********stile not used */
+
+export const getAllUsers=()=>{
+  return axios.get(`${API}/users`,{
+    headers:{
+      Authorization:`Bearer ${localStorage.getItem("token")}`
+    }
+  })
+}
+export const getAdminReplies = () => {
+  return axios.get(
+    `${API}/emails/admin-replies`,
+    {
+      params: {
+        page: 1,
+        limit: 200
+      },
+      headers:{
+        Authorization:`Bearer ${localStorage.getItem("token")}`
       }
     }
   );

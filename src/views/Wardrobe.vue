@@ -1,277 +1,181 @@
 <template>
-  <div class="store-page">
-    <div class="store-page__sidebar">
-      <FilterSidebar
-        :filters="filters"
-        :filter-options="filterOptions"
-        :mobile-open="filterOpen"
-        @update:filters="filters = $event"
-        @close="filterOpen = false"
-      />
-    </div>
+  <main class="w-full max-w-6xl mx-auto px-2 sm:px-4 py-6 sm:py-10">
+    <WardrobeLoading
+      v-if="loading && !initialized"
+      :message="$t('wardrobe.loading')"
+      :aria-label="$t('wardrobe.loading')"
+    />
 
-    <main class="store-page__main">
-      <header class="store-page__header">
-        <h1 class="store-page__title">{{ $t('wardrobe.title') }}</h1>
-      </header>
-
-         <div class="store-page__promo store-page__promo--mobile">
-        {{ $t('wardrobe.promo_prefix') }}
-        <span class="store-page__promo-install">{{ $t('wardrobe.promo_highlight') }}</span>
-      </div>
-
-      <p class="store-page__promo store-page__promo--desktop">
-        {{ $t('wardrobe.promo_prefix') }}
-        <span class="store-page__promo-highlight">{{ $t('wardrobe.promo_highlight') }}</span>
-      </p>
-
-      <StoreSearchbar
-        v-model="searchQuery"
-        class="store-page__search"
-        @open-filters="filterOpen = true"
+    <template v-else>
+      <EmptyWordrobe
+        v-if="!items.length"
+        @add-item="openUploadModal"
       />
 
+      <template v-else>
+        <WardrobeHeader
+          :active-category="activeCategory"
+          @filter="activeCategory = $event"
+        />
 
+        <WardrobeItems
+          :items="filteredItems"
+          @add-item="openUploadModal"
+          @open-item="openItemDetails"
+          @delete="openDeleteModal"
+        />
+      </template>
+    </template>
 
-      <p v-if="loadError" class="store-page__error">{{ loadError }}</p>
+    <p v-if="displayError" class="mt-4 text-sm text-red-600 text-center">{{ displayError }}</p>
 
-      <div v-if="loading" class="store-page__loading">{{ $t('wardrobe.loading') }}</div>
+    <UploadAnalyzeModal
+      :open="showUploadModal"
+      @close="showUploadModal = false"
+      @analyzed="onAnalyzed"
+    />
 
-      <StoreProducts
-        v-else
-        :products="filteredProducts"
-        @try-on="onTryOn"
-      />
-    </main>
-  </div>
+    <AnalyzeDetailsModal
+      :open="showDetailsModal"
+      :analysis-id="activeAnalysisId"
+      @close="showDetailsModal = false"
+      @added="onItemAdded"
+    />
+
+    <QuickViewModal
+      v-if="showQuickViewModal && selectedItem"
+      :item="selectedItem"
+      @close="closeQuickViewModal"
+      @delete="onQuickViewDelete"
+    />
+
+    <DeleteConfirmationModal
+      :open="showDeleteModal"
+      :item-id="itemToDelete?._id || ''"
+      @close="closeDeleteModal"
+      @deleted="onItemDeleted"
+    />
+  </main>
 </template>
 
 <script>
-import FilterSidebar from '../components/StoresRedolapy/filterSidebar.vue'
-import StoreSearchbar from '../components/StoresRedolapy/searchbar.vue'
-import StoreProducts from '../components/StoresRedolapy/StoreProducts.vue'
-import { fetchProducts, fetchStores } from '../api/store.js'
+import { mapState } from 'pinia'
+import EmptyWordrobe from '../components/Wordrobe/EmptyWordrobe.vue'
+import WardrobeHeader from '../components/Wordrobe/WardrobeHeader.vue'
+import WardrobeItems from '../components/Wordrobe/WardrobeItems.vue'
+import WardrobeLoading from '../components/Wordrobe/WardrobeLoading.vue'
+import UploadAnalyzeModal from '../components/WordrobeModals/UploadAnalyzeModal.vue'
+import AnalyzeDetailsModal from '../components/WordrobeModals/AnalyzeDetailsModal.vue'
+import QuickViewModal from '../components/WordrobeModals/QuickViewModal.vue'
+import DeleteConfirmationModal from '../components/WordrobeModals/DeleteConfirmationModal.vue'
+import { useWardrobeStore } from '../stores/wardrobe.js'
 import { mapApiError } from '../utils/mapApiError.js'
-import {
-  buildFilterOptions,
-  createDefaultFilters,
-  filterProducts,
-  normalizeProduct,
-} from '../utils/storeHelpers.js'
+import { triggerLoginModal } from '../authState.js'
+import { API_ERROR_CODES } from '../utils/apiError.js'
 
 export default {
-  name: 'Brands',
+  name: 'Wardrobe',
   components: {
-    FilterSidebar,
-    StoreSearchbar,
-    StoreProducts,
+    EmptyWordrobe,
+    WardrobeHeader,
+    WardrobeItems,
+    WardrobeLoading,
+    UploadAnalyzeModal,
+    AnalyzeDetailsModal,
+    QuickViewModal,
+    DeleteConfirmationModal,
   },
   data: () => ({
-    searchQuery: '',
-    filterOpen: false,
-    loading: true,
-    loadError: '',
-    products: [],
-    filterOptions: {
-      brands: [],
-      colors: [],
-      seasons: [],
-      categories: [],
-      minPrice: 0,
-      maxPrice: 0,
-      currency: 'USD',
-    },
-    filters: {
-      brands: [],
-      colors: [],
-      seasons: [],
-      categories: [],
-      maxPrice: 0,
-    },
+    activeCategory: 'all',
+    showUploadModal: false,
+    showDetailsModal: false,
+    activeAnalysisId: '',
+    showQuickViewModal: false,
+    selectedItem: null,
+    showDeleteModal: false,
+    itemToDelete: null,
+    localError: '',
   }),
-  watch: {
-    filterOpen(open) {
-      document.body.style.overflow = open ? 'hidden' : ''
-    },
-  },
-  async mounted() {
-    await this.loadStoreData()
-  },
-  beforeUnmount() {
-    document.body.style.overflow = ''
-  },
   computed: {
-    filteredProducts() {
-      return filterProducts(this.products, this.filters, this.searchQuery)
+    ...mapState(useWardrobeStore, ['items', 'loading', 'error', 'initialized']),
+
+    wardrobeStore() {
+      return useWardrobeStore()
     },
+
+    filteredItems() {
+      return this.wardrobeStore.getByCategory(this.activeCategory)
+    },
+
+    displayError() {
+      return this.localError || (this.error ? mapApiError({ message: this.error }, this.$t.bind(this)) : '')
+    },
+  },
+  mounted() {
+    this.loadWardrobe()
+  },
+  beforeRouteLeave() {
+    this.closeQuickViewModal()
   },
   methods: {
-    async loadStoreData() {
-      this.loading = true
-      this.loadError = ''
-
+    async loadWardrobe() {
+      this.localError = ''
       try {
-        const [stores, rawProducts] = await Promise.all([
-          fetchStores(),
-          fetchProducts(),
-        ])
-
-        this.products = (Array.isArray(rawProducts) ? rawProducts : [])
-          .filter((product) => product.is_active !== false)
-          .map(normalizeProduct)
-
-        this.filterOptions = buildFilterOptions(
-          Array.isArray(stores) ? stores : [],
-          this.products,
-        )
-        this.filters = createDefaultFilters(this.filterOptions)
+        await this.wardrobeStore.fetchAll()
       } catch (err) {
-        this.loadError = mapApiError(err, this.$t.bind(this))
-      } finally {
-        this.loading = false
+        if (err.message === API_ERROR_CODES.LOGIN_REQUIRED) {
+          triggerLoginModal()
+        } else {
+          this.localError = mapApiError(err, this.$t.bind(this))
+        }
       }
     },
-    onTryOn(product) {
-      this.$router.push({
-        path: '/TryOn',
-        query: { productId: product.id },
-      })
+
+    openUploadModal() {
+      if (!localStorage.getItem('token')) {
+        triggerLoginModal()
+        return
+      }
+      this.showUploadModal = true
+    },
+
+    onAnalyzed({ analysisId }) {
+      this.activeAnalysisId = analysisId
+      this.showDetailsModal = true
+    },
+
+    onItemAdded() {
+      this.showDetailsModal = false
+    },
+
+    openItemDetails(item) {
+      this.selectedItem = item
+      this.showQuickViewModal = true
+    },
+
+    closeQuickViewModal() {
+      this.showQuickViewModal = false
+      this.selectedItem = null
+    },
+
+    onQuickViewDelete(item) {
+      this.closeQuickViewModal()
+      this.openDeleteModal(item)
+    },
+
+    openDeleteModal(item) {
+      this.itemToDelete = item
+      this.showDeleteModal = true
+    },
+
+    closeDeleteModal() {
+      this.showDeleteModal = false
+      this.itemToDelete = null
+    },
+
+    onItemDeleted() {
+      this.closeDeleteModal()
     },
   },
 }
 </script>
-
-<style scoped>
-.store-page {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding: 1.5rem 0 3rem;
-  font-family: 'Roboto', sans-serif;
-}
-
-@media (min-width: 1024px) {
-  .store-page {
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 2rem;
-  }
-}
-
-.store-page__sidebar {
-  flex-shrink: 0;
-}
-
-@media (max-width: 1023px) {
-  .store-page__sidebar {
-    width: 0;
-    height: 0;
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
-  }
-}
-
-@media (min-width: 1024px) {
-  .store-page__sidebar {
-    width: 17rem;
-    position: sticky;
-    top: 1rem;
-    align-self: flex-start;
-  }
-}
-
-.store-page__main {
-  flex: 1;
-  min-width: 0;
-}
-
-.store-page__header {
-  margin-bottom: 1rem;
-}
-
-@media (min-width: 1024px) {
-  .store-page__header {
-    margin-bottom: 1.25rem;
-  }
-}
-
-.store-page__title {
-  font-size: clamp(1.5rem, 4vw, 2.25rem);
-  font-weight: var(--Bold);
-  color: var(--Primary-Text-color);
-  margin: 0;
-}
-
-.store-page__search {
-  margin-bottom: 1rem;
-}
-
-@media (min-width: 1024px) {
-  .store-page__search {
-    margin-bottom: 1.25rem;
-  }
-}
-
-.store-page__promo {
-  font-size: 0.9375rem;
-  color: var(--Secondary-Text-color);
-  line-height: 1.55;
-  margin-bottom: 1.25rem;
-}
-
-.store-page__promo--mobile {
-  display: block;
-  padding: 1rem 1.125rem;
-  border-radius: 0.875rem;
-  font-size: 0.875rem;
-}
-
-.store-page__promo--desktop {
-  display: none;
-}
-
-@media (min-width: 1024px) {
-  .store-page__promo--mobile {
-    display: none;
-  }
-
-  .store-page__promo--desktop {
-    display: block;
-    margin-bottom: 1.5rem;
-  }
-}
-
-
-
-.store-page__promo-install {
-  font-weight: var(--Bold);
-  background: var(--Gradient-bgc);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.store-page__promo-highlight {
-  font-weight: var(--Semi-Bold);
-  background: var(--Gradient-bgc);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.store-page__loading,
-.store-page__error {
-  padding: 2rem 1rem;
-  text-align: center;
-  font-size: 0.9375rem;
-}
-
-.store-page__error {
-  color: #c62828;
-}
-
-.store-page__loading {
-  color: var(--Secondary-Text-color);
-}
-</style>

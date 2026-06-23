@@ -1,50 +1,89 @@
-const API_BASE = import.meta.env.VITE_API_BASE || ''
+import {
+  API_ERROR_CODES,
+  assertApiSuccess,
+  parseJsonResponse,
+} from '../utils/apiError.js'
 
-async function parseJsonResponse(res) {
-  const contentType = res.headers.get('content-type') || ''
-  if (!contentType.includes('application/json')) {
-    throw new Error(
-      res.status === 404
-        ? 'Server endpoint not found. Start the API with: npm run server'
-        : `Unexpected server response (${res.status}). Start the API and try again.`,
-    )
+const API_BASE = import.meta.env.VITE_API_BASE || '/api'
+
+export const RECYCLE_API_ERRORS = API_ERROR_CODES
+
+function getUserToken() {
+  const token = localStorage.getItem('token')
+  if (!token) {
+    throw new Error(API_ERROR_CODES.LOGIN_REQUIRED)
   }
-  return res.json()
+  return token
 }
 
-export async function fetchModels() {
-  const res = await fetch(`${API_BASE}/models`)
-  const data = await parseJsonResponse(res)
-  if (!res.ok) throw new Error(data.message || data.error || 'Failed to load models')
-  return data
+function getGithubToken() {
+  const token = import.meta.env.VITE_GITHUB_TOKEN || import.meta.env.VITE_API_KEY
+  if (!token) {
+    throw new Error(API_ERROR_CODES.MISSING_GITHUB_KEY)
+  }
+  return token
+}
+
+function getDashscopeKey() {
+  const key = import.meta.env.VITE_DASHSCOPE_API_KEY
+  if (!key) {
+    throw new Error(API_ERROR_CODES.MISSING_DASHSCOPE_KEY)
+  }
+  return key
+}
+
+function authHeaders() {
+  return {
+    Authorization: `Bearer ${getUserToken()}`,
+  }
 }
 
 export async function analyzeGarments(files) {
   const formData = new FormData()
   files.forEach((file) => formData.append('images', file))
 
-  const res = await fetch(`${API_BASE}/upcycle`, {
-    method: 'POST',
-    body: formData,
-  })
+  let res
+  try {
+    res = await fetch(`${API_BASE}/recycle/analyze`, {
+      method: 'POST',
+      headers: {
+        ...authHeaders(),
+        'x-github-token': getGithubToken(),
+      },
+      body: formData,
+    })
+  } catch {
+    throw new Error('Network error. Check your connection and try again.')
+  }
 
   const data = await parseJsonResponse(res)
-  if (!res.ok) throw new Error(data.message || data.error || `Request failed (${res.status})`)
-  if (!data.success) throw new Error(data.message || data.error || 'Failed to generate ideas')
+  assertApiSuccess(res, data, 'Failed to generate ideas')
+
   return data
 }
 
-export async function generateDesign({ prompt, images, model, size }) {
-  const res = await fetch(`${API_BASE}/generate`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ prompt, images, model, size }),
-  })
+export async function generateIdeaImage({ sessionId, ideaId, model }) {
+  let res
+  try {
+    res = await fetch(`${API_BASE}/recycle/${sessionId}/generate/${ideaId}`, {
+      method: 'POST',
+      headers: {
+        ...authHeaders(),
+        'Content-Type': 'application/json',
+        'x-dashscope-api-key': getDashscopeKey(),
+      },
+      body: JSON.stringify({ model }),
+    })
+  } catch {
+    throw new Error('Network error. Check your connection and try again.')
+  }
 
   const data = await parseJsonResponse(res)
-  if (!res.ok) throw new Error(data.message || data.error || 'Image generation failed')
-  if (!data.success || !data.images?.[0]) {
+  assertApiSuccess(res, data, 'Image generation failed')
+
+  if (!data.image_url) {
     throw new Error(data.message || data.error || 'Image generation failed')
   }
+
   return data
 }

@@ -28,7 +28,7 @@
       <div class="flex items-start justify-between gap-2">
         <div
           class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
-          :class="selected ? 'bg-(--Secondary-Brand-color) text-white' : 'bg-gray-100 text-(--Disabled-Text-color)'"
+          :class="selected ? 'bg-(--Secondary-Brand-color) text-white' : 'bg-gray-100 dark:bg-zinc-800 text-(--Disabled-Text-color)'"
         >
           {{ String(index + 1).padStart(2, '0') }}
         </div>
@@ -87,11 +87,11 @@ export default {
 <style scoped>
 .idea-card {
   border-radius: 16px;
-  background: #fff;
+  background: var(--card-surface);
 }
 
 .idea-card--default {
-  border: 1px solid #D8DCE3;
+  border: 1px solid var(--input-border);
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
 }
 

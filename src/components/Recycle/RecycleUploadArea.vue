@@ -50,7 +50,7 @@
             :alt="`${piecePrefixLabel} ${i + 1}`"
             class="w-full h-28 sm:h-32 object-cover rounded-xl block"
           />
-          <span class="absolute bottom-4 start-4 bg-white/95 text-[10px] sm:text-xs font-medium text-(--Primary-Text-color) px-2 py-0.5 rounded-md shadow-sm">
+          <span class="absolute bottom-4 start-4 bg-(--card-surface)/95 text-[10px] sm:text-xs font-medium text-(--Primary-Text-color) px-2 py-0.5 rounded-md shadow-sm">
             {{ piecePrefixLabel }} {{ i + 1 }}
           </span>
         </div>

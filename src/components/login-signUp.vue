@@ -17,7 +17,6 @@
       </button>
     </div>
 
-    <!-- Signup form (always on the left side) -->
     <div
       class="form-panel form-panel--signup"
       :data-active="String(mode === 'signup')"
@@ -108,7 +107,7 @@
         </div>
         <p v-if="error" style="color: red; font-size: 12px">{{ error }}</p>
         <p v-if="successMessage" class="success-message">
-          {{ successMessage }}
+          {{ $t("auth.signup.successMessage") }}
         </p>
         <button
           class="submit-btn"
@@ -132,7 +131,6 @@
       </div>
     </div>
 
-    <!-- Login form (always on the right side) -->
     <div
       class="form-panel form-panel--login"
       :data-active="String(mode === 'login')"
@@ -201,7 +199,6 @@
       </div>
     </div>
 
-    <!-- Sliding blue panel -->
     <div
       class="left-panel"
       :class="{
@@ -356,28 +353,61 @@ export default {
     const { locale } = useI18n();
     const isRTL = computed(() => locale.value === "ar");
 
+    function finishGoogleLogin() {
+      if (popup && !popup.closed) popup.close();
+      emit("login-success");
+      emit("close");
+      location.reload();
+    }
+
+    let popup = null;
+
     function handleGoogle() {
-      const popup = window.open(
-        "http://localhost:5000/api/auth/google",
+      // Same-origin URL so Vercel rewrites /api → Cloud Run and preserves window.opener
+      // const googleAuthUrl = `${window.location.origin}/api/auth/google`;
+      
+       const googleAuthUrl = `${window.location.origin}/api/auth/google?client_url=${encodeURIComponent(window.location.origin)}`;
+
+      popup = window.open(
+        googleAuthUrl,
         "Google Login",
         "width=500,height=600,left=400,top=100",
       );
 
-      window.addEventListener(
-        "message",
-        (event) => {
-          if (event.origin !== window.origin) return;
-          if (event.data?.type === "GOOGLE_AUTH_SUCCESS") {
-            const { token, ...user } = event.data.payload;
-            localStorage.setItem("token", token);
-            localStorage.setItem("user", JSON.stringify(user));
-            if (popup && !popup.closed) popup.close();
-            emit("login-success");
-            emit("close");
-          }
-        },
-        { once: true },
-      );
+      if (!popup) {
+        error.value = "Popup blocked. Allow popups for this site and try again.";
+        return;
+      }
+
+      const onMessage = (event) => {
+        if (event.origin !== window.origin) return;
+        if (event.data?.type === "GOOGLE_AUTH_SUCCESS") {
+          const { token, ...user } = event.data.payload;
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(user));
+          cleanup();
+          finishGoogleLogin();
+        } else if (event.data?.type === "GOOGLE_AUTH_ERROR") {
+          error.value = "Google sign-in failed. Please try again.";
+          cleanup();
+          if (popup && !popup.closed) popup.close();
+        }
+      };
+
+      const onStorage = (event) => {
+        if (event.key === "google_auth_trigger" && localStorage.getItem("token")) {
+          cleanup();
+          finishGoogleLogin();
+        }
+      };
+
+      function cleanup() {
+        window.removeEventListener("message", onMessage);
+        window.removeEventListener("storage", onStorage);
+      }
+
+      window.addEventListener("message", onMessage);
+      window.addEventListener("storage", onStorage);
     }
 
     function switchTo(newMode) {
@@ -426,7 +456,6 @@ export default {
           const token = localStorage.setItem("token", res.data.token);
           localStorage.setItem("_id", res.data._id);
           const userRes = await getUserById(res.data._id); // token is read from localStorage inside the service
-          console.log(userRes.data);
           const userData = {
             first_name: userRes.data.user.profile.first_name,
             last_name: userRes.data.user.profile.last_name,
@@ -440,11 +469,14 @@ export default {
             gender: userRes.data.user.profile.gender,
             date_of_birth: userRes.data.user.profile.date_of_birth,
             has_mobile_app: userRes.data.user.settings.has_mobile_app,
+            notifications:userRes.data.user.settings.notifications_enabled,
+            role:userRes.data.user.role
           };
           localStorage.setItem("user", JSON.stringify(userData));
           emit("login-success");
           emit("submit", userRes.data);
           emit("close");
+          location.reload()
         }
       } catch (err) {
         error.value = err.response?.data?.message ?? "Something went wrong";
@@ -528,7 +560,7 @@ export default {
   /* both sides rounded */
   background-image:
     linear-gradient(rgba(128, 128, 128, 0.2), rgba(128, 128, 128, 0.2)),
-    url("../../public/ChatGPT Image Jun 7, 2026, 10_22_25 PM.jpg");
+    url("../assets/Login.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

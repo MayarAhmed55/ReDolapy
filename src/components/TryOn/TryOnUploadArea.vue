@@ -5,10 +5,10 @@
         <div class="flex flex-col items-start mb-4 sm:mb-5">
           <div class="flex items-center gap-2 sm:gap-3">
             <img :src="uploadFileIcon" alt="" class="w-6 h-6 sm:w-7 sm:h-7 shrink-0" aria-hidden="true" />
-            <h2 class="text-lg sm:text-xl font-bold text-(--Primary-Text-color)">Upload Your Garments</h2>
+            <h2 class="text-lg sm:text-xl font-bold text-(--Primary-Text-color)">{{ $t('tryOn.garments.title') }}</h2>
           </div>
           <p class="text-xs text-(--Secondary-Text-color) mt-1.5 ms-8 sm:ms-10">
-            Support for JPG, PNG, WEBP (max 10MB each)
+            {{ $t('tryOn.garments.support_text') }}
           </p>
         </div>
 
@@ -36,14 +36,14 @@
             :class="garmentDragging ? 'bg-green-50/40' : 'bg-(--primary-bgc)'"
           >
             <img :src="uploadIcon" alt="" class="w-10 h-10 sm:w-11 sm:h-11" aria-hidden="true" />
-            <p class="text-sm text-(--Disabled-Text-color)">Click or drag images here</p>
+            <p class="text-sm text-(--Disabled-Text-color)">{{ $t('tryOn.garments.drag_prompt') }}</p>
           </div>
         </div>
       </div>
 
       <div class="lg:col-span-2 flex flex-col">
         <p class="text-[11px] sm:text-xs font-bold tracking-wider text-(--Disabled-Text-color) uppercase mb-3 sm:mb-4">
-          Current Selection
+          {{ $t('tryOn.garments.current_selection') }}
         </p>
 
         <div class="flex-1 space-y-3">
@@ -60,7 +60,7 @@
             <button
               type="button"
               class="shrink-0 p-1.5 rounded-md hover:bg-red-50 transition-colors"
-              :aria-label="`Remove ${item.title}`"
+              :aria-label="$t('tryOn.garments.remove_aria', { name: item.title })"
               @click="removeItem(item)"
             >
               <img :src="trashIcon" alt="" class="w-3.5 h-3.5" aria-hidden="true" />
@@ -68,17 +68,17 @@
           </div>
 
           <p v-if="!selectionItems.length" class="text-sm text-(--Disabled-Text-color) py-6 text-center border border-dashed border-gray-200 rounded-2xl">
-            No items selected yet
+            {{ $t('tryOn.garments.no_items') }}
           </p>
         </div>
 
         <button
           v-if="garments.length < maxGarments"
           type="button"
-          class="add-more-btn mt-4"
+          class="add-more-btn mt-4 "
           @click="$refs.garmentInput.click()"
         >
-          Add More Pieces
+          {{ $t('tryOn.garments.add_more') }}
         </button>
       </div>
     </div>
@@ -91,9 +91,13 @@
         @click="$emit('generate')"
       >
         <img :src="tryonIcon" alt="" aria-hidden="true" />
-        {{ generating ? 'Generating your try-on…' : 'Try-on' }}
+        {{ generating ? $t('tryOn.garments.generating') : $t('tryOn.garments.generate_btn') }}
       </button>
     </div>
+
+    <p v-if="remainingTries != null" class="mt-3 text-sm text-(--Secondary-Text-color) text-center">
+      {{ $t('usage.remaining_try_on', { count: remainingTries }) }}
+    </p>
 
     <p v-if="warning" class="mt-3 text-sm text-amber-700 text-center">{{ warning }}</p>
     <p v-if="error" class="mt-3 text-sm text-red-600 text-center">{{ error }}</p>
@@ -124,6 +128,7 @@ export default {
     garments: { type: Array, default: () => [] },
     generating: { type: Boolean, default: false },
     error: { type: String, default: '' },
+    remainingTries: { type: Number, default: null },
   },
   data: () => ({
     garmentDragging: false,
@@ -142,9 +147,9 @@ export default {
         items.push({
           id: 'model',
           type: 'model',
-          title: this.model.type === 'avatar' ? this.model.name : 'Your Photo',
-          subtitle: this.model.type === 'avatar' ? 'Avatar' : 'Personal image',
-          url: this.model.url,
+          title: this.model.type === 'avatar' ? this.model.name : this.$t('tryOn.model.your_photo'),
+          subtitle: this.model.type === 'avatar' ? this.$t('tryOn.model.avatar_label') : this.$t('tryOn.model.personal_label'),
+          url: this.model.stableUrl || this.model.url,
         })
       }
       this.garments.forEach((g) => {
@@ -159,7 +164,7 @@ export default {
       return items
     },
     canGenerate() {
-      return Boolean(this.model) && this.garments.length >= 1
+      return Boolean(this.model) && this.garments.length >= 2
     },
   },
   beforeUnmount() {
@@ -180,12 +185,12 @@ export default {
       const rejected = incoming.filter(f => !isAllowedImage(f))
 
       if (rejected.length) {
-        this.warning = `Unsupported file format. Use ${SUPPORTED_FORMATS_LABEL}.`
+        this.warning = this.$t('tryOn.warnings.format_error', { formats: SUPPORTED_FORMATS_LABEL })
       }
       if (!allowed.length) return
 
       if (this.garments.length >= MAX_GARMENTS) {
-        this.warning = 'You can only upload up to 2 garment images.'
+        this.warning = this.$t('tryOn.warnings.max_files')
         return
       }
 
@@ -198,7 +203,7 @@ export default {
           return
         }
         if (file.size > MAX_FILE_SIZE) {
-          this.warning = 'Each image must be 10MB or smaller.'
+          this.warning = this.$t('tryOn.warnings.size_limit')
           return
         }
         const baseName = file.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ')
@@ -207,12 +212,12 @@ export default {
           file,
           url: URL.createObjectURL(file),
           title: this.formatGarmentTitle(baseName, next.length),
-          subtitle: 'Uploaded garment',
+          subtitle: this.$t('tryOn.garments.uploaded_garment'),
         })
       })
 
       if (skipped > 0) {
-        this.warning = 'You can only upload up to 2 garment images.'
+        this.warning = this.$t('tryOn.warnings.max_files')
       }
 
       this.$emit('update:garments', next)
@@ -221,7 +226,7 @@ export default {
       if (name && name.length > 1) {
         return name.charAt(0).toUpperCase() + name.slice(1)
       }
-      return `Garment ${index + 1}`
+      return `${this.$t('recycle.upload.piece_prefix')} ${index + 1}`
     },
     removeItem(item) {
       if (item.type === 'model') {
@@ -231,13 +236,19 @@ export default {
       const idx = this.garments.findIndex(g => g.id === item.id)
       if (idx === -1) return
       const next = [...this.garments]
-      URL.revokeObjectURL(next[idx].url)
+      if (next[idx].url?.startsWith('blob:')) {
+        URL.revokeObjectURL(next[idx].url)
+      }
       next.splice(idx, 1)
       this.warning = ''
       this.$emit('update:garments', next)
     },
     revokeGarmentUrls() {
-      this.garments.forEach(g => URL.revokeObjectURL(g.url))
+      this.garments.forEach((g) => {
+        if (g.url?.startsWith('blob:')) {
+          URL.revokeObjectURL(g.url)
+        }
+      })
     },
   },
 }
@@ -250,7 +261,7 @@ export default {
   gap: 0.75rem;
   padding: 0.75rem;
   border-radius: 1rem;
-  background: #E8F0F8;
+  background: var(--surface-muted);
 }
 
 .selection-item__thumb {
@@ -259,7 +270,7 @@ export default {
   border-radius: 9999px;
   object-fit: cover;
   flex-shrink: 0;
-  background: white;
+  background: var(--card-surface);
 }
 
 .add-more-btn {
@@ -269,9 +280,9 @@ export default {
   font-size: 0.875rem;
   font-weight: var(--Semi-Bold);
   color: var(--Primary-Text-color);
-  background: white;
+  background: var(--card-surface);
   border: 2px solid transparent;
-  background-image: linear-gradient(white, white), var(--Gradient-bgc);
+  background-image: linear-gradient(var(--card-surface), var(--card-surface)), var(--Gradient-bgc);
   background-origin: border-box;
   background-clip: padding-box, border-box;
   transition: opacity 0.2s;

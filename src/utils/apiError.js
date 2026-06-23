@@ -2,14 +2,29 @@ export const API_ERROR_CODES = {
   LOGIN_REQUIRED: 'LOGIN_REQUIRED',
   MISSING_GITHUB_KEY: 'MISSING_GITHUB_KEY',
   MISSING_DASHSCOPE_KEY: 'MISSING_DASHSCOPE_KEY',
+  MISSING_DASHSCOPE_ENDPOINT: 'MISSING_DASHSCOPE_ENDPOINT',
+  MISSING_KIE_KEY: 'MISSING_KIE_KEY',
+  MISSING_HF_TOKEN: 'MISSING_HF_TOKEN',
+  KIE_CREDITS_EXHAUSTED: 'KIE_CREDITS_EXHAUSTED',
   NOT_FOUND: 'API_NOT_FOUND',
   INVALID_RESPONSE: 'INVALID_RESPONSE',
+}
+
+export function isKieCreditsError(message = '') {
+  const text = String(message).toLowerCase()
+  return text.includes('credit')
+    && (text.includes('insufficient') || text.includes('top up') || text.includes('balance'))
 }
 
 export function extractApiMessage(data) {
   if (!data) return ''
   if (typeof data === 'string') return data
-  return data.message || data.error || data.msg || ''
+  const detail = data.error || ''
+  const message = data.message || data.msg || ''
+  if (detail && message && detail !== message) {
+    return detail
+  }
+  return message || detail
 }
 
 export async function parseJsonResponse(res) {

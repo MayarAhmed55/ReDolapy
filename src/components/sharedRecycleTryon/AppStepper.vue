@@ -75,7 +75,7 @@ export default {
       if (this.isCompleted(i) || this.isActive(i)) {
         return 'bg-[var(--Secondary-Brand-color)] text-white'
       }
-      return 'bg-gray-100 text-[var(--Disabled-Text-color)]'
+      return 'bg-gray-100 dark:bg-zinc-800 text-[var(--Disabled-Text-color)]'
     },
   },
 }
