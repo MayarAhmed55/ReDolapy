@@ -16,7 +16,7 @@
               />
               <img
                 v-else
-                src="../assets/profile-placeholder.png"
+                src="../assets/Avatar.svg"
                 class="w-full h-full object-cover"
               />
             </div>
@@ -101,7 +101,7 @@
                 class="w-full h-full rounded-full bg-[url('Checker.png')] bg-cover shadow-[0_0_0_4px_rgba(64,185,255,0.2)] overflow-hidden"
               >
                 <img
-                  src="../assets/avatar-placeholder.png"
+                  src="../assets/Avatar.svg"
                   alt="Avatar Preview"
                   class="w-full h-full object-cover hidden"
                 />
@@ -435,7 +435,6 @@ import {
   addImage,
   deleteImage,
 } from "../services/services";
-import imageCompression from "browser-image-compression";
 
 export default {
   name: "EditProfile",

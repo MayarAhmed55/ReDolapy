@@ -27,6 +27,7 @@
       v-model:garments="garments"
       :generating="generating"
       :error="generateError"
+      :remaining-tries="tryOnRemaining"
       class="mb-10 sm:mb-12"
       @generate="onGenerate"
     />
@@ -40,6 +41,7 @@
       :saving-label="$t('tryOn.output.downloading')"
       :saving="saving"
       :error="saveError"
+      :remaining-tries="tryOnRemainingAfterSuccess"
       scroll-id="tryon-result"
       @try-again="onTryAgain"
       @save="onSaveResult"
@@ -58,6 +60,7 @@ import { downloadImage } from '../utils/downloadImage.js'
 import { mapApiError } from '../utils/mapApiError.js'
 import { normalizeProduct, productToTryOnGarment } from '../utils/storeHelpers.js'
 import { pickTopAndBottomGarments, resolveImageFile, resolvePersonForTryOn } from '../utils/tryOnHelpers.js'
+import { getRemainingTries, guardUsageLimit, recordSuccessfulUse } from '../composables/useUsageLimits.js'
 
 export default {
   name: 'TryOn',
@@ -75,8 +78,12 @@ export default {
     generateError: '',
     saveError: '',
     tryOnResult: null,
+    tryOnRemainingAfterSuccess: null,
   }),
   computed: {
+    tryOnRemaining() {
+      return getRemainingTries('tryOn')
+    },
     tryOnSteps() {
       return [
         {
@@ -156,6 +163,7 @@ export default {
       this.tryOnResult = null
       this.generateError = ''
       this.saveError = ''
+      this.tryOnRemainingAfterSuccess = null
     },
     applyAvatarFromRoute() {
       const avatarId = this.$route.query.avatarId
@@ -183,8 +191,11 @@ export default {
         return
       }
 
+      if (guardUsageLimit('tryOn', this.$router)) return
+
       this.generating = true
       this.generateError = ''
+      this.tryOnRemainingAfterSuccess = null
 
       try {
         const { top, bottom } = pickTopAndBottomGarments(this.garments)
@@ -200,6 +211,7 @@ export default {
           bottomImage,
         })
 
+        this.tryOnRemainingAfterSuccess = recordSuccessfulUse('tryOn')
         this.tryOnResult = {
           image: result.imageUrl,
         }

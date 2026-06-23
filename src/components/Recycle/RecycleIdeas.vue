@@ -47,7 +47,7 @@
       </div>
     </div>
 
-    <div v-if="selectedId" class="flex justify-center mt-5 sm:mt-6">
+    <div v-if="selectedId" class="flex flex-col items-center mt-5 sm:mt-6">
       <button
         type="button"
         class="recycle-action-btn recycle-action-btn--compact mt-6"
@@ -57,6 +57,9 @@
         <img :src="starsIcon" alt="" aria-hidden="true" />
         {{ loading ? loadingLabel : submitLabel }}
       </button>
+      <p v-if="remainingTries != null" class="mt-3 text-sm text-(--Secondary-Text-color) text-center">
+        {{ $t('usage.remaining_recycle', { count: remainingTries }) }}
+      </p>
     </div>
   </div>
 </template>
@@ -79,6 +82,7 @@ export default {
     ideas: { type: Array, required: true },
     selectedId: { type: [Number, String], default: null },
     loading: { type: Boolean, default: false },
+    remainingTries: { type: Number, default: null },
     titleLabel: { type: String, required: true },
     submitLabel: { type: String, required: true },
     loadingLabel: { type: String, required: true },

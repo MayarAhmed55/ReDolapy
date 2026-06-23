@@ -17,6 +17,13 @@
 
       <p v-if="error" class="mt-4 text-sm text-red-600">{{ error }}</p>
 
+      <p
+        v-if="remainingTries != null"
+        class="mt-4 text-sm font-medium text-(--Secondary-Brand-color) text-center"
+      >
+        {{ $t('usage.remaining_try_on_success', { count: remainingTries }) }}
+      </p>
+
       <div class="flex flex-col sm:flex-row gap-3 w-full max-w-md mt-6 sm:mt-8">
         <button
           type="button"
@@ -52,6 +59,7 @@ export default {
     savingLabel: { type: String, default: 'Saving…' },
     saving: { type: Boolean, default: false },
     error: { type: String, default: '' },
+    remainingTries: { type: Number, default: null },
     scrollId: { type: String, default: 'tryon-result' },
   },
   data: () => ({

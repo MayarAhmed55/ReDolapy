@@ -1,5 +1,6 @@
 import { ref, shallowRef } from 'vue'
 import { findMatchesForProduct } from '../api/matching.js'
+import { enrichMatchesWithImages } from '../utils/matchHelpers.js'
 import { mapApiError } from '../utils/mapApiError.js'
 import { API_ERROR_CODES } from '../utils/apiError.js'
 import { triggerLoginModal } from '../authState.js'
@@ -48,7 +49,7 @@ export function useProductMatch() {
     }
   }
 
-  async function openSeeMatch(product, t) {
+  async function openSeeMatch(product, t, { getWardrobeItemById, ensureWardrobeLoaded } = {}) {
     if (!product?.id || matchLoading.value) return
 
     matchModalOpen.value = true
@@ -57,8 +58,13 @@ export function useProductMatch() {
     productMatches.value = []
 
     try {
+      if (typeof ensureWardrobeLoaded === 'function') {
+        await ensureWardrobeLoaded()
+      }
+
       const data = await findMatchesForProduct(product.id)
-      productMatches.value = Array.isArray(data?.matches) ? data.matches : []
+      const rawMatches = Array.isArray(data?.matches) ? data.matches : []
+      productMatches.value = await enrichMatchesWithImages(rawMatches, { getWardrobeItemById })
       if (productMatches.value.length) {
         markHasMatch(product.id)
       }

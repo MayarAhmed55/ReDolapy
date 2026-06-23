@@ -528,7 +528,7 @@ export default {
   /* both sides rounded */
   background-image:
     linear-gradient(rgba(128, 128, 128, 0.2), rgba(128, 128, 128, 0.2)),
-    url("src/assets/Login.jpg");
+    url("../assets/Login.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

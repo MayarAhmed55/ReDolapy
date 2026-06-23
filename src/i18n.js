@@ -921,6 +921,49 @@ const messages = {
       },
     },
 
+    recommendation: {
+      greeting: {
+        morning: "Good Morning",
+        afternoon: "Good Afternoon",
+        evening: "Good Evening",
+      },
+      tagline: "Let's dress smart today.",
+      section_today: "Today's recommendation",
+      badge: "TODAY'S CHOICE",
+      badge_day: "DAILY LOOK",
+      look_title_today: "Today's Look",
+      look_title_date: "Look for {date}",
+      look_description:
+        "Perfect for today's warm weather and your wardrobe pieces. A balanced mix of comfort and style.",
+      description_weather:
+        "A {temp}°C {condition} day — pair your {top} with {bottom} for a balanced, weather-ready look.",
+      description_items:
+        "Style your {top} with {bottom} for a comfortable, coordinated outfit from your wardrobe.",
+      outfit_details: "OUTFIT DETAILS",
+      outfit_empty: "Outfit details will appear here once recommendations are ready.",
+      week_title: "This Week",
+      week_aria: "Select a day for recommendations",
+      select_day: "View recommendation for {date}",
+      loading: "Loading your outfit recommendation…",
+      syncing: "Syncing…",
+      generating: "Creating today's outfit recommendation…",
+      detail_top: "Top: {name} — {color}, {style}",
+      detail_bottom: "Bottom: {name} — {color}, {style}",
+      detail_color: "Colors: {color}",
+      detail_pattern: "Pattern: {pattern}",
+      detail_season: "Season: {season}",
+      detail_weather: "Weather: {temp}°C, {condition}",
+      detail_score: "Match score: {score}",
+      alternatives_title: "More outfit picks",
+    },
+
+    usage: {
+      remaining_try_on: "{count} try-on attempts remaining",
+      remaining_try_on_success: "{count} try-on attempts left",
+      remaining_recycle: "{count} recycle attempts remaining",
+      remaining_recycle_success: "{count} recycle attempts left",
+    },
+
     aboutRecycle: {
       header_primary: "Why Upcycling Matters",
       header_gradient: "Sustainable Fashion",
@@ -2064,6 +2107,49 @@ const messages = {
         add_failed: "فشلت إضافة القطعة إلى الخزانة.",
         delete_failed: "فشل حذف القطعة.",
       },
+    },
+
+    recommendation: {
+      greeting: {
+        morning: "صباح الخير",
+        afternoon: "مساء الخير",
+        evening: "مساء الخير",
+      },
+      tagline: "لنختار إطلالة ذكية اليوم.",
+      section_today: "توصية اليوم",
+      badge: "اختيار اليوم",
+      badge_day: "إطلالة يومية",
+      look_title_today: "إطلالة اليوم",
+      look_title_date: "إطلالة {date}",
+      look_description:
+        "مثالية لطقس اليوم وقطع خزانتك. مزيج متوازن من الراحة والأناقة.",
+      description_weather:
+        "يوم {condition} بحرارة {temp}°م — ارتدي {top} مع {bottom} لإطلالة مناسبة للطقس.",
+      description_items:
+        "نسّق {top} مع {bottom} لإطلالة مريحة ومتناسقة من خزانتك.",
+      outfit_details: "تفاصيل الإطلالة",
+      outfit_empty: "ستظهر تفاصيل الإطلالة هنا عند جاهزية التوصيات.",
+      week_title: "هذا الأسبوع",
+      week_aria: "اختر يوماً لعرض التوصيات",
+      select_day: "عرض توصية {date}",
+      loading: "جاري تحميل توصية الإطلالة…",
+      syncing: "جاري المزامنة…",
+      generating: "جاري إنشاء توصية إطلالة اليوم…",
+      detail_top: "علوي: {name} — {color}، {style}",
+      detail_bottom: "سفلي: {name} — {color}، {style}",
+      detail_color: "الألوان: {color}",
+      detail_pattern: "النقش: {pattern}",
+      detail_season: "الموسم: {season}",
+      detail_weather: "الطقس: {temp}°م، {condition}",
+      detail_score: "درجة التطابق: {score}",
+      alternatives_title: "خيارات إطلالة أخرى",
+    },
+
+    usage: {
+      remaining_try_on: "متبقي {count} محاولات للتجربة الافتراضية",
+      remaining_try_on_success: "متبقي {count} محاولات للتجربة الافتراضية",
+      remaining_recycle: "متبقي {count} محاولات لإعادة التدوير",
+      remaining_recycle_success: "متبقي {count} محاولات لإعادة التدوير",
     },
 
     aboutRecycle: {

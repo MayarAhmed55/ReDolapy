@@ -187,7 +187,10 @@ export default {
     },
     async onSeeMatch(product) {
       this.activeMatchProductId = product?.id || ''
-      await this.openSeeMatch(product, this.$t.bind(this))
+      await this.openSeeMatch(product, this.$t.bind(this), {
+        getWardrobeItemById: (id) => this.wardrobeStore.getItemById(id),
+        ensureWardrobeLoaded: () => this.wardrobeStore.fetchAll(),
+      })
     },
     closeMatchModal() {
       this.activeMatchProductId = ''

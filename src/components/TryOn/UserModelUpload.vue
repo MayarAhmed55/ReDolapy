@@ -309,7 +309,7 @@ export default {
 
     onCreateAvatar() {
       if (this.validAvatars.length) {
-        this.$router.push('/pricing')
+        this.$router.push('/UpgradePricing')
         return
       }
       this.goToAvatarPage()
