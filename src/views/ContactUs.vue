@@ -76,6 +76,7 @@
 <script>
 import { Mail, Phone, Send } from '@lucide/vue';
 import axios from 'axios';
+import API_BASE from '../config/api.js';
 
 export default {
     name: 'ContactUs',
@@ -102,7 +103,7 @@ export default {
             }
             this.isSubmitting = true;
             try {
-                const response = await axios.post('http://localhost:5000/api/contact', this.formInput);
+                const response = await axios.post(`${API_BASE}/contact`, this.formInput);
 
                 if (response.status === 201 || response.status === 200) {
                     alert('Message sent successfully to us!');

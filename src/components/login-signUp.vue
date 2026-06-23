@@ -353,29 +353,61 @@ export default {
     const { locale } = useI18n();
     const isRTL = computed(() => locale.value === "ar");
 
+    function finishGoogleLogin() {
+      if (popup && !popup.closed) popup.close();
+      emit("login-success");
+      emit("close");
+      location.reload();
+    }
+
+    let popup = null;
+
     function handleGoogle() {
-      const popup = window.open(
-        "http://localhost:5000/api/auth/google",
+      // Same-origin URL so Vercel rewrites /api → Cloud Run and preserves window.opener
+      // const googleAuthUrl = `${window.location.origin}/api/auth/google`;
+      
+       const googleAuthUrl = `${window.location.origin}/api/auth/google?client_url=${encodeURIComponent(window.location.origin)}`;
+
+      popup = window.open(
+        googleAuthUrl,
         "Google Login",
         "width=500,height=600,left=400,top=100",
       );
 
-      window.addEventListener(
-        "message",
-        (event) => {
-          if (event.origin !== window.origin) return;
-          if (event.data?.type === "GOOGLE_AUTH_SUCCESS") {
-            const { token, ...user } = event.data.payload;
-            localStorage.setItem("token", token);
-            localStorage.setItem("user", JSON.stringify(user));
-            if (popup && !popup.closed) popup.close();
-            emit("login-success");
-            emit("close");
-            location.reload();
-          }
-        },
-        { once: true },
-      );
+      if (!popup) {
+        error.value = "Popup blocked. Allow popups for this site and try again.";
+        return;
+      }
+
+      const onMessage = (event) => {
+        if (event.origin !== window.origin) return;
+        if (event.data?.type === "GOOGLE_AUTH_SUCCESS") {
+          const { token, ...user } = event.data.payload;
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(user));
+          cleanup();
+          finishGoogleLogin();
+        } else if (event.data?.type === "GOOGLE_AUTH_ERROR") {
+          error.value = "Google sign-in failed. Please try again.";
+          cleanup();
+          if (popup && !popup.closed) popup.close();
+        }
+      };
+
+      const onStorage = (event) => {
+        if (event.key === "google_auth_trigger" && localStorage.getItem("token")) {
+          cleanup();
+          finishGoogleLogin();
+        }
+      };
+
+      function cleanup() {
+        window.removeEventListener("message", onMessage);
+        window.removeEventListener("storage", onStorage);
+      }
+
+      window.addEventListener("message", onMessage);
+      window.addEventListener("storage", onStorage);
     }
 
     function switchTo(newMode) {
