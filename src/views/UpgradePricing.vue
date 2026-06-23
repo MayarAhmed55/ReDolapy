@@ -74,7 +74,7 @@
           </div>
         </div>
 
-        <GradientCard :cardTitle="$t('pricing.pro.name')" :Price="isYearly ? '$12.19' : '$16.99'"
+        <GradientCard :cardTitle="$t('pricing.pro.name')" :Price="isYearly ? '$12.5' : '$16.19'"
           :permonth="$t('pricing.pro.priceUnit')" :firstPoint="$t('pricing.pro.features.0')"
           :secondPoint="$t('pricing.pro.features.1')" :thirdPoint="$t('pricing.pro.features.2')"
           :fourthPoint="$t('pricing.pro.features.3')" :fifthPoint="$t('pricing.pro.features.4')"
@@ -85,19 +85,19 @@
             <div class="w-full text-sm space-y-2 border-t pt-4 border-gray-200 PrimaryTxt text-start">
               <div class="flex justify-between">
                 <span>{{ isYearly ? 'Annual Subscription' : 'Monthly Subscription' }}</span>
-                <span>{{ isYearly ? '$146.28' : '$16.99' }}</span>
+                <span>{{ isYearly ? '$239.88' : '$19.99' }}</span>
               </div>
               <div class="flex justify-between text-green-500">
                 <span>{{ $t('pricing.earlyBirdDiscount') }}</span>
-                <span>{{ isYearly ? '-$30.00' : '-$5.00' }}</span>
+                <span>{{ isYearly ? '-$70.00' : '-$5.00' }}</span>
               </div>
               <div class="flex justify-between">
                 <span>{{ $t('pricing.estimatedTax') }}</span>
-                <span>{{ isYearly ? '$10.80' : '$1.20' }}</span>
+                <span>{{ isYearly ? '$19.89' : '$1.20' }}</span>
               </div>
               <div class="flex justify-between font-bold text-base border-t pt-2 mt-2 border-dashed border-gray-300">
                 <span>{{ $t('pricing.dueToday') }}</span>
-                <span>{{ isYearly ? '$127' : '$13.19' }}</span>
+                <span>{{ isYearly ? '$149.99'  : '$16.19' }}</span>
               </div>
             </div>
           </template>

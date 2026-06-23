@@ -23,14 +23,14 @@
     </CardsSection>
 
     <section id="StepsSection" class="flex flex-col lg:flex-row justify-between items-center gap-8 px-4 lg:px-0 my-12">
-      <div class="StepsImg  w-full w-auto flex justify-center px-4">
+      <div class="StepsImg  w-[48%] w-auto flex justify-center px-4">
         <img src="../assets/image 9.png" class="w-full max-w-[40rem] h-auto max-h-[30rem] object-cover rounded-xl"
           :alt="$t('features.sectionTitle')" />
       </div>
 
       <div id="Steps" class="w-full lg:w-[48%] space-y-4 ">
         <p class="font-bold text-3xl md:text-4xl PrimaryTxt text-center lg:text-start">{{ $t("steps.title") }}</p>
-        <div class="step flex items-start">
+        <div class="step flex items-center">
           <div class="stepCircle flex-shrink-0">
             <p>1</p>
           </div>
@@ -44,7 +44,7 @@
           </div>
         </div>
 
-        <div class="step flex items-start">
+        <div class="step flex items-center">
           <div class="stepCircle flex-shrink-0">
             <p>2</p>
           </div>
@@ -58,7 +58,7 @@
           </div>
         </div>
 
-        <div class="step flex">
+        <div class="step flex items-center">
           <div class="stepCircle flex-shrink-0">
             <p>3</p>
           </div>
@@ -73,70 +73,6 @@
         </div>
       </div>
     </section>
-
-
-    <!-- <section :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'" class="px-4 lg:px-0">
-
-      <div class="relative flex flex-col items-center lg:items-start text-center lg:text-start md:d-block">
-
-        <router-link to="/Brands">
-
-          <span class="absolute top-3  flex gap-2 text-[#8ED321]" :class="$i18n.locale === 'ar' ? 'left-1' : 'right-1'">
-
-            {{ $t('brands.viewAll') }}
-
-            <ChevronRight class="text-lg" :class="{ 'rotate-180': $i18n.locale === 'ar' }" />
-
-          </span>
-          </router-link>
-
- <p id="FeaturesTitle" class="text-4xl md:text-5xl font-bold  PrimaryTxt flex">
-          {{ $t('brands.title') }}
-        </p>
-
-        <p class="mb-[1rem] font-medium grayTxt m-2">
-          {{ $t('brands.subtitle') }}
-          <span class="gradientColor">{{ $t('brands.appName') }}</span>
-        </p>
-      </div>
-      <div class="cardsContainer flex flex-col lg:flex-row gap-6 justify-center my-[3rem] ">
-
-        <div
-          class="card bg-white dark:bg-[#0d0d0d] min-h-[25rem] h-auto shadow-lg md:w-[60%]  sm:w-[90%] self-center lg:w-[32%]">
-          <div class="flex justify-center items-center m-auto mb-[2rem]">
-            <img src="../assets/H&M.jpg" class="h-[10rem] w-[10rem] object-contain" alt="H&M">
-          </div>
-          <p class="serviceTitle PrimaryTxt">{{ $t('brands.hm.title') }}</p>
-          <p class="serviceDescription Secondary-grayTxt">
-            {{ $t('brands.hm.description') }}
-          </p>
-        </div>
-
-        <div
-          class="card bg-white dark:bg-[#0d0d0d] min-h-[25rem] h-auto shadow-lg md:w-[60%]  sm:w-[90%] self-center lg:w-[32%]">
-          <div class="flex justify-center items-center m-auto mb-[2rem]">
-            <img src="../assets/H&M.jpg" class="h-[10rem] w-[10rem] object-contain" alt="H&M">
-          </div>
-          <p class="serviceTitle PrimaryTxt">{{ $t('brands.hm.title') }}</p>
-          <p class="serviceDescription Secondary-grayTxt">
-            {{ $t('brands.hm.description') }}
-          </p>
-        </div>
-
-        <div
-          class="card bg-white dark:bg-[#0d0d0d] min-h-[25rem] h-auto shadow-lg md:w-[60%]  sm:w-[90%]  self-center  lg:w-[32%]">
-          <div class="flex justify-center items-center m-auto mb-[2rem]">
-            <img src="../assets/H&M.jpg" class="h-[10rem] w-[10rem] object-contain" alt="H&M">
-            <ArrowRight :class="{ 'rotate-180': $i18n.locale === 'ar' }" />
-            <img :src="imgSrc6" alt="">
-          </div>
-          <p class="serviceTitle PrimaryTxt">{{ $t('brands.hm.title') }}</p>
-          <p class="serviceDescription Secondary-grayTxt">
-            {{ $t('brands.hm.description') }}
-          </p>
-        </div>
-        </div>
-    </section> -->
 
     <section :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'" class="px-4 lg:px-0">
 
@@ -281,7 +217,7 @@
           </div>
         </div>
 
-        <GradientCard :cardTitle="$t('pricing.pro.name')" :Price="isYearly ? '$12.19' : '$16.99'"
+        <GradientCard :cardTitle="$t('pricing.pro.name')" :Price="isYearly ? '$12.5' : '$16.19'"
           :permonth="$t('pricing.pro.priceUnit')" :firstPoint="$t('pricing.pro.features.0')"
           :secondPoint="$t('pricing.pro.features.1')" :thirdPoint="$t('pricing.pro.features.2')"
           :fourthPoint="$t('pricing.pro.features.3')" :fifthPoint="$t('pricing.pro.features.4')"
@@ -292,19 +228,19 @@
             <div class="w-full text-sm space-y-2 border-t pt-4 border-gray-200 PrimaryTxt text-start">
               <div class="flex justify-between">
                 <span>{{ isYearly ? 'Annual Subscription' : 'Monthly Subscription' }}</span>
-                <span>{{ isYearly ? '$146.28' : '$16.99' }}</span>
+                <span>{{ isYearly ? '$239.88' : '$19.99' }}</span>
               </div>
               <div class="flex justify-between text-green-500">
                 <span>{{ $t('pricing.earlyBirdDiscount') }}</span>
-                <span>{{ isYearly ? '-$30.00' : '-$5.00' }}</span>
+                <span>{{ isYearly ? '-$70.00' : '-$5.00' }}</span>
               </div>
               <div class="flex justify-between">
                 <span>{{ $t('pricing.estimatedTax') }}</span>
-                <span>{{ isYearly ? '$10.80' : '$1.20' }}</span>
+                <span>{{ isYearly ? '$19.89' : '$1.20' }}</span>
               </div>
               <div class="flex justify-between font-bold text-base border-t pt-2 mt-2 border-dashed border-gray-300">
                 <span>{{ $t('pricing.dueToday') }}</span>
-                <span>{{ isYearly ? '$127' : '$13.19' }}</span>
+                <span>{{ isYearly ? '$149.99' : '$16.19' }}</span>
               </div>
             </div>
           </template>
