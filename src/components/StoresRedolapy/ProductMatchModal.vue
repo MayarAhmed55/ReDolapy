@@ -107,7 +107,15 @@
                         @click="onViewDetails(entry.item?.id)"
                       >
                         {{ $t('store.match_modal.view_details') }}
-                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                        <svg
+                          class="product-match-card__details-icon w-3.5 h-3.5"
+                          :class="{ 'product-match-card__details-icon--rtl': isRtl }"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2.5"
+                          aria-hidden="true"
+                        >
                           <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
                         </svg>
                       </button>
@@ -161,6 +169,11 @@ export default {
     error: { type: String, default: '' },
   },
   emits: ['close', 'view-details'],
+  computed: {
+    isRtl() {
+      return this.$i18n?.locale === 'ar'
+    },
+  },
   methods: {
     primaryColor(entry) {
       return entry?.item?.color || entry?.item?.colors?.[0]?.color || ''
@@ -338,8 +351,9 @@ export default {
   border-radius: 9999px;
   font-size: 0.6875rem;
   font-weight: 700;
-  color: var(--Primary-Text-color);
-  background: rgb(255 255 255 / 92%);
+  color: #121826;
+  background: rgb(255 255 255 / 95%);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 12%);
 }
 
 .product-match-card__info {
@@ -409,5 +423,9 @@ export default {
 
 .product-match-card__details:hover {
   opacity: 0.8;
+}
+
+.product-match-card__details-icon--rtl {
+  transform: scaleX(-1);
 }
 </style>

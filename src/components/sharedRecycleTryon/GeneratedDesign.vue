@@ -55,6 +55,13 @@
 
           <p v-if="error" class="mt-4 text-sm text-red-600">{{ error }}</p>
 
+          <p
+            v-if="remainingTries != null"
+            class="mt-4 text-sm font-medium text-(--Secondary-Brand-color)"
+          >
+            {{ $t('usage.remaining_recycle_success', { count: remainingTries }) }}
+          </p>
+
           <button
             type="button"
             class="recycle-action-btn mt-6 sm:mt-8"
@@ -99,6 +106,7 @@ export default {
     design: { type: Object, required: true },
     saving: { type: Boolean, default: false },
     error: { type: String, default: '' },
+    remainingTries: { type: Number, default: null },
     heading: { type: String, default: 'Your Generated Design' },
     actionLabel: { type: String, default: 'Save Specs' },
     actionLoadingLabel: { type: String, default: 'Downloading…' },

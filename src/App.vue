@@ -17,6 +17,7 @@ import Footer from "./components/Footer.vue";
 import Navbar from "./components/Navbar.vue";
 import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
+import { initRecommendationScheduler } from "./composables/useRecommendations.js";
 
 export default {
   name: "App",
@@ -28,10 +29,11 @@ export default {
     const router = useRouter();
     const routerReady = ref(false);
 
-    // Wait for the router to finish its initial navigation
-    // before rendering anything — prevents flash of wrong layout
     router.isReady().then(() => {
       routerReady.value = true;
+      if (localStorage.getItem("token")) {
+        initRecommendationScheduler();
+      }
     });
 
     return { routerReady };

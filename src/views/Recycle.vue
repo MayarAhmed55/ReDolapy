@@ -35,6 +35,7 @@
       :ideas="styleIdeas"
       :selected-id="selectedIdea?.id ?? null"
       :loading="generating"
+      :remaining-tries="recycleRemaining"
       :title-label="$t('recycle.ideas.title')"
       :submit-label="$t('recycle.ideas.submit')"
       :loading-label="$t('recycle.ideas.loading')"
@@ -50,6 +51,7 @@
       :design="generatedDesign"
       :saving="saving"
       :error="saveError"
+      :remaining-tries="recycleRemainingAfterSuccess"
       :heading="$t('recycle.output.heading')"
       :action-label="$t('recycle.output.save_btn')"
       :action-loading-label="$t('recycle.output.saving')"
@@ -67,6 +69,7 @@ import { analyzeGarments, generateIdeaImage } from '../api/recycle.js'
 import { downloadImage } from '../utils/downloadImage.js'
 import { localizeRecycleIdeas, localizeRecycleIdea } from '../utils/recycleLocale.js'
 import { mapApiError } from '../utils/mapApiError.js'
+import { getRemainingTries, guardUsageLimit, recordSuccessfulUse } from '../composables/useUsageLimits.js'
 
 export default {
   name: 'Recycle',
@@ -88,8 +91,12 @@ export default {
     generatedDesign: null,
     rawIdeas: [],
     sessionId: null,
+    recycleRemainingAfterSuccess: null,
   }),
   computed: {
+    recycleRemaining() {
+      return getRemainingTries('recycle')
+    },
     recycleSteps() {
       return [
         {
@@ -156,6 +163,7 @@ export default {
       this.analyzeError = ''
       this.generateError = ''
       this.saveError = ''
+      this.recycleRemainingAfterSuccess = null
     },
     mapRecycleError(err) {
       return mapApiError(err, this.$t.bind(this))
@@ -192,8 +200,11 @@ export default {
         return
       }
 
+      if (guardUsageLimit('recycle', this.$router)) return
+
       this.generating = true
       this.generateError = ''
+      this.recycleRemainingAfterSuccess = null
 
       try {
         const data = await generateIdeaImage({
@@ -201,6 +212,8 @@ export default {
           ideaId: this.selectedIdea.id,
           model,
         })
+
+        this.recycleRemainingAfterSuccess = recordSuccessfulUse('recycle')
 
         const localizedIdea = localizeRecycleIdea(
           this.rawIdeas.find(idea => idea.id === this.selectedIdea.id) || this.selectedIdea,

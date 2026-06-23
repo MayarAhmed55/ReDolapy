@@ -435,7 +435,6 @@ import {
   addImage,
   deleteImage,
 } from "../services/services";
-import imageCompression from "browser-image-compression";
 
 export default {
   name: "EditProfile",

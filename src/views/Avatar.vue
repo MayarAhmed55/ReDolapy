@@ -76,7 +76,7 @@ export default {
     },
     async onGenerate(params) {
       if (this.hasUsedFreeTry) {
-        this.$router.push('/pricing')
+        this.$router.push('/UpgradePricing')
         return
       }
 
@@ -103,7 +103,7 @@ export default {
       }
     },
     onTryAgain() {
-      this.$router.push('/pricing')
+      this.$router.push('/UpgradePricing')
     },
     async onDownloadAvatar() {
       if (!this.generatedUrl) return

@@ -95,6 +95,10 @@
       </button>
     </div>
 
+    <p v-if="remainingTries != null" class="mt-3 text-sm text-(--Secondary-Text-color) text-center">
+      {{ $t('usage.remaining_try_on', { count: remainingTries }) }}
+    </p>
+
     <p v-if="warning" class="mt-3 text-sm text-amber-700 text-center">{{ warning }}</p>
     <p v-if="error" class="mt-3 text-sm text-red-600 text-center">{{ error }}</p>
   </div>
@@ -124,6 +128,7 @@ export default {
     garments: { type: Array, default: () => [] },
     generating: { type: Boolean, default: false },
     error: { type: String, default: '' },
+    remainingTries: { type: Number, default: null },
   },
   data: () => ({
     garmentDragging: false,
